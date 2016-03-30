@@ -1,0 +1,116 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.cortxt.app.mmcui">
+
+    <application android:allowBackup="true" android:label="@string/app_name">
+        <uses-library android:name="com.google.android.maps" />
+
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.EngineeringModSettings"
+            android:noHistory="true"
+            android:screenOrientation="user" />
+
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.TroubleSpot.TroubleSpot"
+            android:screenOrientation="user" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.TroubleSpot.TroubleSpotMapActivity"
+            android:screenOrientation="user" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.SpeedTest"
+            android:screenOrientation="user" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.SpeedTestHistory"
+            android:screenOrientation="user" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.EventHistory"
+            android:screenOrientation="user" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.EventDetail"
+            android:screenOrientation="user" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.Settings"
+            android:screenOrientation="user" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.VQSettings"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.NerdScreen"
+            android:screenOrientation="user" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.VoiceQTest"
+            android:screenOrientation="user" >
+            <intent-filter>
+                <action android:name="android.intent.action.RUN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.VideoTest"
+            android:screenOrientation="user" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.AudioTest"
+            android:screenOrientation="user" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.YouTubeTest"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="user" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.AppUsageStats"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.DeveloperScreenOld"
+            android:screenOrientation="user" />
+
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.BlackScreen"
+            android:screenOrientation="user" >
+            <intent-filter>
+                <action android:name="android.intent.action.RUN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.MyCoverage.MyCoverageActivityGroup"
+            android:screenOrientation="user" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.MyCoverage.MyCoverage"
+            android:screenOrientation="user" />
+        <activity
+            android:name="com.cortxt.app.mmcui.Activities.MyCoverage.MyCoverageMapActivity"
+            android:screenOrientation="user" />
+
+        <activity
+            android:name="com.cortxt.app.mmcui.Sampling.Building.ManualMapping"
+            android:screenOrientation="user" >
+        </activity>
+        <activity
+            android:name="com.cortxt.app.mmcui.Sampling.Transit.TransitSampling"
+            android:screenOrientation="user" >
+        </activity>
+
+        <activity
+            android:name="com.cortxt.app.mmcui.Sampling.Transit.TransitSamplingMap"
+            android:screenOrientation="user" >
+        </activity>
+        <activity
+            android:name="com.cortxt.app.mmcui.Sampling.Transit.TransitSamplingListView"
+            android:screenOrientation="user" >
+        </activity>
+
+
+        <activity
+            android:name="com.cortxt.app.mmcui.Sampling.Transit.TransitSamplingSettings"
+            android:screenOrientation="user" >
+        </activity>
+        <activity
+            android:name="com.cortxt.app.mmcui.Sampling.Transit.TransitSamplingMain"
+            android:screenOrientation="user" >
+        </activity>
+        <activity
+            android:name="com.cortxt.app.mmcui.Sampling.Transit.TransitSamplingOverview"
+            android:screenOrientation="user" >
+        </activity>
+        <activity
+            android:name="com.cortxt.app.mmcui.Sampling.Transit.TransitSamplingLibrary"
+            android:screenOrientation="user" >
+        </activity>
+    </application>
+
+</manifest>

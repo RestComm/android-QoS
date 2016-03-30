@@ -1,0 +1,13 @@
+
+<resources>
+     <!-- Set to true to track time spent in each Activity.  Set to false to track application level information only -->
+    <item type="bool" name="ga_auto_activity_tracking">true</item>
+    <!--   Set to true to remove the last octet of the device's IP Address from tracking data. -->
+    <item type="bool" name="ga_anonymizeIp">true</item>
+    <!--  Set to true to generate debug message to the Android log -->
+    <item type="bool" name="ga_debug">true</item>
+    <!--  Set to true if you want to test your tracking code without actually sending data to Google Analytics. Default is false.-->
+    <item type="bool" name="ga_dryRun">false</item>
+    <!-- GA api number -->
+    <string name="ga_api_key">UA-26101321-2</string>
+</resources>

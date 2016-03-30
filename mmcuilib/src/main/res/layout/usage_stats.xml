@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/usage_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#c0c0c0"
+        android:orientation="horizontal"
+         >
+
+        <Button
+            android:id="@+id/getcpustats"
+            android:layout_width="0dip"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="CPU"
+            android:textSize="10dip" />
+
+        <Button
+            android:id="@+id/getmemorystats"
+            android:layout_width="0dip"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Memory"
+            android:textSize="10dip" />
+
+        <Button
+            android:id="@+id/getdatastats"
+            android:layout_width="0dip"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Data"
+            android:textSize="10dip" />
+
+        <Button
+            android:id="@+id/getbatterystats"
+            android:layout_width="0dip"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Battery"
+            android:textSize="10dip" />
+    </LinearLayout>
+    
+    <ListView
+        android:id="@+id/cpustats"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+    <ListView
+        android:id="@+id/memorystats"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" >
+    </ListView>
+
+    <ListView
+        android:id="@+id/datastats"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" >
+    </ListView>
+    
+</LinearLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <header android:fragment="com.cortxt.app.mmcui.Activities.Settings$PrefsFragment"
+  
+    android:title="Should be non clickable Title" >
+    <extra android:name="pref-resource"  />
+</header>  
+ 
+<header android:fragment="com.cortxt.app.mmcui.Activities.Settings$PrefsFragment"
+  
+    android:title="Test Title" >
+    <extra android:name="pref-resource" android:value="preferences_v14" />
+</header>  
+
+
+
+
+ 
+</preference-headers>

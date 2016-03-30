@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/eventhistoryContainer"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".Activities.SpeedTest" >
+
+    <View
+        android:id="@+id/centralBackground"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/background" />
+
+    <RelativeLayout
+        android:id="@+id/scalingWrapper"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <TextView
+            android:id="@+id/eventhistory_emptymessage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120px"
+            android:gravity="center_horizontal"
+            android:paddingTop="10dp"
+            android:text="@string/eventhistory_emptymessage"
+            android:textColor="#666666"
+            android:visibility="invisible" />
+
+        <RelativeLayout
+            android:id="@+id/topactionbarLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="96px"
+            android:background="@color/title_background" >
+
+            <ImageButton
+                android:id="@+id/actionBarBackButton"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_action_back_icon"
+                android:background="@null"
+                android:padding="10px"
+                android:onClick="MapBackActionClicked" />
+
+            <ImageView
+                android:id="@+id/actionBarLogo"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/actionBarBackButton"
+                android:background="@drawable/action_bar_logo"
+                android:onClick="MapBackActionClicked" />
+
+            <TextView
+                android:id="@+id/actionbartitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/actionBarLogo"
+                android:text="Event History"
+                android:textColor="#666666"
+                android:textSize="30sp" />
+
+            <Button
+                android:id="@+id/actionbarShareIcon"
+                android:layout_width="64px"
+                android:layout_height="64px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ic_action_share_icon"
+                android:onClick="shareClicked" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/topactionbarLine"
+            android:layout_width="fill_parent"
+            android:layout_height="4px"
+            android:layout_below="@+id/topactionbarLayout"
+            android:background="#3399cc" />
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/topactionbarLine" >
+
+            <fragment
+                android:id="@+id/historyList"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                class="com.cortxt.app.mmcui.Activities.CustomViews.Fragments.EventHistoryFragment"/>
+        </FrameLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

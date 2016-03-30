@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mycoverage_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/scalingWrapper"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+       <RelativeLayout
+            android:id="@+id/topactionbarLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="96px"
+            android:background="@color/title_background" >
+
+            <ImageButton
+                android:id="@+id/actionBarBackButton"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:padding="10px"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:onClick="MapBackActionClicked"
+                android:src="@drawable/ic_action_back_icon" />
+
+            <ImageView
+                android:id="@+id/actionBarLogo"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/actionBarBackButton"
+                android:background="@drawable/action_bar_logo"
+                android:onClick="MapBackActionClicked" />
+
+            <TextView
+                android:id="@+id/actionbartitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/actionBarLogo"
+                android:text="Map"
+                android:textColor="#666666"
+                android:textSize="30sp" />
+
+            <ImageButton
+                android:id="@+id/actionbarMenuIcon"
+                android:layout_width="64px"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:onClick="MapMenuIconClicked" />
+
+            <LinearLayout
+                android:id="@+id/actionBarHistoryIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_toLeftOf="@id/actionbarMenuIcon"
+                android:gravity="center_vertical"
+                android:onClick="showHistory"
+                android:orientation="horizontal"
+                android:paddingLeft="10px"
+                android:paddingRight="10px" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5px"
+                    android:background="@drawable/ic_action_history_icon_dark" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="History"
+                    android:textColor="#fff"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+				android:id="@+id/actionbarShare"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_toLeftOf="@id/actionBarHistoryIcon"
+                android:gravity="center_vertical"
+                android:onClick="topActionShareClicked"
+                android:orientation="horizontal"
+                android:paddingLeft="10px"
+                android:paddingRight="10px" >
+
+                <ImageView
+	                android:id="@+id/actionbarShareIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5px"
+                    android:background="@drawable/ic_action_share_icon_dark" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Share"
+                    android:textColor="#fff"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+
+
+            <Button
+                android:id="@+id/actionbarLocationIcon"
+                android:layout_width="36px"
+                android:layout_height="36px"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/actionbarShare"
+                android:background="@drawable/ic_action_location_icon"
+                android:onClick="centerOnCurrentLocationClicked" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/topactionbarLine"
+            android:layout_width="fill_parent"
+            android:layout_height="4px"
+            android:layout_below="@+id/topactionbarLayout"
+            android:background="#3399cc" />
+
+        <RelativeLayout
+            android:id="@+id/mycoverage_mapview_container"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/topactionbarLine" >
+
+			<fragment 
+		        android:id="@+id/mycoverage_map_fragment"
+		        android:name="com.cortxt.app.mmcui.Activities.MyCoverage.CoverageMapFragment"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent" >
+		    </fragment>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true" >
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_weight="3"
+                    android:background="#00000000" />
+
+                <FrameLayout
+                    android:id="@+id/fragment_container"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2" >
+
+                    <!--
+                    <fragment
+                        android:id="@+id/historyList"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        class="com.cortxt.app.MMC.Views.EventHistoryFragment" />
+                    -->
+                </FrameLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/mycoverage_busyIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/mycoverage_mapview_container"
+            android:layout_marginRight="10px"
+            android:layout_marginTop="12px"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/shareButton"
+            android:layout_width="500px"
+            android:layout_height="100px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="950px"
+            android:background="@drawable/start_button_selector"
+            android:onClick="shareClicked"
+            android:text="@string/mycoverage_share"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,135 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale: 1.0, user-scalable=no" />
+<script src="../highcharts_2_2_1/js/jquery.min.js" type="text/javascript"></script>
+<script src="../highcharts_2_2_1/js/highcharts.js" type="text/javascript"></script>
+<script src="../json2.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+var chart;
+var chartoptions;
+
+function getString(name) {
+	return window.javaInterface.getString(name) + '';
+}
+
+$(document).ready(function() {
+	chartoptions = {
+		chart: {
+			renderTo: 'container',
+			type: 'column',
+			backgroundColor: 'transparent',
+			spacingTop: 10,
+			spacingBottom: 20,
+			spacingLeft: 40,
+			spacingRight: 35,
+		},
+		credits: {
+			enabled: false
+		},
+		title: {
+			text: getString('callstats'),
+			align: 'center',
+			x: 15,
+			margin: 30,
+			style: {
+				color: '#FFFFFF',
+				fontWeight: 'bold',
+				fontSize: '22px'
+			}
+		},
+		xAxis: {
+			categories: [getString('yourphone'), getString('yourcarrier'), getString('allcarriers')],
+			labels: {
+				staggerLines: 1,
+				style: {
+					color: '#FFFFFF'
+				}
+			}
+		},
+		yAxis: {
+			min: 0,
+			title: {
+				text: null,
+			},
+			labels: {
+				x: 1,
+				style: {
+					color: '#FFFFFF'
+				},
+				formatter: function() {
+					return this.value + '%';
+				}
+			}
+		},
+		tooltip: {
+			formatter: function() {
+				return '' + this.series.name +': '+ this.y +' ('+ Math.round(this.percentage) +'%)'; 
+			}
+		},
+		plotOptions: {
+			column: {
+				stacking: 'percent'
+			}
+		},
+		legend: { enabled:false},
+		//legend: {
+		//	layout: 'vertical',
+		//	align: 'center',
+        //    verticalAlign: 'bottom',
+        //    x: 15,
+        //    shadow:false,
+		//	borderWidth: 0,
+		//	itemStyle: {
+		//		color: '#FFFFFF'
+		//	}
+		//},
+		series: [
+			{
+				name: getString('normalcalls'),
+				color: '#297AD2',
+				data: [0, 0, 0]
+			},
+			{
+				name: getString('failedcalls'),
+				color: '#FFBB27',
+				data: [0, 0, 0]
+			},
+			{
+				name: getString('droppedcalls'),
+				color: '#DE0A0D',
+				data: [0, 0, 0]
+			}
+		]
+	}
+	
+	window.javaInterface.getStats();
+});
+
+function setStats(stats) {
+
+	chartoptions.series[0].data[0] = parseInt(stats.yourphone.normallyEndedCalls);
+	chartoptions.series[1].data[0] = parseInt(stats.yourphone.failedCalls);
+	chartoptions.series[2].data[0] = parseInt(stats.yourphone.droppedCalls);
+	
+	chartoptions.series[0].data[1] = parseInt(stats.yourcarrier.normallyEndedCalls);
+	chartoptions.series[1].data[1] = parseInt(stats.yourcarrier.failedCalls);
+	chartoptions.series[2].data[1] = parseInt(stats.yourcarrier.droppedCalls);
+	
+	chartoptions.series[0].data[2] = parseInt(stats.allcarriers.normallyEndedCalls);
+	chartoptions.series[1].data[2] = parseInt(stats.allcarriers.failedCalls);
+	chartoptions.series[2].data[2] = parseInt(stats.allcarriers.droppedCalls);
+	
+	chart = new Highcharts.Chart(chartoptions);
+	
+	window.javaInterface.hideLoadingIndicator();
+}
+
+</script>
+</head>
+
+<body style="overflow: hidden;">
+<div id="container" style="height: 85%"></div>
+</body>
+
+</html>

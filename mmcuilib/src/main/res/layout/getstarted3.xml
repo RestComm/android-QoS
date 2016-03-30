@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical"
+android:gravity="center"
+android:background="@drawable/background">
+	<ImageView
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:src="@drawable/processbar3"
+	android:contentDescription="@string/progress_step3of3"
+	android:layout_gravity="center_horizontal"
+	android:padding="30dp"/>
+	
+	<ImageView
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:src="@drawable/getstarted_heart"
+	android:contentDescription="@string/getstarted_heart"
+	android:layout_gravity="center_horizontal"
+	android:layout_weight="1"/>
+
+	<TextView
+	android:layout_width="240dp"
+	android:layout_height="wrap_content"
+	android:gravity="center_horizontal"
+	android:layout_weight="1"
+	android:text="@string/getstarted_thankyou"
+	android:textSize="21sp"
+	android:textStyle="bold"
+	android:textColor="@color/white"/>
+	
+	<TextView
+	android:layout_width="240dp"
+	android:layout_height="wrap_content"
+	android:layout_gravity="center_horizontal"
+	android:layout_weight="1"
+	android:text="@string/getstarted_completed_message"
+	android:gravity="center_horizontal"
+	android:autoLink="web"/>
+	
+	<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:layout_weight="1">
+		<Button
+		android:layout_width="90dp"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:text="@string/getstarted_continue"
+		android:onClick="okClicked"/>
+	</LinearLayout>
+
+</LinearLayout>

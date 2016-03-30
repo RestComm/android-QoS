@@ -1,0 +1,1214 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="alt_app_label"></string>
+    <string name="app_name">com.cortxt.app.MMC.MMCApplication</string>
+    <string name="MMC_URL_WIN">http://mymobilecoverage.com/</string>
+    <string name="MMC_URL_CLOUD">http://d1l72qawknwf5q.cloudfront.net</string>
+    <string name="progress_step1of3">Step 1 of 3</string>
+    <string name="progress_step2of3">Step 2 of 3</string>
+    <string name="progress_step3of3">Step 3 of 3</string>
+    <!-- Sharing related strings -->
+    <string name="share_title">Share</string>
+    <string name="share_error">Could not get screenshot because there is no external storage present</string>
+    <string name="sharemessage_mycoverage">Check out the coverage performance on @CARRIERHANDLE from #MyMobileCoverage free app!</string>
+    <string name="sharemessage_nerdmode">Everything a phone geek could want to know about @CARRIERHANDLE from #MyMobileCoverage!</string>
+    <string name="sharemessage_eventdetail_droppedcall">Dropped a @CARRIERHANDLE call and my #MyMobileCoverage app has the data to troubleshoot the problem.</string>
+    <string name="sharemessage_eventdetail_failedcall">Failed call on @CARRIERHANDLE and my #MyMobileCoverage app has the data to troubleshoot the problem.</string>
+    <string name="sharemessage_eventdetail_event">%s on @CARRIERHANDLE and my #MyMobileCoverage app is sending them the data.</string>
+    <string name="sharemessage_troublespot_droppedcall">Just dropped a @CARRIERHANDLE call and #MyMobileCoverage app has the data to troubleshoot the problem.</string>
+    <string name="sharemessage_troublespot_failedcall">Just had a failed call on @CARRIERHANDLE and #MyMobileCoverage app has the data to troubleshoot the problem.</string>
+    <string name="sharemessage_troublespot_datasession">Ugh! Poor data service @CARRIERHANDLE. Thanks for catching it, #MyMobileCoverage!</string>
+    <string name="sharemessage_troublespot_coverage">Coverage problem on @CARRIERHANDLE. Thanks for catching it, #MyMobileCoverage is sending the issue to @CARRIERHANDLE</string>
+    <string name="sharemessage_speedtest_goodspeed">Check out my data speed on @CARRIERHANDLE. #MyMobileCoverage just clocked them. Pretty quick, @CARRIERHANDLE :)</string>
+    <string name="sharemessage_speedtest_poorspeed">Check out my data speed on @CARRIERHANDLE. #MyMobileCoverage just clocked them. Get the lead out, @CARRIERHANDLE :)</string>
+    <string name="sharemessage_speedtest_wifi">Check out my WiFi data speed. #MyMobileCoverage just clocked it. </string>
+    <string name="sharemessage_speedtest_wimax">Check out my WiMAX data speed. #MyMobileCoverage just clocked it. </string>
+    <string name="sharemessage_mystats_downloadspeed_good">Check out my data speeds on @CARRIERHANDLE using #MyMobileCoverage. Not too shabby, @CARRIERHANDLE :)</string>
+    <string name="sharemessage_mystats_downloadspeed_poor">Check out my data speeds on @CARRIERHANDLE using #MyMobileCoverage. Speed it up, @CARRIERHANDLE :)</string>
+    <string name="sharemessage_mystats_mycalls">Check out my call stats on @CARRIERHANDLE using #MyMobileCoverage.</string>
+    <string name="sharemessage_mystats_calls_more">Check out my call stats on @CARRIERHANDLE using #MyMobileCoverage. Not too bad, @CARRIERHANDLE :)</string>
+    <string name="sharemessage_mystats_calls_less">Check out my call stats on @CARRIERHANDLE using #MyMobileCoverage. Step it up, @CARRIERHANDLE :)</string>
+    <string name="sharemessagesubject_mycoverage">Coverage map on @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_nerdmode">Network info on @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_mystats">Call stats on @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_speedtest">Speed test on @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_dataspeeds">Speed tests on @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_callstats">Speed tests on @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_speedtestwifi">Speed test on WiFi</string>
+    <string name="sharemessagesubject_speedtestwimax">Speed test on WiMAX</string>
+    <string name="sharemessagesubject_eventdetail_droppedcall">Dropped call on @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_eventdetail_failedcall">Failed call on @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_troublespot_droppedcall">Dropped call on @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_troublespot_failedcall">Failed call on @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_troublespot_datasession">Data problem on @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_troublespot_coverage">Coverage problem on @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_eventdetail_event">%s on @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_rankings">Carrier rankings including my carrier @CARRIERHANDLE</string>
+    <string name="sharemessage_rankings">Check out Carrier Rankings on #MyMobileCoverage app.  See how your carrier stacks up against others in your area!</string>
+    <!-- Event types -->
+    <string name="eventtype_droppedcall">Dropped Call</string>
+    <string name="eventtype_failedcall">Failed Call</string>
+    <string name="eventtype_lostservice">Lost Service</string>
+    <string name="eventtype_regainedservice">Regained Service</string>
+    <string name="eventtype_lost2g">Lost 2G</string>
+    <string name="eventtype_gain2g">Regained 2G</string>
+    <string name="eventtype_lost3g">Lost 3G</string>
+    <string name="eventtype_gain3g">Regained 3G</string>
+    <string name="eventtype_lost4g">Lost 4G</string>
+    <string name="eventtype_gain4g">Regained 4G</string>
+    <string name="eventtype_lostLTE">Lost LTE</string>
+    <string name="eventtype_gainLTE">Regained LTE</string>
+    <string name="eventtype_connectcall">Phone Call</string>
+    <string name="eventtype_disconnectcall">Disconnect</string>
+    <string name="eventtype_unansweredcall">Unanswered</string>
+    <string name="eventtype_update">Update</string>
+    <string name="eventtype_fillin">Fill-in</string>
+    <string name="eventtype_periscope">Periscope</string>
+    <string name="eventtype_track">Recording</string>
+    <string name="eventtype_netchange">Net change</string>
+    <string name="eventtype_regainedsignal">Regained Signal</string>
+    <string name="eventtype_dataDisc">Data Disconnected</string>
+    <string name="eventtype_dataConn">Data Connected</string>
+    <string name="eventtype_manPlottig">Building survey</string>
+    <string name="eventtype_monitorAps">Passive Speedtest</string>
+    <string name="eventtype_smsTest">SMS Test</string>
+    <string name="eventtype_latencyTest">Connection Test</string>
+    <string name="eventtype_webpageTest">Webpage Test</string>
+    <string name="eventtype_videoTest">Video Test</string>
+    <string name="eventtype_audioTest">Audio Test</string>
+    <string name="eventtype_manTransit">Transit</string>
+    <string name="eventtype_vqcall">VQ Test Call</string>
+    <string name="eventtype_youtubeTest">YouTube Test</string>
+    <!-- need translations -->
+    <string name="eventtype_lowsignal">Low Signal</string>
+    <string name="eventtype_openwifi">Open Wifi</string>
+    <string name="eventtype_securewifi">Secure Wifi</string>
+    <string name="eventtype_chargeron">Battery Charger On</string>
+    <string name="eventtype_chargeroff">Battery Charger Off</string>
+    <string name="eventtype_startup">Startup</string>
+    <string name="eventtype_shutdown">Shutdown</string>
+    <string name="eventtype_ushutdown">Unexpected Shutdown</string>
+    <string name="eventtype_speedtest">Speed Test</string>
+    <string name="eventtype_ttdropped">TT dropped call</string>
+    <string name="eventtype_ttfailed">TT call failed</string>
+    <string name="eventtype_ttdata">TT poor data</string>
+    <string name="eventtype_ttservice">TT no service</string>
+    <string name="eventtype_wificonnect">WiFi connect</string>
+    <string name="eventtype_wifidisconnect">WiFi disconnect</string>
+    <!-- Strings for SplashScreen activity -->
+    <string name="splashscreen_logo">my mobile coverage logo</string>
+    <!-- Strings for GetStarted1 activity -->
+    <string name="getstarted_title_get">Get</string>
+    <string name="getstarted_title_started">Started</string>
+    <string name="getstarted_learn">Learn about MMC</string>
+    <string name="getstarted_gettingstarted">Getting Started</string>
+    <string name="getstarted_visitwebsite">Visit Web Site</string>
+    <string name="getstarted_next">Next</string>
+    <!-- Strings for GetStarted2 activity -->
+    <string name="getstarted_enteremail">Please register or login with your valid email address</string>
+    <string name="getstarted_invalidemail">Not a valid email</string>
+    <string name="getstarted_continue">Continue</string>
+    <string name="getstarted_acceptterms">Accept terms and conditions</string>
+    <string name="getstarted_mustacceptterms">In order to use MyMobileCoverage, you must agree to the terms and conditions</string>
+    <string name="getstarted_privacy_message">MyMobileCoverage respects your privacy and will share your coverage data only with your wireless provider. Your personal data will not be shared with any third party.</string>
+    <string name="getstarted_policy_links">See our &lt;a href="http://www.mymobilecoverage.com/docs/privacypolicy.htm"&gt; privacy policy &lt;"/a&gt; or &lt;a href="http://www.mymobilecoverage.com/docs/tos.htm"&gt; terms of use &lt;/a&gt;</string>
+    <string name="getstarted_dialog_title">Registering</string>
+    <string name="getstarted_dialog_message">Please wait</string>
+    <string name="getstarted_register_error">Sorry, an error occurred during registration</string>
+    <string name="getstarted_register_unknownhost">Unable to connect to network, please check your data connection or try WiFi</string>
+    <string name="getstarted_register_ioexception">Unable to connect to server, please try again later</string>
+    <string name="getstarted_register_apikeyempty">Registration failed. Please contact info@mymobilecoverage.com</string>
+    <!-- Strings for GetStarted3 activity -->
+    <string name="getstarted_heart">my mobile coverage logo heart</string>
+    <string name="getstarted_thankyou">Thank you</string>
+    <string name="getstarted_completed_message">Your password has been emailed to you. You can use this password and your email to log into\nwww.mymobilecoverage.com\nfrom your desktop browser</string>
+    <!-- Strings for Dashboard activity -->
+    <string name="dashboard_settings">Settings</string>
+    <string name="dashboard_engineer">Engineer Mode</string>
+    <string name="dashboard_feedback">Feedback</string>
+    <string name="dashboard_about">About, Terms and Privacy </string>
+    <string name="dashboard_surveys">Survey</string>
+    <string name="dashboard_sampling">Sampling</string>
+    <string name="dashboard_recording">Coverage Recording</string>
+    <string name="dashboard_eventdetail">Event Detail</string>
+    <string name="dashboard_eventhistory">Map Events</string>
+    <string name="dashboard_engineeringeventhistory">All Events</string>
+    <string name="dashboard_register">Getting Started</string>
+    <string name="dashboard_title_my">My</string>
+    <string name="dashboard_title_mobile">Mobile</string>
+    <string name="dashboard_title_coverage">Coverage</string>
+    <string name="dashboard_icon_maps">my coverage icon</string>
+    <string name="dashboard_icon_compare">my stats icon</string>
+    <string name="dashboard_icon_troubletweet">trouble spot icon</string>
+    <string name="dashboard_icon_speedtest">speed test icon</string>
+    <string name="dashboard_title">MyMobileCoverage</string>
+    <string name="dashboard_maps">Maps</string>
+    <string name="dashboard_compare">Compare</string>
+    <string name="dashboard_speed">Speed Test</string>
+    <string name="dashboard_test">Test</string>
+    <string name="dashboard_trouble">Trouble Tweet</string>
+    <string name="dashboard_tweet">Tweet</string>
+    <string name="dashboard_didyouknow">Did you know?</string>
+
+    <string-array name="dashboard_didyouknow_messages">
+        <item>That you can share your coverage experience with your carrier or friends?</item>
+        <item>That you contribute to a worldwide coverage map that you can view in greater detail on mymobilecoverage.com?</item>
+        <item>You get even more network performance details in Engineer Mode?</item>
+        <item>That MyMobileCoverage improves your GPS performance?</item>
+        <item>That you can choose how much you share?</item>
+    </string-array>
+    <string name="dashboard_please_note">Please Note</string>
+    <string name="dashboard_run_blackberry">MyMobileCoverage 1/2 and MyMobileCoverage 2/2 must both be running or minimized</string>
+
+    <string name="survey_question_title">Question</string>
+    <string name="survey_title">Satisfaction survey</string>
+    <string name="survey_answer_hint"></string>
+    <string name="survey_done1">Thank you very much!</string>
+    <string name="survey_done2">Your answers have been sent.</string>
+	<string name="survey_done_title">Done!</string>
+	<string name="survey_notification">Participate in our Carrier Survey</string>
+	
+    <string-array name="survey_questions">
+        <item>How satisfied are you with your carrier?</item>
+        <item>My network quality is...</item>
+        <item>How likely are you to switch carriers?</item>
+		<item>My carrier\'s urban coverage is...</item>
+        <item>My data speed is...</item>
+        <item>How likely are you to recommend your carrier to friends or family?</item>
+    </string-array>
+    <string-array name="survey_answers1">
+        <item>Very likely</item>
+        <item>Likely</item>
+        <item>Maybe</item>
+        <item>Unlikely</item>
+        <item>Very unlikely</item>
+    </string-array>
+    <string-array name="survey_answers2">
+        <item>Excellent</item>
+        <item>Above average</item>
+        <item>Average</item>
+        <item>Below average</item>
+        <item>Very poor</item>
+    </string-array>
+        <string-array name="survey_answers3">
+        <item>Very satisfied</item>
+        <item>Satisfied</item>
+        <item>Somewhat satisfied</item>
+        <item>Not satisfied</item>
+        <item>Very unsatisfied</item>
+    </string-array>
+    <string-array name="survey_answers4">
+        <item>Very unlikely</item>
+        <item>Unlikely</item>
+        <item>Maybe</item>
+        <item>Likely</item>
+        <item>Very likely</item>
+    </string-array>
+
+    <string name="dashboard_root_request_title">(Optional) Allow superuser access?</string>
+    <string name="dashboard_root_request_message">By allowing superuser access, you enable additional phone call diagnostics that are no longer accessible in this version of Android.</string>
+    <string name="dashboard_root_request_system_message">By allowing superuser access, we can install a patch for raw radio measurements. This will reboot the phone.</string>
+    <string name="dashboard_nonroot_request_title">Did you know?</string>
+    <string name="dashboard_nonroot_request_message">If you Root your Android phone, it could enable better phone call diagnostics for MyMobileCoverage.</string>
+    <string name="dashboard_nonroot_request_system_message">If you Root your Android phone, it could enable better phone call diagnostics and raw radio measurements for MyMobileCoverage.</string>
+    <string name="system_install_request_title">Update system service?</string>
+    <string name="system_install_request_message">MyMobileCoverage has a newer system service for Raw Radio Access. Update and reboot?</string>
+    <string name="dashboard_menu_settings">Settings</string>
+    <string name="dashboard_menu_stopmonitoring">Stop Service</string>
+    <!-- TODO : find better words for start and stop buttons -->
+    <string name="dashboard_menu_startmonitoring">Start Service</string>
+    
+    <!-- Strings for Transit Sampling -->
+    <string name="transitsampling_train_name">Select train name</string>
+    <string name="transitsampling_overview_title"><![CDATA[<bold>Overview</bold><br/><small>See sampling results</small>]]></string>
+    <string name="transitsampling_resume_title"><![CDATA[<bold>Resume</bold><br/><small>Train is in motion again</small>]]></string>
+    <string name="transitsampling_start_title"><![CDATA[<bold>Start</bold><br/><small>Train is leaving station</small>]]></string>
+    <string name="transitsampling_pause_title"><![CDATA[<bold>Pause</bold><br/><small>Unscheduled stop</small>]]></string>
+    <string name="transitsampling_stop_title"><![CDATA[<bold>Stop</bold><br/><small>Train arrived at station</small>]]></string>
+    <string name="transitsampling_stop_title_final"><![CDATA[<bold>Final stop</bold><br/><small>Arrived at final station</small>]]></string>
+    <string name="transitsampling_confirm_exit">Are you sure you want to exit sampling?</string>
+    <string name="transitsampling_trouble_skip">Skip to next station</string>
+    <string name="transitsampling_trouble_abort">Exit sampling</string>
+    <string name="transitsampling_trouble_wrong_way">Going in the wrong direction</string>
+    <string name="transitsampling_trouble_unscheduled_stop">Unscheduled stop</string>
+    <string name="transitsampling_trouble_phone_issues">Phone issues</string>
+    <string name="transitsampling_trouble_other_issue">Other issue</string>
+    <string name="transitsampling_trouble_title">Problems while sampling</string>
+    <string name="transitsampling_menu_title">Stations in this route</string>
+    <string name="transitsampling_library_title">Transit Library</string>
+    <string name="transitsampling_map_laststation">Arrived at final station</string>
+    <string name="transitsampling_map_seeoverview">See itinerary overview</string>
+    <string name="transitsampling_undo_message">undo</string>
+    <string name="transitsampling_itinerary_deleted_msg">Itinerary deleted</string>
+    <string name="transitsampling_started">Started</string>
+    <string name="transitsampling_abort">Abort testing</string>
+    <string name="transitsampling_skip">Skip</string>
+    <string name="transitsampling_unknown">Unknown</string>
+    <string name="transitsampling_area_not_exist">There is no transit information available for this area</string>
+    <string name="transitsampling_download_title">Large download</string>
+    <string name="transitsampling_download_msg">This requires a large download. It requires data and time to process. If you wait this will download at a convenient time and on WiFi. Would you like to proceed to download now?</string>
+    <string name="transitsampling_download_wait">Wait</string>
+    <string name="transitsampling_download_proceed">Proceed</string>
+    <string name="transitsampling_listview_title">Select station</string>
+    <string name="transitsampling_map_title">Transit sampling</string>
+    <string name="transitsampling_city_invalid">There is no transit sampling available for this city. Please check for your city in Transit Libraries.</string>
+    <string name="transitsampling_no_itineraries">You do not have any itineraries</string>
+    <string name="transitsampling_no_itineraries_add">Press \"Add new\" to create one</string>
+    <string name="transitsampling_station_selected">Station selected</string>
+    <string name="transitsampling_continue">Continue</string>
+    <string name="transitsampling_start_another_itinerary">Start another itinerary</string>
+    <string name="transitsampling_map_overview">Map</string>
+    <string name="transitsampling_sample_overview">Sample</string>
+    <string name="transitsampling_to">To:</string>
+    <string name="transitsampling_from">From:</string>
+    <string name="transitsampling_line">Line: </string>
+    <string name="transitsampling_stations">Stops:</string>
+    <string name="transitsampling_sampling_time">Sampling time:</string>
+    <string name="transitsampling_sampling_distance">Sampling distance:</string>
+    <string name="transitsampling_samples_collected">Samples collected:</string>
+    <string name="transitsampling_speedtests">Speed tests:</string>
+    <string name="transitsampling_top_dl_speed">Top download speed:</string>
+    <string name="transitsampling_top_ul_speed">Top upload speed:</string>
+    <string name="transitsampling_route_issues">Route issues:</string>
+    <string name="transitsampling_itinerary_usage">Itinerary usage:</string>
+    <string name="transitsampling_error_geocoder">No address found: please manually enter your city</string>
+    <string name="transitsampling_round_trip">Create a round trip itinerary</string>
+    <string name="transitsampling_add">Add new</string>
+    <string name="transitsampling_error_startstation">Please choose a starting station</string>
+    <string name="transitsampling_error_stopstation">Please choose a stopping station</string>
+    <string name="transitsampling_itinerary_list">Itinerary list</string>
+    <string name="transitsampling_main_title">Select an itinerary</string>
+    <string name="transitsampling_settings_autospeedtest">Auto speed test when sampling</string>
+    <string name="transitsampling_settings_submitatstation">Submit data at station</string>
+    <string name="transitsampling_settings_title">Transit sampling settings</string>
+    <string name="transitsampling_depart_from">Departing from station:</string>
+    <string name="transitsampling_stop">Arrived at station</string>
+    <string name="transitsampling_start">Departing now</string>
+    <string name="transitsampling_title">Transit sampling</string>
+    <string name="transitsampling_newsession_title">Plan a new session</string>
+    <string name="transitsampling_city">City</string>
+    <string name="transitsampling_select_line">Select line</string>
+    <string name="transitsampling_start_station_button">Select starting station</string>
+    <string name="transitsampling_final_station_button">Final station</string>
+    <string name="transitsampling_station_start">Starting from</string>
+    <string name="transitsampling_stop_station_button">Select stopping station</string>
+    <string name="transitsampling_station_stop">Arriving at</string>
+    <string name="transitsampling_location_alert">Use current location to select city?</string>
+    <string name="transitsampling_create_itinerary">Save and Start Sampling</string>
+    <string name="transitsampling_submit_sampling">Submit samples</string>
+    <string name="transit_final_station_error">Error: Final station must come after starting station</string>
+    
+    <!-- Strings for Manual Mapping -->	
+    <string name="manualmapping_topfloor_toobig">Maximum top floor is 100</string>
+    <string name="manualmapping_other_structure">Other structure</string>
+    <string name="manualmapping_invalid_topfloor">Invalid top floor</string>
+    <string name="manualmapping_select_manualpolygon">Select building plan</string>
+    <string name="manualmapping_delete_manualpolygon">Delete building plan</string>
+    <string name="manualmapping_delete">Delete</string>
+    <string name="manualmapping_exit">Exit</string>
+    <string name="manualmapping_polygon_option_saved">Find building plan</string>
+    <string name="manualmapping_polygon_option_create">Create building plan</string>
+    <string name="manualmapping_polygon_option_none">Start without building plan</string>
+    <string name="manualmapping_polygon_option_title">Start surveying session</string>
+    <string name="manualmapping_polygon_option_browse">Browse building coverage</string>
+    <string name="manualmapping_delete_error_corners">No corners to delete</string>
+    <string name="manualmapping_polygon_top_floor">Enter the top floor # of the building (1 = single level)</string>
+    <string name="manualmapping_polygon_help_title">Draw building outline</string>
+    <string name="manualmapping_polygon_help_message">Using the satellite image for reference, trace your building outline by creating corners.</string>
+    <string name="manualmapping_polygon_create_title">Draw building outline</string>
+    <string name="manualmapping_polygon_create_message">Would you like to create a building plan?</string>
+    <string name="manualmapping_create_corner">Create corner</string>
+    <string name="manualmapping_close_polygon">Close outline</string>
+    <string name="manualmapping_no_polygon_points">No outline to submit</string>
+    <string name="manualmapping_not_enough_polygon_points">Please create more corners</string>
+    <string name="manualmapping_done_polygon">Done</string>
+    <string name="manualmapping_walking_confirm">Did you really move to your next sample?</string>
+    <string name="manualmapping_polygon_delete_select_s_button">Select outline</string>
+    <string name="manualmapping_polygon_delete_select_d_button">Delete outline</string>
+    <string name="manualmapping_polygon_delete_select_title">Building Outline</string>
+    <string name="manualmapping_polygon_delete_select_msg">Please select \'Select\' to proceed sampling with this building outline, or \'Delete\' to remove it</string>
+    <string name="manualmapping_delete_title">Delete samples</string>
+    <string name="manualmapping_outofrange_polygon">You are too far away to be inside this building</string>
+    <string name="manualmapping_select_level_type">Select level type</string>
+    <string name="manualmapping_select_floor">Select floor</string>
+    <string name="manualmapping_tunnel">Tunnel</string>
+    <string name="manualmapping_underpass">Under-pass</string>
+	<string name="manualmapping_floor">Floor</string>
+	<string name="manualmapping_instruct_search_title">Select a building</string>
+	<string name="manualmapping_instruct_anchor_title">Create anchor</string>
+	<string name="manualmapping_instruct_sample_title">Create sample(s)</string>
+    <string name="manualmapping_instruct_anchor1">An anchor sample helps you have a reference before sampling.</string>
+    <string name="manualmapping_instruct_anchor2">Create this anchor in front of the entrance you used to get into the building.</string>
+    <string name="manualmapping_instruct_sample1">Walk in the place where you want to sample. Move the cursor to the area you are and press create sample.</string>
+    <string name="manualmapping_instruct_sample2">This will add a sample to the map, colored according to the signal strength. If you walk a longer stretch, samples recorded while you are walking can be spread between the start and end.</string>
+    <string name="manualmapping_ground">Ground</string>
+    <string name="manualmapping_help">\? </string>
+    <string name="manualmapping_no_prompt">Don\'t show this again</string>
+    <string name="manualmapping_searching">Searching for building plan</string>
+    <string name="manualmapping_still_searching">Still searching for building plan</string>
+    <string name="manualmapping_delete_error">No samples to delete</string>
+    <string name="manualmapping_delete_msg">Tap samples to select them. To return to sampling, tap the trash can.</string>
+    <string name="manualmapping_range_msg">Are you sure that you are really at this location right now?</string>
+    <string name="manualmapping_range_title">Plotting outside the current location estimate</string>
+    <string name="manualmapping_skip_polygon">Start without building plan</string>
+    <string name="manualmapping_delete_instruction">Tap the trash can to return to sampling</string>
+    <string name="manualmapping_undo">Delete last sample</string>
+    <string name="manualmapping_delete_lastcorner">Delete last corner</string>
+    <string name="manualmapping_continue_sampling">Samples have been submitted. Do you want to continue mapping this building?</string>
+    <string name="manualmapping_select_polygon">Select building</string>
+    <string name="manualmapping_anchor_sample">Create anchor sample</string>
+    <string name="manualmapping_sample">Create sample</string>
+    <string name="manualmapping_select_level">Select level</string>
+    <string name="manualmapping_title">Manual Sampling</string>
+    <string name="manualmapping_floor_title">Choose a floor level to begin</string>
+    <string name="manualmapping_floor_message">Select a floor, then begin walking around. Create samples to indicate your location as you go. Then submit to create indoor coverage.</string>
+	<string name="manualmapping_submit_error">There are no samples to submit</string>
+    <string name="manualmapping_indoor_zoom_accuracy">Map needs to be zoomed in for sampling accuracy</string>
+    <string name="manualmapping_delete_selection">Delete selected samples</string>
+    <string name="manualmapping_polygon_notfound">Building plan not found</string>
+    <string name="manualmapping_polygon_notfound_question">Would you like to sample here anyway?</string>
+    <string name="manualmapping_polygon_skip">Skip building selection</string>
+    <string name="manualmapping_polygon_skip_question">Would you like to sample here?</string>
+    <string name="manualmapping_submit">Floor complete</string>
+    <string name="manualmapping_submit_text">Your samples have been sent for this floor</string>
+    <string name="manualmapping_cancel_text">Canceling will cause all unsubmitted samples to be lost. Would you still like to cancel?</string>
+    <string name="manualmapping_polygon_cancel_msg">Canceling will lose progress mapping out this building outline. Would you still like to cancel?</string>
+    <string name="manualmapping_polygon_delete">Are you sure you want to delete this polygon?</string>
+    <string name="manualmapping_select_building">Press and hold a building on the map</string>
+    <string name="manualmapping_instruct_search1">Select your building from the map.</string>
+    <string name="manualmapping_instruct_search2">If the building is not displayed or you want to sample outdoors, press \'Skip building selection\'."</string>
+    <string name="manualmapping_continue">Skip building selection</string>
+    <string name="manualmapping_about1">Use this surveying tool to accurately map out the coverage of buildings and other structures where the GPS does not work.</string>
+    <string name="manualmapping_about2">You will mark signal samples as you walk throughout the structure. You can use a building plan, but it is not required.</string>
+    <string name="manualmapping_about_title">Building Surveying Tool</string>
+    
+    <!-- Strings for MyCoverage activity -->
+    <string name="mycoverage_title">Maps</string>
+    <string name="mycoverage_coverageerror_title">Error</string>
+    <string name="mycoverage_coverageerror_message">Could not get coverage from server</string>
+    <string name="mycoverage_coverageerror_button_ok">OK</string>
+    <string name="mycoverage_unknownlocation">Unknown location</string>
+    <string name="mycoverage_center">Center map on current location</string>
+    <string name="mycoverage_share">Share</string>
+    <string name="mycoverage_history">History</string>
+    <string name="mycoverage_overlays">Switch Carriers</string>
+    <string name="mycoverage_hide_overlays">Hide coverage</string>
+    <string name="mycoverage_show_overlays">Show Coverage</string>
+    <string name="mycoverage_manual_mapping">Manual Sampling</string>
+    <string name="mycoverage_selectCarrier">Switch Coverage Overlay</string>
+    <string name="mycoverage_zoomout">Zoom in to see coverage overlay</string>
+    <string name="mycoverage_hideevents">Switch back to your carrier to see events</string>
+    <!-- Strings for SpeedTest activity -->
+    <string name="speedtest_sms_results">SMS test results: delivery / return time: </string>
+    <string name="speedtest_latency_results">Connection test time:</string>
+    <string name="speedtest_stop">Cancel this speedtest?</string>
+    <string name="videotest_stop">Cancel this test?</string>
+    <string name="speedtest_title_speed">Speed</string>
+    <string name="speedtest_title_test">Test</string>
+    <string name="speedtest_share">Share</string>
+    <string name="speedtest_start">Start</string>
+    <string name="speedtest_results">Results</string>
+    <string name="speedtest_date">Date</string>
+    <string name="speedtest_type">Type</string>
+    <string name="speedtest_history">History</string>
+    <string name="speedtest_latency">Latency</string>
+    <string name="speedtest_download_speed">Download</string>
+    <string name="speedtest_upload_speed">Upload</string>
+    <string name="speedtest_gauge">speed gauge</string>
+    <string name="speedtest_gauge_needle">speed gauge needle</string>
+    <string name="speedtest_gauge_needleglow">speed gauge needle glow</string>
+    <string name="speedtest_error">An error occurred while performing the speed test</string>
+    <string name="speedtest_yourdevice">Your device</string>
+    <string name="speedtest_carrieravg">Carrier avg.</string>
+    <string name="speedtest_wifiavg">WiFi avg</string>
+    <string name="speedtest_wimaxavg">Wimax avg</string>
+    <string name="speedtest_ethernetavg">Ethernet avg</string>
+    <string name="speedtest_milliseconds">ms</string>
+    <string name="speedtest_mbps">Mb/s</string>
+    <string name="speedtest_kbps">kb/s</string>
+    <string name="speedtest_carrierspeed_error">Could not get carrier\'s speed</string>
+    <string name="speedtest_technology">network technology</string>
+    <string name="speedtest_shareimage">follow us on twitter @mycoverageapp</string>
+    <string name="speedtest_no_test_history">You do not have speed test to show in history</string>
+    <string name="speedtest_progress">Progress</string>
+    <string name="speedtest_radius">(%s km radius)</string>
+    <!-- Strings for SpeedTestHistory activity -->
+    <string name="speedtesthistory_title">Speed Test History</string>
+    <string name="speedtesthistory_sharetitle">Speed Test History</string>
+    <string name="history_sharetitle">Events History</string>
+    <string name="speedtesthistory_emptymessage">you have not done any speed tests</string>
+    <!-- Strings for Ranking stat view -->
+    <string name="rankings_coverage">Time in service</string>
+    <string name="rankings_download">Download (Mbps)</string>
+    <string name="rankings_upload">Upload (Mbps)</string>
+    <string name="rankings_dropped">Lowest dropped calls</string>
+    <!-- Strings for MyStats activity -->
+    <string name="mystats_title">Compare</string>
+    <string name="mystats_share">Share</string>
+    <string name="mystats_history">History</string>
+    <string name="mystats_arrowleft">Left arrow</string>
+    <string name="mystats_arrowright">Right arrow</string>
+    <string name="mystats_screen_indicator">stat screen indicator</string>
+    <string name="mystats_callstats">Call Stats Benchmark</string>
+    <string name="mystats_mycallstats">Call Stats</string>
+    <string name="mystats_dataspeeds">Data Speeds (Mb/s)</string>
+    <string name="mystats_droppedcalls">Dropped Calls</string>
+    <string name="mystats_failedcalls">Failed Calls</string>
+    <string name="mystats_normalcalls">Normal Calls</string>
+    <string name="mystats_yourphone">Your Phone</string>
+    <string name="mystats_yourcarrier">Your Carrier</string>
+    <string name="mystats_allcarriers">All Carriers</string>
+    <string name="mystats_percentofcalls">Percent of Calls</string>
+    <string name="mystats_downloadspeed">Data Speed</string>
+    <string name="mystats_downloadspeed2G">2G Data Speed Mb/s</string>
+    <string name="mystats_downloadspeed3G">3G Data Speed Mb/s</string>
+    <string name="mystats_downloadspeedLTE">LTE Data Speed Mb/s</string>
+    <string name="mystats_downloadspeedWifi">WiFi Data Speed Mb/s</string>
+    <string name="mystats_downloadspeedbps">Download Speed (bps)</string>
+    <string name="mystats_nostats">You have no stats to show yet</string>
+    <string name="mystats_ranking">Ranking</string>
+    <string name="mystats_stat0">RANKING</string>
+    <string name="mystats_stat1">MY CALLS</string>
+    <string name="mystats_stat2">ALL CALLS</string>
+    <string name="mystats_stat3">SPEEDS</string>
+    <string name="mystats_withinarea">Within %s km of</string>
+    <string name="speedtest_withinarea">Carrier avg near</string>
+    <string name="speedtest_wifiavgnear">WiFi avg near</string>
+    <string name="speedtest_wimaxavgnear">WiMAX avg near</string>
+    <string name="speedtest_ethernetavgnear">Ethernet avg near</string>
+    <string name="speedtest_carrier2Gavg">Carrier 2G avg near</string>
+    <string name="speedtest_carrier3Gavg">Carrier 3G avg near</string>
+    <string name="speedtest_carrierLTEavg">Carrier LTE avg near</string>
+    <string name="mystats_unknownlocation">unknown location - no stats available</string>
+    <string name="location_unavailable">location unavailable</string>
+    <!-- Strings for EventHistory activity -->
+    <string name="eventhistory_droppedtitle">Dropped Calls</string>
+    <string name="eventhistory_eventicon">event icon</string>
+    <string name="eventhistory_emptymessage">You have no events</string>
+    <!-- Strings for EventDetail activity -->
+    <string name="eventdetail_socialmediabanner">social media banner</string>
+    <string name="eventdetail_registeredat">Registered at</string>
+    <string name="eventdetail_share">Share</string>
+    <string name="eventdetail_phone">Phone:</string>
+    <string name="eventdetail_carrierlogo">carrier logo</string>
+    <!-- Strings for TroubleSpot activity -->
+    <string name="troublespot_title_trouble">Trouble</string>
+    <string name="troublespot_title_tweet">Tweet</string>
+    <string name="troublespot_intromessage">Center the map over the problem area</string>
+    <string name="troublespot_step1_message">1. My issue is related to:</string>
+    <string name="troublespot_crosshairs">crosshairs</string>
+    <string name="troublespot_droppedcall">Dropped Call</string>
+    <string name="troublespot_failedcall">Failed Call</string>
+    <string name="troublespot_datasesion">Data Session</string>
+    <string name="troublespot_coverage">No Coverage</string>
+    <string name="troublespot_step2_message">2. Rate the impact of the event:</string>
+    <string name="troublespot_impactlow">Low</string>
+    <string name="troublespot_impactmedium">Medium</string>
+    <string name="troublespot_impacthigh">High</string>
+    <string name="troublespot_step3_message">Add a comment (optional):</string>
+    <string name="troublespot_submit">Next</string>
+    <string name="troublespot_thankyou">Thank you. The issue has been submitted.</string>
+    <string name="troublespot_mapshadow">map shadow</string>
+    <string name="troublespot_impacticon">impact level icon</string>
+    <string name="troublespot_comment_impactlow">Pfft</string>
+    <string name="troublespot_comment_impactmedium">Ugh</string>
+    <string name="troublespot_comment_impacthigh">Grrr!</string>
+    <string name="troublespot_show_recent_events">Show recent events</string>
+    <string name="troublespot_show_all_events">Show all events in the area</string>
+    <!-- Strings for Settings activity -->
+    <string name="Settings_ShareWithCarrier">Share with carrier</string>
+    <string name="Settings_ShareWithCarrier_Summary">Allow my carrier to see my phone\'s events</string>
+    <string name="Settings_StartOnBoot">Start on boot</string>
+    <string name="Settings_EnableDataRoaming">Send data when roaming</string>
+    <string name="Settings_DaysToKeepEntries">Days to keep data for</string>
+    <!-- Crash reporting related strings -->
+    <string name="crash_notif_ticker_text">Unexpected error, please send a report</string>
+    <string name="crash_notif_title">MMC has crashed</string>
+    <string name="crash_notif_text">Please click here to help fix the issue.</string>
+    <string name="crash_dialog_title">MMC has crashed</string>
+    <string name="crash_dialog_text">An unexpected error occurred forcing the
+	        application to stop. Please help us fix this by sending us error data,
+	        all you have to do is click \'OK\'.</string>
+    <string name="crash_dialog_comment_prompt">You might add your comments about the problem below:</string>
+    <string name="crash_dialog_ok_toast">Thank you !</string>
+    <!-- MMC Status Notifications -->
+    <string name="MMC_Notification_message">is running</string>
+    <string name="MMC_Notification_StartMessage">Please log in</string>
+    <string name="MMC_Notification_call_dropped">Call Dropped</string>
+    <string name="MMC_Notification_call_failed">Call Failed</string>
+    <string name="MMC_Notification_view_map">View on map</string>
+    <string name="MMC_Notification_view_event">View details</string>
+    <string name="MMC_Notification_locating">Acquiring location</string>
+    <string name="MMC_Notification_did_you_drop">Did you drop a call?</string>
+    <string name="MMC_Notification_did_you_fail">Did your call fail?</string>
+    <string name="MMC_Notification_did_you_disconnect">Did your call end normally? </string>
+    <string name="MMC_Notification_did_failed">Please click to confirm whether your call failed </string>
+    <string name="MMC_Notification_did_dropped">Please click to confirm whether your call dropped </string>
+    <string name="MMC_Notification_did_disconnect">If this call ended abnormally, please click to confirm</string>
+    <string name="dropcall_confirmation_text">Did this call drop or end normally?</string>
+    <string name="failedcall_confirmation_text">Did this call fail or end normally?</string>
+    <string name="thankyou_confirmation_text">Thanks for clarifying!</string>
+    <string name="normal_button_text">Normal Disconnect</string>
+    <!-- Generic text -->
+    <string name="GenericText_Done">Done</string>
+    <string name="GenericText_Next">Next</string>
+    <string name="GenericText_Skip">Skip</string>
+    <string name="GenericText_Prev">Prev</string>
+    <string name="GenericText_Back">Back</string>
+    <string name="GenericText_OK">OK</string>
+    <string name="GenericText_Send">Send</string>
+    <string name="GenericText_Cancel">Cancel</string>
+    <string name="GenericText_Save">Save</string>
+    <string name="GenericText_Help">Help</string>
+    <string name="GenericText_Change">Change</string>
+    <string name="GenericText_Download">Download</string>
+    <string name="GenericText_Upload">Upload</string>
+    <string name="GenericText_Open">Open</string>
+    <string name="GenericText_Close">Close</string>
+    <string name="GenericText_Status">Status</string>
+    <string name="GenericText_Live">Live</string>
+    <string name="GenericText_Settings">Settings</string>
+    <string name="GenericText_Event">Event</string>
+    <string name="GenericText_Detail">Detail</string>
+    <string name="GenericText_Coverage">Coverage</string>
+    <string name="GenericText_In">In</string>
+    <string name="GenericText_Yes">Yes</string>
+    <string name="GenericText_No">No</string>
+    <string name="GenericText_Not">Not</string>
+    <string name="GenericText_Scanning">Scanning</string>
+    <string name="GenericText_Unknown">Unknown</string>
+    <string name="GenericText_None">None</string>
+    <string name="GenericText_Calls">Calls</string>
+    <string name="GenericText_Call_logged">call logged</string>
+    <string name="GenericText_MapIt">Map It</string>
+    <string name="GenericText_Map">Map</string>
+    <string name="GenericText_UnknownError">Unknown Error</string>
+    <string name="GenericText_Options">Options</string>
+    <string name="GenericText_Stats">Stats</string>
+    <string name="GenericText_Finished">Finished</string>
+    <string name="GenericText_Kbps">kbps</string>
+    <string name="GenericText_Login">Login</string>
+    <string name="GenericText_LogOut">Log Out</string>
+    <string name="GenericText_Data">Data</string>
+    <string name="GenericText_Quality">Quality</string>
+    <string name="GenericText_Voice">Voice</string>
+    <string name="GenericText_All">All</string>
+    <string name="GenericText_3G">3G</string>
+    <string name="GenericText_3G_Best">3G Best</string>
+    <string name="GenericText_3G_Avg">3G Average</string>
+    <string name="GenericText_4G">4G</string>
+    <string name="GenericText_Rating">Rating</string>
+    <string name="GenericText_PercentageOfTotal">% of total</string>
+    <string name="GenericText_VoiceQuality">Voice Quality</string>
+    <string name="GenericText_DataSpeeds">Data Speeds</string>
+    <string name="GenericText_AvgKbps">avg(kbps)</string>
+    <string name="GenericText_BestKbps">best(kbps)</string>
+    <string name="GenericText_NumberFailed">failed(#)</string>
+    <string name="GenericText_Minimal">Minimal</string>
+    <string name="GenericText_Balanced">Balanced</string>
+    <string name="GenericText_Maximum">Maximum</string>
+    <string name="GenericText_PleaseWait">Please wait...</string>
+    <string name="GenericText_Overall">Overall</string>
+    <string name="GenericText_Best">Best</string>
+    <string name="GenericText_Average">Average</string>
+    <string name="GenericText_History">History</string>
+    <string name="GenericText_Error">Error</string>
+    <string name="GenericText_Update">Update event</string>
+    <string name="GenericText_SMSTest">SMS Test</string>
+    <string name="GenericText_SMSTestInProgress">SMS Test in Progress</string>
+    <string name="GenericText_LatencyTest">Latency Test</string>
+    <string name="GenericText_Track">Drive Test Script</string>
+    <string name="GenericText_TrackEnds">Drive Test ends in</string>
+    <string name="GenericText_StopTrack">Stop Drive Test</string>
+    <string name="GenericText_ConfirmStopTrack">Are you sure you want to \n stop drive test?</string>
+    <string name="GenericText_SendLogEmail">Send log</string>
+    <string name="GenericText_ClearLog">Clear log</string>
+    <string name="GenericText_Log">Log</string>
+    <string name="GenericText_NoAskAgain">Don\'t ask again</string>
+    <string name="GenericText_EmailRaw">Email Raw Data</string>
+    <string name="GenericText_EmailRaw2">Email Raw Data</string>
+    <string name="GenericText_EmailRawDescription">MyMobileCoverage will send the last 24 hours of all data collected on your device to your contact email address (from settings): \r\n\r\n %s\r\n\r\nfor more raw data, login to www.mymobilecoverage.com from your desktop browser.</string>
+    <string name="GenericText_ShutDownPrompt">Shut down MyMobileCoverage</string>
+    <string name="GenericText_ShutDownDescription">Are you sure you want to Stop MyMobileCoverage?\r\n\r\nThis will completely stop the background service until you Start the service again from this menu.</string>
+    <string name="GenericText_SignOutPrompt">Sign out MyMobileCoverage</string>
+    <string name="GenericText_SignOutDescription">Are you sure you want to Sign out of MyMobileCoverage?\r\n\r\nThis will completely stop the background service until you register with your email again.</string>
+    <string name="GenericText_ShutDown">Shut Down</string>
+    <string name="GenericText_EmailRequested">Email sent.</string>
+    <string name="GenericText_ColdReset">GPS cold start</string>
+    <string name="GenericText_ColdStarted">GPS aiding data cleared</string>
+    <string name="GenericText_Actions">Actions</string>
+    <string name="GenericText_AskTwitter">Please provide your Twitter Username</string>
+    <string name="GenericText_AskTwitterDescription">By providing your Twitter username, you enable your carrier to see your Trouble Tweet and fix your problem!\r\nClick Settings to set.</string>
+    <string name="GenericText_MapTip">The map will display outage and dropped call events once they acquire GPS locations</string>
+    <string name="GenericText_SpeedTip">To test your carrier\'s speed please turn off WiFi</string>
+    <string name="GenericText_UnknownHost">unable to connect to server</string>
+    <string name="GenericText_Stopped">stopped</string>
+    <string name="GenericText_ClearLogin">Sign Out</string>
+    <string name="GenericText_AskStartService">MyMobileCoverage is stopped.</string>
+    <string name="GenericText_AskStartServiceDescription">It needs to be started to complete this action. \nStart MyMobileCoverage now?</string>
+    <string name="GenericText_Connect">Connect</string>
+    <string name="GenericText_Test">Test</string>
+    <string name="GenericText_Failed">Failed</string>
+    <string name="GenericText_Passive">Passive</string>
+    <string name="GPS_Disabled">Location is disabled</string>
+    <string name="GPS_Disabled_Message">GPS, Wi-Fi &amp; Network location should be enabled for best results. Would you like to enable them?</string>
+    <string name="Q10_Bar">Swipe Down to Hide Bar</string>
+    <string name="Q10_Bar_Message">To hide the bottom bar, please swipe the screen from top to bottom. This will provide more room for this application.</string>
+    <string name="BB10_Install">Install and run 2nd App</string>
+    <string name="BB10_Install_Message">
+<![CDATA[
+			To detect coverage, a 2nd App called \'MyMobileCoverage 1 of 2\' also needs to be installed and running. <a href="http://appworld.blackberry.com/webstore">Install MyMobileCoverage 1 of 2</a>
+		]]>
+    </string>
+
+    <!-- Generic Labels -->
+    <string name="GenericLabel_Latitude">Latitude: </string>
+    <string name="GenericLabel_Longitude">Longitude: </string>
+    <string name="GenericLabel_Signal">Signal: </string>
+    <string name="GenericLabel_MCC">MCC: </string>
+    <string name="GenericLabel_MNC">MNC: </string>
+    <string name="GenericLabel_LAC">LAC: </string>
+    <string name="GenericLabel_Cell">Cell: </string>
+    <string name="GenericLabel_Time">Time: </string>
+    <string name="GenericLabel_Coverage">Coverage: </string>
+    <string name="GenericLabel_Download">Download: </string>
+    <string name="GenericLabel_Upload">Upload: </string>
+    <string name="GenericLabel_Reason">Reason: </string>
+    <string name="GenericLabel_Voice">Voice: </string>
+    <string name="GenericLabel_3G">3G: </string>
+    <string name="GenericLabel_4G">4G: </string>
+    <string name="GenericLabel_Password">Password: </string>
+    <string name="GenericLabel_Email">Email: </string>
+    <string name="GenericLabel_Username">Username: </string>
+    <string name="GenericLabel_Rating">Rating: </string>
+    <string name="GenericLabel_Rating_Number">Rating Number: </string>
+    <string name="GenericLabel_UnexpectedException">An unexpected error has occurred!</string>
+    <string name="GenericLabel_ReportError">Report error</string>
+    <!-- Text specific to the EmailAddress activity -->
+    <string name="EmailAddress_TitleRight">address</string>
+    <string name="EmailAddress_TitleLeft">Register</string>
+    <string name="EmailAddress_PasswordConfirmInput_label">Confirm:</string>
+    <string name="EmailAddress_EmailExposion_short">Enter your email address then press next</string>
+    <string name="EmailAddress_EmailExposion_long">Register using a valid email address, a password with five characters or more to confirm</string>
+    <string name="EmailAddress_EmailExposion_new">Enter a username or email address</string>
+    <string name="EmailAddress_EmailExposion_new2">If you provide your email address, we will be able to email you with lost passwords, your raw data, and other feedback. You may also provide your email in the settings.</string>
+    <string name="EmailAddress_EmailPolicy_label">View our Privacy Policy</string>
+    <string name="EmailAddress_PasswordExposion_short">Please enter and confirm a password then select next</string>
+    <string name="EmailAddress_PasswordExposion_long">MyMobileCoverage respects privacy and will share your coverage data only with your wireless provider. Personal data will not be shared with any third party.</string>
+    <!-- Text specific to the settings activity -->
+    <string name="Setting_UserAccount">User Account</string>
+    <!-- Text specific to the Map activity -->
+    <string name="Map_LocationUnkown">Location Unknown</string>
+    <!-- Text specific to the main activity -->
+    <string name="Main_BtnGetStarted">Get Started Now</string>
+    <string name="Main_BtnLoginExisting">Login</string>
+    <!-- Text specific to the livestatus activity -->
+    <string name="LiveStatus_Locating">Locating</string>
+    <string name="LiveStatus_GPSON">GPS On \nsearching...</string>
+    <string name="LiveStatus_GPSFix">GPS Fix</string>
+    <string name="LiveStatus_GPSOFF">GPS Off</string>
+    <string name="LiveStatus_GPSPartialFix">GPS \nPartial Fix</string>
+    <string name="LiveStatus_GPSCoarseFix">GPS ON coarse fix</string>
+    <string name="LiveStatus_GPSFineFix">GPS ON fine fix</string>
+    <string name="LiveStatus_SignalTrend">Signal (dBm)</string>
+    <string name="LiveStatus_SignalLTE">Signal (currently LTE rsrp)</string>
+    <string name="LiveStatus_LocationStatus">Location Status</string>
+    <string name="LiveStatus_NetworkStatus">Network Status</string>
+    <string name="LiveStatus_dormant">dormant</string>
+    <string name="LiveStatus_receiving">receiving</string>
+    <string name="LiveStatus_sending">sending</string>
+    <string name="LiveStatus_sendrecv">send/receive</string>
+    <string name="LiveStatus_noactivty">no activity</string>
+    <string name="nerdmode_title_nerd">Engineer</string>
+    <string name="nerdmode_title_mode">Mode</string>
+    <string name="Chart_SignalStrength">Signal Strength</string>
+    <string name="Chart_CellIDs">CellIDs</string>
+    <string name="Chart_Locations">Locations</string>
+    <string name="Chart_Measurements">Measurements</string>
+
+    <string-array name="LiveStatus_TrackingValues">
+        <item name="5 minutes">5 minutes</item>
+        <item name="15 minutes">15 minutes</item>
+        <item name="30 minutes">30 minutes</item>
+        <item name="1 hour">1 hour</item>
+        <item name="2 hours">2 hours</item>
+        <item name="6 hours">6 hours</item>
+        <item name="Continuous">Continuous</item>
+    </string-array>
+    <string-array name="recorddlg_interval_values">
+        <item name="Off">Off</item>
+        <item name="1 minutes">1 minutes</item>
+        <item name="2 minutes">2 minutes</item>
+        <item name="5 minutes">5 minutes</item>
+        <item name="10 minutes">10 minutes</item>
+        <item name="15 minutes">15 minutes</item>
+        <item name="30 minutes">30 minutes</item>
+    </string-array>
+    <string-array name="recorddlg_cov_interval_values">
+        <item name="Off">Off</item>
+        <item name="On">On</item>
+    </string-array>
+    
+    <string-array name="start_schedule">
+        <item name="Now">Now</item>
+        <item name="1:00 am">1:00 am</item>
+        <item name="2:00 am">2:00 am</item>
+        <item name="3:00 am">3:00 am</item>
+        <item name="4:00 am">4:00 am</item>
+        <item name="5:00 am">5:00 am</item>
+        <item name="6:00 am">6:00 am</item>
+        <item name="7:00 am">7:00 am</item>
+        <item name="8:00 am">8:00 am</item>
+        <item name="9:00 am">9:00 am</item>
+        <item name="10:00 am">10:00 am</item>
+        <item name="11:00 am">11:00 am</item>
+        <item name="12:00 am">12:00 am</item>
+        <item name="1:00 pm">1:00 pm</item>
+        <item name="2:00 pm">2:00 pm</item>
+        <item name="3:00 pm">3:00 pm</item>
+        <item name="4:00 pm">4:00 pm</item>
+        <item name="5:00 pm">5:00 pm</item>
+        <item name="6:00 pm">6:00 pm</item>
+        <item name="7:00 pm">7:00 pm</item>
+        <item name="8:00 pm">8:00 pm</item>
+        <item name="9:00 pm">9:00 pm</item>
+        <item name="10:00 pm">10:00 pm</item>
+        <item name="11:00 pm">11:00 pm</item>
+        <item name="12:00 pm">12:00 pm</item>
+    </string-array>
+    <string-array name="schedule_interval">
+        <item name="One time">One time</item>
+        <item name="15 minutes">15 minutes</item>
+        <item name="30 minutes">30 minutes</item>
+        <item name="1 hour">1 hour</item>
+        <item name="2 hours">2 hours</item>
+        <item name="3 hours">3 hours</item>
+        <item name="6 hours">6 hours</item>
+        <item name="12 hours">12 hours</item>
+        <item name="24 hours">24 hours</item>
+    </string-array>
+
+    <string name="Schedule_Interval">Interval</string>
+    <string name="Schedule_StartTime">Start Time</string>
+    <string name="Schedule_Title">Schedule</string>
+    <string name="Chart_Events">Events</string>
+    <string name="LiveStatus_SelectTrackingDuration">Select tracking duration</string>
+    <string name="recordingdlg_title">Drive Test Script</string>
+    <string name="recordingdlg_duration">Test duration:</string>
+    <string name="recordingdlg_types">Test for:</string>
+    <string name="recordingdlg_coverage">Coverage</string>
+    <string name="recordingdlg_speedtest">Speed</string>
+    <string name="recordingdlg_speedinterval">Speed test interval</string>
+    <string name="recordingdlg_videotest">Video Stream</string>
+    <string name="recordingdlg_connecttest">Connectivity</string>
+    <string name="recordingdlg_smstest">SMS Reply</string>
+    <string name="recordingdlg_webtest">Web Page Load</string>
+    <string name="recordingdlg_vqtest">Voice Quality</string>
+    <string name="recordingdlg_audiotest">Audio Stream</string>
+    <string name="recordingdlg_youtubetest">YouTube</string>
+    <string name="recordingdlg_pingtest">Ping</string>
+
+    <string name="recordingdlg_stop_recording">Are you sure you want to \n stop the tests?</string>
+
+    <!-- Text specific to the speedtest activity -->
+    <string name="SpeedTest_StartTest">Start Test</string>
+    <string name="SpeedTest_History">History</string>
+    <string name="SpeedTest_Msg_Wifi_On">Speed Tests can not be performed over Wifi. Disable Wifi and try again.</string>
+    <string name="SpeedTest_UploadSpeed">Upload Speed:</string>
+    <string name="SpeedTest_DownloadSpeed">Download Speed:</string>
+    <string name="SpeedTest_LocationAttempt">Attempting to get location</string>
+    <string name="SpeedTest_AcquiredLocation">Acquired location</string>
+    <string name="SpeedTest_Failure">Test failed</string>
+    <string name="SpeedTest_Failure_NoLocation">Failed to get location</string>
+    <string name="SpeedTest_StartingSpeedTest">Starting speed test</string>
+    <string name="SpeedTest_WaitingLocation">Waiting for location</string>
+    <string name="SpeedTest_GeneratingRandomPackets">Generating randomized packets</string>
+    <string name="SpeedTest_SendingPacket">Uploading %s packet to the server</string>
+    <!-- Please keep the "%s" as is. It will be automatically replaced by the packet size (eg. 50K) -->
+    <string name="SpeedTest_InProgress">Test in progress</string>
+    <string name="SpeedTest_TestAgain">Test again</string>
+    <string name="WebSiteLink_Help_Title">Help</string>
+    <string name="WebsiteLink_CoverageHelp_Url">http://www.mymobilecoverage.com/client/help/mystats.htm#coverage</string>
+    <string name="WebsiteLink_TermsAndConditions_Url">http://www.mymobilecoverage.com/docs/tos.htm</string>
+    <string name="WebsiteLink_GettingStarted_Url">http://www.mymobilecoverage.com/client/android/2.0/gettingstarted.html</string>
+    <string name="WebsiteLink_Help_Url">http://www.mymobilecoverage.com/client/android/help/mmcandroidhelp.htm</string>
+    <string name="WebsiteLink_PrivacyPolicy_Url">http://www.mymobilecoverage.com/docs/privacypolicy.htm</string>
+    <string name="WebsiteLink_SettingsOptionsHelp_Url">http://www.mymobilecoverage.com/client/help/settings.htm#monitoroptions</string>
+    <string name="WebsiteLink_WifiHelp_Url">http://www.mymobilecoverage.com/client/help/wifisetup.htm</string>
+    <string name="WebsiteLink_GpsTips_Url">http://www.mymobilecoverage.com/client/help/gps_tips.htm</string>
+    <string name="WebsiteLink_LivestatusHelp_Url">http://www.mymobilecoverage.com/client/help/livestatus.htm</string>
+    <string name="WebsiteLink_MapHelp_Url">http://www.mymobilecoverage.com/client/help/mymap.htm</string>
+    <string name="WebsiteLink_StatsHelp_Url">http://www.mymobilecoverage.com/client/help/mystats.htm</string>
+    <string name="WebsiteLink_StatsCalldroppedHelp_Url">http://www.mymobilecoverage.com/client/help/mystats.htm#callsdropped</string>
+    <string name="WebsiteLink_StatsVoiceQualityHelp_Url">http://www.mymobilecoverage.com/client/help/mystats.htm#voicequality</string>
+    <string name="WebsiteLink_StatsDataspeedHelp_Url">http://www.mymobilecoverage.com/client/help/mystats.htm#dataspeeds</string>
+    <string name="WebsiteLink_SettingsHelp_Url">http://www.mymobilecoverage.com/client/help/settings.htm</string>
+    <string name="WebsiteLink_LoginHelp_Url">http://www.mymobilecoverage.com/client/help/firstrun.htm#gettingstartednewuser</string>
+    <!-- Crash reporting related strings -->
+    <string name="ACRA_CategoryName">Crash reporting</string>
+    <string name="ACRA_Enable">Enable crash reporting</string>
+    <string name="ACRA_Disabled">Crash reporting is disabled</string>
+    <string name="ACRA_Enabled">Crash reporting is enabled</string>
+    <string name="ACRA_SyslogEnabled">System log reporting is enabled</string>
+    <string name="ACRA_SyslogDisabled">System log reporting is disabled</string>
+    <string name="ACRA_SyslogEnable">Enable syslog reporting</string>
+    <string name="ACRA_DeviceIdEnable">Include device id in report</string>
+    <string name="ACRA_DeviceIdEnabled">Device Id reporting is enabled</string>
+    <string name="ACRA_DeviceIdDisabled">Device Id reporting is disabled</string>
+    <string name="ACRA_UseEmail">Include email address</string>
+    <string name="ACRA_EmailSummary">Please enter your email address for crash reports so that the developers may contact you</string>
+    <!-- Preference related strings -->
+    <string name="Settings_PassiveSpeedtest">Allow passive speed tests</string>
+    <string name="Settings_ChooseProfile">Choose Profile</string>
+    <string name="Settings_EditProfileDetails">Edit Profile Details</string>
+    <string name="Settings_EditProfile">Edit Profile</string>
+    <string name="Settings_OtherOptions">Other Options</string>
+    <string name="Settings_Maximum">Maximum</string>
+    <string name="Settings_Maximum_Description">Maximum - Basic reporting plus extra contribution to coverage maps (may turn on screen while contributing)</string>
+    <string name="Settings_Balanced">Balanced</string>
+    <string name="Settings_Balanced_Description">Balanced - Basic reporting plus limited contribution to coverage maps (may turn on screen while contributing)</string>
+    <string name="Settings_Minimum">Minimum</string>
+    <string name="Settings_Minimum_Description">Minimum - Basic reporting with very limited use of the gps to minimize battery consumption</string>
+
+    <string-array name="Settings_Profile">
+        <item>@string/Settings_Maximum</item>
+        <item>@string/Settings_Balanced</item>
+        <item>@string/Settings_Minimum</item>
+    </string-array>
+
+    <string name="Settings_MonitorForCallQuality">Monitor for call quality</string>
+    <string name="Settings_EnableDataWhenRoaming">Send data when roaming</string>
+    <string name="Settings_SendDataOnWifi">Send data only on WiFi</string>
+    <string name="Settings_AlwaysShowIcon">Always show top icon</string>
+    <string name="Settings_AlwaysShowIcon_Summary">Keeps the notification icon at the top of the screen whether it is idle or active</string>
+    <string name="Settings_AutoSpeed_Enable">Automatic speed tests</string>
+    <string name="Settings_AutoSpeed_Summary">Automatically run limited speed tests in areas needing measurements. Set Monthly MB limit below.</string>
+    <string name="Settings_AutoSpeedMB">Monthly MB Limit </string>
+    <string name="Settings_AutoSpeedMB_Summary">Automatic speed tests are limited to a few tests per day, up to a set limit of MB per month</string>
+    <string name="Settings_MaxOnCharge">Max when charging</string>
+    <string name="Settings_MaxOnChargeSummary">Increase usage profile to Maximum when charger is connected</string>
+    <string name="Settings_TurnOffMonitoring">Turn off monitoring</string>
+    <string name="Settings_Map">Map</string>
+    <string name="Settings_Map_DateRange">Date Range</string>
+    <string name="Settings_Map_DateRangeSummary">The number of past days to show events for</string>
+
+    <string-array name="Settings_Map_DateRanges">
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+    </string-array>
+
+    <string name="Settings_Travel">Periscoping</string>
+    <string name="Settings_TravelDetect">Passive Scanning Mode</string>
+    <string name="Settings_TravelDetectSummary">Level of activity needed while sleeping for effective coverage periscoping</string>
+
+    <string-array name="Settings_TravelDetectModes">
+        <item name="0">idle</item>
+        <item name="1">low</item>
+        <item name="2">medium</item>
+        <item name="3">high (screen blink)</item>
+    </string-array>
+    <string-array name="Settings_TravelDetectValues">
+        <item name="0">0</item>
+        <item name="1">1</item>
+        <item name="2">2</item>
+        <item name="3">3</item>
+    </string-array>
+
+    <string name="Settings_Usage">Usage Level</string>
+    <string name="Settings_Usage_Group">Level of reporting</string>
+    <string name="Settings_Usage_Group_Summary">Sets the level of coverage reporting for smart battery management while contributing to the coverage map</string>
+    <string name="Settings_UsageProfile">Level of reporting</string>
+    <string name="Settings_UsageProfileSummary">level of coverage reporting when not on battery charger</string>
+    <string name="Settings_UsageProfileCharger">Level when charging</string>
+    <string name="Settings_UsageProfileSummaryCharger">level of coverage reporting when on battery charger</string>
+
+    <string-array name="Settings_UsageProfileNames">
+        <item name="0">minimum</item>
+        <item name="1">balanced</item>
+        <item name="2">maximum</item>
+    </string-array>
+    <string-array name="Settings_UsageProfileValues">
+        <item name="0">0</item>
+        <item name="1">1</item>
+        <item name="2">2</item>
+    </string-array>
+
+    <string name="Settings_TravelEnable">Allow coverage periscoping</string>
+    <string name="Settings_DataWhenRoaming">Allow background sends when roaming</string>
+    <string name="Settings_Travel_Group">Coverage Periscoping</string>
+    <string name="Settings_Map_Filters">Filters</string>
+    <string name="Settings_Map_DroppedCall">Dropped/Failed calls</string>
+    <string name="Settings_Map_LostVoiceCoverage">Service outages</string>
+    <string name="Settings_Map_Lost3G">Data outages</string>
+    <string name="Settings_Map_Coverage">Coverage Signal</string>
+    <string name="Settings_ShareWithCarrierOld">Share with carrier</string>
+    <string name="Settings_ShareWithCarrier_SummaryOld">Restart required for change to take effect</string>
+    <string name="Settings_ContactEmail">Contact Email</string>
+    <string name="Settings_ContactEmail_Summary">You may change the email used to send raw data or password resets to, but this will not affect your login.</string>
+    <string name="Settings_Twitter">Twitter Username</string>
+    <string name="Settings_RootAccess">Root Access</string>
+    <string name="Settings_Twitter_Summary">(optional) By providing your Twitter username, you enable your carrier to see your Trouble Tweet and fix your problem!</string>
+    <string name="Settings_MonitorInSleep">Wake to monitor in sleep</string>
+    <string name="Settings_MonitorInSleep_Summary">May need to blink screen periodically to allow network measurements. Has tiny effect on battery.</string>
+    <string name="Settings_StartOnBootOld">Start on boot</string>
+    <string name="Settings_CollectUsageData">Send usage statistics</string>
+    <string name="Settings_CollectUsageData_Summary">Allow MyMobileCoverage to collect anonymous usage statistics about this application.</string>
+    <string name="Settings_OtherSettings">Other</string>
+    <string name="Settings_ServiceMode">Raw Radio Access</string>
+    <string name="Settings_ServiceMode_summary">Rooted Samsung devices can provide deeper radio information by enabling system mode for certain events</string>
+    <string name="Settings_Svcmode_Basic">Basic Information</string>
+    <string name="Settings_Svcmode_Basic_summary">Read from the basic page to get extra info on cell, band, signal and channels</string>
+    <string name="Settings_Svcmode_Neighbors">Neighbors</string>
+    <string name="Settings_Svcmode_Neighbors_summary">Include the Neighbor cells page in the rotation </string>
+    <string name="Settings_Svcmode_MM">MM Information</string>
+    <string name="Settings_Svcmode_MM_summary">Include the Mobile Management page in the rotation</string>
+    <string name="Settings_Svcmode_Panel">Show Details Panel</string>
+
+    <string name="Settings_NotEnabled">Not Enabled</string>
+    <string name="Settings_GsmHeartbeat">Remote Test Watchdog</string>
+    <string name="Settings_GsmHeartbeatDesc">Increases Reliability in receiving Remote Tests (uses more battery) </string>
+
+    <string name="SpeedTest_DownloadingPacket">Downloading %s packet from server</string>
+    <string name="image_background">background image</string>
+    <!-- For RIL OEM HOOK testing -->
+    <string name="testing_RIL_OEMHook">RIL OEM Hook Test</string>
+    <string name="ril_oem_choose">Choose a RIL OEM Hook API to test:</string>
+    <string name="radio_api1">API 1 (datalen=0)</string>
+    <string name="radio_api2">API 2 (datalen=1)</string>
+    <string name="radio_api3">API 3 (datalen=6)</string>
+    <string name="radio_api4">API 4 Type command :</string>
+    <string name="radio_run">RUN</string>
+    <string name="ril_oem_response">Module response:</string>
+    <string name="privacy_registration_text">		MyMobileCoverage respects your privacy and will share your coverage data only with your wireless provider and/or regulatory body. Personal data will not be shared with any third party.
+</string>
+    <string name="privacy_registration_text_html">
+<![CDATA[
+			MyMobileCoverage<sup><small>SM</small></sup> respects your privacy and will share your coverage data only with your wireless provider and/or regulatory body. Personal data will not be shared with any third party.
+        ]]>
+    </string>
+    <string name="disclaimer">By pressing the Continue button, you are agreeing to the Terms and Conditions of use. Know more about our privacy policy and terms of use.</string>
+    <string name="disclaimer_html">
+<![CDATA[
+			By pressing the Continue button, you are agreeing to the Terms and Conditions of use. Know more about our <a href="http://www.mymobilecoverage.com/docs/att/privacypolicy.htm">privacy policy</a> and <a href="http://www.mymobilecoverage.com/docs/att/tos.htm">terms of use</a>.
+		]]>
+    </string>
+    <string name="mmcTwittertext">\@mycoverageapp</string>
+    <string name="mmcFacebooktext">www.facebook.com/MyMobileCoverage</string>
+    <string name="RecordingStart">Start Tests</string>
+    <string name="status_IdleRecording">idle (recording mode)</string>
+    <string name="status_Idle">idle</string>
+    <string name="status_Active">active</string>
+    <string name="status_inWiFi">in WiFi</string>
+    <string name="status_noWiFi">out of WiFi</string>
+    <string name="blackberry_notrunning_title">Please launch BB MMC</string>
+    <string name="blackberry_notrunning_message">Calidad Celular can not get coverage data without BB MMC. Both Applications must be running or minimize.</string>
+    <string name="title_activity_carrier_satisfaction_survey">CarrierSatisfactionSurvey</string>
+    <string name="title_activity_manual_mapping">ManualMapping</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="about_info" formatted="false">Application: %s\nUsername: %s\nApplication version: %s\nAndroid version: %s\nCarrier: %s </string>
+    <string name="about_extrainfo" formatted="false">\nCarrier ID: %s\nApi key: %s\nServer URL: %s\nUserID: %s</string>
+    <string name="about_noemail">no contact email set</string>
+    <string name="VQ_UseBluetooth">Use VQ Module Recorder</string>
+    <string name="VQ_selectDevice">VQ Module Device</string>
+    <string name="VQ_Playback_Audio">Playback Audio</string>
+    <string name="VQ_Start_Test">Start VQ Test</string>
+    <string name="VQ_InProgress">Test In Progress</string>
+    <string name="VQ_NeedHeadphone">Connect Audio Cable</string>
+    <string name="VQ_disconnectJack">Disconnect Audio Cable to hear recording</string>
+    <string name="VQ_Discover">Discover</string>
+    <string name="VQ_Pair">Pair</string>
+    <string name="VQ_Cancel">Cancel</string>
+    <string name="VQ_Idle">Idle</string>
+    <string name="VQ_Downloading">Receiving</string>
+    <string name="VQ_Download_Failed">Failed</string>
+    <string name="VQ_Download_Complete">Transfer Complete</string>
+    <string name="VQ_Connect_Failed">Connection Failed</string>
+    <string name="VQ_test_stop">Cancel this voice test?</string>
+    <string name="VQ_Uploading">Uploading</string>
+    <string name="VQ_Upload_Complete">Upload Complete</string>
+    <string name="VQ_Upload_Failed">Upload Complete</string>
+    <string name="VQ_Score">Score</string>
+    <string name="VQ_MicTest">Test</string>
+    <string name="VQ_Connectfailed_msg1">Sorry, bluetooth connection failed to VQ Module.</string>
+    <string name="VQ_Connectfailed_msg2">Try again 5 seconds after re-plugging the audio cable into the VQ Module audio jack.</string>
+    <string name="VQ_Connectfailed_msg3">Also make sure the correct paired device is selected.</string>
+    <string name="VQ_Error_Tryagain">There was an error, please replug cables and try again.</string>
+    <string name="VQ_WaitForGPS">Waiting for Location</string>
+    <string name="VQ_WaitForScore">Waiting for VQ Score</string>
+    <string name="VQ_Recording">Recording Call</string>
+    <string name="VQ_ScoreFailed">Unable to process VQ</string>
+    
+	<string name="SettingsVQ_Useexternal">Use External Recording Device</string>
+    <string name="SettingsVQ_Encoder">Audio Encoder</string>
+    <string name="SettingsVQ_EncoderSummary"></string>
+    
+    <string name="SettingsVQ_Source">Audio Source</string>
+    <string name="SettingsVQ_SourceSummary"></string>
+    <string name="SettingsVQ_Level">Audio Volume Level</string>
+    <string name="SettingsVQ_LevelSummary">Recommended 20% volume</string>
+
+    <string-array name="SettingsVQ_EncoderOptions">
+        <item name="1">AMR_WB</item>
+        <item name="2">AAC</item>
+        <item name="3">HE_AAC</item>
+    </string-array>
+    <string-array name="SettingsVQ_EncoderValues">
+        <item name="1">2</item>
+        <item name="2">3</item>
+        <item name="3">4</item>
+    </string-array>
+    
+    <string-array name="SettingsVQ_SourceOptions">
+        <item name="1">Mic</item>
+        <item name="2">Voice Communication</item>
+        <item name="3">Voice Recognition</item>
+    </string-array>
+    <string-array name="SettingsVQ_SourceValues">
+        <item name="1">1</item>
+        <item name="2">7</item>
+        <item name="3">6</item>
+    </string-array>
+    
+    <string-array name="SettingsVQ_LevelOptions">
+        <item name="1">10</item>
+        <item name="2">15</item>
+        <item name="3">20</item>
+        <item name="4">25</item>
+        <item name="5">30</item>
+        <item name="6">40</item>
+        <item name="7">50</item>
+        <item name="8">60</item>
+        <item name="9">70</item>
+        <item name="10">80</item>
+        <item name="11">90</item>
+        <item name="12">100</item>
+    </string-array>
+    <string-array name="SettingsVQ_LevelValues">
+        <item name="1">10</item>
+        <item name="2">15</item>
+        <item name="3">20</item>
+        <item name="4">25</item>
+        <item name="5">30</item>
+        <item name="6">40</item>
+        <item name="7">50</item>
+        <item name="8">60</item>
+        <item name="9">70</item>
+        <item name="10">80</item>
+        <item name="11">90</item>
+        <item name="12">100</item>
+    </string-array>
+
+    <string name="SettingsVQ_Format">File Output Format</string>
+    <string name="SettingsVQ_FormatSummary"></string>
+
+    <string-array name="SettingsVQ_FormatOptions">
+        <item name="1">3GPP</item>
+        <item name="2">MP4</item>
+        <item name="3">AMR</item>
+    </string-array>
+    <string-array name="SettingsVQ_FormatValues">
+        <item name="1">1</item>
+        <item name="2">2</item>
+        <item name="3">4</item>
+    </string-array>
+
+    <string name="SettingsVQ_Sample">Sample Rate</string>
+    <string name="SettingsVQ_SampleSummary"></string>
+
+    <string-array name="SettingsVQ_SampleOptions">
+        <item name="0">44100</item>
+        <item name="1">16000</item>
+        <item name="2">8000</item>
+    </string-array>
+    <string-array name="SettingsVQ_SampleValues">
+        <item name="0">0</item>
+        <item name="1">1</item>
+        <item name="2">2</item>
+    </string-array>
+
+    <string name="SettingsVQ_Language">Language</string>
+    <string name="SettingsVQ_LanguageSummary"></string>
+
+    <string-array name="SettingsVQ_LanguageOptions">
+    </string-array>
+    <string-array name="SettingsVQ_LanguageValues">
+    </string-array>
+    
+    <!-- string-array name="SettingsVQ_LanguageOptions">
+        <item name="0">English-US</item>
+        <item name="1">English-UK</item>
+        <item name="2">Chinese</item>
+        <item name="3">Dutch</item>
+        <item name="4">Finnish</item>
+        <item name="5">French</item>
+        <item name="6">German-1</item>
+        <item name="7">German-2</item>
+        <item name="8">Italian</item>
+        <item name="9">Japanese</item>
+        <item name="10">Polish</item>
+        <item name="11">Spanish</item>
+    </string-array>
+    <string-array name="SettingsVQ_LanguageValues">
+        <item name="0">0,0</item>
+        <item name="1">0,1</item>
+        <item name="2">1</item>
+        <item name="3">2</item>
+        <item name="4">3</item>
+        <item name="5">4</item>
+        <item name="6">5,0</item>
+        <item name="7">5,1</item>
+        <item name="8">6</item>
+        <item name="9">7</item>
+        <item name="10">8</item>
+        <item name="11">9</item>
+    </string-array -->
+
+    <string name="SettingsVQ_Gender">Voice Gender</string>
+    <string name="SettingsVQ_GenderSummary"></string>
+
+    <string-array name="SettingsVQ_GenderOptions">
+    </string-array>
+    <string-array name="SettingsVQ_GenderValues">
+    </string-array>
+    
+    <!-- string-array name="SettingsVQ_GenderOptions">
+        <item name="1">Female 1</item>
+        <item name="2">Female 2</item>
+        <item name="3">Male 1</item>
+        <item name="4">Male 2</item>
+    </string-array>
+    <string-array name="SettingsVQ_GenderValues">
+        <item name="1">0</item>
+        <item name="2">1</item>
+        <item name="3">2</item>
+        <item name="4">3</item>
+    </string-array -->
+
+    <string name="SettingsVQ_Telephone">Phone Number to dial</string>
+    <string name="SettingsVQ_LogPackets">Log bluetooth packets</string>
+    <string name="title_activity_test">Test</string>
+    
+    <string name="app_usage">App Usage</string>
+    <string name="wifi">Wifi</string>
+    <string name="cellular">Cellular</string>
+    <string name="sent">Sent</string>
+    <string name="received">Received</string>
+    <string name="percentage">Usage</string>
+
+    <string name="activetest_accessdelay">Buffer delay</string>
+    <string name="activetest_playdelay">Play delay</string>
+    <string name="activetest_buffertime">Duration</string>
+    <string name="activetest_stalls">Stalls</string>
+    <string name="activetest_stalltime">Stall Time</string>
+    <string name="activetest_score">Score</string>
+    <string name="activetest_buffer">Buffer</string>
+    <string name="activetest_playback">Playback</string>
+    <string name="activetest_progress">Progress</string>
+    <string name="activetest_rate">Rate</string>
+
+
+</resources>

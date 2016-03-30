@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cortxt.app.mmccore"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:versionCode="0"
+    android:versionName="2.0" >
+
+	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17"/>
+
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PRECISE_PHONE_STATE"/>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+	<uses-permission android:name="android.permission.ACCESS_SUPERUSER"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.GET_TASKS"/>
+	<uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="com.cortxt.app.mmccore.permission.C2D_MESSAGE" />
+    <!--uses-permission android:name="android.permission.MODIFY_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.CALL_PRIVILEGED" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/ -->
+
+
+	<!-- uses-permission android:name="android.permission.VIBRATE"/-->
+	<uses-permission android:name="android.permission.READ_SMS"/>
+	<uses-permission android:name="android.permission.RECEIVE_SMS"/>
+	<uses-permission android:name="android.permission.SEND_SMS" />
+	<uses-permission android:name="android.permission.RAISED_THREAD_PRIORITY"/>
+
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+	<uses-permission android:name="android.permission.CALL_PHONE"/>
+	<uses-permission android:name="android.permission.RECORD_AUDIO" />
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+
+	<!-- uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"/-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_OVERLAY" />
+
+    <meta-data
+        android:name="com.google.android.maps.v2.API_KEY"
+        android:value="@string/google_maps_api_key"/>
+
+    <application
+        android:debuggable="true">
+        <uses-library android:name="com.google.android.maps" />
+
+
+        <receiver
+            android:name="com.cortxt.app.mmccore.GcmBroadcastReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.cortxt.app.mmccore" />
+            </intent-filter>
+        </receiver>
+
+        <!-- activity android:label="@string/testing_RIL_OEMHook" android:name=".Activities.RilOemHookTest" android:process="com.android.phone" android:screenOrientation="user"/ -->
+        <!--activity
+            android:name="org.acra.CrashReportDialog"
+            android:excludeFromRecents="true"
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="user"
+            android:theme="@android:style/Theme.Dialog" /-->
+
+        <service
+            android:name="com.cortxt.app.mmccore.MMCService"
+            android:enabled="true"
+            android:label="MMC Service"
+            android:screenOrientation="user" />
+        <!--service
+            android:name="com.cortxt.app.MMC.sms.SMSService"
+            android:enabled="true"
+            android:label="DM SMS Service"
+            android:screenOrientation="user" /-->
+
+        <!--  service android:enabled="true"
+            android:name="com.cortxt.app.MMC.Sampling.ActivityRecognitionService"
+            android:label="Movement Service" /-->
+
+        <!-- provider android:authorities="com.cortxt.app.mmcutility.ContentProvider.Tables" android:name=".ContentProvider.Provider" android:screenOrientation="user"/ -->
+
+        <receiver android:name="com.cortxt.app.mmccore.BootListener" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.cortxt.app.mmccore.Services.Intents.MMCIntentHandler" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

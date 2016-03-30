@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="AndroidMockRuntime">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../MMC_Android/MMC/app/libs/AndroidMockRuntime.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

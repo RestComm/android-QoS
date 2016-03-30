@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mycoverage_container"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.cortxt.app.mmcui.Activities.MyCoverage.MMCMapView
+        android:id="@+id/mycoverage_mapview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:apiKey="@string/google_maps_api_key"
+        android:clickable="true"
+        android:enabled="true" />
+
+    <ProgressBar
+        android:id="@+id/mycoverage_busyIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:visibility="visible" />
+
+</RelativeLayout>

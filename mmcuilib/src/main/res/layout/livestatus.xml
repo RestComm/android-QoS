@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     >ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:mmc="http://schemas.android.com/apk/res/com.cortxt.app.MMC"
+	android:fillViewport="true"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mmc="http://schemas.android.com/apk/res/com.cortxt.app.MMC"
+    android:id="@+id/nerdmode_container"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <!--
+        TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/Chart_Measurements"
+			android:textColor="@color/solid_white"
+			android:background="@drawable/section_header_gradient"
+			android:gravity="center"
+			android:textSize="20sp"
+		/
+        -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:paddingTop="10dp" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="64dp"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/livestatus_carrierlogobg"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/eventdetail_carrierlogo"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/eventdetail_carrierlogo_blank" />
+
+                <ImageView
+                    android:id="@+id/livestatus_carrierlogo"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/eventdetail_carrierlogo"
+                    android:padding="2dp"
+                    android:scaleType="centerInside" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:paddingLeft="10dp" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:background="@drawable/right_panel"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <com.cortxt.app.mmcui.Activities.CustomViews.SatelliteStatus
+                        android:id="@+id/satelliteStatus"
+                        android:layout_width="fill_parent"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="9dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="3dp" />
+
+                    <com.cortxt.app.mmcui.Activities.CustomViews.SatelliteCount
+                        android:id="@+id/satelliteCount"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="9dp"
+                        android:paddingRight="1dp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+        <!--
+        TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/LiveStatus_NetworkStatus"
+			android:textColor="@color/solid_white"
+			android:background="@drawable/section_header_gradient"
+			android:gravity="center"
+			android:textSize="20sp"
+		/
+        -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="6"
+            android:background="@drawable/first_main_panel"
+            android:orientation="vertical" >
+
+            <!--
+            com.cortxt.app.mmcui.Activities.CustomViews.Guage
+				android:id="@+id/percentometer"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				mmc:min_angle="0.72"
+				mmc:max_angle="2.42"
+				mmc:pivotCoord_x="155.0"
+				mmc:pivotCoord_y="140.0"
+				mmc:pivot_point_offset="52.0"
+				mmc:show_percent_label="true"
+				mmc:background="@drawable/signal_stength_gradient_compound_v"
+			/
+            -->
+
+            <com.cortxt.app.mmcui.Activities.CustomViews.NerdView
+                android:id="@+id/nerdview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:layout_margin="8dp"
+            android:layout_weight="6"
+            android:background="@drawable/second_main_panel"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/chart_title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_marginTop="0dp"
+                    android:gravity="center"
+                    android:text="@string/LiveStatus_SignalTrend"
+                    android:textColor="@color/solid_white"
+                    android:textSize="18sp" />
+
+                <com.cortxt.app.mmcui.Activities.CustomViews.Chart.Chart
+                    android:id="@+id/signalTrendChart"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="8dp"
+                    android:gravity="center"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="24dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:baselineAligned="false" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/mycoverage_share"
+                android:contentDescription="@string/mycoverage_share"
+                android:onClick="shareClicked" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="45dp"
+                android:paddingBottom="10dp"
+                android:text="@string/mycoverage_share"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/mycoverage_center"
+                android:contentDescription="@string/mycoverage_center"
+                android:onClick="centerOnCurrentLocationClicked" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/mycoverage_history"
+                android:contentDescription="@string/mycoverage_history"
+                android:onClick="historyClicked" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:paddingBottom="10dp"
+                android:paddingRight="15dp"
+                android:text="@string/mycoverage_history"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

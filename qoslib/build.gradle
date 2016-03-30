@@ -1,0 +1,88 @@
+apply plugin: 'com.android.library'
+
+android {
+    signingConfigs {
+        configDebug {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('../../../MMC_keystore/debug.keystore')
+            storePassword 'android'
+        }
+
+    }
+    compileSdkVersion "Google Inc.:Google APIs:17"
+    buildToolsVersion '21.1.2'
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 17
+        versionCode System.getenv("BUILD_NUMBER") as Integer ?: 0
+        versionName "2.0.1." + System.getenv("BUILD_NUMBER") ?: "0"
+        testApplicationId "com.cortxt.app.MMC.test"
+        testInstrumentationRunner "pl.polidea.instrumentation.PolideaInstrumentationTestRunner"
+        signingConfig signingConfigs.configDebug
+
+        resValue "string", "app_versionCode", versionCode as String
+        resValue "string", "app_versionName", versionName
+        resValue "string", "app_label", "MyMobileCoverage"
+        resValue "string", "svcmode_version", "103"
+
+    }
+    buildTypes {
+        debug {
+            resValue "string", "google_maps_api_key", "0kdHHzVVjg3MenrXSvZ2NpYta1j64_MF9bK17ag"
+            resValue "string", "MMC_URL_LIN", "https://dev.mymobilecoverage.com"
+            resValue "string", "MMC_STATIC_ASSET_URL", "http://lb1.mymobilecoverage.com"
+            resValue "string", "MMC_URL_SPEED", "http://dev.mymobilecoverage.com:5005"
+            resValue "string", "app_versionCode", "0"
+            resValue "string", "MMC_WEBSOCKET_URL", "wss://dev.mymobilecoverage.com/ws"
+            signingConfig signingConfigs.configDebug
+            debuggable true
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            //proguardFiles 'proguard-android.txt'
+            resValue "string", "google_maps_api_key", "0kdHHzVVjg3MenrXSvZ2NpYta1j64_MF9bK17ag"
+            resValue "string", "MMC_URL_LIN", "https://lb1.mymobilecoverage.com"
+            resValue "string", "MMC_STATIC_ASSET_URL", "http://lb1.mymobilecoverage.com"
+            resValue "string", "MMC_URL_SPEED", "http://sts.mymobilecoverage.com:5005"
+            resValue "string", "MMC_WEBSOCKET_URL", "wss://lb.mymobilecoverage.com:4444/ws"
+            //signingConfig signingConfigs.configRelease
+        }
+    }
+
+    defaultPublishConfig 'release'
+    publishNonDefault true
+    productFlavors {
+        library{
+
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+dependencies {
+    //compile 'com.android.support:support-v4:18.0.0'
+    //compile 'com.google.android.gms:play-services:3.1.+'
+    //compile files('libs/acra-4.5.0.jar')
+    //compile files('libs/slf4j-android-1.5.8.jar')
+    //compile files('libs/xmltask.jar')
+    //compile 'com.scottyab:secure-preferences-lib:0.0.4'
+    //compile 'com.felipecsl:gifimageview:1.2.0'
+    //compile project(':mmcextension')
+    //debugCompile project(':mmcextension')
+    //compile(name:'secure-preferences', ext:'aar')
+    //compile project(':mmcextension')
+
+    debugCompile project(path: ':mmcextension', configuration: "libraryDebug")
+    releaseCompile project(path: ':mmcextension', configuration: "libraryRelease")
+}

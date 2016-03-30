@@ -1,0 +1,411 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="320px"
+    android:layout_below="@+id/topactionbarLine" >
+
+    <View
+        android:id="@+id/upperBackground"
+        android:layout_width="match_parent"
+        android:layout_height="320px"
+        android:background="#cccccc" />
+
+    <ImageView
+        android:id="@+id/SpeedTestBigGaugaeBase"
+        android:layout_width="340px"
+        android:layout_height="340px"
+        android:layout_marginLeft="100px"
+        android:layout_marginTop="80px"
+        android:background="@drawable/big_gauge_base_1" />
+
+    <ImageView
+        android:id="@+id/speedtest_needle_download"
+        android:layout_width="340px"
+        android:layout_height="340px"
+        android:layout_alignLeft="@+id/SpeedTestBigGaugaeBase"
+        android:layout_alignTop="@+id/SpeedTestBigGaugaeBase"
+        android:background="@drawable/big_gauge_needdle_1" />
+
+    <ImageView
+        android:id="@+id/bigGaugeCover"
+        android:layout_width="340px"
+        android:layout_height="340px"
+        android:layout_alignLeft="@+id/SpeedTestBigGaugaeBase"
+        android:layout_alignTop="@+id/SpeedTestBigGaugaeBase"
+        android:background="@drawable/big_gauge_display_1" />
+
+    <TextView
+        android:id="@+id/bigGaugeSpeedValue"
+        android:layout_width="340px"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bigGaugeCover"
+        android:layout_alignTop="@+id/bigGaugeCover"
+        android:layout_marginTop="110px"
+        android:gravity="center_horizontal"
+        android:text="0.0"
+        android:textColor="#FFFFFF"
+        android:textSize="22dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/bigGaugeSpeedType"
+        android:layout_width="340px"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bigGaugeCover"
+        android:layout_below="@+id/bigGaugeSpeedValue"
+        android:layout_marginTop="-10px"
+        android:gravity="center_horizontal"
+        android:text="MB/S"
+        android:textColor="#FFFFFF"
+        android:textSize="14dp" />
+
+    <ImageView
+        android:id="@+id/smallGaugeBase"
+        android:layout_width="260px"
+        android:layout_height="260px"
+        android:layout_alignLeft="@+id/bigGaugeCover"
+        android:layout_alignTop="@+id/SpeedTestBigGaugaeBase"
+        android:layout_marginLeft="250px"
+        android:layout_marginTop="100px"
+        android:background="@drawable/small_gauge_base_1" />
+
+    <ImageView
+        android:id="@+id/smallGaugeNeedle"
+        android:layout_width="260px"
+        android:layout_height="260px"
+        android:layout_alignLeft="@+id/smallGaugeBase"
+        android:layout_alignTop="@+id/smallGaugeBase"
+        android:background="@drawable/small_gauge_needdle_1" />
+
+    <ImageView
+        android:id="@+id/smallGaugeCover"
+        android:layout_width="260px"
+        android:layout_height="260px"
+        android:layout_alignLeft="@+id/smallGaugeBase"
+        android:layout_alignTop="@+id/smallGaugeBase"
+        android:background="@drawable/small_gauge_display_1" />
+
+    <TextView
+        android:id="@+id/UploadSpeedValue"
+        android:layout_width="260px"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/smallGaugeBase"
+        android:layout_alignTop="@+id/smallGaugeBase"
+        android:layout_marginTop="70px"
+        android:gravity="center_horizontal"
+        android:text="0.0"
+        android:textColor="#FFFFFF"
+        android:textSize="22dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/uploadSpeedType"
+        android:layout_width="260px"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/smallGaugeBase"
+        android:layout_below="@+id/UploadSpeedValue"
+        android:layout_marginTop="-10px"
+        android:gravity="center_horizontal"
+        android:text="MB/S"
+        android:textColor="#FFFFFF"
+        android:textSize="14dp" />
+
+    <ImageView
+        android:id="@+id/carrierGenerationImage"
+        android:layout_width="74px"
+        android:layout_height="42px"
+        android:layout_below="@+id/upperBackground"
+        android:layout_marginLeft="50px"
+        android:layout_marginTop="50px" />
+
+    <TableLayout
+        android:id="@+id/resultTableLayout"
+        android:layout_width="660px"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/carrierGenerationImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80px"
+        android:stretchColumns="0,2,3" >
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/ResultHead"
+                android:layout_width="208px"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16px"
+                android:text="@string/speedtest_results"
+                android:textColor="#999999"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/YourDeviceHead"
+                android:layout_width="228px"
+                android:layout_height="wrap_content"
+                android:text="@string/speedtest_yourdevice"
+                android:textColor="#999999"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/speedtest_carrieravg"
+                android:layout_width="218px"
+                android:layout_height="wrap_content"
+                android:text="@string/speedtest_carrieravg"
+                android:textColor="#999999"
+                android:textSize="16dp" />
+        </TableRow>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="2px"
+            android:background="#4F000000" />
+
+        <TableRow
+            android:id="@+id/TableRow2"
+            android:layout_width="220px"
+            android:layout_height="100px" >
+
+            <TextView
+                android:id="@+id/latencyHead"
+                android:layout_width="120px"
+                android:layout_height="100px"
+                android:layout_marginLeft="16px"
+                android:gravity="center_vertical"
+                android:text="@string/speedtest_latency"
+                android:textColor="#666666"
+                android:textSize="20dp" />
+
+            <FrameLayout
+                android:layout_width="122px"
+                android:layout_height="100px" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+
+                    <View
+                        android:layout_width="2px"
+                        android:layout_height="80px"
+                        android:layout_marginTop="10px"
+                        android:background="#1A000000" />
+
+                    <TextView
+                        android:id="@+id/speedtest_latency"
+                        android:layout_width="fill_parent"
+                        android:layout_height="100px"
+                        android:layout_marginLeft="25px"
+                        android:gravity="center_vertical"
+                        android:text="0"
+                        android:textColor="#666666"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="2px"
+                        android:layout_height="80px"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10px"
+                        android:background="#1A000000" />
+                </RelativeLayout>
+
+                <ProgressBar
+                    android:id="@+id/speedtest_latencyprogress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="10px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15px"
+                    android:max="100"
+                    android:paddingRight="20px"
+                    android:progressDrawable="@drawable/speedtest_progress"
+                    android:visibility="invisible" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/speedtest_carrier_latency"
+                android:layout_width="120px"
+                android:layout_height="100px"
+                android:layout_marginLeft="20px"
+                android:gravity="center_vertical"
+                android:text="0"
+                android:textColor="#666666"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="2px"
+            android:background="#1A000000" />
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/DownloadHead"
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:layout_marginLeft="16px"
+                android:gravity="center_vertical"
+                android:text="@string/speedtest_download_speed"
+                android:textColor="#666666"
+                android:textSize="20dp" />
+
+            <FrameLayout
+                android:layout_width="120px"
+                android:layout_height="100px" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+
+                    <View
+                        android:layout_width="2px"
+                        android:layout_height="80px"
+                        android:layout_marginTop="10px"
+                        android:background="#1A000000" />
+
+                    <TextView
+                        android:id="@+id/speedtest_download"
+                        android:layout_width="fill_parent"
+                        android:layout_height="100px"
+                        android:layout_marginLeft="25px"
+                        android:gravity="center_vertical"
+                        android:text="0"
+                        android:textColor="#666666"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="2px"
+                        android:layout_height="80px"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10px"
+                        android:background="#1A000000" />
+                </RelativeLayout>
+
+                <ProgressBar
+                    android:id="@+id/speedtest_downloadprogress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="10px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15px"
+                    android:max="100"
+                    android:paddingRight="20px"
+                    android:progressDrawable="@drawable/speedtest_progress"
+                    android:visibility="invisible" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/speedtest_carrier_download"
+                android:layout_width="120px"
+                android:layout_height="100px"
+                android:layout_marginLeft="20px"
+                android:gravity="center_vertical"
+                android:text="0"
+                android:textColor="#666666"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="2px"
+            android:background="#1A000000" />
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/UploadHead"
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:layout_marginLeft="16px"
+                android:gravity="center_vertical"
+                android:text="@string/speedtest_upload_speed"
+                android:textColor="#666666"
+                android:textSize="20dp" />
+
+            <FrameLayout
+                android:layout_width="120px"
+                android:layout_height="100px" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+
+                    <View
+                        android:layout_width="2px"
+                        android:layout_height="80px"
+                        android:layout_marginTop="10px"
+                        android:background="#1A000000" />
+
+                    <TextView
+                        android:id="@+id/speedtest_upload"
+                        android:layout_width="fill_parent"
+                        android:layout_height="100px"
+                        android:layout_marginLeft="25px"
+                        android:gravity="center_vertical"
+                        android:text="0"
+                        android:textColor="#666666"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="2px"
+                        android:layout_height="80px"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10px"
+                        android:background="#1A000000" />
+                </RelativeLayout>
+
+                <ProgressBar
+                    android:id="@+id/speedtest_uploadprogress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="10px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15px"
+                    android:max="100"
+                    android:paddingRight="20px"
+                    android:progressDrawable="@drawable/speedtest_progress"
+                    android:visibility="invisible" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/speedtest_carrier_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:layout_marginLeft="20px"
+                android:gravity="center_vertical"
+                android:text="0"
+                android:textColor="#666666"
+                android:textSize="18sp" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="480px"
+        android:layout_height="100px"
+        android:layout_below="@+id/resultTableLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30px"
+        android:background="@drawable/start_button_selector"
+        android:gravity="center"
+        android:onClick="startClicked"
+        android:text="@string/SpeedTest_StartTest"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp" />
+
+    <Button
+        android:id="@+id/TestInProgressButton"
+        android:layout_width="480px"
+        android:layout_height="100px"
+        android:layout_below="@+id/resultTableLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30px"
+        android:background="#666666"
+        android:gravity="center"
+        android:text="@string/SpeedTest_InProgress"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
+        android:visibility="invisible" />
+
+</RelativeLayout>

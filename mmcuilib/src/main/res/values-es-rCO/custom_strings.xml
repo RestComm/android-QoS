@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="eventcustom_droppedcall">Llamada caída</string>
+    <string name="eventcustom_failedcall">Llamada fallida</string>
+    <string name="troublecustom_droppedcall">Llamada caída</string>
+    <string name="troublecustom_failedcall">Llamada fallida</string>
+    <string name="mystats_custom_droppedcalls">Llamadas perdidas</string>
+    <string name="mystats_custom_failedcalls">Llamadas fallidas</string>
+    
+</resources>

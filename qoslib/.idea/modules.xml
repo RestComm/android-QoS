@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Android-QOS-Lib.iml" filepath="$PROJECT_DIR$/../Android-QOS-Lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../MMC_Android/MMC/app/app.iml" filepath="$PROJECT_DIR$/../../MMC_Android/MMC/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../examples/mmc_test_aar/mmc_test_aar.iml" filepath="$PROJECT_DIR$/../examples/mmc_test_aar/mmc_test_aar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../mmcextension/mmcextension.iml" filepath="$PROJECT_DIR$/../mmcextension/mmcextension.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../MMC_Android/MMC/mmcuilib/mmcuilib.iml" filepath="$PROJECT_DIR$/../../MMC_Android/MMC/mmcuilib/mmcuilib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../mmcutility/mmcutility.iml" filepath="$PROJECT_DIR$/../mmcutility/mmcutility.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qoslib.iml" filepath="$PROJECT_DIR$/qoslib.iml" />
+    </modules>
+  </component>
+</project>

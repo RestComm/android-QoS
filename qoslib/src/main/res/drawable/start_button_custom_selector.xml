@@ -1,0 +1,6 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/start_button_custom_active_gradient" android:state_pressed="true"/>
+    <item android:drawable="@drawable/start_button_custom_inactive_gradient"/>
+
+</selector>

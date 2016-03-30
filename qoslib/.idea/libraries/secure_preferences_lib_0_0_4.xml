@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="secure-preferences-lib-0.0.4">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/intermediates/exploded-aar/com.scottyab/secure-preferences-lib/0.0.4/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/build/intermediates/exploded-aar/com.scottyab/secure-preferences-lib/0.0.4/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.scottyab/secure-preferences-lib/0.0.4/64a75e71b922c4a45feaa9c97bba8f9a87f74e6d/secure-preferences-lib-0.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

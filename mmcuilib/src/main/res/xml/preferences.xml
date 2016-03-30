@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    
+<!--     <Preference
+	    android:title="Settings"
+	    android:key="Settings"
+	     />
+ -->    
+    <!--  CheckBoxPreference
+    	android:key="KEY_SETTINGS_SHARE_WITH_CARRIER"
+    	android:title="@string/Settings_ShareWithCarrier"
+    	android:summary="@string/Settings_ShareWithCarrier_Summary"
+    	android:defaultValue="true"
+    /-->
+    
+    <!--  Start on boot -->
+    <CheckBoxPreference
+    	android:key="KEY_SETTINGS_START_ON_BOOT"	
+    	android:title="@string/Settings_StartOnBoot"
+    	android:defaultValue="true"
+    />
+    
+    <!-- CheckBoxPreference
+    	android:key="KEY_SETTINGS_ENABLE_DATA_ROAMING"
+    	android:title="@string/Settings_EnableDataRoaming"
+    	android:defaultValue="false"
+    / -->
+    
+    <!--  Level of reporting -->
+    <PreferenceScreen 
+    		android:key="KEY_SETTINGS_USAGE_GROUP"
+    		android:title="%s">
+    		<ListPreference
+	    		android:key="KEY_SETTINGS_USAGE_PROFILE"
+	    		android:title="@string/Settings_UsageProfile"
+	    		android:summary="%s"
+	    		android:entries="@array/Settings_UsageProfileNames"
+	    		android:entryValues="@array/Settings_UsageProfileValues"
+	    		android:defaultValue="1"
+		    />
+		    <ListPreference
+	    		android:key="KEY_SETTINGS_USAGE_PROFILE_CHARGER"
+	    		android:title="@string/Settings_UsageProfileCharger"
+	    		android:summary="@string/Settings_UsageProfileSummaryCharger"
+	    		android:entries="@array/Settings_UsageProfileNames"
+	    		android:entryValues="@array/Settings_UsageProfileValues"
+	    		android:defaultValue="1"
+		    />
+		    <CheckBoxPreference
+		    	android:key="KEY_SETTINGS_AUTOSPEED_ENABLE"
+		    	android:title="@string/Settings_AutoSpeed_Enable"
+		    	android:summary="@string/Settings_AutoSpeed_Summary"
+		    	android:defaultValue="false"
+		    />
+		    <EditTextPreference
+		        android:key="KEY_SETTINGS_AUTOSPEED_SIZEMB"
+		        android:title="@string/Settings_AutoSpeedMB"
+		        android:summary="@string/Settings_AutoSpeedMB_Summary"
+		        android:defaultValue="50"
+		        android:numeric="integer"
+		    />
+		</PreferenceScreen>
+
+
+		
+    <!--  Passive speedtest -->
+    <CheckBoxPreference
+    	android:key="KEY_PASSIVE_SPEED_TEST"
+    	android:title="@string/Settings_PassiveSpeedtest"
+    	android:defaultValue="true"
+    />
+    
+    <!-- Passive Scanning Mode (only for debugging)-->
+    <ListPreference
+    		android:key="KEY_SETTINGS_TRAVEL_DETECT"
+    		android:title="@string/Settings_TravelDetect"
+    		android:summary="@string/Settings_TravelDetectSummary"
+    		android:entries="@array/Settings_TravelDetectModes"
+    		android:entryValues="@array/Settings_TravelDetectValues"
+    		android:defaultValue="-1"
+    />
+    
+    <!--  Contact Email -->
+    <EditTextPreference
+    	android:key="KEY_SETTINGS_CONTACT_EMAIL"
+    	android:title="@string/Settings_ContactEmail"
+    	android:summary="@string/Settings_ContactEmail_Summary"
+    	android:defaultValue="null"
+    />
+    
+    <!-- Twitter Username -->
+    <EditTextPreference
+    	android:key="KEY_SETTINGS_TWITTER"
+    	android:title="@string/Settings_Twitter"
+    	android:summary="@string/Settings_Twitter_Summary"
+    	android:defaultValue="null"
+    />
+ 
+    <!-- Send data when roaming -->
+    <CheckBoxPreference
+    	android:key="KEY_SETTINGS_DATA_ROAMING"
+    	android:title="@string/Settings_EnableDataWhenRoaming"
+    	android:summary="@string/Settings_EnableDataWhenRoaming"
+    	android:defaultValue="false"
+    />
+    
+    <!-- Send data only on Wifi -->
+    <CheckBoxPreference
+    	android:key="KEY_SETTINGS_SEND_ON_WIFI"
+    	android:title="@string/Settings_SendDataOnWifi"
+    	android:summary="@string/Settings_SendDataOnWifi"
+    	android:defaultValue="false"
+    />
+    
+    <!--  Always show top icon -->
+    <CheckBoxPreference
+    	android:key="KEY_SETTINGS_ICON_ALWAYS"
+    	android:title="@string/Settings_AlwaysShowIcon"
+    	android:summary="@string/Settings_AlwaysShowIcon_Summary"
+    	android:defaultValue="false"
+    />
+    
+    <!--  Map -->
+    <PreferenceCategory android:title="@string/Settings_Map">
+    	<PreferenceScreen 
+    		android:key="KEY_SETTINGS_MAP_FILTERS"
+    		android:title="@string/Settings_Map_Filters">
+    		<CheckBoxPreference
+    			android:key="KEY_SETTINGS_MAP_FILTERS_DROPPEDCALL"
+    			android:title="@string/Settings_Map_DroppedCall"
+    			android:defaultValue="true"
+    		/>
+    		<CheckBoxPreference
+    			android:key="KEY_SETTINGS_MAP_FILTERS_LOSTVOICECOVERAGE"
+    			android:title="@string/Settings_Map_LostVoiceCoverage"
+    			android:defaultValue="true"
+    		/>
+    		<CheckBoxPreference
+    			android:key="KEY_SETTINGS_MAP_FILTERS_LOST3G"
+    			android:title="@string/Settings_Map_Lost3G"
+    			android:defaultValue="true"
+    		/>
+    		<CheckBoxPreference
+    			android:key="KEY_SETTINGS_MAP_FILTERS_SPEED"
+    			android:title="@string/recordingdlg_speedtest"
+    			android:defaultValue="true"
+    		/>
+    	</PreferenceScreen>
+    	
+    	
+    </PreferenceCategory>
+    
+    <!-- Days to keep data for -->
+    <EditTextPreference
+        android:key="KEY_SETTINGS_DAYS_TO_KEEP_ENTRIES"
+        android:title="@string/Settings_DaysToKeepEntries"
+        android:defaultValue="30"
+        android:numeric="integer"
+    />
+    
+    <!--  CheckBoxPreference
+    	android:key="KEY_SETTINGS_COLLECT_USAGE_DATA"
+    	android:title="@string/Settings_CollectUsageData"
+    	android:summary="@string/Settings_CollectUsageData_Summary"
+    	android:defaultValue="true"
+    /-->
+</PreferenceScreen>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+	<string name="sharemessage_eventdetail_droppedcall">He perdido una llamada con @CARRIERHANDLE y la aplicación #MyMobileCoverage está enviando los datos para solucionar el problema.</string>
+    <string name="sharemessage_eventdetail_failedcall">Hubo un error en una llamada con @CARRIERHANDLE y mi aplicación #MyMobileCoverage les está enviando datos para solucionar el problema.</string>
+    <string name="sharemessage_troublespot_droppedcall">Acabo de perder una llamada con @CARRIERHANDLE y la aplicación #MyMobileCoverage está enviando los datos para solucionar el problema.</string>
+    <string name="sharemessage_troublespot_failedcall">Solo tenía una llamada fallida en @CARRIERHANDLE y la aplicación #MyMobileCoverage está enviando datos para solucionar el problema.</string>
+    <string name="sharemessagesubject_eventdetail_droppedcall">Llamada cortada con @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_eventdetail_failedcall">Error en llamada con @CARRIERHANDLE</string>
+    <string name="eventtype_droppedcall">Llamada cortada</string>
+    <string name="eventtype_failedcall">Llamada fallida</string>
+    <string name="dashboard_root_request_title">¿Desea una mejor detección de llamadas cortadas?</string>
+	<string name="dashboard_root_request_message">Jellybean requiere acceso al root para determinar la causa exacta de llamadas cortadas.  A continuación el sistema le solicitará que permita el acceso a la app MyMobileCoverage.  ¿Desea proseguir?</string>
+    <string name="rankings_dropped">Menos % de llamadas cortadas</string>
+    <string name="mystats_callstats">Benchmark de llamadas</string>
+    <string name="mystats_mycallstats">Estadísticas de llamadas</string>
+    <string name="mystats_droppedcalls">Llamadas cortadas</string>
+    <string name="mystats_failedcalls">Llamadas fallidas</string>
+    <string name="mystats_yourphone">Su celular</string>
+    <string name="mystats_yourcarrier">Su operador</string>
+    <string name="eventhistory_droppedtitle">Llamadas cortadas</string>
+    <string name="troublespot_droppedcall">Llamada cortada</string>
+    <string name="troublespot_failedcall">Llamada fallida</string>
+    <string name="MMC_Notification_call_dropped">Llamada cortada</string>
+    <string name="MMC_Notification_call_failed">Llamada fallida</string>
+    <string name="MMC_Notification_did_you_drop">¿Tuvo una llamada cortada?</string>
+    <string name="MMC_Notification_did_you_fail">¿Tuvo una llamada fallida?</string>
+    <string name="MMC_Notification_did_failed">Por favor, confirme si su llamada falló. </string>
+    <string name="MMC_Notification_did_dropped">Por favor, confirme si su llamada cayó. </string>
+    <string name="dropcall_confirmation_text">¿Este llamada se cayó o terminó normalmente?</string>
+    <string name="failedcall_confirmation_text">¿Este llamada se falló o terminó normalmente?</string>
+    <string name="drop_button_text">llamada cortada</string>
+    <string name="fail_button_text">llamada fallida</string>
+    <string name="GenericText_Calls">Llamadas</string>
+    <string name="GenericText_Dropped">cortada</string>
+    <string name="GenericText_CallsDropped">Llamadas cortadas</string>
+    <string name="GenericText_DroppedCall">Llamada cortada</string>
+    <string name="GenericText_MapTip">El mapa mostrará eventos de cortes y llamadas cortadas cuando adquiera la ubicación GPS</string>
+    <string name="MyStats_StatisticType_CallsDropped_Caption">Llamadas cortadas</string>
+    <string name="Setting_Options_ProfileChange_Minimal_Explanation_Part1">Análisis básico de la cobertura de vida mientras maximiza la vida de la batería. Mínimo uso del GPS para reportar las llamadas cortadas y los cortes. </string>
+    <string name="Setting_Options_ProfileChange_Minimal_Explanation_Part2">Localiza e informa de llamadas cortadas y cortes. Desactiva la exploración Wi-Fi y las pruebas de velocidad de datos, con actualizaciones en movimiento cada 6 horas.</string>
+    <string name="Settings_Map_DroppedCall">Llamadas cortadas/fallidas</string>
+    
+</resources>

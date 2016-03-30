@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/webtest_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/upperBackground"
+        android:layout_width="match_parent"
+        android:background="#000000"
+        android:layout_height="70dp">
+        <ImageView
+            android:id="@+id/actionBarLogo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/action_bar_logo"
+            android:onClick="BackActionClicked" />
+        <SurfaceView
+			android:id="@+id/surfaceView1"
+            android:layout_toRightOf="@id/actionBarLogo"
+            android:layout_width="110dp"
+			android:layout_height="70dp" />
+        <TextView
+            android:id="@+id/bufferHead"
+            android:layout_toRightOf="@id/surfaceView1"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="16px"
+            android:gravity="center_vertical"
+            android:text="Video Test Progress"
+            android:textColor="#666666"
+            android:textSize="20dp" />
+
+        <FrameLayout
+            android:id="@+id/frame_progress"
+            android:layout_toRightOf="@id/bufferHead"
+            android:layout_width="200dp"
+            android:layout_height="50dp" >
+
+            <ProgressBar
+                android:id="@+id/buffer_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="8dp"
+                android:max="100"
+                android:paddingRight="20px"
+                android:progressDrawable="@drawable/speedtest_progress"/>
+            <ProgressBar
+                android:id="@+id/play_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="8dp"
+                android:layout_below="@id/buffer_progress"
+                android:max="100"
+                android:paddingRight="20px"
+                android:progressDrawable="@drawable/speedtest_progress"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/textBufferProg"
+            android:layout_toRightOf="@id/frame_progress"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20px"
+            android:gravity="center_vertical"
+            android:text="0"
+            android:textColor="#666666"
+            android:textSize="18sp" />
+	</RelativeLayout>
+	
+
+</RelativeLayout>

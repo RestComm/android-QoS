@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?><RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"    android:background="#333333"
+    android:id="@+id/mappingView">
+
+    <RelativeLayout
+        android:id="@+id/scalingWrapper"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <RelativeLayout
+            android:id="@+id/topactionbarLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="96px"
+            android:background="@color/title_background" >
+
+            <ImageButton
+                android:id="@+id/actionBarBackButton"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:padding="10px"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:onClick="onExit"
+                android:src="@drawable/ic_action_back_icon" />
+
+            <ImageView
+                android:id="@+id/actionBarLogo"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/actionBarBackButton"
+                android:background="@drawable/action_bar_logo"
+                android:onClick="onExit" />
+
+            <TextView
+                android:id="@+id/actionbartitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/actionBarLogo"
+                android:onClick="onMappingOptions"
+                android:text="@string/manualmapping_title"
+                android:textColor="#666666"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/actionbarSlinkyIcon"
+                android:layout_width="64px"
+                android:layout_height="64px"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/actionBarLogo"
+                android:layout_marginLeft="15px"
+                android:layout_marginRight="195px"
+                android:background="@drawable/slinky_icon_remove"
+                android:onClick="discardWalkingSamples" />
+            
+            <Button
+                android:id="@+id/actionbarDeleteButton"
+                android:layout_width="64px"
+                android:layout_height="64px"
+                android:layout_alignBaseline="@+id/actionbartitle"
+                android:layout_alignBottom="@+id/actionbartitle"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="110px"
+                android:background="@drawable/trash_icon_gray" />
+
+            <Button
+                android:id="@+id/actionbarHelpButton"
+                android:layout_width="64px"
+                android:layout_height="64px"
+                android:layout_alignBottom="@+id/actionbarLocationIcon"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/actionbarLocationIcon"
+                android:layout_marginRight="25px"
+                android:background="@drawable/help_icon"
+                android:onClick="onHelp" />
+
+            
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/topactionbarLine"
+            android:layout_width="fill_parent"
+            android:layout_height="4px"
+            android:layout_below="@+id/topactionbarLayout"
+            android:background="#3399cc" />
+
+        <com.cortxt.app.mmcui.Activities.MyCoverage.MMCMapView
+            android:id="@+id/my_mapview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/linearLayout2"
+            android:layout_below="@+id/topactionbarLine"
+            android:apiKey="@string/google_maps_api_key"
+            android:clickable="true"
+            android:enabled="true" />
+
+        <ProgressBar
+            android:id="@+id/busyIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/topLinearLayout"
+            android:layout_marginRight="10px"
+            android:layout_marginTop="12px"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:background="#333333"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <ImageView
+                android:id="@+id/anchorImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="80px"
+                android:gravity="center_horizontal|center_vertical"
+                android:src="@drawable/anchor_icon" />
+
+            <Button
+                android:id="@+id/continueButton"
+                android:layout_width="0px"
+                android:layout_height="80px"
+                android:layout_weight="1"
+                android:background="#333333"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/manualmapping_continue"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/leftButtonIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20px"
+                android:background="@drawable/action_bar_remove_marker_white"
+                android:gravity="center_horizontal|center_vertical" />
+
+            <TextView
+                android:id="@+id/leftButton"
+                android:layout_width="0px"
+                android:layout_height="80px"
+                android:layout_weight="0.50"
+                android:background="#333333"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/manualmapping_skip_polygon"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/actionbarline3"
+                android:layout_width="0px"
+                android:layout_height="80px"
+                android:layout_weight="0.007"
+                android:background="#757575" />
+
+            <ImageView
+                android:id="@+id/rightButtonIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15px"
+                android:background="@drawable/action_bar_add_marker_white"
+                android:gravity="center_horizontal|center_vertical" />
+
+            <TextView
+                android:id="@+id/rightButton"
+                android:layout_width="0px"
+                android:layout_height="80px"
+                android:layout_weight="0.50"
+                android:background="#333333"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/manualmapping_select_polygon"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="fill_parent"
+            android:layout_height="4px"
+            android:layout_above="@+id/linearLayout1"
+            android:background="#757575"
+            android:orientation="horizontal" >
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/crosshairImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/linearLayout2"
+            android:layout_below="@+id/topactionbarLine"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/crosshair_mapping" />
+
+        <TextView
+            android:id="@+id/levelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/topLinearLayout"
+            android:layout_marginRight="10px"
+            android:layout_marginTop="10px"
+            android:text="smaple"
+            android:textSize="18dp"
+            android:textColor="#333333"
+          	android:visibility="gone" />
+
+        <!-- Zoom In -->
+
+        <!--Button
+            android:id="@+id/zoomInButton"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20px"
+            android:layout_marginTop="150px"
+            android:layout_below="@+id/topactionbarLine"
+            android:background="@drawable/zoom_in"
+            android:onClick="onZoomIn" /-->
+
+        <!-- Zoom Out -->
+
+        <!-- Button
+            android:id="@+id/zoomOutButton"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/zoomInButton"
+            android:layout_marginLeft="20px"
+            android:background="@drawable/zoom_out"
+            android:onClick="onZoomOut" /-->
+
+        <!-- Button
+            android:id="@+id/rotateCounterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/linearLayout1"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="50px"
+            android:onClick="onRotateCounter"
+            android:text="Counter" 
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/rotateClockButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/rotateCounterButton"
+            android:layout_alignParentLeft="true"
+            android:onClick="onRotateClock"
+            android:text="Clock" 
+             android:visibility="gone"/-->
+
+        <!-- SeekBar
+            android:id="@+id/rotateSeekBar"
+            android:layout_width="600px"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/topactionbarLine"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/orientation_ruler" 
+            android:layout_marginTop="65px"
+            android:max="0"
+            android:progress="0"/>
+        
+        <SeekBar
+            android:id="@+id/hiddenSeekBar"
+            android:layout_width="580px"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/topactionbarLine"
+            android:layout_centerHorizontal="true"
+            android:thumb="@drawable/orientation_pointer"
+            android:scaleY="-1"
+            android:max="36"
+            android:layout_marginTop="20px"
+            android:progressDrawable="@drawable/seekbar_translucent"
+            android:progress="18"/>
+
+        <TextView
+            android:id="@+id/scaleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/topactionbarLayout" 
+            android:layout_marginLeft="20px" 
+            android:layout_marginTop="20px"
+            android:text=""/-->
+
+        <LinearLayout
+            android:id="@+id/topLinearLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/my_mapview"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <SeekBar
+                android:id="@+id/rotateSeekBar"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.80"
+                android:background="@drawable/orientation_ruler"
+                android:max="0"
+                android:progress="0" />
+
+            <TextView
+                android:id="@+id/scaleTextView"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.20"
+                android:gravity="center"
+                android:text="0.0m" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/thumbLinearLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/my_mapview"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <SeekBar
+                android:id="@+id/hiddenSeekBar"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.80"
+                android:max="36"
+                android:progress="18"
+                android:progressDrawable="@drawable/seekbar_translucent"
+                android:thumb="@drawable/orientation_pointer" />
+
+            <View
+                android:id="@+id/placeholder"
+                android:layout_width="0px"
+                android:layout_height="0px"
+                android:layout_weight="0.20" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    </RelativeLayout>
+

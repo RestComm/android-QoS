@@ -1,0 +1,11 @@
+
+include ':qoslib', ':mmcutility', ':mmcextension'
+//project(':mmc_test_aar').projectDir = new File('examples/mmc_test_aar')
+include ':mmcuilib'
+//project(':mmcuilib').projectDir = new File(settingsDir, '../MMC_Android/MMC/mmcuilib')
+include ':app'
+//project(':app').projectDir = new File(settingsDir, '../MMC_Android/MMC/app')
+//include ':examples/Restcomm_demo/app'
+project(':app').projectDir = new File('examples/Restcomm_demo/app')
+include ':restcomm.android.client.sdk'
+project(':restcomm.android.client.sdk').projectDir = new File(settingsDir, '../restcommsdk/restcomm-android-sdk/restcomm.android.client.sdk')

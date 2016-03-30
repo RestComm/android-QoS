@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/screen_container"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#dddddd" >
+
+    <RelativeLayout
+        android:id="@+id/topactionbarLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="96px"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/actionbar_gradient" >
+
+      
+        <ImageView
+            android:id="@+id/actionBarLogo"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="48px"
+            android:background="@drawable/action_bar_logo"
+            android:onClick="actionBarbackClik" />
+
+        <TextView
+            android:id="@+id/actionbartitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/actionBarLogo"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10px"
+            android:layout_toRightOf="@+id/actionBarLogo"
+            android:text="@string/dashboard_title"
+            android:textColor="#666666"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/actionbarMenuIcon"
+            android:layout_width="90px"
+            android:layout_height="90px"
+            android:layout_marginLeft="614px"
+            android:layout_marginTop="14px"
+            android:background="@drawable/actionbar_gradient"
+            android:onClick="MenuButtonClickListener" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/topactionbarLine"
+        android:layout_width="fill_parent"
+        android:layout_height="4px"
+        android:layout_below="@+id/topactionbarLayout"
+        android:background="#3399cc" />
+</RelativeLayout>

@@ -1,0 +1,132 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <android.opengl.GLSurfaceView
+        android:id="@+id/glview_call"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView android:id="@+id/textDial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dial: "
+        android:textColor="#ffffff"
+        android:layout_marginBottom="18px"
+        android:layout_above="@+id/button_apply"
+        android:layout_alignParentLeft="true" />
+
+    <EditText android:id="@+id/editDial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="8888@184.73.55.15:5080"
+        android:minWidth="100dp"
+        android:textColor="#ffffff"
+        android:layout_above="@+id/button_apply"
+        android:singleLine="true"
+        android:lines="1"
+        android:layout_toRightOf="@+id/textDial"/>
+
+    <TextView android:id="@+id/textPwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pwd: "
+        android:textColor="#ffffff"
+        android:layout_marginBottom="18px"
+        android:layout_above="@+id/editDial"
+        android:layout_alignParentLeft="true" />
+
+    <EditText android:id="@+id/editPwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="aaaa"
+        android:password="true"
+        android:minWidth="100dp"
+        android:layout_above="@+id/editDial"
+        android:singleLine="true"
+        android:textColor="#ffffff"
+        android:lines="1"
+        android:layout_toRightOf="@+id/textPwd"/>
+
+
+    <TextView android:id="@+id/textUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User: "
+        android:textColor="#ffffff"
+        android:layout_marginBottom="18px"
+        android:layout_above="@+id/editPwd"
+        android:layout_alignParentLeft="true" />
+
+    <EditText android:id="@+id/editUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="brad"
+        android:textColor="#ffffff"
+        android:minWidth="100dp"
+        android:layout_above="@+id/editPwd"
+        android:singleLine="true"
+        android:lines="1"
+        android:layout_toRightOf="@+id/textDial"/>
+
+    <TextView android:id="@+id/textServer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Server: "
+        android:textColor="#ffffff"
+        android:layout_marginBottom="18px"
+        android:layout_above="@+id/editUser"
+        android:layout_alignParentLeft="true" />
+
+    <EditText android:id="@+id/editServer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="184.73.55.15"
+        android:minWidth="100dp"
+        android:textColor="#ffffff"
+        android:layout_above="@+id/editUser"
+        android:singleLine="true"
+        android:lines="1"
+        android:layout_toRightOf="@+id/textUser"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply"
+        android:id="@+id/button_apply"
+        android:minWidth="100dp"
+        android:layout_above="@+id/button_dial"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dial"
+        android:id="@+id/button_dial"
+        android:minWidth="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Answer"
+        android:id="@+id/button_answer"
+        android:minWidth="100dp"
+        android:layout_toRightOf="@+id/button_dial"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hang up"
+        android:id="@+id/button_hangup"
+        android:minWidth="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

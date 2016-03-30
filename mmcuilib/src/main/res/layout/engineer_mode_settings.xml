@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" >
+
+    <RelativeLayout
+        android:id="@+id/scallingWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:id="@+id/topactionbarLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="96px"
+            android:background="@color/title_background" >
+
+            <ImageButton
+                android:id="@+id/actionBarBackButton"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:padding="10px"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:src="@drawable/ic_action_back_icon"
+                android:onClick="BackActionClicked" />
+
+            <ImageView
+                android:id="@+id/actionBarLogo"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/actionBarBackButton"
+                android:background="@drawable/action_bar_logo" 
+                android:onClick="BackActionClicked"
+                />
+
+            <TextView
+                android:id="@+id/actionbartitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/actionBarLogo"
+                android:text="Engineer Mode Settings"
+                android:textColor="#666666"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/firstSeparator"
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            android:layout_below="@+id/topactionbarLayout"
+            android:background="#1A000000"
+            android:tag="constantheight" />
+
+        <RelativeLayout
+            android:id="@+id/secondLayout"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="20px"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/firstSeparator"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/recordSessionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/recordingdlg_duration"
+                android:textColor="#666666"
+                android:textSize="18dp" />
+
+            <Spinner
+                android:id="@+id/recordingTimeSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginLeft="20px"
+                android:layout_toRightOf="@+id/recordSessionText" >
+            </Spinner>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/secondSeparator"
+            android:layout_width="640px"
+            android:layout_height="2px"
+            android:layout_below="@+id/secondLayout"
+            android:layout_centerHorizontal="true"
+            android:background="#1A000000"
+            android:tag="constantheight" />
+
+       	<RelativeLayout
+            android:id="@+id/datatypeCoveragelayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:layout_below="@+id/secondSeparator"
+            android:layout_alignLeft="@id/secondLayout"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/dataTypeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:text="@string/recordingdlg_types"
+                android:textColor="#666666"
+                android:textSize="18dp" />
+
+            <!--CheckBox
+                android:id="@+id/checkBoxCoverage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dataTypeText"
+                android:textColor="#666666"
+                android:layout_marginTop="10px"
+                android:layout_marginLeft="40px"
+                android:text="@string/recordingdlg_coverage" />
+
+            <CheckBox
+                android:id="@+id/checkBoxSpeedtest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#666666"
+                android:layout_below="@+id/checkBoxCoverage"
+                android:layout_marginLeft="40px"
+                android:text="@string/recordingdlg_speedtest" /-->
+              
+            <TableLayout
+		        android:id="@+id/resultTableLayout"
+		        android:layout_width="640px"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@+id/dataTypeText"
+		        android:layout_centerHorizontal="true"
+		        android:layout_marginTop="20px"
+		        android:stretchColumns="0" >
+		
+		        <TableRow>
+		         
+		            <TextView
+		                android:id="@+id/intervalCoverage"
+		                android:layout_width="240px"
+		                android:layout_height="wrap_content"
+		                android:layout_centerVertical="true"
+		                android:text="@string/recordingdlg_coverage"
+		                android:textColor="#666666"
+		                android:textSize="18dp" />
+		
+		            <Spinner
+		                android:id="@+id/CoverageSpinnerView"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:textSize="15sp"
+		                android:layout_marginLeft="20px"
+		                android:layout_toRightOf="@+id/intervalCoverage" >
+		            </Spinner>
+	            </TableRow>
+	            
+		        <TableRow>
+		         
+		            <TextView
+		                android:id="@+id/intervalSpeed"
+		                android:layout_width="240px"
+		                android:layout_height="wrap_content"
+		                android:layout_centerVertical="true"
+		                android:text="@string/recordingdlg_speedtest"
+		                android:textColor="#666666"
+		                android:textSize="18dp" />
+		
+		            <Spinner
+		                android:id="@+id/SpeedSpinnerView"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:textSize="15sp"
+		                android:layout_marginLeft="20px"
+		                android:layout_toRightOf="@+id/intervalSpeed" >
+		            </Spinner>
+	            </TableRow>
+	            
+		        <TableRow>
+		            <TextView
+		                android:id="@+id/intervalVideo"
+		                android:layout_width="240px"
+		                android:layout_height="wrap_content"
+		                android:layout_centerVertical="true"
+		                android:text="@string/recordingdlg_videotest"
+		                android:textColor="#666666"
+		                android:textSize="18dp" />
+		
+		            <Spinner
+		                android:id="@+id/VideoSpinnerView"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:textSize="15sp"
+		                android:layout_marginLeft="20px"
+		                android:layout_toRightOf="@+id/intervalVideo" >
+		            </Spinner>
+	            </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:id="@+id/intervalAudio"
+                        android:layout_width="240px"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/recordingdlg_audiotest"
+                        android:textColor="#666666"
+                        android:textSize="18dp" />
+
+                    <Spinner
+                        android:id="@+id/AudioSpinnerView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:layout_marginLeft="20px"
+                        android:layout_toRightOf="@+id/intervalAudio" >
+                    </Spinner>
+                </TableRow>
+	            
+		        <TableRow>
+		            <TextView
+		                android:id="@+id/intervalConnect"
+		                android:layout_width="240px"
+		                android:layout_height="wrap_content"
+		                android:layout_centerVertical="true"
+		                android:text="@string/recordingdlg_connecttest"
+		                android:textColor="#666666"
+		                android:textSize="18dp" />
+		
+		            <Spinner
+		                android:id="@+id/ConnectSpinnerView"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:textSize="15sp"
+		                android:layout_marginLeft="20px"
+		                android:layout_toRightOf="@+id/intervalConnect" >
+		            </Spinner>
+	            </TableRow>
+	            
+		        <TableRow>
+		            <TextView
+		                android:id="@+id/intervalSMS"
+		                android:layout_width="240px"
+		                android:layout_height="wrap_content"
+		                android:layout_centerVertical="true"
+		                android:text="@string/recordingdlg_smstest"
+		                android:textColor="#666666"
+		                android:textSize="18dp" />
+		
+		            <Spinner
+		                android:id="@+id/SMSSpinnerView"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:textSize="15sp"
+		                android:layout_marginLeft="20px"
+		                android:layout_toRightOf="@+id/intervalSMS" >
+		            </Spinner>
+	            </TableRow>
+	            
+		        <TableRow>
+		            <TextView
+		                android:id="@+id/intervalVQ"
+		                android:layout_width="240px"
+		                android:layout_height="wrap_content"
+		                android:layout_centerVertical="true"
+		                android:text="@string/recordingdlg_vqtest"
+		                android:textColor="#666666"
+		                android:textSize="18dp" />
+		
+		            <Spinner
+		                android:id="@+id/VQSpinnerView"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:textSize="15sp"
+		                android:layout_marginLeft="20px"
+		                android:layout_toRightOf="@+id/intervalVQ" >
+		            </Spinner>
+	            </TableRow>
+	            
+		        <TableRow>
+		            <TextView
+		                android:id="@+id/intervalWeb"
+		                android:layout_width="240px"
+		                android:layout_height="wrap_content"
+		                android:layout_centerVertical="true"
+		                android:text="@string/recordingdlg_webtest"
+		                android:textColor="#666666"
+		                android:textSize="18dp" />
+		
+		            <Spinner
+		                android:id="@+id/WebSpinnerView"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:textSize="15sp"
+		                android:layout_marginLeft="20px"
+		                android:layout_toRightOf="@+id/intervalWeb" >
+		            </Spinner>
+	            </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:id="@+id/intervalYouTube"
+                        android:layout_width="240px"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/recordingdlg_youtubetest"
+                        android:textColor="#666666"
+                        android:textSize="18dp" />
+
+                    <Spinner
+                        android:id="@+id/YouTubeSpinnerView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:layout_marginLeft="20px"
+                        android:layout_toRightOf="@+id/intervalYouTube" >
+                    </Spinner>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:id="@+id/intervalPing"
+                        android:layout_width="240px"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/recordingdlg_pingtest"
+                        android:textColor="#666666"
+                        android:textSize="18dp" />
+
+                    <Spinner
+                        android:id="@+id/PingSpinnerView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:layout_marginLeft="20px"
+                        android:layout_toRightOf="@+id/intervalPing" >
+                    </Spinner>
+                </TableRow>
+
+	        </TableLayout>
+            
+        </RelativeLayout>
+
+        <!-- View
+            android:id="@+id/thirdSeparator"
+            android:layout_width="640px"
+            android:layout_height="2px"
+            android:layout_below="@+id/datatypeCoveragelayout"
+            android:layout_centerHorizontal="true"
+            android:background="#1A000000"
+            android:tag="constantheight" />
+
+        <RelativeLayout
+            android:id="@+id/IntervalsLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:layout_below="@+id/thirdSeparator"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/intervalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/recordingdlg_speedinterval"
+                android:textColor="#666666"
+                android:textSize="18dp" />
+
+            <Spinner
+                android:id="@+id/IntervalSpinnerView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_marginLeft="20px"
+                android:layout_toRightOf="@+id/intervalText" >
+            </Spinner>
+        </RelativeLayout -->
+        
+        <!-- View
+            android:id="@+id/fourthSeparator"
+            android:layout_width="640px"
+            android:layout_height="2px"
+            android:layout_below="@+id/IntervalsLayout"
+            android:layout_centerHorizontal="true"
+            android:background="#1A000000"
+            android:tag="constantheight" />
+                
+        <RelativeLayout
+            android:id="@+id/ScheduleLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:layout_below="@+id/fourthSeparator"
+            android:gravity="center_horizontal" >      
+                     
+            <TextView
+                android:id="@+id/scheduleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:textSize="18dp"
+                android:textColor="#666666"
+                android:text="@string/Schedule_Title" />     
+                
+            <LinearLayout
+                android:id="@+id/startTimeContainer"
+				android:layout_width="wrap_content"
+                android:layout_below="@+id/scheduleTextView"
+                android:layout_marginTop="20px"
+				android:layout_height="wrap_content" >
+	            
+	            <TextView
+	                android:id="@+id/startTimeTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"                
+	                android:text="@string/Schedule_StartTime"
+	                android:textColor="#666666"
+	                android:textSize="17dp" 
+	                android:layout_marginLeft="40px" />
+	
+	            <Spinner
+	                android:id="@+id/IntervalSpinnerView3"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="20px"
+	                android:textSize="16sp">
+	            </Spinner>
+
+            </LinearLayout>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+                android:layout_below="@id/startTimeContainer"
+                android:layout_marginTop="20px"
+				android:layout_height="wrap_content" >
+            
+	            <TextView
+	                android:id="@+id/scheduledTimesTextView"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/Schedule_Interval"
+	                android:textColor="#666666"
+	                android:textSize="17dp"
+	                android:layout_marginLeft="40px"/>
+	
+	            <Spinner
+	                android:id="@+id/IntervalSpinnerView4"
+	                android:textSize="17sp"
+	                android:layout_marginLeft="20px"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+		</RelativeLayout -->
+
+        <View
+            android:id="@+id/lastSeparator"
+            android:layout_width="640px"
+            android:layout_height="2px"
+            android:layout_below="@+id/datatypeCoveragelayout"
+            android:layout_centerHorizontal="true"
+            android:background="#1A000000"
+            android:tag="constantheight" />
+        
+         <Button
+            android:id="@+id/startButton"
+            android:layout_width="480px"
+            android:layout_height="100px"
+            android:layout_below="@+id/lastSeparator"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20px"
+            android:background="@drawable/start_button_selector"
+            android:gravity="center"
+            android:onClick="startClicked"
+            android:text="@string/RecordingStart"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

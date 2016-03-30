@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="FEEDBACK_MENU" type="integer" format="integer">0</item>
+    <item name="DASH_MAPS" type="integer" format="integer">1</item>
+    <item name="DASH_SPEED" type="integer" format="integer">1</item>
+    <item name="DASH_COMPARE" type="integer" format="integer">1</item>
+    <item name="DASH_TROUBLETWEET" type="integer" format="integer">1</item>
+    <item name="DASH_ENGINEER" type="integer" format="integer">1</item>
+    <item name="DASH_SAMPLING" type="integer" format="integer">1</item>
+    <item name="DASH_TRANSIT" type="integer" format="integer">1</item>
+    <item name="DASH_SURVEYS" type="integer" format="integer">1</item>
+    <item name="DASH_RAWDATA" type="integer" format="integer">1</item>
+    <item name="DASH_SETTINGS" type="integer" format="integer">1</item>
+    <item name="DASH_LABELCOLOR" type="string" format="string"></item>
+    <item name="COMPARE_RANKINGS" type="integer" format="integer">-1</item>
+    <item name="COMPARE_CALLS" type="integer" format="integer">-1</item>
+    <item name="RANKING_OPS" type="string" format="string">top</item>
+    <item name="REG_ACCEPT" type="integer" format="integer">0</item>
+    <item name="REG_SHOWPOLICY" type="integer" format="integer">1</item>
+    <item name="SHARE_TWITTER" type="integer" format="integer">1</item>
+    <item name="DASH_DIDYOUKNOW" type="integer" format="integer">1</item>
+    <item name="DASH_ADVERTIZE" type="integer" format="integer">0</item>
+    <item name="MAP_LOGO" type="integer" format="integer">1</item>
+    <item name="MAP_SWITCH_CARRIER" type="integer" format="integer">1</item>
+    <item name="CUSTOM_RECORDINGSTRING" type="integer" format="integer">0</item>
+    <item name="CUSTOM_DIDYOUKNOW" type="integer" format="integer">0</item>
+    <item name="CUSTOM_NOTIFIER" type="integer" format="integer">1</item>
+    <item name="CUSTOM_LAUNCHICON" type="integer" format="integer">0</item>
+    <item name="CUSTOM_SPLASH" type="integer" format="integer">0</item>
+    <item name="CUSTOM_DASHXML" type="integer" format="integer">0</item>
+    <item name="CUSTOM_DASHICONS" type="integer" format="integer">0</item>
+    <item name="CUSTOM_DASHLABELS" type="integer" format="integer">0</item>
+    <item name="CUSTOM_TITLELOGO" type="integer" format="integer">0</item>
+    <item name="CUSTOM_TITLES" type="integer" format="integer">0</item>
+    <item name="CUSTOM_TITLE_BACKIMAGE" type="integer" format="integer">0</item>
+    <item name="CUSTOM_STARTBUTTON" type="integer" format="integer">0</item>
+    <item name="CUSTOM_FONT" type="string" format="string"></item>
+    <item name="CUSTOM_BACKGROUND" type="integer" format="integer">0</item>
+    <item name="CUSTOM_BACKGROUND_COLOR" type="string" format="string"></item>
+    <item name="CUSTOM_DASH_BACKGROUND_COLOR" type="string" format="string"></item>
+    <item name="CUSTOM_PRIVACY" type="integer" format="integer">0</item>
+    <item name="CUSTOM_REGISTER" type="integer" format="integer">0</item>
+    <item name="CUSTOM_REGBUTTONTEXT" type="integer" format="integer">0</item>
+    <item name="TITLE_ISDARK" type="string" format="string"></item>
+    <item name="TITLE_BACKCOLOR" type="string" format="string"></item>
+    <item name="TITLE_COLOR" type="string" format="string"></item>
+    <item name="TITLE_LINECOLOR" type="string" format="string"></item>
+    <item name="WIFI_DEFAULT" type="string" format="string"></item>
+    <item name="NO_CONFIRMATION" type="string" format="string"></item>
+    <item name="SCREEN_COLOR" type="string" format="string"></item>
+    <item name="DIDYOUKNOW_BACKCOLOR" type="string" format="string"></item>
+    <item name="DIDYOUKNOW_COLOR" type="string" format="string"></item>
+    <item name="HELP_FOLDER" type="string" format="string"></item>
+    <item name="STATS_MONTHS" type="integer" format="integer">2</item>
+    <item name="CUSTOM_SOCIALTEXT" type="integer" format="integer">0</item>
+    <item name="HEADING_COLOR" type="string" format="string"></item>
+    <item name="TROUBLE_CUSTOM_LABEL_COLOR" type="string" format="string"></item>
+    <item name="SPEED_CUSTOM_LABEL_COLOR" type="string" format="string"></item>
+    <item name="SPEEDTEST_TOP_BACK_COLOR" type="string" format="string"></item>
+    <item name="CUSTOM_RANKING_BULLET_COLOR" type="string" format="string"></item>
+    <item name="CUSTOM_COMPARE_TABS_BG_COLOR" type="string" format="string"></item>
+    <item name="CUSTOM_COMPARE_TABS_FG_COLOR" type="string" format="string">3D3D3D</item>
+    <item name="CUSTOM_COMPARENAMES" type="integer" format="integer">0</item>
+    <item name="CUSTOM_EVENTNAMES" type="integer" format="integer">0</item>
+    
+    <!-- for custom color set to hex value (0xffffff is maximum). for default set to -1  -->
+    <item name="CUSTOM_RANKED_ITEM_HIGHLIGHT" type="integer" format="integer">0xffffff</item>
+    <item name="CUSTOM_RANKED_ITEM_HIGHLIGHT_FG" type="integer" format="integer">0x35b4e3</item>
+    <item name="CUSTOM_NERD_CHART_BG" type="integer" format="integer">-1</item>
+    <item name="CUSTOM_NERD_CHART_FG" type="integer" format="integer">-1</item>
+    <!-- left and right margins for Chart on Engineer Mode screen - set to true for full width no left and right margin  -->
+    <item name="CUSTOM_NERD_CHART_FULL_WIDTH" type="bool" format="boolean">false</item>
+    <!-- bg color for satellite status and satellite count  views. values between 0x000000 to 0xffffff. If not set, it will have transparent bg -->
+    <item name="CUSTOM_SATELLITE_BG" type="integer" format="integer">0xbdbdbd</item>
+    <item name="NEW_COMPAREVIEWS" type="integer" format="integer">1</item>
+    
+    <!-- Did You Know text color  -->
+    <item name="DIDYOUKNOW_TEXT_COLOR" type="integer" format="integer">-1</item>
+    
+    <!-- Compare screen - vertical tab title separator color  -->
+    <item name="TAB_V_SEP" type="integer" format="integer">-1</item>
+    
+    <!-- To hide Facebook/Twitter bottom layout on Event Detail page while sharing an event, set this to 1  -->
+	<item name="HIDE_FB_TWTR" type="bool" format="boolean">true</item>
+	
+    <!-- Show/hide location and time view at the bottom of all Compare screens (Ranking, My Calls, All Calls, Data Speeds) - set to true to hide the element -->
+    <item name="HIDE_LOCATION_TIME" format="boolean" type="bool">false</item>
+
+    <!-- Show/hide location and time view at the bottom of Donut Chart screen - set to true to hide the element. Setting this will have no effect if HIDE_LOCATION_TIME is already set to 'true' -->
+    <item name="HIDE_LOCATION_TIME_DONUT_SCREEN" format="boolean" type="bool">false</item>
+    <item name="GROUND_TRACK" type="bool" format="boolean">true</item>
+
+    <!-- To disable support for landscape orientation on tablets, set this to false -->
+    <item name="ALLOW_LANDSCAPE_FOR_TABLET" type="bool" format="boolean">true</item>
+
+    <!-- To disable new icons and allow the only 4 base icons, set this to true -->
+    <item name="BASE_ICONS_ONLY" type="bool" format="boolean">false</item>
+    
+    <item name="SHOW_DROP_POPUP" type="integer" format="integer">-1</item>
+    <item name="ASKFOR_SUPERUSER" type="integer" format="integer">-1</item>
+    <item name="NOTIFY_CLICK_TO_LAUNCH" type="string" format="string">None</item>
+    <item name="ALLOW_SERVICE_FOREGROUND" type="bool" format="boolean">true</item>
+    <item name="ALLOW_FULL_WAKELOCK" type="bool" format="boolean">true</item>
+    <item name="ALLOW_CHECK_INS" type="bool" format="boolean">true</item>
+    <item name="ALLOW_SVCMODE" type="bool" format="boolean">false</item>
+
+</resources>
+

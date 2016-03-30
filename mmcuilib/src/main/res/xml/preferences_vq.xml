@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <Preference
+	    android:title="Settings"
+	    android:key="Settings"
+	    android:layout="@layout/preference_actionbar" />
+    
+    <!-- Twilio phone number >
+    <EditTextPreference
+    	android:key="KEY_SETTINGS_VQ_TELEPHONE"
+    	android:title="@string/SettingsVQ_Telephone"
+    	android:summary=""
+    	android:defaultValue="+1-866-666-6463"
+    /-->
+    
+    <!-- File Output Format Encoder-->
+    <ListPreference
+    		android:key="KEY_SETTINGS_VQ_LANG"
+    		android:title="@string/SettingsVQ_Language"
+    		android:summary="@string/SettingsVQ_LanguageSummary"
+    		android:defaultValue="English"
+    />   
+    
+    <!-- File Output Format Encoder-->
+    <ListPreference
+    		android:key="KEY_SETTINGS_VQ_VOICE"
+    		android:title="@string/SettingsVQ_Gender"
+    		android:summary="@string/SettingsVQ_GenderSummary"
+    		android:defaultValue="female1"
+    />   
+    
+    <!-- Recording Audio Encoder-->
+    <ListPreference
+    		android:key="KEY_SETTINGS_VQ_ENCODER"
+    		android:title="@string/SettingsVQ_Encoder"
+    		android:summary="@string/SettingsVQ_EncoderSummary"
+    		android:entries="@array/SettingsVQ_EncoderOptions"
+    		android:entryValues="@array/SettingsVQ_EncoderValues"
+    		android:defaultValue="3"
+    />    
+    
+    <ListPreference
+    		android:key="KEY_SETTINGS_VQ_LEVEL"
+    		android:title="@string/SettingsVQ_Level"
+    		android:summary="@string/SettingsVQ_LevelSummary"
+    		android:entries="@array/SettingsVQ_LevelOptions"
+    		android:entryValues="@array/SettingsVQ_LevelValues"
+    		android:defaultValue="20"
+    />    
+    
+    <ListPreference
+    		android:key="KEY_SETTINGS_VQ_SOURCE"
+    		android:title="@string/SettingsVQ_Source"
+    		android:summary="@string/SettingsVQ_SourceSummary"
+    		android:entries="@array/SettingsVQ_SourceOptions"
+    		android:entryValues="@array/SettingsVQ_SourceValues"
+    		android:defaultValue="6"
+    />    
+    
+    <!-- File Output Format Encoder-->
+    <!-- ListPreference
+    		android:key="KEY_SETTINGS_VQ_FORMAT"
+    		android:title="@string/SettingsVQ_Format"
+    		android:summary="@string/SettingsVQ_FormatSummary"
+    		android:entries="@array/SettingsVQ_FormatOptions"
+    		android:entryValues="@array/SettingsVQ_FormatValues"
+    		android:defaultValue="2"
+    /-->    
+    
+    <!-- File Output Format Encoder-->
+    <!-- ListPreference
+    		android:key="KEY_SETTINGS_VQ_SAMPLE"
+    		android:title="@string/SettingsVQ_Sample"
+    		android:summary="@string/SettingsVQ_SampleSummary"
+    		android:entries="@array/SettingsVQ_SampleOptions"
+    		android:entryValues="@array/SettingsVQ_SampleValues"
+    		android:defaultValue="1"
+    /-->   
+    
+    <!-- Send data when roaming -->
+    <CheckBoxPreference
+    	android:key="KEY_SETTINGS_VQ_LOG"
+    	android:title="@string/SettingsVQ_LogPackets"
+    	android:defaultValue="false"
+    />
+</PreferenceScreen>

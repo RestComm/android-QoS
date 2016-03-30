@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/compare_webstats"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.cortxt.app.mmcui.Activities.CustomViews.MyStatChart
+        android:id="@+id/stats_chart"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <com.cortxt.app.mmcui.Activities.CustomViews.LegendView
+        android:id="@+id/stats_legend"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stats_chart" 
+        android:layout_marginTop="-20dp"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScalingWrapper"
+    android:layout_width="450px"
+    android:layout_height="wrap_content"
+    android:background="#ffffff" >
+
+    <!-- History -->
+    <TextView
+        android:id="@+id/HistoryOption"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="@string/mycoverage_history"
+        android:textColor="#222222"
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/Separator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/HistoryOption"
+        android:background="#cccccc" />
+
+    <!-- Switch Cariers -->
+    <TextView
+        android:id="@+id/OverlaysOption"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_below="@+id/Separator"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="@string/mycoverage_overlays"
+        android:textColor="#222222"
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/Separator2"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/OverlaysOption"
+        android:background="#cccccc" />
+    
+    <!-- Show Overlays -->
+       <CheckBox
+        android:id="@+id/OverlaysShowOption"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/Separator2"
+        android:layout_height="128px"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="@string/mycoverage_show_overlays"
+        android:textColor="#222222"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/Separator3"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/OverlaysShowOption"
+        android:background="#cccccc"
+        android:visibility="gone" />
+    
+    <!-- Outdoor Mapping -->
+    <!--TextView
+        android:id="@+id/OutdoorMappingOption"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_below="@+id/Separator3"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="@string/mycoverage_outdoor_mapping"
+        android:textColor="#222222"
+        android:textSize="18sp"
+        android:visibility="gone" -->
+
+    <!--  View
+        android:id="@+id/Separator4"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/OutdoorMappingOption"
+        android:background="#cccccc"
+        android:visibility="gone" -->
+    
+
+
+</RelativeLayout>

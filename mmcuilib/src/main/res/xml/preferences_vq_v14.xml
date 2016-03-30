@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  
+    <Preference
+	    android:title="Settings"
+	    android:key="Settings"
+	    android:layout="@layout/preference_actionbar" />
+    
+    <!--  Use external Recorder -->
+    <CheckBoxPreference
+    	android:key="KEY_SETTINGS_VQ_EXTERNAL"	
+    	android:title="@string/SettingsVQ_Useexternal"
+    	android:defaultValue="true"
+    />
+    
+    <!-- Recording Audio Encoder-->
+    <ListPreference
+    		android:key="KEY_SETTINGS_VQ_ENCODER"
+    		android:title="@string/SettingsVQ_Encoder"
+    		android:summary="@string/SettingsVQ_EncoderSummary"
+    		android:entries="@array/SettingsVQ_EncoderOptions"
+    		android:entryValues="@array/SettingsVQ_EncoderValues"
+    		android:defaultValue="0"
+    />   
+    <!-- ListPreference
+    		android:key="KEY_SETTINGS_VQ_LEVEL"
+    		android:title="@string/SettingsVQ_Level"
+    		android:summary="@string/SettingsVQ_LevelSummary"
+    		android:entries="@array/SettingsVQ_LevelOptions"
+    		android:entryValues="@array/SettingsVQ_LevelValues"
+    		android:defaultValue="20"
+    /-->    
+    
+    <ListPreference
+    		android:key="KEY_SETTINGS_VQ_SOURCE"
+    		android:title="@string/SettingsVQ_Source"
+    		android:summary="@string/SettingsVQ_SourceSummary"
+    		android:entries="@array/SettingsVQ_SourceOptions"
+    		android:entryValues="@array/SettingsVQ_SourceValues"
+    		android:defaultValue="6"
+    />     
+    
+    <!-- File Output Format Encoder-->
+    <!-- ListPreference
+    		android:key="KEY_SETTINGS_VQ_FORMAT"
+    		android:title="@string/SettingsVQ_Format"
+    		android:summary="@string/SettingsVQ_FormatSummary"
+    		android:entries="@array/SettingsVQ_FormatOptions"
+    		android:entryValues="@array/SettingsVQ_FormatValues"
+    		android:defaultValue="0"
+    /-->    
+    
+    <!-- File Output Format Encoder-->
+    <!-- ListPreference
+    		android:key="KEY_SETTINGS_VQ_SAMPLE"
+    		android:title="@string/SettingsVQ_Sample"
+    		android:summary="@string/SettingsVQ_SampleSummary"
+    		android:entries="@array/SettingsVQ_SampleOptions"
+    		android:entryValues="@array/SettingsVQ_SampleValues"
+    		android:defaultValue="0"
+    /-->    
+    
+</PreferenceScreen>

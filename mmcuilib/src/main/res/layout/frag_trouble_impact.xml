@@ -1,0 +1,169 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/TroubleImpactLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:visibility="visible" >
+
+    <TextView
+        android:id="@+id/issueText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_marginLeft="20px"
+        android:text="@string/troublespot_step2_message"
+        android:textColor="#999999"
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/secondSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/issueText2"
+        android:background="#cccccc"
+        android:tag="constantheight" />
+
+    <RelativeLayout
+        android:id="@+id/lowImpactLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="80px"
+        android:layout_below="@id/secondSeparator"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:tag="@string/troublespot_impactlow" >
+
+        <TextView
+            android:id="@+id/lowImpactText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10px"
+            android:text="@string/troublespot_impactlow"
+            android:textColor="#666666"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/horizontalSeparator"
+            android:layout_width="1px"
+            android:layout_height="50px"
+            android:layout_alignBottom="@+id/troubleIcon"
+            android:layout_alignTop="@+id/troubleIcon"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30px"
+            android:layout_toLeftOf="@+id/troubleIcon"
+            android:background="#4F000000"
+            android:tag="constantwidth" />
+
+        <ImageView
+            android:id="@+id/troubleIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/problem_1_icon" />
+
+        <View
+            android:id="@+id/verticalSeparator"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#cccccc"
+            android:tag="constantheight" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/MediumImpactTrouble"
+        android:layout_width="fill_parent"
+        android:layout_height="80px"
+        android:layout_below="@id/lowImpactLayout"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:tag="@string/troublespot_impactmedium" >
+
+        <TextView
+            android:id="@+id/MediumImpactText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10px"
+            android:text="@string/troublespot_impactmedium"
+            android:textColor="#666666"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/horizontalSeparator"
+            android:layout_width="1px"
+            android:layout_height="50px"
+            android:layout_alignBottom="@+id/troubleIcon"
+            android:layout_alignTop="@+id/troubleIcon"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30px"
+            android:layout_toLeftOf="@+id/troubleIcon"
+            android:background="#4F000000"
+            android:tag="constantwidth" />
+
+        <ImageView
+            android:id="@+id/troubleIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/problem_2_icon" />
+
+        <View
+            android:id="@+id/verticalSeparator"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#cccccc"
+            android:tag="constantheight" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/HighImpactTroubleLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="80px"
+        android:layout_below="@+id/MediumImpactTrouble"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:tag="@string/troublespot_impacthigh" >
+
+        <TextView
+            android:id="@+id/HighImpactTroubleName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10px"
+            android:text="@string/troublespot_impacthigh"
+            android:textColor="#666666"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/horizontalSeparator"
+            android:layout_width="1px"
+            android:layout_height="50px"
+            android:layout_alignBottom="@+id/troubleIcon"
+            android:layout_alignTop="@+id/troubleIcon"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30px"
+            android:layout_toLeftOf="@+id/troubleIcon"
+            android:background="#4F000000"
+            android:tag="constantwidth" />
+
+        <ImageView
+            android:id="@+id/troubleIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/problem_3_icon" />
+
+        <View
+            android:id="@+id/verticalSeparator"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#cccccc"
+            android:tag="constantheight" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:mmc="http://schemas.android.com/apk/res/com.cortxt.app.MMC"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+>
+	<TextView
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/EventList_StatisticCategory"
+		android:text="temporary caption"
+		android:textColor="@color/solid_white"
+		android:background="@drawable/section_header_gradient"
+		android:gravity="center"
+		android:textSize="15sp"
+	/>
+	<com.cortxt.app.mmccore.Activities.CustomViews.MyStats.Statistic
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/EventList_Statistic"
+	/>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:background="@drawable/gray"
+	>
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:paddingLeft="5dp"
+			android:id="@+id/EventList_Icon"
+		/>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/EventList_Caption"
+			android:layout_gravity="bottom"
+			android:textColor="@color/solid_black"
+			android:textStyle="bold"
+		/>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:background="@drawable/section_header_gradient"
+		android:id="@+id/EventList_HeaderHolder"
+	>	
+	</LinearLayout>
+	<ListView
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/eventListViewer"
+	>
+	</ListView>
+</LinearLayout>

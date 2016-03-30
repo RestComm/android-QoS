@@ -1,0 +1,167 @@
+{
+  "twilio":
+  {
+    "countries":
+    [
+      {
+        "countries": "US,CA",
+        "voices": [
+          "female1",
+          "male1"
+        ],
+        "languages": {
+          "English": {
+            "female1": {
+              "phone": "1-855-982-9741",
+              "file": "american_english_clause_b.3.4/female_1.wav"
+            },
+            "male1": {
+              "phone": "1-855-982-9751",
+              "file": "american_english_clause_b.3.4/male_1.wav"
+            }
+          }
+        }
+      },
+      {
+        "countries": "CA",
+        "voices": [
+          "female1"
+        ],
+        "languages": {
+          "English": {
+            "female1": {
+              "phone": "14318001815",
+              "file": "american_english_clause_b.3.4/female_1.wav"
+            }
+          }
+        }
+      },
+      {
+        "countries": "IN",
+        "voices": [
+          "female1"
+        ],
+        "languages": {
+          "English": {
+            "female1": {
+              "phone": "02249411590",
+              "file": "american_english_clause_b.3.4/female_1.wav"
+            }
+          }
+        }
+      },
+      {
+        "countries": "PK",
+        "voices": [
+          "female1"
+        ],
+        "languages": {
+          "English": {
+            "female1": {
+              "phone": "0518108818",
+              "file": "american_english_clause_b.3.4/female_1.wav"
+            }
+          }
+        }
+      },
+      {
+        "countries": "CL,AR,PE,BO",
+        "voices": [
+          "female1",
+          "male1"
+        ],
+        "languages": {
+          "English": {
+            "female1": {
+              "phone": "1210-55-2140422256",
+              "file": "american_english_clause_b.3.4/female_1.wav"
+            },
+            "male1": {
+              "phone": "00-55-2140422256",
+              "file": "american_english_clause_b.3.4/male_1.wav"
+            }
+          }
+        }
+      },
+      {
+        "countries": "BR",
+        "voices": [
+          "female1",
+          "male1"
+        ],
+        "languages": {
+          "English": {
+            "female1": {
+              "phone": "55-2140422256",
+              "file": "american_english_clause_b.3.4/female_1.wav"
+            },
+            "male1": {
+              "phone": "55-2140422256",
+              "file": "american_english_clause_b.3.4/male_1.wav"
+            }
+          }
+        }
+      },
+      {
+        "countries": "MX",
+        "voices": [
+          "female1",
+          "male1"
+        ],
+        "languages": {
+          "English": {
+            "female1": {
+              "phone": "8141709471",
+              "file": "american_english_clause_b.3.4/female_1.wav"
+            },
+            "male1": {
+              "phone": "8141709471",
+              "file": "american_english_clause_b.3.4/male_1.wav"
+            }
+          }
+        }
+      },
+      {
+        "countries": "others",
+        "voices": [
+          "female1",
+          "male1"
+        ],
+        "languages": {
+          "English": {
+            "female1": {
+              "phone": "001-832-261-4422",
+              "file": "american_english_clause_b.3.4/female_1.wav"
+            },
+            "male1": {
+              "phone": "001-832-981-6623",
+              "file": "american_english_clause_b.3.4/male_1.wav"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "sms":
+  {
+    "countries":
+    [
+      {
+        "countries": "US,CA",
+        "number": "+1 866 2662584"
+      },
+      {
+        "countries": "CL,AR,BR,PE",
+        "number": "+525549998625"
+      },
+      {
+        "countries": "MX",
+        "number": "+525549998625"
+      },
+      {
+        "countries": "others",
+        "number": "+1 832-261-4422"
+      }
+    ]
+  }
+}

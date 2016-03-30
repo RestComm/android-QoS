@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/compare_webstats"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1"
+    android:orientation="vertical" >
+
+    <!--
+         <TextView
+        android:id="@+id/dataspeeds_title"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:gravity="center_horizontal"
+        android:text="Data Speeds (Kbps)"
+        android:textColor="#000"
+        android:textSize="36sp" />
+    -->
+
+    <com.cortxt.app.mmcui.Activities.CustomViews.Atomic.CompareTitleView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:text="@string/mystats_dataspeeds" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.1" />
+
+        <com.cortxt.app.mmcui.Activities.CustomViews.Atomic.SpeedStatChartAtomic
+            android:id="@+id/stats_chart"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.4" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.01" />
+
+        <com.cortxt.app.mmcui.Activities.CustomViews.Atomic.SpeedStatChartAtomic
+            android:id="@+id/stats_chart2"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.4" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.1" />
+
+        <com.cortxt.app.mmcui.Activities.CustomViews.Atomic.SpeedStatChartAtomic
+            android:id="@+id/stats_chart3"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.4" />
+    </LinearLayout>
+
+</LinearLayout>

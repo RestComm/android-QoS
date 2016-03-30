@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mmc="http://schemas.android.com/apk/res/com.cortxt.app.MMC"
+    android:id="@+id/ScalingWrapper"
+    android:layout_width="450px"
+    android:layout_height="wrap_content"
+    android:background="#ffffff" >
+
+    <TextView
+        android:id="@+id/EngineeringModeOption"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="@string/dashboard_engineer"
+        android:textColor="#222222"
+        android:textSize="18dp" />
+
+    <View
+        android:id="@+id/Separator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/EngineeringModeOption"
+        android:background="#cccccc"
+        android:tag="constantheight"/>
+
+    <TextView
+        android:id="@+id/SettingsOption"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_below="@+id/Separator"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="@string/dashboard_menu_settings"
+        android:textColor="#222222"
+        android:textSize="18dp" />
+
+    <View
+        android:id="@+id/secondSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/SettingsOption"
+        android:background="#cccccc"
+        android:tag="constantheight" />
+
+    <TextView
+        android:id="@+id/dashboard_menu_signout"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_below="@+id/secondSeparator"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="@string/GenericText_ClearLogin"
+        android:textColor="#222222"
+        android:textSize="18dp" />
+
+    <View
+        android:id="@+id/thirdSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/dashboard_menu_signout"
+        android:background="#cccccc"
+        android:tag="constantheight" />
+
+    <TextView
+        android:id="@+id/ToggleserviceOption"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_below="@+id/thirdSeparator"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="Toggle service"
+        android:textColor="#222222"
+        android:textSize="18dp" />
+
+    <View
+        android:id="@+id/fourthSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/ToggleserviceOption"
+        android:background="#cccccc"
+        android:tag="constantheight" />
+
+    <TextView
+        android:id="@+id/dashboard_menu_log"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_below="@+id/fourthSeparator"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="Log"
+        android:textColor="#222222"
+        android:textSize="18dp" />
+
+    <View
+        android:id="@+id/fifthSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/dashboard_menu_log"
+        android:background="#cccccc"
+        android:tag="constantheight" />
+
+    <TextView
+        android:id="@+id/dashboard_menu_Email_Csv"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_below="@+id/fifthSeparator"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="@string/GenericText_EmailRaw"
+        android:textColor="#222222"
+        android:textSize="18dp" />
+
+    <View
+        android:id="@+id/sixthSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/dashboard_menu_Email_Csv"
+        android:background="#cccccc"
+        android:tag="constantheight" />
+
+    <TextView
+        android:id="@+id/dashboard_menu_feedback"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_below="@+id/sixthSeparator"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="@string/dashboard_feedback"
+        android:textColor="#222222"
+        android:textSize="18dp" />
+
+    <View
+        android:id="@+id/seventhSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/dashboard_menu_feedback"
+        android:background="#cccccc"
+        android:tag="constantheight" />
+
+    <TextView
+        android:id="@+id/dashboard_menu_survey"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_below="@+id/seventhSeparator"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="@string/dashboard_surveys"
+        android:textColor="#222222"
+        android:textSize="18dp" />
+
+    <View
+        android:id="@+id/eighthSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/dashboard_menu_survey"
+        android:background="#cccccc"
+        android:tag="constantheight" />
+
+	<TextView
+        android:id="@+id/dashboard_menu_sampling"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_below="@+id/eighthSeparator"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="@string/mycoverage_manual_mapping"
+        android:textColor="#222222"
+        android:textSize="18dp" />
+
+    <View
+        android:id="@+id/samplingSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/dashboard_menu_sampling"
+        android:background="#cccccc"
+        android:tag="constantheight" />
+	
+    <TextView
+        android:id="@+id/dashboard_menu_help"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_below="@+id/samplingSeparator"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="@string/GenericText_Help"
+        android:textColor="#222222"
+        android:textSize="18dp" />
+
+    <View
+        android:id="@+id/ninthSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/dashboard_menu_help"
+        android:background="#cccccc"
+        android:tag="constantheight" />
+    
+    <TextView
+        android:id="@+id/dashboard_menu_about"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_below="@+id/ninthSeparator"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="@string/dashboard_about"
+        android:textColor="#222222"
+        android:textSize="18dp" />
+    
+    <View
+        android:id="@+id/tenthSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/dashboard_menu_about"
+        android:background="#cccccc"
+        android:tag="constantheight" />
+    
+    <TextView
+        android:id="@+id/dashboard_transit_log"
+        android:layout_width="fill_parent"
+        android:layout_height="128px"
+        android:layout_below="@+id/tenthSeparator"
+        android:layout_marginLeft="30px"
+        android:gravity="center_vertical"
+        android:text="Transit log"
+        android:textColor="#222222"
+        android:textSize="18dp" />
+    
+    
+
+</RelativeLayout>

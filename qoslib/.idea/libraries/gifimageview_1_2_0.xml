@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="gifimageview-1.2.0">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../MMC_Android/MMC/app/build/intermediates/exploded-aar/com.felipecsl/gifimageview/1.2.0/res" />
+      <root url="jar://$PROJECT_DIR$/../../MMC_Android/MMC/app/build/intermediates/exploded-aar/com.felipecsl/gifimageview/1.2.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.felipecsl/gifimageview/1.2.0/914ac535f0f8d4ff84cf34b196b96b8005ec2a83/gifimageview-1.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

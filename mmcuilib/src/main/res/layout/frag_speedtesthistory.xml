@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/speedTestHistoryContainer"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <View
+        android:id="@+id/centralBackground"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+         />
+
+    <TextView
+        android:id="@+id/speedTestHistoryTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Speed Test History"
+        android:textColor="#a7a9ab"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginLeft="20px"
+        android:textSize="18sp" />
+
+    <RelativeLayout
+        android:id="@+id/scalingWrapperLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/speedTestHistoryTitle" >
+
+        <LinearLayout
+            android:id="@+id/listViewHeader"
+            android:layout_width="fill_parent"
+            android:layout_height="60px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:orientation="horizontal"
+            android:weightSum="1.0" >
+
+            <!-- 70, 2, 200, 2, 140, 2, 140, 2, 140 / -->
+            <!-- 0.1, 0.005, 0.28, 0.005, 0.2, 0.005, 0.2, 0.005, 0.2 -->
+
+            <TextView
+                android:id="@+id/TypeListHeading"
+                android:layout_width="0dp"
+                android:layout_height="60px"
+                android:layout_weight="0.12"
+                android:gravity="bottom"
+                android:text="@string/speedtest_type"
+                android:textColor="#989898"
+                android:textSize="10sp" />
+            <!-- horizontal space -->
+
+            <View
+                android:layout_width="2px"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10px" />
+
+            <TextView
+                android:id="@+id/DateListHeading"
+                android:layout_width="0dp"
+                android:layout_height="60px"
+                android:layout_weight="0.26"
+                android:gravity="center_vertical"
+                android:text="@string/speedtest_date"
+                android:textColor="#989898"
+                android:textSize="10sp" />
+
+            <View
+                android:layout_width="2px"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10px" />
+
+            <TextView
+                android:id="@+id/LatencyListHeading"
+                android:layout_width="0dp"
+                android:layout_height="60px"
+                android:layout_weight="0.2"
+                android:gravity="center_vertical"
+                android:text="@string/speedtest_latency"
+                android:textColor="#989898"
+                android:textSize="10sp" />
+
+            <View
+                android:layout_width="2px"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10px" />
+
+            <TextView
+                android:id="@+id/DownloadListHeading"
+                android:layout_width="0dp"
+                android:layout_height="60px"
+                android:layout_weight="0.2"
+                android:gravity="center_vertical"
+                android:text="@string/speedtest_download_speed"
+                android:textColor="#989898"
+                android:textSize="10sp" />
+
+            <View
+                android:layout_width="2px"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10px" />
+
+            <TextView
+                android:id="@+id/uploadListHeading"
+                android:layout_width="0dp"
+                android:layout_height="60px"
+                android:layout_weight="0.2"
+                android:gravity="center_vertical"
+                android:text="@string/speedtest_upload_speed"
+                android:textColor="#989898"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/HeaderSeparator"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/listViewHeader"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_marginTop="2px"
+            android:background="#4F000000" />
+
+        <TextView
+            android:id="@+id/speedtesthistory_emptymessage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/HeaderSeparator"
+            android:layout_marginTop="10px"
+            android:gravity="center_horizontal"
+            android:text="@string/speedtesthistory_emptymessage"
+            android:textColor="@color/black"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/HeaderSeparator"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:listSelector="@drawable/listselector" />
+    </RelativeLayout>
+
+</RelativeLayout>

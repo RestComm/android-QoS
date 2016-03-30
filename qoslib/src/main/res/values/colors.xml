@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2007 The Android Open Source Project Licensed under the 
+	Apache License, Version 2.0 (the "License"); you may not use this file except 
+	in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
+	the specific language governing permissions and limitations under the License. -->
+
+<resources>
+	<color name="white">#FFFFFFFF</color>
+	<color name="gray">#FF888888</color>
+	<color name="black">#FF000000</color>
+	<color name="blue">#FF00A4E4</color>
+	<color name="title_blue">#FF00A4E4</color>
+	
+	<!-- MARKET VERSION COLORS -->
+	<drawable name="white">#ffffffff</drawable>
+	<drawable name="red">#7f00</drawable>
+	<drawable name="blue">#770000ff</drawable>
+	<drawable name="green">#7700ff00</drawable>
+	<drawable name="green3">#ff00cc00</drawable>
+	<drawable name="yellow">#77ffff00</drawable>
+
+	<drawable name="black">#ff000000</drawable>
+	<drawable name="lightgray">#ffdddddd</drawable>
+	<drawable name="gray">#ffaaaaaa</drawable>
+	<drawable name="darkgray">#ff777777</drawable>
+	<drawable name="translucent_background">#e0000000</drawable>
+	<drawable name="transparent_background">#00000000</drawable>
+
+	<drawable name="lightred">#90FF0000</drawable>
+	<color name="solid_red">#f00</color>
+	<color name="solid_blue">#0000ff</color>
+	<color name="solid_green">#ff00ff00</color>
+	<color name="solid_yellow">#ffffff00</color>
+	
+	<color name="splash_background">#333333</color>
+
+	<color name="title_background">#333333</color>
+	<!-- background to apply to all activities -->
+	<color name="background">#eaeaea</color>
+
+
+	<color name="solid_black">#ff000000</color>
+	<color name="solid_white">#ffffffff</color>
+
+
+
+	<color name="solid_blue_MMC">#ff00a5fc</color>
+	<color name="solid_darkgray">#ff777777</color>
+	<color name="solid_gray">#ffaaaaaa</color>
+	<color name="solid_lightgray">#ffeaeaea</color>
+
+	<drawable name="orange">#ffff8000</drawable>
+	<drawable name="green_MMC">#60F020</drawable>
+	<color name="transparent">#9000</color>
+	<drawable name="blue_Satellites">#007eb5</drawable>
+	
+	<!-- The following are the colors related to the mystats page -->
+	<color name="mystats_blue">#ff69add8</color>
+	<color name="mystats_yellow">#fffaf4a8</color>
+	<color name="mystats_green">#ffbed971</color>
+	
+	<!-- color values - aoc -->
+	<color name="new_compare_tabs_bg">#cccccc</color>
+</resources>

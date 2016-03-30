@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.2, maximum-scale=1.0" />
+</head>
+<body>
+<!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+<div id="player"></div>
+
+<script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+ 
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+ 
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        app.onYoutubeAPIReady ();
+      }
+      var mRes, mVideoId;
+
+      // Called back from Android to pass the videoId
+      function startYoutubePlayer (videoId, resolution)
+      {
+        //resolution='hd720';
+        mRes = resolution;
+        //videoId = 'QFtEJDkQL2o';
+        //videoId = '3bEtJgnd86M';
+        //videoId = 'eS-So2BtyVo';
+        mVideoId = videoId;
+
+        // If resolution is provided, it will load the videoId in a different way, to lock the resolution
+        // But the streaming wont be 'adaptive'
+        if (resolution)
+            videoId = '';
+
+        player = new YT.Player('player', {
+          height: '600',
+          width: '900',
+          videoId: videoId,
+          playerVars: {rel:0},
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange,
+            'onPlaybackQualityChange': onPlayerPlaybackQualityChange,
+            'onError': onPlayerError
+          }
+        });
+
+      }
+ 
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        if (mRes)
+        {
+            player.loadVideoById({videoId:mVideoId,suggestedQuality:mRes})
+        }
+        else
+        {
+            event.target.playVideo();
+        }
+        //player.setPlaybackQuality('hd720');
+      }
+ 
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+
+        }
+        app.onPlayerStateChange(event.data);
+      }
+
+      function onPlayerPlaybackQualityChange(event) {
+        app.onPlaybackQualityChange(event.data);
+      }
+
+      function onPlayerError(event) {
+        app.onError(event.data);
+      }
+
+      function stopVideo() {
+        player.stopVideo();
+      }
+
+      function getPlayPosition ()
+      {
+        var loaded = player.getVideoLoadedFraction();
+        //if (loaded > 0)
+        {
+            var dur = parseInt(player.getDuration());
+            var buff = parseInt(loaded * 100);
+            var play = parseInt(player.getCurrentTime() * 1000);
+            app.onPlayProgress (buff, play, dur);
+            //player.setPlaybackQuality('hd1080');
+        }
+      }
+
+      function getPlaybackQuality ()
+      {
+        var qual = player.getPlaybackQuality ();
+        app.onPlaybackQualityChange(qual);
+      }
+
+      function stopVideo ()
+      {
+        player.stopVideo();
+      }
+
+
+      // 'eS-So2BtyVo' (guitar), //'GSqmjwhi-gk'(avengers1080),
+      // 'Ww5JGEKyGjw'(avengers 720), 'Uh_oNW0D_LI' (kaleido old), sN0CjcaWKt0 (kaleido new)
+
+    </script>
+</body>
+</html>

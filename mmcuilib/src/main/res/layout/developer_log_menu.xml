@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" >
+
+    <RelativeLayout
+        android:id="@+id/ScalingWrapper"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/ClearOption"
+            android:layout_width="fill_parent"
+            android:layout_height="128px"
+            android:layout_marginLeft="30px"
+            android:gravity="center_vertical"
+            android:text="@string/GenericText_ClearLog"
+            android:textColor="#222222"
+            android:textSize="18dp" />
+
+        <View
+            android:id="@+id/Separator"
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            android:layout_below="@+id/ClearOption"
+            android:background="#cccccc" />
+        
+        <TextView
+            android:id="@+id/SendOption"
+            android:layout_width="fill_parent"
+            android:layout_height="128px"
+            android:layout_marginLeft="30px"
+            android:layout_below="@+id/Separator"
+            android:gravity="center_vertical"
+            android:text="@string/GenericText_SendLogEmail"
+            android:textColor="#222222"
+            android:textSize="18dp" />
+
+<!--         <View
+            android:id="@+id/Separator2"
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            android:layout_below="@+id/SendOption"
+            android:background="#cccccc" /> -->
+    </RelativeLayout>
+
+</RelativeLayout>

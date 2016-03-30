@@ -1,0 +1,52 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout 
+        android:id="@+id/undobar" 
+        android:layout_width="match_parent"
+        android:layout_height="48px"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="20px"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="32px"
+        android:background="#444444"
+        android:clickable="true" >
+        
+        <TextView 
+            android:id="@+id/undoTextView" 
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="32px"
+			android:layout_gravity="center_vertical"
+			android:layout_marginRight="32px"
+			android:textSize="16sp"
+			android:layout_centerVertical="true"
+			android:text="@string/transitsampling_itinerary_deleted_msg"
+			android:textColor="#ffffff"  />
+        
+        <View
+            android:id="@+id/undoView" 
+            android:layout_width="3px"
+            android:layout_height="24px"
+            android:background="#666666"
+            android:layout_toLeftOf="@+id/undoButton"
+            android:layout_centerVertical="true" />
+
+        
+        <Button 
+            android:id="@+id/undoButton" 
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:drawableLeft="@drawable/back_arrow_icon"
+            android:paddingLeft="15px"
+            android:paddingRight="32px"
+            android:drawablePadding="4px"
+            android:background="#444444"
+            android:textColor="#ffffff"
+            android:layout_alignParentRight="true"
+            android:text="@string/transitsampling_undo_message"
+            />
+    </RelativeLayout>
+
+</FrameLayout>

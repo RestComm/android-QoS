@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:id="@+id/mycoverage_container">
+
+    <LinearLayout 	
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+	>
+    <RelativeLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_weight="3"
+	    >
+    <com.cortxt.app.mmcui.Activities.CustomViews.Map.EventsMapViewOld
+    android:id="@+id/Map_EventsMapView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:enabled="true"
+    android:clickable="true"
+    android:apiKey="@string/google_maps_api_key"/>
+    
+    <ProgressBar
+    android:id="@+id/Map_BusyIndicator"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentRight="true"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="5dp"
+    android:visibility="gone"/>
+    </RelativeLayout>
+    <ListView
+	android:id="@+id/Map_EventsListView"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:visibility="gone"
+	android:layout_weight="7"
+	android:background="@color/solid_black"
+	/>
+    </LinearLayout>
+    <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:baselineAligned="false">
+        <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+	        <ImageButton
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentBottom="true"
+		    android:background="@drawable/mycoverage_share"
+		    android:contentDescription="@string/mycoverage_share"
+		    android:onClick="shareClicked"/>
+
+	        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+	        android:paddingBottom="10dp"
+	        android:layout_marginLeft="45dp"
+            android:text="@string/mycoverage_share"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+	    </RelativeLayout>
+	    
+        <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+	        <ImageButton
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentBottom="true"
+		    android:background="@drawable/mycoverage_center"
+		    android:contentDescription="@string/mycoverage_center"
+		    android:onClick="centerOnCurrentLocationClicked"/>
+	    </RelativeLayout>
+	    
+        <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+	        <ImageButton
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentBottom="true"
+		    android:background="@drawable/mycoverage_history"
+		    android:contentDescription="@string/mycoverage_history"
+		    android:onClick="historyClicked"/>
+
+	        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+	        android:paddingBottom="10dp"
+	        android:paddingRight="12dp"
+            android:text="@string/mycoverage_history"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+	    </RelativeLayout>
+	</LinearLayout>
+</RelativeLayout>

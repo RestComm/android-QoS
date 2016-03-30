@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:title="Send log" android:id="@+id/Developer_Menu_SendLogEmail"></item>
+  <item android:title="Clear log" android:id="@+id/Developer_Menu_ClearLog"></item>
+</menu>

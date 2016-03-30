@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/topactionbarLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="96px"
+        android:layout_alignParentTop="true"
+        android:background="@color/title_background" >
+
+		<ImageButton
+		    android:id="@+id/actionBarBackButton"
+		    android:layout_width="wrap_content"
+		    android:layout_height="fill_parent"
+		    android:padding="10px"
+		    android:layout_centerVertical="true"
+		    android:background="@null"
+		    android:onClick="backActionClicked"
+		    android:src="@drawable/ic_action_back_icon" />
+
+        <ImageView
+            android:id="@+id/actionBarLogo"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/actionBarBackButton"
+            android:background="@drawable/action_bar_logo"
+            android:onClick="backActionClicked" />
+
+        <TextView
+            android:id="@+id/actionbartitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/actionBarLogo"
+            android:text="@string/dashboard_title"
+            android:textColor="#666666"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+	<RelativeLayout
+	    android:id="@+id/topactionbarLine"
+	    android:layout_width="fill_parent"
+	    android:layout_height="4px"
+	    android:layout_below="@+id/topactionbarLayout"
+	    android:background="#3399cc" />
+    <ListView
+        android:id="@+id/datastats"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topactionbarLine"
+        android:visibility="visible" >
+    </ListView>
+    
+</LinearLayout>

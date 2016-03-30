@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mmc="http://schemas.android.com/apk/res/com.cortxt.app.MMC"
+    android:id="@+id/nerd_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dddddd">
+
+
+    <RelativeLayout
+        android:id="@+id/topactionbarLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="96px"
+        android:background="@color/title_background" >
+
+        <ImageButton
+            android:id="@+id/actionBarBackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="10px"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:src="@drawable/ic_action_back_icon" />
+
+        <ImageView
+            android:id="@+id/actionBarLogo"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/actionBarBackButton"
+            android:background="@drawable/action_bar_logo" />
+
+        <TextView
+            android:id="@+id/actionbartitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/actionBarLogo"
+            android:textColor="#666666"
+            android:textSize="18dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/topactionbarLine"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/topactionbarLayout"
+        android:background="#3399cc" />
+    <TextView
+        android:id="@+id/timeAndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/topactionbarLine"
+        android:textColor="#999999"
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/secondSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/timeAndDate"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="6dp"
+        android:background="#50000000" />
+
+    <RelativeLayout
+        android:id="@+id/satellitelayout"
+        android:layout_width="fill_parent"
+        android:layout_height="44dp"
+        android:layout_alignTop="@+id/secondSeparator"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="2dp"
+        android:background="#EFEFEFEF" >
+
+        <com.cortxt.app.mmcui.Activities.CustomViews.SatelliteStatus
+            android:id="@+id/satelliteStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical" />
+
+        <com.cortxt.app.mmcui.Activities.CustomViews.SatelliteCount
+            android:id="@+id/satelliteCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/satelliteStatus" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/firstPanel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/satellitelayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical" >
+
+        <com.cortxt.app.mmcui.Activities.CustomViews.NerdView
+            android:id="@+id/nerdview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
+
+
+</RelativeLayout>

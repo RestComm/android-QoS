@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_marginLeft="20px"
+    android:layout_marginRight="20px"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:weightSum="1.0"
+        android:layout_height="105px" >
+
+        <!-- 70, 2, 200, 2, 140, 2, 140, 2, 140 /  -->
+        <!-- 0.1, 0.005, 0.28, 0.005, 0.2, 0.005, 0.2, 0.005, 0.2-->
+
+        <TextView
+            android:id="@+id/speedtesthistory_type"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="100px"
+            android:gravity="center_vertical"
+            android:text="0"
+            android:textColor="#666666"
+            android:textSize="11sp" />
+
+<!--         <View
+            android:id="@+id/typeSeparator"
+            android:layout_width="2px"
+            android:layout_height="80px"
+            android:layout_marginTop="10px"
+            android:background="#1A000000" />
+ -->
+        <TextView
+            android:id="@+id/speedtesthistory_date"
+            android:layout_width="0dp"
+            android:layout_weight="0.28"
+            android:layout_height="100px"
+            android:gravity="center_vertical"
+            android:text="0"
+            android:textColor="#666666"
+            android:textSize="11sp" />
+<!-- 
+        <View
+            android:id="@+id/dateSeparator"
+            android:layout_width="2px"
+            android:layout_height="80px"
+            android:layout_marginTop="10px"
+            android:background="#1A000000" />
+ -->
+        <TextView
+            android:id="@+id/speedtesthistory_latency"
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="100px"
+            android:gravity="center_vertical"
+            android:text="0"
+            android:textColor="#666666"
+            android:textSize="11sp" />
+<!-- 
+        <View
+            android:id="@+id/latencySeparator"
+            android:layout_width="2px"
+            android:layout_height="80px"
+            android:layout_marginTop="10px"
+            android:background="#1A000000"
+            android:tag="constantheight" />
+ -->
+        <TextView
+            android:id="@+id/speedtesthistory_downspeed"
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="100px"
+            android:gravity="center_vertical"
+            android:text="0"
+            android:textColor="#666666"
+            android:textSize="11sp" />
+<!-- 
+        <View
+            android:id="@+id/downSeparator"
+            android:layout_width="2px"
+            android:layout_height="80px"
+            android:layout_marginTop="10px"
+            android:background="#1A000000"
+            android:tag="constantheight" />
+ -->
+        <TextView
+            android:id="@+id/speedtesthistory_upspeed"
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="100px"
+            android:gravity="center_vertical"
+            android:text="0"
+            android:textColor="#666666"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/horizontalRowSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="2px"
+        android:layout_marginTop="100px"
+        android:background="#1A000000"
+        android:tag="constantheight"
+        android:visibility="gone" />
+
+</LinearLayout>
