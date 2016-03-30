@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
-import com.cortxt.app.mmccore.Utils.MMCCommand;
+import com.cortxt.app.mmccore.Utils.APICommand;
 
 import java.util.HashMap;
 
@@ -138,7 +138,7 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         // we don't have a separate activity for the calls, so use the same intent both for calls and messages
         device.setPendingIntents(intent, intent);
         device.listen();
-        MMCCommand.start (this);
+        APICommand.start(this);
 
         // Setup video stuff
         scalingType = VideoRendererGui.ScalingType.SCALE_ASPECT_FILL;
@@ -249,7 +249,7 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
 
             // If dial setting changed, register with the QoS server
             if (!editDial.getText().equals(PreferenceManager.getDefaultSharedPreferences(this).getString("PREF_DIAL",null))) {
-                MMCCommand.setLogin(this, editDial.getText().toString());
+                APICommand.setLogin(this, editUser.getText().toString());
                 PreferenceManager.getDefaultSharedPreferences(this).edit().putString("PREF_DIAL", editDial.getText().toString()).commit();
             }
             params = new HashMap<String, Object>();

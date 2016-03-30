@@ -22,9 +22,9 @@ import org.json.JSONObject;
 /**
  * Created by bscheurman on 16-01-23.
  */
-public class MMCCommand {
+public class APICommand {
 
-    public static final String TAG = MMCCommand.class.getSimpleName();
+    public static final String TAG = APICommand.class.getSimpleName();
 
     public static String getLogin (Context context)
     {

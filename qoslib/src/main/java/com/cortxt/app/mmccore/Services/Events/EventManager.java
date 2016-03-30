@@ -37,7 +37,7 @@ import com.cortxt.app.mmccore.MMCService;
 import com.cortxt.app.mmcutility.Reporters.LocalStorageReporter.LocalStorageReporter;
 import com.cortxt.app.mmcutility.DataObjects.MMCCellLocation;
 import com.cortxt.app.mmcutility.DataObjects.MMCSignal;
-import com.cortxt.app.mmccore.Utils.MMCCommand;
+import com.cortxt.app.mmccore.Utils.APICommand;
 import com.cortxt.app.mmcutility.Utils.DeviceInfoOld;
 import com.cortxt.app.mmcutility.DataObjects.EventType;
 import com.cortxt.app.mmcutility.Utils.PreferenceKeys;
@@ -974,7 +974,7 @@ public class EventManager {
 
 	public boolean queueActiveTest (EventType eventType, int trigger)
 	{
-		if (!MMCCommand.isEventEnabled(context, eventType) || !MMCCommand.isEventPermitted(context, eventType, trigger))
+		if (!APICommand.isEventEnabled(context, eventType) || !APICommand.isEventPermitted(context, eventType, trigger))
 			return false; // Event has not been enabled by server
 
 		// If no test is in progress, run now

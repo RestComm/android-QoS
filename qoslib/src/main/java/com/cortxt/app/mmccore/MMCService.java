@@ -56,7 +56,7 @@ import com.cortxt.app.mmccore.Services.Events.EventManager;
 import com.cortxt.app.mmcutility.DataObjects.EventObj;
 import com.cortxt.app.mmccore.Services.Intents.MMCServiceIntentDispatcher;
 import com.cortxt.app.mmccore.Services.Location.GpsManagerOld;
-import com.cortxt.app.mmccore.Utils.MMCCommand;
+import com.cortxt.app.mmccore.Utils.APICommand;
 import com.cortxt.app.mmcutility.DataObjects.MMCDevice;
 import com.cortxt.app.mmccore.Utils.MMCWebSocket;
 import com.cortxt.app.mmccore.UtilsOld.AccessPointHistory;
@@ -1253,12 +1253,15 @@ public class MMCService extends Service {
 		return trackingManager;
 	}
 
-	public static String getLogin (Context context) {return MMCCommand.getLogin(context);}
-	public static void setLogin(Context context, String login) {MMCCommand.setLogin(context, login);}
-	public static void setLoginToIMEI (Context context) {MMCCommand.setLoginToIMEI(context);}
-	public static void start (Context context) {MMCCommand.start(context);}
+	public static String getLogin (Context context) {return APICommand.getLogin(context);}
+	public static void setLogin(Context context, String login) {
+		APICommand.setLogin(context, login);}
+	public static void setLoginToIMEI (Context context) {
+		APICommand.setLoginToIMEI(context);}
+	public static void start (Context context) {
+		APICommand.start(context);}
 	public static int startDriveTest (Context context, int minutes, boolean coverage, int speed, int connectivity, int sms, int video, int audio, int web, int vq, int youtube, int ping)
-	{ return MMCCommand.startDriveTest(context, minutes, coverage, speed, connectivity, sms, video, audio, web, vq, youtube, ping);}
+	{ return APICommand.startDriveTest(context, minutes, coverage, speed, connectivity, sms, video, audio, web, vq, youtube, ping);}
 
 	public MMCServiceIntentDispatcher getIntentDispatcher(){
 		return this.intentDispatcher;
