@@ -71,18 +71,6 @@ repositories {
     }
 }
 dependencies {
-    //compile 'com.android.support:support-v4:18.0.0'
-    //compile 'com.google.android.gms:play-services:3.1.+'
-    //compile files('libs/acra-4.5.0.jar')
-    //compile files('libs/slf4j-android-1.5.8.jar')
-    //compile files('libs/xmltask.jar')
-    //compile 'com.scottyab:secure-preferences-lib:0.0.4'
-    //compile 'com.felipecsl:gifimageview:1.2.0'
-    //compile project(':mmcextension')
-    //debugCompile project(':mmcextension')
-    //compile(name:'secure-preferences', ext:'aar')
-    //compile project(':mmcextension')
-
     debugCompile project(path: ':mmcextension', configuration: "libraryDebug")
     releaseCompile project(path: ':mmcextension', configuration: "libraryRelease")
 }

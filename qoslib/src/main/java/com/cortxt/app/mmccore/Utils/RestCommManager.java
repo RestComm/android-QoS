@@ -95,9 +95,6 @@ public class RestCommManager {
                     targetEventCouple.getStopEvent().setEventTimestamp(disconnectTime);
                     targetEventCouple.getStopEvent().setEventIndex(5); // something has to hold the confidence rating. This field will be sent to server as 'eventIndex'
 
-                    //owner.getEventManager().updateEventDBField(targetEventCouple.getStopEvent().getUri(), Tables.Events.TIMESTAMP, Long.toString(disconnectTime));
-                    //ReportManager.getInstance(owner).updateEventField(targetEventCouple.getStopEvent().getLocalID(), LocalStorageReporter.Events.KEY_TIER, Integer.toString(rating));
-                    //ReportManager.getInstance(owner).updateEventField(targetEventCouple.getStopEvent().getLocalID(), "timeStamp", Long.toString(disconnectTime));
                     int allowConfirm = PreferenceManager.getDefaultSharedPreferences(owner).getInt(PreferenceKeys.Miscellaneous.ALLOW_CONFIRMATION, 5);
                     if (allowConfirm > 0)
                         owner.getPhoneStateListener().popupDropped (EventType.SIP_DROP, 5, targetEventCouple.getStopEvent().getLocalID());
@@ -115,8 +112,6 @@ public class RestCommManager {
 
                     targetEventCouple.getStopEvent().setEventIndex(0);
                     targetEventCouple.getStopEvent().setEventTimestamp(disconnectTime);
-                    //ReportManager.getInstance(owner).updateEventField(targetEventCouple.getStopEvent().getLocalID(), LocalStorageReporter.Events.KEY_TIER, Integer.toString(0));
-                    //ReportManager.getInstance(owner).updateEventField(targetEventCouple.getStopEvent().getLocalID(), "timeStamp", Long.toString(disconnectTime));
 
                 } else if (state.equals("connect failed")) {
                     if (targetEventCouple == null)
@@ -128,8 +123,6 @@ public class RestCommManager {
                     targetEventCouple.getStopEvent().setCause(cause);
                     targetEventCouple.getStopEvent().setEventTimestamp(disconnectTime);
                     targetEventCouple.getStopEvent().setEventIndex(5); // rating
-                    //ReportManager.getInstance(owner).updateEventField(targetEventCouple.getStopEvent().getLocalID(), LocalStorageReporter.Events.KEY_TIER, Integer.toString(0));
-                    //ReportManager.getInstance(owner).updateEventField(targetEventCouple.getStopEvent().getLocalID(), "timeStamp", Long.toString(disconnectTime));
 
                     MMCLogger.logToFile(MMCLogger.Level.WTF, TAG, "DisconnectTimerTask", "call changed to IDLE while call was dialing/ringing (CALL FAILED)");
 
@@ -145,21 +138,11 @@ public class RestCommManager {
                     return null;
 
                 phoneOffHook (bIncoming);
-                //intent = new Intent(MMCIntentHandlerOld.PHONE_CALL_CONNECT);
-                //owner.sendBroadcast(intent);
                 if (connectLatch != null)
                     connectLatch.countDown();
                 onConnect (state);
             }
-//            else if (state.equals("ringing")) {
-//                if (bOffHook)
-//                    return null;
-//                phoneOffHook (TelephonyManager.CALL_STATE_RINGING);
-//                if (intentExtras.containsKey("FROM")) {
-//                    txtIncomingNumber = intentExtras.getString("FROM");
-//                }
-//                onConnect (state);
-//            }
+
             else if (state.equals("connecting")) {
                 onConnect (state);
             }
@@ -186,8 +169,6 @@ public class RestCommManager {
             boolean b = res;
             return res;
         } catch (InterruptedException e) {
-            //if (connectLatch.getCount() <= 0)
-            //	return true;
             return false;
         }
     }
@@ -197,8 +178,6 @@ public class RestCommManager {
         try {
             return disconnectLatch.await (50,TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            //if (connectLatch.getCount() <= 0)
-            //	return true;
             return false;
         }
     }
@@ -255,7 +234,6 @@ public class RestCommManager {
                     EventCouple targetEventCouple = owner.getEventManager().getEventCouple(EventType.SIP_CONNECT, EventType.SIP_DISCONNECT);
                     if (targetEventCouple != null && targetEventCouple.getStartEvent() != null) {
                         targetEventCouple.getStartEvent().setEventTimestamp(System.currentTimeMillis());
-                        //eventManager.updateEventDBField(targetEventCouple.getStartEvent().getUri(), Tables.Events.TIMESTAMP, Long.toString(System.currentTimeMillis()));
                         //start a phone connected event
                         long connectDuration = 0;
                         // The duration on the connected Call event will represent the time it took the call to begin ringing
