@@ -219,6 +219,13 @@ public class EventResponse {
             return null;
     }
 
+    public Integer getAllowSMS() {
+        if (d.allow_sms != null)
+            return d.allow_sms;
+        else
+            return null;
+    }
+
     public Integer getAutoConnTests() {
         if (d.auto_conn_test != null)
             return d.auto_conn_test;
@@ -447,6 +454,8 @@ public class EventResponse {
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.ALLOW_BUILDINGS, this.getAllowBuildings()).commit();
         if (this.getAllowTransit() != null)
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.ALLOW_TRANSIT, this.getAllowTransit()).commit();
+        if (this.getAllowSMS() != null)
+            PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.ALLOW_SMS, this.getAllowSMS()).commit();
         if (this.getAutoConnTests() != null)
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.AUTO_CONNECTION_TESTS, this.getAutoConnTests()).commit();
         if (this.getWifiEvents() != null)
@@ -583,7 +592,7 @@ class EventResponseContents {
 	public long[] eventids;
     public long starttime = 0;
     public Integer hideCompare = 0, hideMap = 0, userCovOnly = 0, carrierCovOnly = 0;
-
+    public Integer allow_sms = 1;
 	public EventResponseContents(){
 		
 	}

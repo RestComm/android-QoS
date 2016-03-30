@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 //import android.preference.PreferenceManager;
 import com.cortxt.app.mmcutility.DataObjects.EventType;
 import com.securepreferences.SecurePreferences;
@@ -59,6 +60,9 @@ public final class PreferenceKeys {
 
 	public static boolean getSMSPermissionsAllowed(Context context, boolean checkForSMSSpeedTest)
 	{
+		int allowSMS = PreferenceManager.getDefaultSharedPreferences(context).getInt(PreferenceKeys.Miscellaneous.ALLOW_SMS, 1);
+		if (allowSMS == 0)
+			return false;
 		PackageManager pkMan = context.getPackageManager();
 		int smsSendPermissionValue = pkMan.checkPermission("android.permission.SEND_SMS", context.getPackageName());
 		int smsReceivePermissionValue = pkMan.checkPermission("android.permission.RECEIVE_SMS", context.getPackageName());
@@ -250,6 +254,7 @@ public final class PreferenceKeys {
 		public static final String SEND_ON_WIFI  = "KEY_SETTINGS_SEND_ON_WIFI";
 		public static final String CHANGED_SEND_ON_WIFI  = "KEY_SETTINGS_CHANGED_SEND_ON_WIFI";
 		public static final String TRACKING_EXPIRES = "KEY_SETTINGS_TRACKING_EXPIRES";
+		public static final String ALLOW_SMS = "KEY_SETTINGS_ALLOW_SMS";
 
 		//public static final String TRACKING_INTERVAL = "KEY_SETTINGS_TRACKING_INTERVAL";
 		//public static final String TRACKING_COVERAGE = "KEY_SETTINGS_TRACKING_COVERAGE";

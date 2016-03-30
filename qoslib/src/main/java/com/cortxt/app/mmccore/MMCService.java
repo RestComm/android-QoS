@@ -115,7 +115,6 @@ public class MMCService extends Service {
 	private ConnectionHistory connectionHistory;
 	private StartupGpsTimerTask startupGpsTimerTask;
 	private Timer startupGpsTimer = new Timer();
-	//private Timer stopRadioTimer = new Timer();
 	private EventActiveTimerTask eventActiveTask;
 	private Timer eventActiveTimer = null;
 
@@ -130,8 +129,7 @@ public class MMCService extends Service {
 	public void onCreate() {
 		super.onCreate();
 
-		// applicationInfo.uid = 10038
-        MMCLogger.setDebuggable(this.isDebuggable());
+		MMCLogger.setDebuggable(this.isDebuggable());
 		MMCLogger.logToFile(MMCLogger.Level.DEBUG, TAG, "onCreate", "SERVICE WAS STARTED. isMMCServiceRunning = " + isMMCServiceRunning());
 
 		try {
@@ -143,7 +141,6 @@ public class MMCService extends Service {
 			mReportManager.setService(mmcCallbacks, mPhoneState, connectionHistory);
 
 			mReportManager.getCarrierLogo(null);
-            //dataMonitor = new DMService(this);
 
 			eventManager = new EventManager(this);
 			dataMonitorStats = new DataMonitorStats(this);
@@ -205,7 +202,6 @@ public class MMCService extends Service {
 			if (System.currentTimeMillis() - 60000 * 60 * 4 > last_time || needEvent)
 			{
 				brieflyRunLocation (30, LocationManager.GPS_PROVIDER, true, null);  // Initially run the GPS for 20 seconds, then it will cycle the GPS and trigger the first update event
-				//sendUserUpdate();
 				EventObj evt = eventManager.registerSingletonEvent(EventType.EVT_STARTUP);
 				// STARTUP event is triggered and uploads right away without GPS
 				// and without waiting for SHUTDOWN event
@@ -253,8 +249,6 @@ public class MMCService extends Service {
 		
 		MMCLogger.logToFile(MMCLogger.Level.ERROR, TAG, "onDestroy", "");
 		
-		//mEventManager.stop();
-		//mSampleManager.stop();
 		mReportManager.stop();
 
 
@@ -321,7 +315,6 @@ public class MMCService extends Service {
 	        if (isMMCServiceRunning())
 	        {
 	        	MMCLogger.logToFile(MMCLogger.Level.ERROR, TAG, "Service already running - return immediately...", "");
-	            //ensureServiceStaysRunning();
 	            return START_STICKY;
 	        }
 	    }
@@ -624,9 +617,6 @@ public class MMCService extends Service {
 					PhoneStateListener.LISTEN_SIGNAL_STRENGTHS		|
 					PhoneStateListener.LISTEN_CALL_STATE			|
 					PhoneStateListener.LISTEN_DATA_ACTIVITY			|
-					//MMCPhoneStateListenerOld.LISTEN_VOLTE_STATE     |
-					//MMCPhoneStateListenerOld.LISTEN_OEM_HOOK_RAW_EVENT |
-					//MMCPhoneStateListenerOld.LISTEN_PRECISE_CALL_STATE |
 					PhoneStateListener.LISTEN_SERVICE_STATE;
 
 		TelephonyManager telephonyManager = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
@@ -959,7 +949,6 @@ public class MMCService extends Service {
 			svcPanel.getWindow().setGravity(Gravity.BOTTOM);
 
 			svcPanel.show();
-			//mBufferProgress = (ProgressBar) videoDialog.findViewById(R.id.buffer_progress);
 		}
 	}
 
