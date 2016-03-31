@@ -48,7 +48,6 @@ Todos.lst
 
 !mmcsys.apk
 android-QoS.iml
-examples/Restcomm_demo/app/libs/restcomm.android.client.sdk-debug.aar
 gradle/wrapper/gradle-wrapper.jar
 gradle/wrapper/gradle-wrapper.properties
 gradlew
