@@ -243,7 +243,7 @@ public class ContentValuesGenerator {
 					rscp = signal.getLayer3("mGsmRscp");
 				if (rscp == null)
 					rscp = signal.getLayer3("mWcdmaRscp");
-				if ((signalDB == null || signalDB <= -120) && rscp != null && rscp > -120 && rscp < -40)
+				if ((signalDB == null || signalDB <= -120) && rscp != null && rscp > -120 && rscp < -20)
 					signalDB = rscp;
 
 
