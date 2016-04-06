@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" >
+
+        <RelativeLayout
+            android:id="@+id/firstLayout"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/testtypeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="@string/testscript_test_type"
+                android:textColor="#666666"
+                android:textSize="18dp" />
+
+            <Spinner
+                android:id="@+id/activeTestSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/testtypeText" >
+            </Spinner>
+
+        </RelativeLayout>
+
+
+
+        <View
+            android:id="@+id/lastSeparator"
+            android:layout_width="360dp"
+            android:layout_height="1dp"
+            android:layout_below="@+id/firstLayout"
+            android:layout_centerHorizontal="true"
+            android:background="#1A000000"
+            android:tag="constantheight" />
+        
+         <Button
+            android:id="@+id/startButton"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/lastSeparator"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/start_button_selector"
+            android:gravity="center"
+            android:onClick="startClicked"
+            android:text="@string/testscript_start_test"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp" />
+
+</RelativeLayout>

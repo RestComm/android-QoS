@@ -20,10 +20,7 @@ import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.widget.Toast;
 
-
-import com.cortxt.app.mmcutility.DataObjects.MMCDevice;
-import com.cortxt.app.mmcutility.Utils.Global;
-import com.cortxt.app.mmcutility.Utils.MMCLogger;
+import com.cortxt.app.utillib.Utils.Global;
 
 import java.io.BufferedReader;
 import java.io.File;

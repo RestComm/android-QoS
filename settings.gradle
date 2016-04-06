@@ -1,6 +1,5 @@
-
-include ':qoslib', ':mmcutility', ':mmcextension'
-include ':mmcuilib'
+include ':qoslib', ':utillib', ':mmcextension'
+include ':uilib'
 include ':app'
 project(':app').projectDir = new File('examples/Restcomm_demo/app')
 // TODO:  To set up the project to use actual Restcomm SDK module code, please edit actual path to sdk, and update app build.gradle dependencies

@@ -29,7 +29,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     //compile project(':mmcutility')
-    debugCompile project(path: ':mmcutility', configuration: "libraryDebug")
-    releaseCompile project(path: ':mmcutility', configuration: "libraryRelease")
+    debugCompile project(path: ':utillib', configuration: "libraryDebug")
+    releaseCompile project(path: ':utillib', configuration: "libraryRelease")
     //compile 'com.scottyab:secure-preferences-lib:0.0.4'
 }

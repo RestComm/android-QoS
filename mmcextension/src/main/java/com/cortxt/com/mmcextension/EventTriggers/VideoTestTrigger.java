@@ -4,8 +4,8 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.webkit.WebView;
 
-import com.cortxt.app.mmcutility.DataObjects.EventType;
-import com.cortxt.app.mmcutility.ICallbacks;
+import com.cortxt.app.utillib.DataObjects.EventType;
+import com.cortxt.app.utillib.ICallbacks;
 
 public class VideoTestTrigger {
 	public static final String TAG = VideoTestTrigger.class.getSimpleName();

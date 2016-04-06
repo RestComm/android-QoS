@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" >
+
+        <RelativeLayout
+            android:id="@+id/firstLayout"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/firstSeparator"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/testInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="0dp"
+                android:text="Create and run a repeating script of tests."
+
+                android:textColor="#333333"
+                android:textSize="18dp" />
+            </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/durationLayout"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstLayout"
+         >
+            <TextView
+                android:id="@+id/durationText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="Test duration:"
+                android:textColor="#666666"
+                android:textSize="18dp" />
+
+            <Spinner
+                android:id="@+id/durationSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginLeft="0dp"
+                android:layout_toRightOf="@+id/durationText" >
+            </Spinner>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/testtypeLayout"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/durationLayout" >
+
+        <TextView
+            android:id="@+id/testtypeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="Test type:  "
+            android:textColor="#666666"
+            android:textSize="18dp" />
+            <Spinner
+                android:id="@+id/activeTestSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/testtypeText" >
+            </Spinner>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/delayLayout"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/testtypeLayout">
+            <TextView
+                android:id="@+id/delayinfoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="with delay:"
+                android:textColor="#666666"
+                android:textSize="18dp" />
+            <Spinner
+                android:id="@+id/delaySpinner"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/delayinfoText" >
+            </Spinner>
+            <TextView
+                android:id="@+id/afterText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:text="after"
+                android:layout_toRightOf="@+id/delaySpinner"
+                android:textColor="#666666"
+                android:textSize="18dp" />
+            <Spinner
+                android:id="@+id/delayStartSpinner"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/afterText" >
+            </Spinner>
+            </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/delayLayout">
+
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/start_button_selector"
+            android:gravity="center"
+            android:text=" + Add test"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp" />
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:background="#666666"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/addButton"
+            android:text="@string/testscript_start_tests"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/lastSeparator"
+        android:layout_width="360dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/buttonLayout"
+        android:layout_centerHorizontal="true"
+        android:background="#1A000000"
+        android:tag="constantheight" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@+id/buttonLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </ListView>
+        
+
+
+</RelativeLayout>
