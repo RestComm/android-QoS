@@ -12,7 +12,6 @@
             <option value="$PROJECT_DIR$/examples/Restcomm_demo/app" />
             <option value="$PROJECT_DIR$/mmcextension" />
             <option value="$PROJECT_DIR$/qoslib" />
-            <option value="$PROJECT_DIR$/uilib" />
             <option value="$PROJECT_DIR$/utillib" />
           </set>
         </option>

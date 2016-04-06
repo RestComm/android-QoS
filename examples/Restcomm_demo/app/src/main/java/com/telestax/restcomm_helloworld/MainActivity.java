@@ -256,7 +256,7 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
             // CHANGEME: update the IP address to your Restcomm instance
             //params.put("pref_proxy_ip", editServer.getText());
             //params.put("pref_proxy_port", "5080");
-            params.put("pref_proxy_domain", editServer.getText().toString());// + ":5080");
+            params.put("pref_proxy_domain", "sip:" + editServer.getText().toString() + ":5060");// + ":5080");
             params.put("pref_sip_user", editUser.getText());
             params.put("pref_sip_password", editPwd.getText());
             device = RCClient.createDevice(params, this);
