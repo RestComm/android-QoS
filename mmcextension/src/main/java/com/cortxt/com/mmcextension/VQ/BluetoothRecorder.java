@@ -30,7 +30,6 @@ import android.os.Handler;
 import android.os.ParcelUuid;
 import android.preference.PreferenceManager;
 
-import com.cortxt.app.mmcutility.Utils.MMCLogger;
 import com.cortxt.com.mmcextension.R;
 
 public class BluetoothRecorder   {

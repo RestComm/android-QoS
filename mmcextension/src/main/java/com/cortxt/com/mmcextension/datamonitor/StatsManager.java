@@ -28,11 +28,10 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import com.cortxt.app.mmcutility.Utils.MMCLogger;
-import com.cortxt.app.mmcutility.DataObjects.beans.DataStatsBean;
-import com.cortxt.app.mmcutility.DataObjects.beans.RunningAppsBean;
-import com.cortxt.app.mmcutility.DataObjects.database.DataMonitorDBReader;
-import com.cortxt.app.mmcutility.DataObjects.database.DataMonitorDBWriter;
+import com.cortxt.app.utillib.DataObjects.beans.DataStatsBean;
+import com.cortxt.app.utillib.DataObjects.beans.RunningAppsBean;
+import com.cortxt.app.utillib.DataObjects.database.DataMonitorDBReader;
+import com.cortxt.app.utillib.DataObjects.database.DataMonitorDBWriter;
 //import com.datamonitor.SMSObserver;
 
 /**

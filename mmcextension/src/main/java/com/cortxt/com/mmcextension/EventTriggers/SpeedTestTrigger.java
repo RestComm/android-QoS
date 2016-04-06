@@ -2,8 +2,8 @@ package com.cortxt.com.mmcextension.EventTriggers;
 
 import android.os.Handler;
 
-import com.cortxt.app.mmcutility.DataObjects.EventType;
-import com.cortxt.app.mmcutility.ICallbacks;
+import com.cortxt.app.utillib.DataObjects.EventType;
+import com.cortxt.app.utillib.ICallbacks;
 
 public class SpeedTestTrigger {
 	public static final String TAG = SpeedTestTrigger.class.getSimpleName();

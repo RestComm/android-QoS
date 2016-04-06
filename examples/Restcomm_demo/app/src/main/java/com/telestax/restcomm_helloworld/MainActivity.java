@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
-import com.cortxt.app.mmccore.Utils.APICommand;
+import com.cortxt.app.corelib.Utils.APICommand;
 
 import java.util.HashMap;
 
@@ -128,7 +128,7 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
 
         params = new HashMap<String, Object>();
         // update the IP address to your Restcomm instance
-        params.put("pref_proxy_domain", "");//editServer.getText().toString() + ":5080");
+        params.put("pref_proxy_domain", "sip:" + editServer.getText().toString() + ":5060"); // :5080
         //params.put("pref_proxy_ip", editServer.getText().toString());
         //params.put("pref_proxy_port", "5080");
         params.put("pref_sip_user", editUser.getText().toString());
@@ -210,8 +210,8 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
             // CHANGEME: update the IP address to your Restcomm instance. Also, you can update the number
             // from '1235' to any Restcomm application you wish to reach
             //connectParams.put("username", "sip:+1235@cloud.restcomm.com");
-            connectParams.put("username", "sip:" + dial);
-            connectParams.put("video-enabled", true);
+            connectParams.put("username", "sip:+" + dial + ":5060");
+            connectParams.put("video-enabled", false);
 
             // if you want to add custom SIP headers, please uncomment this
             //HashMap<String, String> sipHeaders = new HashMap<>();
@@ -254,8 +254,9 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
             }
             params = new HashMap<String, Object>();
             // CHANGEME: update the IP address to your Restcomm instance
-            params.put("pref_proxy_ip", editServer.getText());
-            params.put("pref_proxy_port", "5080");
+            //params.put("pref_proxy_ip", editServer.getText());
+            //params.put("pref_proxy_port", "5080");
+            params.put("pref_proxy_domain", editServer.getText().toString());// + ":5080");
             params.put("pref_sip_user", editUser.getText());
             params.put("pref_sip_password", editPwd.getText());
             device = RCClient.createDevice(params, this);

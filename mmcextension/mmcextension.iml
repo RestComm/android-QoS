@@ -104,6 +104,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="support-v4-13.0.0" level="project" />
     <orderEntry type="library" exported="" name="gson-1.7.1" level="project" />
-    <orderEntry type="module" module-name="mmcutility" exported="" />
+    <orderEntry type="module" module-name="utillib" exported="" />
   </component>
 </module>

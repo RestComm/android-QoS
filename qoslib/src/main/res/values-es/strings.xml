@@ -532,8 +532,8 @@
 
     <!-- Set the URLs for the webservice endpoint -->
     <!-- 
-The actual production server is http://mymobilecoverage.com/wsMMC/MMCService.asmx/ 
-The test server is http://mmctestsite.com/wsMMC/MMCService.asmx/ 
+The actual production server is http://mymobilecoverage.com/wsMMC/MainService.asmx/
+The test server is http://mmctestsite.com/wsMMC/MainService.asmx/
 -->
     <string name="MMC_Notification_message">se está ejecutando</string>
     <string name="MMC_Notification_StartMessage">Por favor, inicie sesión en MyMobileCoverage</string>
