@@ -1066,7 +1066,7 @@ public class MainService extends Service {
 				public void run() {
 					try {
 						mApikey = null;
-						mReportManager.authorizeDevice(getLogin(MainService.this),false);
+						mReportManager.authorizeDevice(getLogin(MainService.this),APICommand.getPassword(MainService.this), false);
 						mReportManager.checkPlayServices(MainService.this, true);
 					} catch (Exception e) {
 					}

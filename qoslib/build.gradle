@@ -66,9 +66,7 @@ android {
 }
 
 repositories {
-    flatDir {
-        dirs 'libs'
-    }
+    jcenter()
 }
 dependencies {
     debugCompile project(path: ':mmcextension', configuration: "libraryDebug")

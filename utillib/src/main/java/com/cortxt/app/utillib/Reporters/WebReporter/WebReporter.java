@@ -132,7 +132,7 @@ public class WebReporter  {
 	/**
 	 * Sends the registration request, receives the request and parses the response back
 	 */
-	public void authorizeDevice(DeviceInfo device, String email, boolean bFailover)  throws LibException {
+	public void authorizeDevice(DeviceInfo device, String email, String password, boolean bFailover)  throws LibException {
 		String host = mHost;
 		{
 			SharedPreferences preferenceSettings = PreferenceKeys.getSecurePreferences(mContext);
@@ -141,7 +141,7 @@ public class WebReporter  {
 
 			try {
 
-				HttpURLConnection connection = RegistrationRequest.POSTConnection(host, device, email, true);
+				HttpURLConnection connection = RegistrationRequest.POSTConnection(host, device, email, password, true);
 				//verifyResponse throws an MMCException
 				if(verifyConnectionResponse(connection)) {
 

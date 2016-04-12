@@ -167,11 +167,11 @@ public class ReportManager {
      * Attempt to register a user and his device with Linux server
      * If bFailover is true, then try windows server if it fails with linux
      */
-    public void authorizeDevice(String email, boolean bFailover) throws LibException {
+    public void authorizeDevice(String email, String password, boolean bFailover) throws LibException {
         DeviceInfo device = getDevice();
         if (email == null)
             email = PreferenceKeys.getSecurePreferenceString(PreferenceKeys.User.USER_EMAIL, null, mContext);
-        mWebReporter.authorizeDevice(device, email, bFailover);
+        mWebReporter.authorizeDevice(device, email, password, bFailover);
         //mLocalStorageReporter.authorizeDevice(device, email, bFailover);
     }
 
@@ -956,7 +956,7 @@ public class ReportManager {
      * @param isEmail should login be an email and be validated?
      * @param context application's context.
      */
-    public boolean registerAndStartService (String login, boolean isEmail, Context context)
+    public boolean registerAndStartService (String login, boolean isEmail, String password, Context context)
     {
         SharedPreferences preferenceSettings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences secureSettings = PreferenceKeys.getSecurePreferences(context);
@@ -981,13 +981,13 @@ public class ReportManager {
             // Background registration
             //Intent intent = new Intent(SplashScreen.this, GetStarted2.class);
             //startActivity(intent);
-            backgroundRegistration (login, isEmail, context);
+            backgroundRegistration (login, isEmail, password, context);
         }
         secureSettings.edit().putInt(PreferenceKeys.User.VERSION, getAppVersionCode(context)).commit();
         return true;
     }
 
-    private void backgroundRegistration (final String login, final boolean isEmail, final Context context)
+    private void backgroundRegistration (final String login, final boolean isEmail, final String password, final Context context)
     {
         if(isEmail == false || validateEmail(login) == true) {
             new Thread(new Runnable()
@@ -1005,7 +1005,7 @@ public class ReportManager {
                         {
                             regLogin = getDevice().getIMEI();
                         }
-                        manager.authorizeDevice(regLogin, true);
+                        manager.authorizeDevice(regLogin,  password, true);
 
                         return; // success
                     }

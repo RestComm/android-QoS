@@ -32,6 +32,12 @@ public class APICommand {
         String value = securePref.getString (PreferenceKeys.User.USER_EMAIL, null);
         return value;
     }
+    public static String getPassword (Context context)
+    {
+        SharedPreferences securePref = MainService.getSecurePreferences(context);
+        String value = securePref.getString (PreferenceKeys.User.USER_PASSWORD, null);
+        return value;
+    }
 
     public static void setLogin (Context context, String login)
     {
@@ -41,6 +47,17 @@ public class APICommand {
             return;
         securePref.edit().putString(PreferenceKeys.User.USER_EMAIL, login).commit ();
         registerLogin(context, login);
+    }
+
+    public static void setLogin (Context context, String login, String password)
+    {
+        SharedPreferences securePref = MainService.getSecurePreferences(context);
+        String oldlogin = securePref.getString(PreferenceKeys.User.USER_EMAIL, "");
+        if (login == null || oldlogin.equals(login) || login.length() < 3)
+            return;
+        securePref.edit().putString(PreferenceKeys.User.USER_EMAIL, login).commit ();
+        securePref.edit().putString(PreferenceKeys.User.USER_PASSWORD, password).commit ();
+        registerLogin(context, login, password);
     }
 
     public static void setLoginToIMEI (Context context)
@@ -56,20 +73,25 @@ public class APICommand {
         registerLogin(context, imei);
     }
 
-    private static void registerLogin (final Context context, final String login)
+    private static void registerLogin (final Context context, final String login, final String password)
     {
         final ReportManager reportmanager = ReportManager.getInstance(context);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    reportmanager.authorizeDevice(login,false);
+                    reportmanager.authorizeDevice(login,password,false);
                     reportmanager.checkPlayServices(context, true);
                 } catch (Exception e) {
                 }
             }
         }).start();
 
+    }
+
+    private static void registerLogin (final Context context, final String login)
+    {
+        registerLogin(context, login, null);
     }
 
     public static void start (Context context)

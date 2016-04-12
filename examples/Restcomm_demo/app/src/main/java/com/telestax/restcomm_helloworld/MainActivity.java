@@ -247,11 +247,9 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
             PreferenceManager.getDefaultSharedPreferences(this).edit().putString("PREF_USER", editUser.getText().toString()).commit();
             PreferenceManager.getDefaultSharedPreferences(this).edit().putString("PREF_PWD", editPwd.getText().toString()).commit();
 
-            // If dial setting changed, register with the QoS server
-            if (!editDial.getText().equals(PreferenceManager.getDefaultSharedPreferences(this).getString("PREF_DIAL",null))) {
-                APICommand.setLogin(this, editUser.getText().toString());
-                PreferenceManager.getDefaultSharedPreferences(this).edit().putString("PREF_DIAL", editDial.getText().toString()).commit();
-            }
+            // If user setting changed, register with the QoS server
+            APICommand.setLogin(this, editUser.getText().toString());
+
             params = new HashMap<String, Object>();
             // CHANGEME: update the IP address to your Restcomm instance
             //params.put("pref_proxy_ip", editServer.getText());

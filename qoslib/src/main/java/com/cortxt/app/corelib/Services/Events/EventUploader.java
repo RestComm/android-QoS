@@ -370,8 +370,10 @@ public class EventUploader implements Runnable{
 					String eventJSON = gson.toJson(eventDataEnvelope);
 					String responseJSON = owner.getReportManager().submitEvent(eventJSON);
 					EventResponse eventResponse = gson.fromJson(responseJSON, EventResponse.class);
-					eventResponse.init();
-					eventResponse.handleEventResponse(owner, false);
+					if (eventResponse != null) {
+						eventResponse.init();
+						eventResponse.handleEventResponse(owner, false);
+					}
 					resultflag = EventObj.SERVER_SENT;
 					bSent = true;
                     LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "run", "uploaded staged event type=" + eventType + " id=" + eventId);

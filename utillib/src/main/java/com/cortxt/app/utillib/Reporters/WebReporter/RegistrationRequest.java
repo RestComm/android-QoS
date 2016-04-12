@@ -23,10 +23,10 @@ public class RegistrationRequest  {
     private static final String TAG = RegistrationRequest.class.getSimpleName();
     private static final String END_POINT = "/api/devices/register";
 
-    public static HttpURLConnection POSTConnection(String host, DeviceInfo device, String email, boolean share) throws Exception
+    public static HttpURLConnection POSTConnection(String host, DeviceInfo device, String email, String password, boolean share) throws Exception
     {
         URL url = new URL(host + END_POINT);
-        String message = toJSON(device, email, share);
+        String message = toJSON(device, email, password, share);
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setReadTimeout(10000);
@@ -56,14 +56,18 @@ public class RegistrationRequest  {
     /**
      * @return String the json representation of the body of the request.
      */
-    public static String toJSON(DeviceInfo device, String email, boolean share) {
+    public static String toJSON(DeviceInfo device, String email, String password, boolean share) {
         String json = "";
         HashMap<String, String> phoneProperties = device.getProperties();
         if(phoneProperties != null) {
           JSONObject data = new JSONObject(phoneProperties);
           try {
-            data.put("email", email);
+            data.put("login", email);
             data.put("share", share);
+              if (password != null)
+              {
+                  data.put("password", password);
+              }
             json = data.toString();
           } catch (JSONException e) {
             LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "toJSON", e.getMessage());
