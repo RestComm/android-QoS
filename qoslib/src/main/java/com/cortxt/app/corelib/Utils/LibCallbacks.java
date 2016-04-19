@@ -36,7 +36,7 @@ public class LibCallbacks implements ICallbacks {
     }
 
     public EventObj triggerSingletonEvent(EventType eventType) {
-        return mContext.getEventManager().registerSingletonEvent(eventType);
+        return mContext.getEventManager().triggerSingletonEvent(eventType);
     }
     public void temporarilyStageEvent(EventObj event, EventObj compEvent, Location loc)
     {

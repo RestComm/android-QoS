@@ -56,7 +56,7 @@ import com.cortxt.app.corelib.Services.Events.EventManager;
 import com.cortxt.app.utillib.DataObjects.EventObj;
 import com.cortxt.app.corelib.Services.Intents.IntentDispatcher;
 import com.cortxt.app.corelib.Services.Location.GpsManagerOld;
-import com.cortxt.app.corelib.Utils.APICommand;
+import com.cortxt.app.corelib.Utils.QosAPI;
 import com.cortxt.app.utillib.DataObjects.DeviceInfo;
 import com.cortxt.app.corelib.Utils.RTWebSocket;
 import com.cortxt.app.corelib.UtilsOld.AccessPointHistory;
@@ -1059,19 +1059,25 @@ public class MainService extends Service {
 	{
 		String apikey = getApiKey(this);
 
-		if (apikey != null && apikey.equals ("0") && mReportManager != null)
+		if (mReportManager != null)
 		{
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
 					try {
-						mApikey = null;
-						mReportManager.authorizeDevice(getLogin(MainService.this),APICommand.getPassword(MainService.this), false);
-						mReportManager.checkPlayServices(MainService.this, true);
+						if (!mReportManager.isAuthorized() && getLogin(MainService.this) != null) {
+							mApikey = null;
+							mReportManager.authorizeDevice(getLogin(MainService.this), QosAPI.getPassword(MainService.this), false);
+							mReportManager.checkPlayServices(MainService.this, true);
+						}
 					} catch (Exception e) {
 					}
 				}
 			}).start();
+		}
+		else
+		{
+			apikey = null;
 		}
 
 		// Also if a dropped call notification has been shown for a hours, expire and remove it
@@ -1242,15 +1248,15 @@ public class MainService extends Service {
 		return trackingManager;
 	}
 
-	public static String getLogin (Context context) {return APICommand.getLogin(context);}
+	public static String getLogin (Context context) {return QosAPI.getLogin(context);}
 	public static void setLogin(Context context, String login) {
-		APICommand.setLogin(context, login);}
+		QosAPI.setLogin(context, login);}
 	public static void setLoginToIMEI (Context context) {
-		APICommand.setLoginToIMEI(context);}
+		QosAPI.setLoginToIMEI(context);}
 	public static void start (Context context) {
-		APICommand.start(context);}
+		QosAPI.start(context);}
 	public static int startDriveTest (Context context, int minutes, boolean coverage, int speed, int connectivity, int sms, int video, int audio, int web, int vq, int youtube, int ping)
-	{ return APICommand.startDriveTest(context, minutes, coverage, speed, connectivity, sms, video, audio, web, vq, youtube, ping);}
+	{ return QosAPI.startDriveTest(context, minutes, coverage, speed, connectivity, sms, video, audio, web, vq, youtube, ping);}
 
 	public IntentDispatcher getIntentDispatcher(){
 		return this.intentDispatcher;

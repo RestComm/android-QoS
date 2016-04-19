@@ -67,6 +67,7 @@ public class CommonIntentActionsOld {
 	public static final String ACTIVE_TEST = "com.cortxt.app.MMC.Services.Intents.MMCIntentHandler.ACTIVE_TEST";
 	public static final String WEB_TEST = "com.cortxt.app.MMC.Services.Intents.MMCIntentHandler.WEB_TEST";
 	public static final String COMMAND = "com.cortxt.app.MMC.Services.Intents.MMCIntentHandler.COMMAND";
+	public static final String SENDCOMMAND = "com.cortxt.app.MMC.Services.Intents.MMCIntentHandler.SENDCOMMAND";
 	public static final String COMMAND_EXTRA = "command_extra";
 
 	public static final String UPDATE_ACTION = "com.cortxt.app.MMC.Services.Intents.MMCIntentHandler.UPDATE_ACTION";

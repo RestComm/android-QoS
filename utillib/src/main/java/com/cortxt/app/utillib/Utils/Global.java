@@ -5,6 +5,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -93,7 +95,16 @@ public class Global {
 
     public static String getAppName (Context context)
     {
-        return getString (context, "app_label");
+        String appname = "";
+        try{
+            PackageManager packageManager = context.getApplicationContext().getPackageManager();
+            ApplicationInfo applicationInfo = context.getApplicationInfo();
+            String name = (String)((applicationInfo != null) ? packageManager.getApplicationLabel(applicationInfo) : context.getPackageName());
+
+            appname = name;
+        }
+        catch (Exception e) {}
+        return appname;
     }
 
     public static String getApiUrl (Context context)

@@ -1,5 +1,6 @@
 package com.cortxt.app.corelib.Utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,15 +17,16 @@ import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 import com.cortxt.app.utillib.Utils.PreferenceKeys;
 import com.cortxt.app.utillib.Utils.UsageLimits;
+import com.securepreferences.SecurePreferences;
 
 import org.json.JSONObject;
 
 /**
  * Created by bscheurman on 16-01-23.
  */
-public class APICommand {
+public class QosAPI {
 
-    public static final String TAG = APICommand.class.getSimpleName();
+    public static final String TAG = QosAPI.class.getSimpleName();
 
     public static String getLogin (Context context)
     {
@@ -234,5 +236,16 @@ public class APICommand {
                 return false;
         }
         return true;
+    }
+
+    public static void finishUI (Activity activity)
+    {
+        SecurePreferences securePrefs = MainService.getSecurePreferences(activity);
+        boolean bStoppedService = securePrefs.getBoolean(PreferenceKeys.Miscellaneous.STOPPED_SERVICE, false);
+        if (!bStoppedService)
+        {
+            Intent intent = new Intent(IntentHandler.RESTART_MMC_SERVICE);
+            activity.sendBroadcast(intent);
+        }
     }
 }

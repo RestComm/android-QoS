@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
-import com.cortxt.app.corelib.Utils.APICommand;
+import com.cortxt.app.corelib.Utils.QosAPI;
 
 import java.util.HashMap;
 
@@ -138,7 +138,7 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         // we don't have a separate activity for the calls, so use the same intent both for calls and messages
         device.setPendingIntents(intent, intent);
         device.listen();
-        APICommand.start(this);
+        QosAPI.start(this);
 
         // Setup video stuff
         scalingType = VideoRendererGui.ScalingType.SCALE_ASPECT_FILL;
@@ -248,7 +248,7 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
             PreferenceManager.getDefaultSharedPreferences(this).edit().putString("PREF_PWD", editPwd.getText().toString()).commit();
 
             // If user setting changed, register with the QoS server
-            APICommand.setLogin(this, editUser.getText().toString());
+            QosAPI.setLogin(this, editUser.getText().toString());
 
             params = new HashMap<String, Object>();
             // CHANGEME: update the IP address to your Restcomm instance

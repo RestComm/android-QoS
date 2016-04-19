@@ -39,7 +39,7 @@ android {
             debuggable true
         }
         release {
-            minifyEnabled true
+            minifyEnabled false
             shrinkResources true
             //proguardFiles 'proguard-android.txt'
             resValue "string", "google_maps_api_key", "0kdHHzVVjg3MenrXSvZ2NpYta1j64_MF9bK17ag"

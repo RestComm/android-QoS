@@ -197,6 +197,8 @@ public class LocationRequest {
 		this.firstAccuracyDeg = gpsAccuracy * 0.000005;
 		this.bLastKnownLocation = true;
 		this.bLocationChanged = true;
+
+
 	}
 
 	public Location start ()
@@ -239,6 +241,8 @@ public class LocationRequest {
 				mOnStoppedListener.onStopped();
 			releaseWakeLock();
 		}
+		else
+			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "LocationStopped", "bGPSRunning " + bGPSRunning + " bNWRunning " + bNWRunning);
 	}
 	
 	Location getGPSLocation ()
@@ -282,6 +286,7 @@ public class LocationRequest {
 				statsLocation = netLocation;
 			bFinalLocation = true;
 			handleLocation (true);
+			LocationStopped(true);
 		}
 		//
 		/**
@@ -340,6 +345,8 @@ public class LocationRequest {
 				//return true;
 				if (bFinalLocation) {
 					bGPSRunning = false;
+					LocationStopped(true);
+					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "GpsListenerForRequest.onLocationUpdate", "LocationStopped (true)");
 					return false;
 				}
 				return true;
@@ -395,6 +402,8 @@ public class LocationRequest {
 				bLastKnownLocation = false;
 				handleLocation (true);
 			}
+			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "LocationListenerForRequest.onLocationUpdate", "onTimeout");
+			LocationStopped (false);
 		}
 		@Override
 		public boolean onLocationUpdate(Location location, int satellites) {
@@ -421,6 +430,8 @@ public class LocationRequest {
 					bLastKnownLocation = false;
 					bLocationChanged = bLocChanged;
 					handleLocation(true);
+					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "LocationListenerForRequest.onLocationUpdate", "LocationStopped (true)");
+					LocationStopped (false);
 					return false;
 					//if (mOnNewLocationListener != null)
 					//	mOnNewLocationListener.onLocation (LocationRequest.this);
@@ -429,6 +440,7 @@ public class LocationRequest {
 					//return false;
 				}
 			}
+
 			handleLocation (false);
 			return true;
 			//return true;
@@ -450,24 +462,24 @@ public class LocationRequest {
 	void acquireWakeLock(Context context)
 	{
 		//Setup a WakeLock
-		PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
-		wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MMC LocationRequest partial wake");
-		wakeLock.acquire();
+		//wakeLock.acquire();
 //		wakeLock.setReferenceCounted(true);
 //
 //		//acquire the lock
 //		if(!wakeLock.isHeld())
-//		{
-//			wakeLock.acquire();
-//		}
+		PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
+		wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MMC LocationRequest partial wake");
+		wakeLock.acquire();
+		LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "acquireWakeLock", "ACQUIRE");
+
 	}
 
 	void releaseWakeLock ()
 	{
-		//acquire the lock
-		if(wakeLock.isHeld())
+		while (wakeLock.isHeld())
 		{
 			wakeLock.release();
+			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "acquireWakeLock", "RELEASE");
 		}
 	}
 	

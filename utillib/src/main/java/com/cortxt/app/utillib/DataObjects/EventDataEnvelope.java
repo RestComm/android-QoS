@@ -42,7 +42,7 @@ public class EventDataEnvelope {
             if (altLabel != null && !altLabel.equals(""))
                 this.oCallData.appName = altLabel;
             else
-                this.oCallData.appName = Global.getAppName(null);
+                this.oCallData.appName = Global.getAppName(context);
         }
 
 	}

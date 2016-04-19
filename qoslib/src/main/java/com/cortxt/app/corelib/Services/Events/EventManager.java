@@ -37,7 +37,7 @@ import com.cortxt.com.mmcextension.EventTriggers.VideoTestTrigger;
 import com.cortxt.app.utillib.Reporters.LocalStorageReporter.LocalStorageReporter;
 import com.cortxt.app.utillib.DataObjects.CellLocationEx;
 import com.cortxt.app.utillib.DataObjects.SignalEx;
-import com.cortxt.app.corelib.Utils.APICommand;
+import com.cortxt.app.corelib.Utils.QosAPI;
 import com.cortxt.app.utillib.Utils.DeviceInfoOld;
 import com.cortxt.app.utillib.DataObjects.EventType;
 import com.cortxt.app.utillib.Utils.PreferenceKeys;
@@ -974,7 +974,7 @@ public class EventManager {
 
 	public boolean queueActiveTest (EventType eventType, int trigger)
 	{
-		if (!APICommand.isEventEnabled(context, eventType) || !APICommand.isEventPermitted(context, eventType, trigger))
+		if (!QosAPI.isEventEnabled(context, eventType) || !QosAPI.isEventPermitted(context, eventType, trigger))
 			return false; // Event has not been enabled by server
 
 		// If no test is in progress, run now

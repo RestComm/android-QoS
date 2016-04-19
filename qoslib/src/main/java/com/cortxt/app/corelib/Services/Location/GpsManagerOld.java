@@ -617,7 +617,7 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 				if (listener.getProvider().equals(LocationManager.GPS_PROVIDER))
 				{
 					owner.goIdle ();
-					//MMCLogger.logToFile(MMCLogger.Level.DEBUG, TAG, "removeListenerFromCollection", "stopped listening for location updates " + listener.getProvider());
+					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "removeListenerFromCollection", "stopped listening for location updates " + listener.getProvider());
 				}
 			}
 		}
