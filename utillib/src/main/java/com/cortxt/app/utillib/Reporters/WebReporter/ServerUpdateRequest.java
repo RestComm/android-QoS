@@ -22,6 +22,7 @@ public class ServerUpdateRequest {
 	public static final String KEY_EMAIL_SETTING = "email";
 	public static final String KEY_TWITTER_SETTING = "twitter";
     public static final String KEY_GCM_REG_ID = "gcmid";
+	public static final String KEY_SETTINGS_SETTING = "settings";
 	protected JSONObject mBody;
     protected String mHost;
 

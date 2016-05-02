@@ -377,7 +377,7 @@ public class PhoneState {
         catch (Exception e)
         {
             String s = e.toString();
-            LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "getVoiceNetworkType", "exception", e);
+            //LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "getVoiceNetworkType", "exception", e);
         }
         return previousNetworkType;
     }

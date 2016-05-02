@@ -12,8 +12,16 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles 'proguard-android.txt'
+        }
+    }
+
+    android {
+        lintOptions {
+            disable 'MissingTranslation'
+
         }
     }
     defaultPublishConfig 'release'

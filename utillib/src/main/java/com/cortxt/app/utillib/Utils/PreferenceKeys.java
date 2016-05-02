@@ -205,6 +205,9 @@ public final class PreferenceKeys {
 		public static final String CHANGED_NOTIFY = "KEY_USER_CHANGED_NOTIFY";
 		public static final String USAGE_PROFILE = "KEY_SETTINGS_USAGE_PROFILE";
 		public static final String USAGE_LIMIT = "KEY_SETTINGS_USAGE_LIMIT";
+		public static final String USAGE_DEFAULT = "KEY_SETTINGS_USAGE_DEFAULT";
+		public static final String USAGE_CHANGED = "KEY_SETTINGS_USAGE_CHANGED";
+
 		public static final String USAGE_PROFILE_CHARGER = "KEY_SETTINGS_USAGE_PROFILE_CHARGER";
 		public static final String USAGE_DORMANT_MODE = "KEY_SETTINGS_USAGE_DORMANT_MODE";
 		public static final String HIDE_RANKING = "KEY_SETTINGS_HIDE_RANKING";

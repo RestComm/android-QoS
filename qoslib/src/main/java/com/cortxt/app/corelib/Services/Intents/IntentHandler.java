@@ -266,6 +266,8 @@ public class IntentHandler extends BroadcastReceiver {
 		String action = intent.getAction();
 		Bundle intentExtras = intent.getExtras();
 
+		if (owner == null)
+			return;
         owner.getWebSocketManager().sendIntentToWebSocket(action, intentExtras);
 		
 		//capture the "battery changed" event

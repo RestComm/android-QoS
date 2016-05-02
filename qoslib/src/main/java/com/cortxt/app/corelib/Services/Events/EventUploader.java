@@ -139,6 +139,12 @@ public class EventUploader implements Runnable{
 		EventDataEnvelope eventDataEnvelope = null;
 		if (event != null)
 		{
+			// Dont send an unconfirmed Travel event
+			if (event.getEventType() == EventType.TRAVEL_CHECK && owner.getTravelDetector().isConfirmed() == false)
+			{
+				LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "report", "skip unconfirmed travel event");
+				return;
+			}
 
 			EventData eventData = generateEventDataFromEvent(event, local);
 			if (eventData == null)
@@ -231,7 +237,7 @@ public class EventUploader implements Runnable{
 		else  // null event create dummy event envelope to trigger sending the event queue (without adding a new event)
 			eventDataEnvelope = new EventDataEnvelope ();
 		
-		boolean bSent = false,bFromQueue =false; 
+		boolean bSent = false,bFromQueue =false, bAddedQueue = false;
 		loadEventsQueue();  // only loads if queue hasn't loaded yet (ensure loaded)
 		ConcurrentLinkedQueue<EventDataEnvelope> eventQueue = owner.getEventManager().getEventQueue();
 		
@@ -243,6 +249,7 @@ public class EventUploader implements Runnable{
 			{	
 				//if (!bFromQueue)
 				{
+					bAddedQueue = true;
 					eventQueue.add (eventDataEnvelope);
 					while (eventQueue.size() > 200)
 						eventQueue.poll();
@@ -256,7 +263,7 @@ public class EventUploader implements Runnable{
 			}
 		} 
 		// persist the queue every 3 hrs in case something happens
- 		if (event != null && (event.isCheckin)) // || event.getEventType() == EventType.EVT_SHUTDOWN ))
+		if (event != null && (event.isCheckin || bAddedQueue))
  			saveEvents(eventQueue);
 	}
 	
@@ -338,7 +345,10 @@ public class EventUploader implements Runnable{
 		if (!owner.isOnline() || owner.getPhoneState().isCallConnected()) // if no connectivity, send event be sent later?
 		{
 			resultflag = EventObj.SERVER_NODATA;
-			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "run", "offline, unable to send event type=" + eventType + " id=" + eventId);
+			if (!owner.isOnline())
+				LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "run", "offline, unable to send event type=" + eventType + " id=" + eventId);
+			else if (owner.getPhoneState().isCallConnected())
+				LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "run", "call in progress, not yet sending event type=" + eventType + " id=" + eventId);
 		}
 		else if (!owner.isServiceRunning() && eventType != EventType.EVT_SHUTDOWN)
 		{
@@ -378,13 +388,6 @@ public class EventUploader implements Runnable{
 					bSent = true;
                     LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "run", "uploaded staged event type=" + eventType + " id=" + eventId);
 				}
-			} catch (ClientProtocolException cpe){
-				//resultflag = EventObj.SERVER_FAILED;
-				bSent = true; // event was cancelled, but mark as sent so it doesnt go back in queue
-				LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "uploadEventEnvelope", "cpe exception uploading event type=" + eventType + " id=" + eventId, cpe);
-			} catch (IOException ioe){
-				bSent = false;
-				LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "uploadEventEnvelope", "io exception uploading event type=" + eventType + " id=" + eventId, ioe);
 			} catch (Exception e){
 				bSent = true;
 				LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "uploadEventEnvelope", "exception uploading event type=" + eventType + " id=" + eventId, e);

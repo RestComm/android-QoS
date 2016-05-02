@@ -77,7 +77,7 @@ public class EventManager {
 	 * This is a list of ongoing events
 	 */
 	private List<EventCouple> ongoingEventCouples = new ArrayList<EventCouple>();
-	
+	private List<EventObj> ongoingEvents = new ArrayList<EventObj>();
 	/**
 	 * This variable stores the currently staged event ("staged" would be referred to as a phase of an event). During
 	 * this phase, the event is able to associate additional data with itself.
@@ -469,6 +469,9 @@ public class EventManager {
 	public List<EventCouple> getOngoingEventCouples(){
 		return (List<EventCouple>) ((ArrayList<EventCouple>)this.ongoingEventCouples).clone();
 	}
+	public List<EventObj> getOngoingEvents(){
+		return this.ongoingEvents;
+	}
 
 	/**
 	 * At the start of the event, stores like-timestamped entries in the tables for signals, cells and locations
@@ -506,6 +509,7 @@ public class EventManager {
 			if (event == null)
 				return;
 
+			ongoingEvents.add (event);
 			Location location = context.getLastLocation();
 			int satellites = context.getLastNumSatellites();
 			if (location != null)
@@ -638,6 +642,9 @@ public class EventManager {
 					  }
 				  }
 				}, 120000);
+			if (context.isMMCActive() && (isEventRunning(EventType.MAN_TRACKING) ||
+										(isEventRunning(EventType.EVT_FILLIN) && context.getUsageLimits().getUsageProfile() > 2)))
+				context.keepAwake(true, false);  // Force the screen back on if it turned off while coverage tracking
 		}
 		else   // if screen is on, and times were cleared because of screen off, start duration time again
 		{
@@ -795,7 +802,10 @@ public class EventManager {
 				if(event.getEventType().getGenre() == EventTypeGenre.SINGLETON || event.getEventType().getGenre() == EventTypeGenre.END_OF_COUPLE) {
 					eventCache.remove(event.getEventType());
 				}
-				
+
+				if (ongoingEvents.contains(event))
+					ongoingEvents.remove(event);
+
 				//MMCLogger.logToFile(MMCLogger.Level.DEBUG, "EventManager", "unstageAndUploadEvent", "event=" + event.getEventType() );
 				event.setStageTimestamp (System.currentTimeMillis());
 				event.setFlag (EventObj.SERVER_READY, true);
@@ -840,6 +850,8 @@ public class EventManager {
 		event.setStageTimestampToNow();
 		MainService.getGpsManager().unregisterListener(event.gpsListener);
 		eventCache.remove(event.getEventType());
+		if (ongoingEvents.contains(event))
+			ongoingEvents.remove (event);
 	}
 	
 	public void cancelCouple (EventCouple cancelCouple)

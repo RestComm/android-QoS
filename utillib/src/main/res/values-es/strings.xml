@@ -65,7 +65,6 @@
     <string name="eventtype_update">Actualizar</string>
     <string name="eventtype_fillin">Rellenar</string>
     <string name="eventtype_periscope">Periscopio</string>
-    <string name="eventtype_">Seguimiento</string>
     <string name="eventtype_netchange">Cambio de red</string>
     <string name="eventtype_speedtest">Prueba de velocidad</string>
     <string name="eventtype_ttdropped">Reportar llamada interrumpida</string>
@@ -210,25 +209,6 @@
         <item>Muy probablemente</item>
     </string-array>
 
-    <!-- Strings for MyCoverage activity -->
-
-    <string name="mycoverage_title">Mapas</string>
-    <string name="mycoverage_coverageerror_title">Error</string>
-    <string name="mycoverage_coverageerror_message">No se pudo obtener la cobertura del servidor</string>
-    <string name="mycoverage_coverageerror_button_ok">OK</string>
-    <string name="mycoverage_unknownlocation">Ubicación desconocida</string>
-    <string name="mycoverage_center">Centrar mapa en la ubicación actual</string>
-    <string name="mycoverage_share">Compartir</string>
-    <string name="mycoverage_history">Historial</string>
-    <string name="mycoverage_overlays">Cobertura</string>
-    <string name="mycoverage_hide_overlays">Ocultar cobertura</string>
-    <string name="mycoverage_show_overlays">Mostrar cobertura</string>
-    <string name="mycoverage_indoor_mapping"> Mapeado interior</string>
-    <string name="mycoverage_outdoor_mapping">Mapeado exterior</string>
-    <string name="mycoverage_selectCarrier">Cambia la capa de cobertura</string>
-    <string name="mycoverage_zoomout">Zoom para ver su cobertura</string>
-    <string name="mycoverage_hideevents">Retorna a la compañia actual para ver sus eventos</string>
-    <string name="mycoverage_manual_mapping">Muestreo Manual</string>
 
     <!-- Strings for Transit Sampling -->
     <string name="transitsampling_train_name">Train name</string>
@@ -309,8 +289,6 @@
 
     <!-- Strings for Manual Mapping -->
     <string name="manualmapping_topfloor_toobig">Maximum top floor is 100</string>
-    <string name="manualmapping_save">Guardar</string>
-    <string name="manualmapping_cancel">Cancelar</string>
     <string name="manualmapping_other_structure">Otra estructura</string>
     <string name="manualmapping_invalid_topfloor">Piso superior inválido</string>
     <string name="manualmapping_select_manualpolygon">Seleccionar área del edificio</string>
@@ -963,7 +941,6 @@ The test server is http://mmctestsite.com/wsMMC/MainService.asmx/
     <string name="recordingdlg_smstest">Prueba de SMS</string>
     <string name="recordingdlg_webtest">Prueba de página web</string>
     <string name="recordingdlg_vqtest">Prueba de calidad de la voz</string>
-    <string name="recordingdlg_audio">Prueba de audio</string>
 
     <string name="activetest_accessdelay">Retardo en Buffer</string>
     <string name="activetest_playdelay">en Reprod.</string>

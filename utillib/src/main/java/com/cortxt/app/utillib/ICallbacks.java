@@ -14,7 +14,7 @@ import org.json.JSONObject;
 /**
  * Created by bscheurman on 16-03-17.
  */
-public interface ICallbacks {
+public interface ICallbacks{
     void setVQHandler (Handler handler);
     EventObj triggerSingletonEvent (EventType eventType);
     void temporarilyStageEvent(EventObj event, EventObj compEvent, Location loc);

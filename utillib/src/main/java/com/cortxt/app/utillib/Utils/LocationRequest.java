@@ -23,7 +23,7 @@ public class LocationRequest {
 	Location nearLocation;
 	long gpsStartTime = 0;
 	double firstAccuracyDeg = 0;
-	public boolean bLastKnownLocation, bLocationChanged, bGPSTimeout = false;
+	public boolean bLastKnownLocation, bLocationChanged, bGPSTimeout = false, bFirstNewLocation = false;
 	public boolean bNWRunning = false, bGPSRunning = false, bFinalLocation = false;
 	Activity activity = null;
 	Context mContext = null;
@@ -223,9 +223,10 @@ public class LocationRequest {
 		locListener2.setOperationTimeout(0);
 		locListener2.setProvider(LocationManager.NETWORK_PROVIDER);
 		bNWRunning = true;
-		Global.registerLocationListener (false, locListener2);
+		Global.registerLocationListener(false, locListener2);
 
 		acquireWakeLock(this.mContext);
+
 		return lastLocation;
 	}
 
@@ -311,7 +312,7 @@ public class LocationRequest {
 				// consider it a live location if it has fluctuated
 				if (location.getLatitude() != firstGpsLocation.getLatitude() || location.getLongitude() != firstGpsLocation.getLongitude())
 				{
-					if (gpsStartTime + 15000 < System.currentTimeMillis() || finalAccuracy == firstAccuracy)
+					if (gpsStartTime + 5000 < System.currentTimeMillis() || finalAccuracy == firstAccuracy)
 						bLiveLocation = true;
 				}
 			}
@@ -334,7 +335,13 @@ public class LocationRequest {
 						bLocationChanged = true;
 					if (location.getAccuracy() < finalAccuracy)
 						bFinalLocation = true;
-					handleLocation (true);
+					boolean bNewLocation = false;
+					if (bLocChanged && bFirstNewLocation)
+					{
+						bNewLocation = true;
+						bFirstNewLocation = false;
+					}
+					handleLocation (bNewLocation | bFinalLocation);
 					//if (mOnNewLocationListener != null)
 					//	mOnNewLocationListener.onLocation (LocationRequest.this);
 					// if (handler != null)
@@ -373,7 +380,7 @@ public class LocationRequest {
 	class LocationListenerForRequest extends GpsListener {
 	//
 		public LocationListenerForRequest() {
-			super("LocationListenerForStats");
+			super("LocationListenerForRequest");
 		}
 		//
 		/**
@@ -400,7 +407,7 @@ public class LocationRequest {
 				if (bGPSRunning == false)
 					bFinalLocation = true;
 				bLastKnownLocation = false;
-				handleLocation (true);
+				handleLocation (false);
 			}
 			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "LocationListenerForRequest.onLocationUpdate", "onTimeout");
 			LocationStopped (false);
@@ -429,8 +436,13 @@ public class LocationRequest {
 					statsLocation = location;
 					bLastKnownLocation = false;
 					bLocationChanged = bLocChanged;
-					handleLocation(true);
-					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "LocationListenerForRequest.onLocationUpdate", "LocationStopped (true)");
+					if (bFirstNewLocation)
+					{
+						handleLocation(true);
+						bFirstNewLocation = false;
+					}
+
+					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "LocationListenerForRequest.onLocationUpdate", "LocationStopped (false)");
 					LocationStopped (false);
 					return false;
 					//if (mOnNewLocationListener != null)

@@ -42,6 +42,8 @@ public class EventResponse {
                             d.hide_tt_share = Integer.parseInt(value);
                         if (name.equals("allow_travel_fillin"))
                             d.allow_travel_fillin = Integer.parseInt(value);
+                        if (name.equals("level_default"))
+                            d.level_default = Integer.parseInt(value);
                         if (name.equals("use_gcm"))
                             d.use_gcm = Integer.parseInt(value);
                         if (name.equals("use_svcmode"))
@@ -118,6 +120,13 @@ public class EventResponse {
     public Integer getHideRanking() {
         if (d.hideRanking != null)
             return d.hideRanking;
+        else
+            return null;
+    }
+
+    public Integer getLevelDefault() {
+        if (d.level_default != null)
+            return d.level_default;
         else
             return null;
     }
@@ -438,6 +447,8 @@ public class EventResponse {
             owner.getUsageLimits().setDormant(this.getDormant());
         if (this.getLevelLimit() != null)
             owner.getUsageLimits().setLevelLimit(this.getLevelLimit());
+        if (this.getLevelDefault() != null)
+            owner.getUsageLimits().setLevelDefault(this.getLevelDefault());
 
         // Server can turn ranking feature on/off
         if (this.getHideRanking() != null)
@@ -584,7 +595,7 @@ class EventResponseContents {
 	public String speed_sizes = null;
 	public String extra_settings = null;
     //public String active_tests = null;
-	public Integer allow_travel_fillin = null;
+	public Integer allow_travel_fillin = null, level_default = null;
     public Integer use_gcm = 0, speed_month_mb = 0, auto_speedtest = 0, use_svcmode = 0;
     public Integer websocket = 0;
     public String youtube_id = "";

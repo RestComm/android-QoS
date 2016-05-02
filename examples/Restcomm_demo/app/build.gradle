@@ -30,9 +30,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
 
     // TODO:  To set up the project to use actual Restcomm SDK, please edit settings.gradle to set actual path to sdk
-    //compile project(':restcomm.android.client.sdk')
+    compile project(':restcomm.android.client.sdk')
     // TODO: Otherwise for now, I shipped .aar file with the modified SDK
-    compile(name:'restcomm.android.client.sdk-debug', ext:'aar')
+    //compile(name:'restcomm.android.client.sdk-debug', ext:'aar')
 
     // Include the QoS library, and ensure it is debuggable when in debug, otherwise release
     debugCompile project(path: ':qoslib', configuration: "libraryDebug")

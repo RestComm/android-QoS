@@ -679,54 +679,68 @@ public class LibPhoneStateListener extends PhoneStateListener {
 	 */
 	public void phoneOffHook (int iPhoneState)
 	{
-		final EventObj event = owner.getEventManager().startPhoneEvent(EventType.EVT_CONNECT, EventType.EVT_DISCONNECT);
-		if (event != null)
+		try
 		{
-			if (mPhoneState.bOffHook)
+			final EventObj event = owner.getEventManager().startPhoneEvent(EventType.EVT_CONNECT, EventType.EVT_DISCONNECT);
+			if (event != null)
 			{
-				if (iPhoneState == TelephonyManager.CALL_STATE_OFFHOOK && (event.getFlags() & EventObj.CALL_INCOMING) > 0)
-					mPhoneState.setCallConnected(true);
-//				if (iPhoneState == TelephonyManager.CALL_STATE_RINGING && (event.getFlags() & EventObj.CALL_INCOMING) == 0)
-//					setCallWaiting(true);
-				return;
+				if (mPhoneState.bOffHook)
+				{
+					if (iPhoneState == TelephonyManager.CALL_STATE_OFFHOOK && (event.getFlags() & EventObj.CALL_INCOMING) > 0)
+						mPhoneState.setCallConnected(true);
+	//				if (iPhoneState == TelephonyManager.CALL_STATE_RINGING && (event.getFlags() & EventObj.CALL_INCOMING) == 0)
+	//					setCallWaiting(true);
+					return;
+				}
+				owner.startRadioLog (true, "call", EventType.EVT_CONNECT); // "monitoring signal strength");
+				if (iPhoneState == TelephonyManager.CALL_STATE_RINGING)
+				{
+					event.setFlag(EventObj.CALL_INCOMING, true);
+					mPhoneState.setCallRinging(true);
+				}
+				else
+				{
+					mPhoneState.setCallDialing(true); // in case it is an outgoing call (not sure), dialing time will start now
+					mPhoneState.setCallRinging(false); // in case it is an outgoing call (not sure), dialing time will start now
+				}
 			}
-			owner.startRadioLog (true, "call", EventType.EVT_CONNECT); // "monitoring signal strength");
-			if (iPhoneState == TelephonyManager.CALL_STATE_RINGING)
-			{
-				event.setFlag(EventObj.CALL_INCOMING, true);
-				mPhoneState.setCallRinging(true);
-			}
-			else
-			{
-				mPhoneState.setCallDialing(true); // in case it is an outgoing call (not sure), dialing time will start now
-				mPhoneState.setCallRinging(false); // in case it is an outgoing call (not sure), dialing time will start now
+			mPhoneState.bOffHook = true;
+			mPhoneState.offhookTime = System.currentTimeMillis();
+
+			mPhoneState.lastCallDropped = false;
+
+			Intent intent = new Intent(IntentHandler.PHONE_CALL_CONNECT);
+			owner.sendBroadcast(intent);
+
+			// Delay for a few seconds and then check the voice network to detect if we have a VoLTE call
+			owner.handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					int tech = mPhoneState.getVoiceNetworkType ();
+					if (tech == mPhoneState.NETWORK_NEWTYPE_LTE && event != null) {
+						event.setFlag (EventObj.CALL_VOLTE, true);
+						LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "getRilVoiceRadioTechnology", "VOLTE CALL DETECTED");
+					}
+					else if ((tech <= 0 || tech == mPhoneState.NETWORK_NEWTYPE_IWLAN) && event != null)
+					{
+						event.setFlag (EventObj.CALL_OFFNET, true);
+						LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "getRilVoiceRadioTechnology", "WIFI CALL DETECTED?");
+					}
+					//boolean isInCall = IsInCall ();
+				}
+			}, 3500);
+
+			// Set all ongoing events as occurring in a call
+			List<EventObj> ongoingEvents = owner.getEventManager().getOngoingEvents();
+			int i;
+			for (i = 0; i < ongoingEvents.size(); i++) {
+				ongoingEvents.get(i).setFlag(EventObj.PHONE_INUSE, true);
 			}
 		}
-		mPhoneState.bOffHook = true;
-		mPhoneState.offhookTime = System.currentTimeMillis();
-
-		mPhoneState.lastCallDropped = false;
-		
-		Intent intent = new Intent(IntentHandler.PHONE_CALL_CONNECT);
-		owner.sendBroadcast(intent);
-
-		// Delay for a few seconds and then check the voice network to detect if we have a VoLTE call
-		owner.handler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				int tech = mPhoneState.getVoiceNetworkType ();
-				if (tech == mPhoneState.NETWORK_NEWTYPE_LTE && event != null) {
-					event.setFlag (EventObj.CALL_VOLTE, true);
-					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "getRilVoiceRadioTechnology", "VOLTE CALL DETECTED");
-				}
-				else if ((tech <= 0 || tech == mPhoneState.NETWORK_NEWTYPE_IWLAN) && event != null)
-				{
-					event.setFlag (EventObj.CALL_OFFNET, true);
-					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "getRilVoiceRadioTechnology", "WIFI CALL DETECTED?");
-				}
-				//boolean isInCall = IsInCall ();
-			}
-		}, 3500);
+		catch (Exception e)
+		{
+			LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "phoneOffHook", "exception", e);
+		}
 	}
 
 //	private boolean IsInCall ()
@@ -957,14 +971,17 @@ public class LibPhoneStateListener extends PhoneStateListener {
 				SignalEx signal = mPhoneState.getLastMMCSignal();
 				processNewMMCSignal(signal);
 
-				// Outage needs to last longer than 10 seconds to actually trigger
+				// Outage needs to last longer than 5 seconds to actually trigger
+				int delay = 5000;
+				if (mPhoneState.isCallConnected() || mPhoneState.disconnectTime + 12000 > System.currentTimeMillis())
+					delay = 1;  // If phone call is connected (or recently disconnected), no delay, dont ignore short outages
 				owner.handler.postDelayed(new Runnable() {
 					  @Override
 					  public void run() {
 						  // If longer outage after 2 seconds, do nothing
 						  if (mPhoneState.previousServiceState != ServiceState.STATE_OUT_OF_SERVICE) //  && previousServiceState != ServiceState.STATE_EMERGENCY_ONLY)
 						  {
-							  LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "onServiceStateChanged", "Outage lasted < 4 sec, ignoring");
+							  LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "onServiceStateChanged", "Outage lasted < 5 sec, ignoring");
 							  return;
 						  }
 						    // Officially an outage now
@@ -988,7 +1005,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 						    mPhoneState.previousNetworkTier = 0;
 							//previousNetworkState = 0;
 					  }
-					}, 10000);
+					}, delay);
 					
 			}
 		}

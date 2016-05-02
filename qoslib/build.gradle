@@ -39,9 +39,10 @@ android {
             debuggable true
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             shrinkResources true
-            //proguardFiles 'proguard-android.txt'
+            //proguardFiles getDefaultProguardFile('proguard-android.txt')
+            proguardFiles 'proguard-android.txt'
             resValue "string", "google_maps_api_key", "0kdHHzVVjg3MenrXSvZ2NpYta1j64_MF9bK17ag"
             resValue "string", "MMC_URL_LIN", "https://lb1.mymobilecoverage.com"
             resValue "string", "MMC_STATIC_ASSET_URL", "http://lb1.mymobilecoverage.com"

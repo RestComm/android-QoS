@@ -1,0 +1,112 @@
+# TODO : if possible, change configuration to only obfuscate classes in DataCollectors.EventMonitors
+# without having to -keep option for every other class
+
+
+# Libraries referenced in libs/xmltask.jar cause warnings which cause the build to fail
+# but xmltask is only used by ant, not by the app, so these warnings can be ignored
+-dontwarn com.oopsconsultancy.xmltask.**
+-dontwarn org.osmdroid.**
+-dontwarn android.support.v4.**
+-dontskipnonpubliclibraryclassmembers
+
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontpreverify
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+# -libraryjars libs/httpmime-4.0.1.jar
+
+-keep class * extends android.app.Activity
+-keep class * extends android.app.Application
+-keep class * extends android.app.Service
+-keep class * extends android.content.BroadcastReceiver
+-keep class * extends android.content.ContentProvider
+-keep class com.android.internal.telephony.ITelephony { *; }
+-keep class com.flurry.sdk.** { *; }
+-keep class com.google.android.gms.** { *; }
+-keep class com.google.code.gson.** { *; }
+
+-keep class com.cortxt.app.utillib.Reporters.** {
+  *;
+}
+
+-keep class com.cortxt.app.utillib.Utils.** {
+  *;
+}
+
+-keep class com.cortxt.app.utillib.DataObjects.** {
+  *;
+}
+
+-keep class com.cortxt.app.utillib.CoverageSamples.** {
+  *;
+}
+
+-keep class com.cortxt.app.utillib.ContentProvider.** {
+  *;
+}
+
+-keep class com.cortxt.app.utillib.** {
+  *;
+}
+
+-keep enum com.cortxt.app.utillib.LoggerUtil.Level {
+  *;
+}
+
+
+-keepclassmembers class * extends android.content.Context {
+public void *(android.view.View);
+  public void *(android.view.MenuItem);
+}
+
+-keepclassmembers class * implements android.os.Parcelable {
+  static android.os.Parcelable$Creator CREATOR;
+}
+
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+
+-keep class **.R$* {
+  public static <fields>;
+}
+
+
+-keepclassmembers enum * {
+*;
+  public static **[] values();
+  public static ** valueOf(java.lang.String);
+}
+
+-keepclassmembers class * extends java.lang.Enum {
+    <fields>;
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keepattributes InnerClasses
+#ACRA specifics
+# we need line numbers in our stack traces otherwise they are pretty useless
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable
+
+# ACRA needs "annotations" so add this... 
+-keepattributes *Annotation*
+
+
+##---------------Begin: proguard configuration for Gson  ----------
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# removes such information by default, so configure it to keep all of it.
+-keepattributes Signature
+
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+#-keep class com.google.gson.stream.** { *; }
+
+# Application classes that will be serialized/deserialized over Gson
+-keep class com.google.gson.examples.android.model.** { *; }
+
+##---------------End: proguard configuration for Gson  ----------

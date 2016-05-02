@@ -463,6 +463,9 @@ public class MainService extends Service {
 					else if (!bPartial) //  && !wakeLockScreen.isHeld())
 						wakeLockScreen.acquire();
 				}
+
+				if (connectivityManager == null)
+					connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 			}
 
 		}
@@ -650,9 +653,11 @@ public class MainService extends Service {
 	 */
 	public void clearLastGoodLocation () 
 	{
-		//lastKnownLocation = null;
-		lastLocation = null;
-		intentDispatcher.updateLocation(null);
+		// If last location was recent, leave it alone
+		if (lastLocation != null && lastLocation.getTime() + 120000 < System.currentTimeMillis()) {
+			lastLocation = null;
+			intentDispatcher.updateLocation(null);
+		}
 	}
 	
 	/*
@@ -873,7 +878,11 @@ public class MainService extends Service {
 		return false;
 
 	}
-
+	public boolean isMMCActive () {
+		if (mmcActive)
+			return true;
+		return false;
+	}
 	/**
 	 * Put the service in Idle state, after evenru event has finished recording samples
 	 */
@@ -908,7 +917,7 @@ public class MainService extends Service {
 				}
 				netLocationManager.unregisterAllListeners();
 		   	 	gpsManager.unregisterAllListeners();
-		   	 	if (bRestartNextIdle == true)
+				if (bRestartNextIdle == true && !getTravelDetector().isTravelling())
 		   	 	{
 		   	 		bRestartNextIdle = false;
 		   	 		restartSelf ();
@@ -1112,8 +1121,6 @@ public class MainService extends Service {
 								 }
 							});
 							
-						} catch (IOException e) {
-							LoggerUtil.logToFile(LoggerUtil.Level.WTF, TAG, "requestCsvEmail", "Exception cannnot request email: ", e);
 						} catch (Exception e) {
 							LoggerUtil.logToFile(LoggerUtil.Level.WTF, TAG, "requestCsvEmail", "Exception cannnot request email: ", e);
 						}

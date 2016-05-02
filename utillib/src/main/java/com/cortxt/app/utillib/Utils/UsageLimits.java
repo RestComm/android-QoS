@@ -134,6 +134,52 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 		}
 	}
 
+	public void setLevelDefault (Integer levelDefault)
+	{
+		int lim = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getInt(PreferenceKeys.Miscellaneous.USAGE_LIMIT, 10);
+		int def = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getInt(PreferenceKeys.Miscellaneous.USAGE_DEFAULT, 1);
+		int dormant = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getInt(PreferenceKeys.Miscellaneous.USAGE_DORMANT_MODE, 0);
+
+		String strSetting = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getString(PreferenceKeys.Miscellaneous.USAGE_PROFILE, "1");
+		int usageProfile = Integer.parseInt(strSetting);
+
+		strSetting = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getString(PreferenceKeys.Miscellaneous.USAGE_PROFILE_CHARGER, "1");
+		int usageProfileCharger = Integer.parseInt(strSetting);
+		boolean changedlevel = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getBoolean(PreferenceKeys.Miscellaneous.USAGE_CHANGED, false);
+
+		if (usageProfile == 2 && levelDefault > 2)
+		{
+			changedlevel = false; // force temporarily, so that old max becomes new max level
+			def = 2;
+		}
+
+		// level limit is ignored if we're dormant
+		if (levelDefault == null || dormant > 0)  // this means if server says 'dormant' once, it needs to set 'un-dormant' before it can return
+			return;
+		if (def != levelDefault && levelDefault <= lim)
+		{
+			PreferenceManager.getDefaultSharedPreferences(owner.getContext()).edit().putInt(PreferenceKeys.Miscellaneous.USAGE_DEFAULT, (int)levelDefault).commit();
+
+			int deflevel = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getInt(PreferenceKeys.Miscellaneous.USAGE_DEFAULT, 1);
+
+			// If the user hasn't changed his own Level, then set it to our default
+			if (changedlevel == false)
+			{
+				if (usageProfile != deflevel)
+				{
+					//ReportManager.getInstance(owner).reportSettingChange(ServerUpdateRequest.DEVICE, "usagemode", deflevel);
+					PreferenceManager.getDefaultSharedPreferences(owner.getContext()).edit().putString(PreferenceKeys.Miscellaneous.USAGE_PROFILE, Integer.toString(deflevel)).commit();
+				}
+				if (usageProfileCharger != deflevel) {
+					//ReportManager.getInstance(owner).reportSettingChange(ServerUpdateRequest.DEVICE, "chargermode", deflevel);
+					PreferenceManager.getDefaultSharedPreferences(owner.getContext()).edit().putString(PreferenceKeys.Miscellaneous.USAGE_PROFILE_CHARGER, Integer.toString(deflevel)).commit();
+				}
+				updateTravelPreference ();
+			}
+
+		}
+	}
+
 	public void setDormant (Integer levelDormant)
 	{
 		int dormant = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getInt(PreferenceKeys.Miscellaneous.USAGE_DORMANT_MODE, 0);
@@ -173,19 +219,23 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 		else
 			return false;
 	}
+
 	public void getUsageProfileSetting ()
 	{
+		int allowSuperMax = 1;
 		String strSetting = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getString(PreferenceKeys.Miscellaneous.USAGE_PROFILE, "1");
 		_usageProfile = Integer.parseInt(strSetting);
-		
+
 		strSetting = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getString(PreferenceKeys.Miscellaneous.USAGE_PROFILE_CHARGER, "1");
 		_usageProfileCharger = Integer.parseInt(strSetting);
 
 		_dormantMode = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getInt(PreferenceKeys.Miscellaneous.USAGE_DORMANT_MODE, 0);
+		//_maxFillin = PreferenceManager.getDefaultSharedPreferences(owner).getInt(PreferenceKeys.Miscellaneous.ENABLE_MAXFILLIN, 0);
 		// active profile may be modified by battery charger state
 		int profile = getUsageProfile();
 		// Server may impose a limit on the actual level of reporting
 		int limit = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getInt(PreferenceKeys.Miscellaneous.USAGE_LIMIT, 10);
+
 
 		// If server sends a _dormantMode, put MMC into dormant mode
 		if (_dormantMode > 0)
@@ -215,7 +265,7 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 				_speedTestMBperMonth = 40;
 
 			}
-			else if (profile > 0)  
+			else if (profile > 0)
 			{
 				if (profile == 1)   // balanced
 				{
@@ -239,9 +289,16 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 					_gpsFailsPer3hr = 100;
 					_gpsAttemptsPer3hr = 100;
 					WAKEUP_PERIOD = 2;
-					_coverageFillSamples = 4;
+					_coverageFillSamples = 5;
 					_speedtestsPerDay = 8;
 					_speedTestMBperMonth = 500;
+					if (profile > 2)
+					{
+						_batteryLimit = 0;
+						_fillinsPer3hr = 500;
+						_consecFillinLimit = 500;
+						_coverageFillSamples = 200;
+					}
 				}
 				_travelEnable = true;
 			}
@@ -254,9 +311,9 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 				owner.getContext().sendBroadcast(intent);
 			}
 			else if (_dormantMode >= 1) {
-				Global.UPDATE_PERIOD  = (24 * 3600 * 1000); // check-in once per day
+				Global.UPDATE_PERIOD = 24 * 3600 * 1000; // check-in once per day
 				if (_dormantMode > 1)
-					Global.UPDATE_PERIOD = (0); // check-in never
+					Global.UPDATE_PERIOD = 0; // check-in never
 				_speedtestsPerDay = 0;
 				_speedTestMBperMonth = 0;
 				owner.setAlarmManager();
@@ -264,13 +321,13 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 			}
 			else if (_prevUsageProfile < 0)  // if we were dormant but no longer dormant, go back to 3hr intervals
 			{
-				Global.UPDATE_PERIOD = (3 * 3600 * 1000);
+				Global.UPDATE_PERIOD = 3 * 3600 * 1000;
 				owner.setAlarmManager();
 				owner.manageDataMonitor (-1,-1);  // re-enable the data monitor
 			}
 			_prevUsageProfile = profile;
 		}
-		
+
 	}
 	
 	public int handleCheckin (boolean reset)
@@ -298,9 +355,17 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 		strSetting = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getString(PreferenceKeys.Miscellaneous.TRAVEL_DETECT, "0");
 		int prevLevel = _detectionLevel;
 		_detectionLevel = Integer.parseInt(strSetting);
+		getUsageProfileSetting ();
 		if (LoggerUtil.isDebuggable())
 			_userChangedTravel = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getBoolean(PreferenceKeys.Miscellaneous.CHANGED_TRAVEL, false);
-		
+
+		if (getUsageProfile() > 1 && _detectionLevel < 1)
+		{
+			if (getUsageProfile() > 2)
+				_detectionLevel = 3;
+			else
+				_detectionLevel = 1;
+		}
 		//_travelEnable = PreferenceManager.getDefaultSharedPreferences(owner).getBoolean(PreferenceKeys.Miscellaneous.TRAVEL_ENABLE, true);
 		getUsageProfileSetting ();
 		//owner.changeWakeType (getUsageProfile());
