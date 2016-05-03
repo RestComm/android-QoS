@@ -55,6 +55,7 @@ import com.cortxt.app.corelib.Utils.RestCommManager;
 import com.cortxt.app.utillib.DataObjects.EventType;
 import com.cortxt.app.utillib.DataObjects.PhoneState;
 import com.cortxt.app.utillib.Utils.DeviceInfoOld;
+import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 import com.cortxt.app.utillib.Utils.PreferenceKeys;
 import com.cortxt.com.mmcextension.PhoneHeuristic;
@@ -1360,7 +1361,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 
 				if (rating >= 5 || allowConfirm == 0)
 				{
-					title = owner.getString(R.string.app_label);
+					title = Global.getAppName(owner);
 					msg = "mmc detected ";
 					if (droptype == EventType.EVT_CALLFAIL)
 						message = owner.getString((customText == 1) ? R.string.Custom_Notification_call_failed : R.string.MMC_Notification_call_failed);

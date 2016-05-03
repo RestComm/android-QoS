@@ -176,7 +176,7 @@ public class MainService extends Service {
 			travelDetector = new TravelDetector (mmcCallbacks);
 			cellHistory = new CellHistory ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE));
 
-			String msg = getString (R.string.app_label) + " " + getString (R.string.MMC_Notification_message);
+			String msg = Global.getAppName(this) + " " + getString (R.string.MMC_Notification_message);
 			makeApplicationForeground(false, msg);
 
 			if (this.getConnectivityManager() != null)
@@ -1108,7 +1108,7 @@ public class MainService extends Service {
 							String manufacturer = DeviceInfoOld.getManufacturer();
 							String model = DeviceInfoOld.getPhoneModel();
 							String device = DeviceInfoOld.getDevice();
-							String appname = MainService.this.getString(R.string.app_label);
+							String appname = Global.getAppName(MainService.this);
 
 							String strResponse = getReportManager().requestCsvEmail(userID, carrier, MCCMNC[0], MCCMNC[1], manufacturer, model, device, appname, apikey);
 							handler.post(new Runnable() {

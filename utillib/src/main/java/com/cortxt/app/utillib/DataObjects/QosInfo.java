@@ -216,7 +216,7 @@ public class QosInfo {
                     Neighbors = ReportManager.getInstance(context.getApplicationContext()).getNeighbors();
                 }
             }
-            Location loc = ReportManager.getInstance(context.getApplicationContext()).getLastKnownLocation();
+            location = ReportManager.getInstance(context.getApplicationContext()).getLastKnownLocation();
 
 
             try {
