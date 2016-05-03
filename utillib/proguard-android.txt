@@ -4,15 +4,15 @@
 
 # Libraries referenced in libs/xmltask.jar cause warnings which cause the build to fail
 # but xmltask is only used by ant, not by the app, so these warnings can be ignored
--dontwarn com.oopsconsultancy.xmltask.**
--dontwarn org.osmdroid.**
--dontwarn android.support.v4.**
--dontskipnonpubliclibraryclassmembers
+#-dontwarn com.oopsconsultancy.xmltask.**
+#-dontwarn org.osmdroid.**
+#-dontwarn android.support.v4.**
+#-dontskipnonpubliclibraryclassmembers
 
--optimizationpasses 5
--dontusemixedcaseclassnames
--dontskipnonpubliclibraryclasses
--dontpreverify
+#-optimizationpasses 5
+#-dontusemixedcaseclassnames
+#-dontskipnonpubliclibraryclasses
+#-dontpreverify
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
 # -libraryjars libs/httpmime-4.0.1.jar
 
@@ -21,10 +21,10 @@
 -keep class * extends android.app.Service
 -keep class * extends android.content.BroadcastReceiver
 -keep class * extends android.content.ContentProvider
--keep class com.android.internal.telephony.ITelephony { *; }
--keep class com.flurry.sdk.** { *; }
--keep class com.google.android.gms.** { *; }
--keep class com.google.code.gson.** { *; }
+#-keep class com.android.internal.telephony.ITelephony { *; }
+#-keep class com.flurry.sdk.** { *; }
+#-keep class com.google.android.gms.** { *; }
+#-keep class com.google.code.gson.** { *; }
 
 -keep class com.cortxt.app.utillib.Reporters.** {
   *;
@@ -67,10 +67,11 @@ public void *(android.view.View);
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
 }
-
--keep class **.R$* {
-  public static <fields>;
-}
+-keep public class com.google.android.gms.gcm.GoogleCloudMessaging
+-keep public class com.google.android.gms.common.GooglePlayServicesUtil
+#-keep class **.R$* {
+#  public static <fields>;
+#}
 
 
 -keepclassmembers enum * {
@@ -87,11 +88,9 @@ public void *(android.view.View);
 -keepattributes InnerClasses
 #ACRA specifics
 # we need line numbers in our stack traces otherwise they are pretty useless
--renamesourcefileattribute SourceFile
--keepattributes SourceFile,LineNumberTable
+#-renamesourcefileattribute SourceFile
+#-keepattributes SourceFile,LineNumberTable
 
-# ACRA needs "annotations" so add this... 
--keepattributes *Annotation*
 
 
 ##---------------Begin: proguard configuration for Gson  ----------
