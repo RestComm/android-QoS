@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 
 import com.cortxt.app.utillib.ContentProvider.Provider;
 import com.cortxt.app.utillib.ContentProvider.Tables;
@@ -15,6 +18,9 @@ import com.cortxt.app.utillib.Utils.CommonIntentActionsOld;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 
 import org.json.JSONObject;
+
+import java.lang.reflect.Method;
+import java.util.BitSet;
 
 /**
  * Created by bscheurman on 16-04-26.
@@ -41,6 +47,7 @@ public class QosInfo {
     public String Neighbors;
     public String Satellites;
     public String LTEIdentity;
+    public String WifiSec, WifiFreq, WifiID, WifiSig;
     Location location;
 
     /**
@@ -241,6 +248,10 @@ public class QosInfo {
                     Band = null;
                     Channel = null;
                 }
+
+                WifiInfo wifiinfo = getWifiInfo ();
+                WifiConfiguration wifiConfig = getWifiConfig ();
+                setWifi(wifiinfo, wifiConfig);
             }
             catch (Exception e)
             {
@@ -256,6 +267,115 @@ public class QosInfo {
         }
     }
 
+    public WifiInfo getWifiInfo ()
+    {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+
+        return wifiInfo;
+    }
+
+
+    public WifiConfiguration getWifiConfig ()
+    {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+        WifiConfiguration activeConfig = null;
+        if (wifiManager.getConfiguredNetworks() == null)
+            return null;
+
+        for ( WifiConfiguration conn: wifiManager.getConfiguredNetworks())
+        {
+            if(( conn.BSSID != null && conn.BSSID.equals( wifiInfo.getBSSID() )) || (conn.SSID != null && conn.SSID.equals( wifiInfo.getSSID() )))
+            {
+                activeConfig = conn;
+                break;
+            }
+        }
+        if (activeConfig != null)
+        {
+            return activeConfig;
+        }
+        return null;
+    }
+    public void setWifi(WifiInfo wifiInfo, WifiConfiguration wifiConfig) {
+        if (wifiInfo == null)
+            return;
+
+        String macid = wifiInfo.getBSSID();
+        if (macid == null)
+            return;
+        String[] bytes = macid.split(":");
+        long bssid = 0;
+        for (int i=0; i<6; i++)
+        {
+            if (i < bytes.length)
+            {
+                long v = hexval(bytes[i]);
+                bssid = bssid + (v<<((5-i)*8));
+            }
+        }
+        WifiID = Long.toString(bssid);
+
+        if (wifiConfig != null)
+        {
+            int bits = 0;
+            for (int i=0; i<4; i++)
+            {
+                if (wifiConfig.allowedKeyManagement.get(i))
+                    bits += 1<<i;
+            }
+            BitSet bs = new BitSet ();
+            //bs.set(WifiConfiguration.KeyMgmt.NONE);
+            //if (wifiConfig.allowedKeyManagement..allowedAuthAlgorithms.intersects(bs))
+            WifiSec = Integer.toString(bits);
+        }
+
+        int freq = getWifiFrequency(wifiInfo);
+        if (freq != -1)
+            WifiFreq = Integer.toString(freq);
+
+        int sig = wifiInfo.getRssi();
+        WifiSig = Integer.toString(sig);
+    }
+
+    private static int getWifiFrequency (WifiInfo wifiInfo)
+    {
+        int returnValue = -1;
+        try {
+            Method freqMethod = WifiInfo.class.getMethod("getFrequency", (Class[]) null);
+            if (freqMethod != null){
+                //now we're in business!
+                returnValue = (Integer) freqMethod.invoke(wifiInfo, (Object[]) null);
+            }
+        } catch (Exception e) {
+        }
+        return returnValue;
+
+    }
+
+    private int hexval (String s)
+    {
+        int val = 0;
+        if (s.length() < 2)
+            return 0;
+        char a = s.charAt(0);
+        if (a>='0' && a<='9')
+            val = (int)(a-'0')<<4;
+        else if (a>='a' && a<= 'f')
+            val = (int)(a-'a'+10)<<4;
+        else if (a>='A' && a<= 'F')
+            val = (int)(a-'A'+10)<<4;
+
+        a = s.charAt(1);
+        if (a>='0' && a<='9')
+            val += (int)(a-'0');
+        else if (a>='a' && a<= 'f')
+            val += (int)(a-'a'+10);
+        else if (a>='A' && a<= 'F')
+            val += (int)(a-'A'+10);
+        return val;
+    }
     private String simpleValidate(Integer signal, String type, String unit) {
         if (signal == null || signal == 0 || signal == -1 || signal == 255 || signal == 99 || signal >= 32767 || signal <= -32767)
             return null;
