@@ -2,10 +2,13 @@ package com.telestax.restcomm_helloworld;
 
 //import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +18,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.cortxt.app.corelib.Utils.QosAPI;
+import com.cortxt.app.utillib.DataObjects.QosInfo;
+import com.cortxt.app.utillib.Utils.LoggerUtil;
 
 import java.util.HashMap;
 
@@ -67,6 +73,7 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
     Button btnAnswer;
     Button btnHangup;
     Button btnApply;
+    Button btnInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +103,8 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         btnHangup.setOnClickListener(this);
         btnApply = (Button)findViewById(R.id.button_apply);
         btnApply.setOnClickListener(this);
+        btnInfo = (Button)findViewById(R.id.button_info);
+        btnInfo.setOnClickListener(this);
 
         editServer = (EditText)findViewById(R.id.editServer);
         editUser = (EditText)findViewById(R.id.editUser);
@@ -280,6 +289,9 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
                 return;
             }
         }
+        else if (view.getId() == R.id.button_info) {
+            showInfo();
+        }
     }
 
 
@@ -414,6 +426,40 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
                     VideoRendererGui.ScalingType.SCALE_ASPECT_FIT, true);
 
             remoteVideoTrack = videoTrack;
+        }
+    }
+
+    private void showInfo () {
+        try {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            // Request all known Network information from QoS library
+            QosInfo info = QosAPI.getQoSInfo(this);
+            // The basic info as a string
+            String devInfo = info.toString();
+            // Network type specific info is divided into objects for CDMA, GSM, LTE, WiFi
+            // CDMAInfo is null unless device is connected to a CDMA network, can co-exist with LTE
+            if (info.CDMAInfo != null)
+                devInfo += info.CDMAInfo.toString();
+            // GSMInfo is null unless connected to 2G or 3G GSM Network, it is null in LTE
+            if (info.GSMInfo != null)
+                devInfo += info.GSMInfo.toString();
+            // LTEInfo is null unless on LTE
+            if (info.LTEInfo != null)
+                devInfo += info.LTEInfo.toString();
+            // WiFiInfo is null unless connected to WiFi
+            if (info.WiFiInfo != null)
+                devInfo += info.WiFiInfo.toString();
+
+            devInfo = devInfo.replace("\n", "<br>");
+            builder1.setMessage(Html.fromHtml(devInfo));
+            builder1.setTitle("QOS Info");
+            builder1.setCancelable(true);
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+            // Make the textview clickable. Must be called after show()
+            ((TextView) alert11.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+        } catch (Exception e) {
+            LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "CreateDevInfoAlertDialog", "exeption", e);
         }
     }
 }

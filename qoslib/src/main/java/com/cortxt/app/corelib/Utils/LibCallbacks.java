@@ -177,6 +177,11 @@ public class LibCallbacks implements ICallbacks {
     {
         return MainService.isInTracking();
     }
+    public String getDriveTestTrigger ()
+    {
+        return MainService.getDriveTestTrigger();
+    }
+    public void triggerDriveTest (String reason, boolean start) {MainService.triggerDriveTest(reason, start);}
 
     public boolean isHeadsetPlugged ()
     {

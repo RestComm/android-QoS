@@ -1229,6 +1229,27 @@ public class MainService extends Service {
 			return false;
 		return trackingManager.isTracking();
 	}
+	public static String getDriveTestTrigger (){
+		if (trackingManager == null)
+			return null;
+		return trackingManager.getDriveTestTrigger();
+	}
+	public static void triggerDriveTest (String reason, boolean start)
+	{
+		if (trackingManager == null)
+			return;
+		trackingManager.triggerDriveTest(reason, start);
+	}
+	public static int getTestScriptIndex (){
+		if (trackingManager == null)
+			return -1;
+		return trackingManager.getTestScriptIndex();
+	}
+	public static boolean isTestScriptWaiting (){
+		if (trackingManager == null)
+			return false;
+		return trackingManager.isAdvancedTrackingWaiting();
+	}
 	
 	public TravelDetector getTravelDetector ()
 	{

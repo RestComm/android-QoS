@@ -29,9 +29,9 @@ android {
     buildTypes {
         debug {
             resValue "string", "google_maps_api_key", "0kdHHzVVjg3MenrXSvZ2NpYta1j64_MF9bK17ag"
-            resValue "string", "MMC_URL_LIN", "https://lb1.mymobilecoverage.com"
+            resValue "string", "MMC_URL_LIN", "https://dev.mymobilecoverage.com"
             resValue "string", "MMC_STATIC_ASSET_URL", "http://lb1.mymobilecoverage.com"
-            resValue "string", "MMC_URL_SPEED", "http://sts.mymobilecoverage.com:5005"
+            resValue "string", "MMC_URL_SPEED", "http://dev.mymobilecoverage.com:5005"
             resValue "string", "app_versionCode", "0"
             resValue "string", "MMC_WEBSOCKET_URL", "wss://dev.mymobilecoverage.com/ws"
             signingConfig signingConfigs.configDebug

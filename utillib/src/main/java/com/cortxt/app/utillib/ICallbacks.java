@@ -49,4 +49,6 @@ public interface ICallbacks{
     boolean isHeadsetPlugged ();
     boolean isWifiConnected ();
     String getStackTrace (Exception e);
+    String getDriveTestTrigger ();
+    void triggerDriveTest (String reason, boolean start);
 }

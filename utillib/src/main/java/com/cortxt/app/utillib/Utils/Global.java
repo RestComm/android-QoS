@@ -136,6 +136,7 @@ public class Global {
             return callbacks.isInTracking();
         return false;
     }
+
     public static boolean isHeadsetPlugged ()
     {
         if (callbacks != null)

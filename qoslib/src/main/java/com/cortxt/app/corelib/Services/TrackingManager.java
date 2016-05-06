@@ -14,6 +14,7 @@ import com.cortxt.app.utillib.Utils.LoggerUtil;
 import com.cortxt.app.utillib.Utils.PreferenceKeys;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -34,6 +35,7 @@ public class TrackingManager {
 	private int advancedIndex = 0;
 	private boolean advancedWaiting = false;
 	private int count = 0;
+	private String testTrigger = "", testTriggerOpt = "";
     private Runnable testRunnable = null;
 	private JSONArray scheduledCommands = null;
 	
@@ -91,6 +93,20 @@ public class TrackingManager {
 			else
 				numFiveMinutePeriods = 5;
 			numFiveMinutePeriods = (numFiveMinutePeriods + 4) / 5;
+
+			if (schedule.has("trigger") && schedule.has("opt") && schedule.getString("trigger").equals("travel"))
+			{
+				testTriggerOpt = schedule.getString("opt");
+				if (testTriggerOpt.equals("once") || testTriggerOpt.equals("always"))
+					testTrigger = "travel";
+				else
+					testTrigger = "";
+				// Initally, when not yet travelling, just wait for travel
+				if (!owner.getTravelDetector().isTravelling() || !owner.getTravelDetector().isConfirmed())
+					return;
+			}
+			else
+				testTrigger = "";
 
 			if (schedule.has("commands")) {
 				// The active test commands will be scheduled in a special
@@ -205,6 +221,46 @@ public class TrackingManager {
 			bTracking = false;
 			return false;
 		}
+	}
+
+	public String getDriveTestTrigger ()
+	{
+		return testTrigger;
+	}
+
+	// A Drive test script may wait and be triggered by travel detection, or other means
+	public void triggerDriveTest (String reason, boolean start)
+	{
+		String cmd = PreferenceManager.getDefaultSharedPreferences(owner).getString(PreferenceKeys.Miscellaneous.DRIVE_TEST_CMD, null);
+		if (cmd == null)
+			return;
+		try {
+			JSONObject cmdsJson = new JSONObject(cmd);
+			JSONObject testSchedule = cmdsJson.getJSONObject("schedule");
+
+			if (start) {
+				// If drive test is to be triggered only once, disable it after starting
+				if (testTriggerOpt != null && testTriggerOpt.equals("once")) {
+					testTriggerOpt = "disabled";
+					testSchedule.put ("opt", "disabled");
+				}
+				startAdvancedTracking (cmdsJson, 0);
+			}
+			else {
+				if (testTriggerOpt != null && testTriggerOpt.equals("disabled")) {
+					testTrigger = "";
+				}
+				owner.getEventManager().stopTracking();
+			}
+		}
+		catch (JSONException e)
+		{
+		}
+	}
+
+	public int getTestScriptIndex ()
+	{
+		return advancedIndex;
 	}
 
 	public boolean isAdvancedTrackingWaiting ()

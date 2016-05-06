@@ -1541,7 +1541,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 					valSignal= (Integer)values.get("lteRsrp");
 				if (valSignal != null && dbmValue != null && valSignal > -130 && valSignal < -30) //  && (dbmValue <= -120 || dbmValue >= -1))
 					dbmValue = valSignal;
-				if (dbmValue > -120 && dbmValue < -40)
+				if ((dbmValue > -120 || mPhoneState.getNetworkType() == PhoneState.NETWORK_NEWTYPE_LTE) && dbmValue < -40)
 					this.validSignal = true;
 				if (this.validSignal) // make sure phone has at least one valid signal before recording
 					owner.getDBProvider(owner).insert(TablesEnum.SIGNAL_STRENGTHS.getContentUri(), values);
