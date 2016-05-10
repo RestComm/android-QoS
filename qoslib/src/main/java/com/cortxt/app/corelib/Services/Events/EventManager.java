@@ -473,6 +473,13 @@ public class EventManager {
 		return this.ongoingEvents;
 	}
 
+	public EventObj getLatestEvent () {
+		if (this.ongoingEvents ==  null)
+			return null;
+		if (this.ongoingEvents.size() == 0)
+			return null;
+		return this.ongoingEvents.get(this.ongoingEvents.size()-1);
+	}
 	/**
 	 * At the start of the event, stores like-timestamped entries in the tables for signals, cells and locations
 	 * This is so that querying the timespan of the event recording will easily return records for the beginning of the event
@@ -1253,7 +1260,15 @@ public class EventManager {
 			// abort initial travelling event if last location is close to this location
 			if (thisEvent.getEventType() == EventType.TRAVEL_CHECK)
 			{
-				if (!context.getTravelDetector().confirmTravelling(location))
+				if (context.getTravelDetector().confirmTravelling(location))
+				{
+					// This might trigger a drive test
+					if (context.getTravelDetector().isConfirmed() && context.getDriveTestTrigger().equals("travel") && !context.isInTracking())
+					{
+						context.triggerDriveTest ("travel", true);
+					}
+				}
+				else
 				{
 					unstageEvent(thisEvent);
 					return false;

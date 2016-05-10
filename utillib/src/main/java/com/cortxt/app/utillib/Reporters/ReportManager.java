@@ -634,6 +634,14 @@ public class ReportManager {
         lastNeighbors = nbrs;
     }
 
+    public EventObj getLatestEvent ()
+    {
+        if (mmcService != null)
+            return mmcService.getLatestEvent();
+        else
+            return null;
+    }
+
     public void saveCurrentCarrierToStorage(Carrier carr) {
         String fileName = null;
 

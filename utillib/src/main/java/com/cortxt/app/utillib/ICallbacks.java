@@ -42,6 +42,7 @@ public interface ICallbacks{
     boolean isEventRunning(EventType eventType);
 
     EventObj getStartEvent (EventType startEventType, EventType stopEventType, boolean bStart);
+    EventObj getLatestEvent ();
     long getLastCellSeen (CellLocation cell);
     boolean waitForConnect ();
     boolean isGpsRunning (); // Needed for Engineering screen to show it
@@ -51,4 +52,5 @@ public interface ICallbacks{
     String getStackTrace (Exception e);
     String getDriveTestTrigger ();
     void triggerDriveTest (String reason, boolean start);
+    void stopTracking ();
 }

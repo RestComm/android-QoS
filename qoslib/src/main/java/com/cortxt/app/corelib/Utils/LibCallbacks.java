@@ -153,6 +153,12 @@ public class LibCallbacks implements ICallbacks {
         }
         return event;
     }
+    public EventObj getLatestEvent ()
+    {
+        if (mContext == null)
+            return null;
+        return mContext.getEventManager().getLatestEvent ();
+    }
     public long getLastCellSeen (CellLocation cell)
     {
         return mContext.getCellHistory().getLastCellSeen(cell);
@@ -180,6 +186,10 @@ public class LibCallbacks implements ICallbacks {
     public String getDriveTestTrigger ()
     {
         return MainService.getDriveTestTrigger();
+    }
+    public void stopTracking ()
+    {
+        mContext.getEventManager().stopTracking ();
     }
     public void triggerDriveTest (String reason, boolean start) {MainService.triggerDriveTest(reason, start);}
 

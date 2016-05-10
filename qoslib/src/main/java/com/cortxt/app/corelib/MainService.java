@@ -100,7 +100,7 @@ public class MainService extends Service {
 	private IntentHandler intentHandler;
 	private RTWebSocket webSocketManager;
 	private VQManager mVQManager;
-	private static TrackingManager trackingManager;
+	public static TrackingManager trackingManager;
 	private LibCallbacks mmcCallbacks; // communication with extension library which implements premium features
 	private PowerManager powerManager;
 	private PowerManager.WakeLock wakeLockScreen, wakeLockPartial;
@@ -1232,13 +1232,21 @@ public class MainService extends Service {
 	public static String getDriveTestTrigger (){
 		if (trackingManager == null)
 			return null;
+		if (trackingManager.getDriveTestTrigger() == null)
+			return "";
 		return trackingManager.getDriveTestTrigger();
+	}
+	public static void setDriveTestTrigger(String trig)
+	{
+		trackingManager.setDriveTestTrigger (trig);
 	}
 	public static void triggerDriveTest (String reason, boolean start)
 	{
-		if (trackingManager == null)
-			return;
-		trackingManager.triggerDriveTest(reason, start);
+		synchronized (trackingManager) {
+			if (trackingManager == null || start == isInTracking())
+				return;
+			trackingManager.triggerDriveTest(reason, start);
+		}
 	}
 	public static int getTestScriptIndex (){
 		if (trackingManager == null)
