@@ -136,8 +136,9 @@ public class QosInfo {
         public int getSignalRangeMin () { return sigMin; }
         public int getSignalRangeMax () { return sigMax; }
         public String getSignalDoc () { return noiseDoc; }
+        public int getSignal () { return signal;}
 
-        public int getNoiseRating ()
+        public int getQualityRating ()
         {
             // calculate a rating from 0 to 5
 
@@ -154,27 +155,28 @@ public class QosInfo {
             return rating;
 
         }
-        public String getNoiseDetails (boolean withValue, boolean withRating) {
-            if (getNoiseLabel() == "")
+        public String getQualityDetails (boolean withValue, boolean withRating) {
+            if (getQualityLabel() == "")
                 return "";
-            String details = getNoiseLabel() + ": ";
+            String details = getQualityLabel() + ": ";
             if (withValue)
             {
                 if (noise != 0)
-                    details += noise + " " + getNoiseUnits() + " ";
+                    details += noise + " " + getQualityUnits() + " ";
                 else
                     details += "unknown ";
             }
-            if (withRating && noise != 0 && getNoiseRating() >= 0)
-                details += "rating " + getNoiseRating() + "/5";
+            if (withRating && noise != 0 && getQualityRating() >= 0)
+                details += "rating " + getQualityRating() + "/5";
 
             return details;
         }
-        public String getNoiseLabel () { return noiseLabel; }
-        public String getNoiseUnits () { return noiseUnits; }
-        public int getNoiseRangeMin () { return noiseMin; }
-        public int getNoiseRangeMax () { return noiseMax; }
-        public String getNoiseDoc () { return noiseDoc; }
+        public String getQualityLabel () { return noiseLabel; }
+        public String getQualityUnits () { return noiseUnits; }
+        public int getQualityRangeMin () { return noiseMin; }
+        public int getQualityRangeMax () { return noiseMax; }
+        public String getQualityDoc () { return noiseDoc; }
+        public float getQuality () { return noise;}
 
         public String getIdentifier ()
         {
