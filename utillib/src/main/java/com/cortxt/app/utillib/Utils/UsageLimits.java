@@ -195,10 +195,14 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 	public boolean exceededGps (EventType eventType, boolean increment)
 	{
         // These type of events will always invoke the GPS
-        if (eventType == EventType.EVT_DROP || eventType == EventType.EVT_CALLFAIL || eventType == EventType.MAN_PLOTTING ||
+        if (eventType == EventType.EVT_DROP || eventType == EventType.EVT_CALLFAIL || eventType == EventType.MAN_PLOTTING || eventType == EventType.TRAVEL_CHECK || eventType == EventType.EVT_FILLIN ||
                 eventType == EventType.MAN_SPEEDTEST || eventType == EventType.MAN_TRACKING || eventType == EventType.COV_UPDATE || eventType == EventType.MAN_TRANSIT ||
                 eventType == EventType.VIDEO_TEST || eventType == EventType.CONNECTION_FAILED || eventType == EventType.WEBPAGE_TEST || eventType == EventType.AUDIO_TEST || eventType == EventType.SMS_TEST)
-            return false;
+		{
+			if (increment == true)
+				_countGpsAttempts ++;
+			return false;
+		}
 
 		if (increment == true)
 		{
@@ -259,7 +263,7 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 				_fillinsPer3hr = 0;
 				_consecFillinLimit = 0;
 				_gpsFailsPer3hr = 2;
-				_gpsAttemptsPer3hr = 7;
+				_gpsAttemptsPer3hr = 8;
 				WAKEUP_PERIOD = 100;
 				_speedtestsPerDay = 2;
 				_speedTestMBperMonth = 40;
@@ -274,7 +278,7 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 					_fillinsPer3hr = 4;
 					_consecFillinLimit = 2;
 					_gpsFailsPer3hr = 5;
-					_gpsAttemptsPer3hr = 15;
+					_gpsAttemptsPer3hr = 17;
 					WAKEUP_PERIOD = 6;
 					_coverageFillSamples = 2;
 					_speedtestsPerDay = 4;

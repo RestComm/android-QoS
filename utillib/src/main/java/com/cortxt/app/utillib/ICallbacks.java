@@ -47,6 +47,7 @@ public interface ICallbacks{
     boolean waitForConnect ();
     boolean isGpsRunning (); // Needed for Engineering screen to show it
     boolean isInTracking ();
+    boolean isTravelling ();
     boolean isHeadsetPlugged ();
     boolean isWifiConnected ();
     String getStackTrace (Exception e);

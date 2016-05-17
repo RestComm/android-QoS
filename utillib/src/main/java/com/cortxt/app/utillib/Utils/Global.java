@@ -144,6 +144,12 @@ public class Global {
         return false;
     }
 
+    public static boolean isTravelling ()
+    {
+        if (callbacks != null)
+            return callbacks.isTravelling();
+        return false;
+    }
 
     public static String getApiKey (Context context)
     {

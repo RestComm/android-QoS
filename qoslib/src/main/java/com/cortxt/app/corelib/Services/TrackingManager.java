@@ -27,7 +27,9 @@ public class TrackingManager {
 	private MainService owner;
 	//private Timer timer;
 	private Handler handler = new Handler();
-	private long trackingExpires = 0;
+	private int trackingElapsed = 0;
+	private int durMinutes = 0;
+	//private long trackingExpires = 0;
 	//private boolean bCoverage = true, bSpeed = false, bTracking = false;
 	private boolean bTracking = false;
 	private int coverageInterval = 5, speedtestInterval = 0, videoInterval = 0, audioInterval = 0;
@@ -35,7 +37,7 @@ public class TrackingManager {
 	private int advancedIndex = 0;
 	private boolean advancedWaiting = false;
 	private int count = 0;
-	private String testTrigger = "", testTriggerOpt = "";
+	private String testTrigger = "";
     private Runnable testRunnable = null;
 	private JSONArray scheduledCommands = null;
 	
@@ -47,8 +49,10 @@ public class TrackingManager {
 	{
 		try {
 			String cmd = PreferenceManager.getDefaultSharedPreferences(owner).getString(PreferenceKeys.Miscellaneous.DRIVE_TEST_CMD, null);
-			long expires = PreferenceManager.getDefaultSharedPreferences(owner).getLong(PreferenceKeys.Miscellaneous.TRACKING_EXPIRES, 0);
+			//long expires = PreferenceManager.getDefaultSharedPreferences(owner).getLong(PreferenceKeys.Miscellaneous.TRACKING_EXPIRES, 0);
+			int elapsed = PreferenceManager.getDefaultSharedPreferences(owner).getInt(PreferenceKeys.Miscellaneous.TRACKING_ELAPSED, 0);
 			//advancedIndex = PreferenceManager.getDefaultSharedPreferences(owner).getInt(PreferenceKeys.Miscellaneous.DRIVETEST_INDEX, -1);
+			durMinutes = 0;
 
 			if (cmd != null) {
 				JSONObject cmdJson = new JSONObject(cmd);
@@ -58,40 +62,47 @@ public class TrackingManager {
 					JSONObject testSchedule = cmdJson.getJSONObject("schedule");
 					if (testSchedule.getInt("dur") > 0)
 					{
-						if (expires > System.currentTimeMillis()) {
-							int numFiveMinutePeriods = (int) (expires - System.currentTimeMillis());
-							numFiveMinutePeriods = numFiveMinutePeriods / (5 * 60000) + 1;
-
-							testSchedule.put("dur", numFiveMinutePeriods);
-						}
-						else
+						durMinutes = testSchedule.getInt("dur");
+						if (elapsed >= durMinutes*60)
 							return;
+//						if (expires > System.currentTimeMillis()) {
+//							int numFiveMinutePeriods = (int) (expires - System.currentTimeMillis());
+//							numFiveMinutePeriods = numFiveMinutePeriods / (5 * 60000) + 1;
+//
+//							testSchedule.put("dur", numFiveMinutePeriods);
+//						}
+//						else
+//							return;
 					}
 					if (testSchedule.has ("trigger")) {
 						testTrigger = testSchedule.getString("trigger");
-						testTriggerOpt = testSchedule.getString("opt");
-						testSchedule.put("dur", 0);
+						//testSchedule.put("dur", 0);
 					}
-					startAdvancedTracking(cmdJson, 0);
+					startAdvancedTracking(cmdJson, 0, false);
 				}
 				else {
 					JSONObject testSettings = cmdJson.getJSONObject("settings");
 					if (testSettings.getInt("dur") > 0)
 					{
-						if (expires > System.currentTimeMillis()) {
-							int numFiveMinutePeriods = (int) (expires - System.currentTimeMillis());
-							numFiveMinutePeriods = numFiveMinutePeriods / (5 * 60000) + 1;
-
-							testSettings.put("dur", numFiveMinutePeriods);
-						}
-						else
+						durMinutes = testSettings.getInt("dur");
+						if (elapsed >= durMinutes*60)
 							return;
+//						{
+//							int numFiveMinutePeriods = (int) (expires - System.currentTimeMillis());
+//							numFiveMinutePeriods = numFiveMinutePeriods / (5 * 60000) + 1;
+//
+//							testSettings.put("dur", numFiveMinutePeriods);
+//						}
+//						else
+//							return;
 					}
-					startTracking(cmdJson, 0);
-				}
-				trackingExpires = expires;
 
-				LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "resumeTracking", "expires=" + expires + ",cmd=" + cmd);
+					startTracking(cmdJson, 0, false);
+				}
+				//trackingExpires = expires;
+				trackingElapsed = elapsed;
+
+				LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "resumeTracking", "elapsed=" + elapsed + ",cmd=" + cmd);
 
 			}
 
@@ -103,31 +114,37 @@ public class TrackingManager {
 
 	}
 
-	public void startAdvancedTracking (JSONObject cmdJson, long starttime) {
+	public void startAdvancedTracking (JSONObject cmdJson, long starttime, boolean resetElapsed) {
 		try {
 			//JSONObject commands = cmdJson.getJSONObject("commands");
 			JSONObject schedule = cmdJson.getJSONObject("schedule");
 
-			int numFiveMinutePeriods = 0;
+
 			if (schedule.has("dur"))
-				numFiveMinutePeriods = schedule.getInt("dur");
+				durMinutes = schedule.getInt("dur");
 			else
-				numFiveMinutePeriods = 5;
-			numFiveMinutePeriods = (numFiveMinutePeriods + 4) / 5;
-			if (numFiveMinutePeriods == 0)  // continuous tracking
+				durMinutes = 5;
+			// If script is starting fresh (not from a trigger), elapsed time is reset to 0
+			if (resetElapsed)
+				trackingElapsed = 0;
+			prevTrackingTime = System.currentTimeMillis();
+			//numFiveMinutePeriods = (numFiveMinutePeriods + 4) / 5;
+			if (durMinutes == 0)  // continuous tracking
 			{
-				trackingExpires = 0;
+				//trackingExpires = 0;
 				// store a tracking expiry date of 10 million seconds from now
-				PreferenceManager.getDefaultSharedPreferences(owner).edit().putLong(PreferenceKeys.Miscellaneous.TRACKING_EXPIRES, System.currentTimeMillis()+10000000000l).commit();
+				PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.TRACKING_ELAPSED, trackingElapsed).commit();
 				PreferenceManager.getDefaultSharedPreferences(owner).edit().putLong(PreferenceKeys.Miscellaneous.ENGINEER_MODE_EXPIRES_TIME, System.currentTimeMillis()).commit();
 			}
-			if (schedule.has("trigger") && schedule.has("opt") && schedule.getString("trigger").equals("travel"))
+
+			if (schedule.has("trigger") && !schedule.getString("trigger").equals(""))
 			{
-				testTriggerOpt = schedule.getString("opt");
-				if (testTriggerOpt.equals("once") || testTriggerOpt.equals("always"))
-					testTrigger = "travel";
-				else
-					testTrigger = "";
+//				testTriggerOpt = schedule.getString("opt");
+//				if (testTriggerOpt.equals("once") || testTriggerOpt.equals("always"))
+//					testTrigger = "travel";
+//				else
+//					testTrigger = "";
+				testTrigger = schedule.getString("trigger");
 				// Initally, when not yet travelling, just wait for travel
 				if (!owner.getTravelDetector().isTravelling() || !owner.getTravelDetector().isConfirmed())
 					return;
@@ -143,7 +160,7 @@ public class TrackingManager {
 				//bTracking = true;
 
 				// Run the normal Signal tracking as usual
-				startCoverageTracking (numFiveMinutePeriods);
+				startCoverageTracking ();
 				long startDelay = 1000;
 				if (starttime > System.currentTimeMillis())
 					startDelay = starttime - System.currentTimeMillis();
@@ -160,33 +177,34 @@ public class TrackingManager {
 		}
 	}
 
-	public void startCoverageTracking (int numFiveMinutePeriods)
+	public void startCoverageTracking ()
 	{
 		bTracking = true;
 		this.owner.keepAwake(true, true);
 		AlarmManager alarmMgr = (AlarmManager) owner.getSystemService( Service.ALARM_SERVICE );
 		Intent intent = new Intent(IntentHandler.ACTION_TRACKING_5MINUTE);
 		PendingIntent alarm = PendingIntent.getBroadcast( owner, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-		alarmMgr.cancel( alarm );
-		trackingExpires = System.currentTimeMillis() + (numFiveMinutePeriods) * 5L * 60L * 1000L;
+		alarmMgr.cancel( alarm);
+		//trackingExpires = System.currentTimeMillis() + (numFiveMinutePeriods) * 5L * 60L * 1000L;
 
-		PreferenceManager.getDefaultSharedPreferences(owner).edit().putLong(PreferenceKeys.Miscellaneous.TRACKING_EXPIRES, trackingExpires).commit();
-		PreferenceManager.getDefaultSharedPreferences(owner).edit().putLong(PreferenceKeys.Miscellaneous.ENGINEER_MODE_EXPIRES_TIME, trackingExpires + 0*5L * 60L * 1000L).commit();
+		//PreferenceManager.getDefaultSharedPreferences(owner).edit().putLong(PreferenceKeys.Miscellaneous.TRACKING_EXPIRES, trackingExpires).commit();
+		long expiresTime = System.currentTimeMillis() + (durMinutes*60 - trackingElapsed) * 1000;
+		PreferenceManager.getDefaultSharedPreferences(owner).edit().putLong(PreferenceKeys.Miscellaneous.ENGINEER_MODE_EXPIRES_TIME, expiresTime).commit();
 
 		long delay = 0;
-		if (numFiveMinutePeriods == 0)  // continuous tracking
+		if (durMinutes == 0)  // continuous tracking
 		{
-			trackingExpires = 0;
+			//trackingExpires = 0;
 			// store a tracking expiry date of 10 million seconds from now
-			PreferenceManager.getDefaultSharedPreferences(owner).edit().putLong(PreferenceKeys.Miscellaneous.TRACKING_EXPIRES, System.currentTimeMillis()+10000000000l).commit();
+			//PreferenceManager.getDefaultSharedPreferences(owner).edit().putLong(PreferenceKeys.Miscellaneous.TRACKING_EXPIRES, System.currentTimeMillis()+10000000000l).commit();
 			PreferenceManager.getDefaultSharedPreferences(owner).edit().putLong(PreferenceKeys.Miscellaneous.ENGINEER_MODE_EXPIRES_TIME, System.currentTimeMillis()).commit();
 		}
-		LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "startTracking", "numFiveMinutePeriods=" + numFiveMinutePeriods + ",covInterval=" + coverageInterval + ",SpeedInterval=" + speedtestInterval + ",videoInterval=" + videoInterval);
+		LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "startTracking", "durationMinutes=" + durMinutes + ",covInterval=" + coverageInterval + ",SpeedInterval=" + speedtestInterval + ",videoInterval=" + videoInterval);
 
 		delay = 5L * 60L * 1000L;
 		alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000, delay, alarm);
 	}
-	public void startTracking (JSONObject cmdJson, long starttime)
+	public void startTracking (JSONObject cmdJson, long starttime, boolean resetElapsed)
 	{
 		try {
 //			if (true)
@@ -198,12 +216,14 @@ public class TrackingManager {
 //				return;
 //			}
 			JSONObject testSettings = cmdJson.getJSONObject("settings");
+			if (resetElapsed)
+				trackingElapsed = 0;
+			prevTrackingTime = System.currentTimeMillis();
 
-			int numFiveMinutePeriods = 0;
 			if (testSettings.has("dur"))
-				numFiveMinutePeriods = testSettings.getInt("dur");
+				durMinutes = testSettings.getInt("dur");
 			else
-				numFiveMinutePeriods = 3;
+				durMinutes = 15;
 			if (testSettings.has("cov"))
 				this.coverageInterval = testSettings.getInt("cov");
 			if (testSettings.has("spd"))
@@ -223,7 +243,7 @@ public class TrackingManager {
 			if (testSettings.has("aud"))
 				this.audioInterval = testSettings.getInt("aud");
 
-			startCoverageTracking (numFiveMinutePeriods);
+			startCoverageTracking ();
 			long startDelay = 1000;
 			if (starttime > System.currentTimeMillis())
 				startDelay = starttime - System.currentTimeMillis();
@@ -244,7 +264,7 @@ public class TrackingManager {
 	public boolean isTracking ()
 	{
 		//if (timer != null && (trackingExpires > System.currentTimeMillis() || trackingExpires == 0))
-		if (bTracking == true && (trackingExpires+0*280000 > System.currentTimeMillis() || trackingExpires == 0))
+		if (bTracking == true) // && (trackingExpires+0*280000 > System.currentTimeMillis() || trackingExpires == 0))
 			return true;
 		else 
 		{
@@ -274,16 +294,16 @@ public class TrackingManager {
 
 			if (start) {
 				// If drive test is to be triggered only once, disable it after starting
-				if (testTriggerOpt != null && testTriggerOpt.equals("once")) {
-					testTriggerOpt = "disabled";
-					testSchedule.put ("opt", "disabled");
-				}
-				startAdvancedTracking (cmdsJson, 0);
+//				if (testTriggerOpt != null && testTriggerOpt.equals("once")) {
+//					testTriggerOpt = "disabled";
+//					testSchedule.put ("opt", "disabled");
+//				}
+				startAdvancedTracking (cmdsJson, 0, false);
 			}
 			else {
-				if (testTriggerOpt != null && testTriggerOpt.equals("disabled")) {
-					testTrigger = "";
-				}
+//				if (testTriggerOpt != null && testTriggerOpt.equals("disabled")) {
+//					testTrigger = "";
+//				}
 				owner.getEventManager().stopTracking();
 			}
 		}
@@ -300,7 +320,7 @@ public class TrackingManager {
 	public boolean isAdvancedTrackingWaiting ()
 	{
 		//if (timer != null && (trackingExpires > System.currentTimeMillis() || trackingExpires == 0))
-		if (bTracking == true && (trackingExpires+0*280000 > System.currentTimeMillis() || trackingExpires == 0))
+		if (bTracking == true) // && (trackingExpires+0*280000 > System.currentTimeMillis() || trackingExpires == 0))
 		{
 			if (advancedIndex >= 0 && advancedWaiting)
 				return true;
@@ -326,8 +346,20 @@ public class TrackingManager {
 		{
 			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "cancelScheduledEvents", "");
             bTracking = false;
-			trackingExpires = System.currentTimeMillis() - 10000;
-			PreferenceManager.getDefaultSharedPreferences(owner).edit().putLong(PreferenceKeys.Miscellaneous.TRACKING_EXPIRES, 0L).commit();
+
+			if (prevTrackingTime > 0) {
+				trackingElapsed += (System.currentTimeMillis() - prevTrackingTime + 500) / 1000;
+				PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.TRACKING_ELAPSED, trackingElapsed).commit();
+				if (durMinutes > 0 && trackingElapsed >= (durMinutes-1) * 60) {
+					testTrigger = "";
+				}
+			}
+			prevTrackingTime = System.currentTimeMillis();
+
+			if (testTrigger.equals(""))
+				trackingElapsed = 1000000;
+			//trackingExpires = System.currentTimeMillis() - 10000;
+			PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.TRACKING_ELAPSED, trackingElapsed).commit();
 			PreferenceManager.getDefaultSharedPreferences(owner).edit().putLong(PreferenceKeys.Miscellaneous.ENGINEER_MODE_EXPIRES_TIME, 0L).commit();
 
             AlarmManager alarmMgr = (AlarmManager) owner.getSystemService( Service.ALARM_SERVICE );
@@ -345,11 +377,11 @@ public class TrackingManager {
     // every 1 minute, execute drive tests that come due
     public void runTrackingTests ()
     {
-		if (trackingExpires < System.currentTimeMillis() || bTracking == false)
+		if (trackingElapsed < durMinutes*60 || bTracking == false)
 			return;
 
 		try{
-			if (bTracking && (trackingExpires == 0 || trackingExpires > System.currentTimeMillis() + 30000)) {
+			if (bTracking && (durMinutes == 0 || trackingElapsed < durMinutes*60 + 30)) {
 
 				handler.postDelayed(
 						testRunnable = new Runnable() {
@@ -417,7 +449,7 @@ public class TrackingManager {
 	// Queue a series of tests with delays, then detect when they complete, and repeat them again
 	public void runAdvancedTrackingTests ()
 	{
-		if ((trackingExpires > 0 && trackingExpires < System.currentTimeMillis()) || bTracking == false)
+		if ((durMinutes > 0 && trackingElapsed >= durMinutes*60) || bTracking == false)
 			return;
 
 		count += 1;
@@ -495,12 +527,21 @@ public class TrackingManager {
 		}
 	}
 
+	private long prevTrackingTime = 0;
 	public void runTracking () {
 
 		LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "runTracking", "covInterval=" + coverageInterval + ",speedInterval=" + speedtestInterval + ",count=" + count + ",videoInterval=" + videoInterval);
+		if (prevTrackingTime > 0)
+		{
+			trackingElapsed += (System.currentTimeMillis() - prevTrackingTime + 500) / 1000;
+			PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.TRACKING_ELAPSED, trackingElapsed).commit();
+		}
+		prevTrackingTime = System.currentTimeMillis();
 
-		if (trackingExpires > 0 && trackingExpires+0*280000 <= System.currentTimeMillis())
+		if (durMinutes > 0 && trackingElapsed >= (durMinutes)*60)
+		{
 			cancelScheduledEvents ();
+		}
 		else if (coverageInterval > 0) {
 			owner.getEventManager().triggerSingletonEvent(EventType.MAN_TRACKING);
 		}

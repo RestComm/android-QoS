@@ -10,10 +10,8 @@ import android.preference.PreferenceManager;
 import com.cortxt.app.corelib.MainService;
 import com.cortxt.app.corelib.Services.Intents.IntentHandler;
 import com.cortxt.app.corelib.UtilsOld.ActiveEvent;
-import com.cortxt.app.utillib.DataObjects.DeviceInfo;
 import com.cortxt.app.utillib.DataObjects.EventType;
 import com.cortxt.app.utillib.DataObjects.PhoneState;
-import com.cortxt.app.utillib.DataObjects.QosInfo;
 import com.cortxt.app.utillib.Reporters.ReportManager;
 import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
@@ -23,8 +21,24 @@ import com.securepreferences.SecurePreferences;
 
 import org.json.JSONObject;
 
+
 /**
- * Created by bscheurman on 16-01-23.
+ * QosAPI is the main interface between the client application and the Quality of Service Library
+ * These methods allow the app to easily communicate and start and stop the background service
+ * using static methods.
+ * The main tasks to be performed using this class are:
+ * <ul>
+ * <li>start the service
+ * <li>set the login, and in some cases a password. This will register with the server.
+ * <li>Request QoS information such as all the mobile network measurements
+ * <li>Trigger events such as speed tests, which gather data and send to the server
+ * <li>Check for permissions
+ * </ul>
+ * <p>
+ *
+ * @author      Brad Scheurman
+ * @version     %I%, %G%
+ * @since       1.0
  */
 public class QosAPI {
 

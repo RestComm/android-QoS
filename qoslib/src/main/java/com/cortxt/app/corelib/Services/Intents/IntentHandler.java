@@ -705,6 +705,8 @@ public class IntentHandler extends BroadcastReceiver {
 				return;
             
 			String commands = intentExtras.getString(COMMAND_EXTRA);
+			if (commands == null)
+				return;
 			long starttime = intent.getLongExtra("STARTTIME_EXTRA", 0);
 			String[] msgs = null;
 			try {
@@ -865,11 +867,11 @@ public class IntentHandler extends BroadcastReceiver {
 
 					if(msgBody.indexOf("\"schedule\":") != -1) {
 						PreferenceManager.getDefaultSharedPreferences(owner).edit().putString(PreferenceKeys.Miscellaneous.DRIVE_TEST_CMD, remoteJson.toString ()).commit();
-						owner.getTrackingManager().startAdvancedTracking (remoteJson, starttime);
+						owner.getTrackingManager().startAdvancedTracking (remoteJson, starttime, true);
 					}
                 	else if (testType.equals("rt")) {
 						PreferenceManager.getDefaultSharedPreferences(owner).edit().putString(PreferenceKeys.Miscellaneous.DRIVE_TEST_CMD, remoteJson.toString ()).commit();
-						owner.getTrackingManager().startTracking (remoteJson, starttime);
+						owner.getTrackingManager().startTracking (remoteJson, starttime, true);
                 	}
                 	else if (testType.equals("ue")) {
 						owner.getEventManager().triggerUpdateEvent(false, false);

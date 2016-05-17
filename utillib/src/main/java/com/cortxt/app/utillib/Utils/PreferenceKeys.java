@@ -254,7 +254,8 @@ public final class PreferenceKeys {
 		public static final String SHOW_SPEED_TIP = "KEY_SHOW_SPEED_TIP";
 		public static final String SEND_ON_WIFI  = "KEY_SETTINGS_SEND_ON_WIFI";
 		public static final String CHANGED_SEND_ON_WIFI  = "KEY_SETTINGS_CHANGED_SEND_ON_WIFI";
-		public static final String TRACKING_EXPIRES = "KEY_SETTINGS_TRACKING_EXPIRES";
+		//public static final String TRACKING_EXPIRES = "KEY_SETTINGS_TRACKING_EXPIRES";
+		public static final String TRACKING_ELAPSED = "KEY_SETTINGS_TRACKING_ELAPSED";
 		public static final String ALLOW_SMS = "KEY_SETTINGS_ALLOW_SMS";
 
 		//public static final String TRACKING_INTERVAL = "KEY_SETTINGS_TRACKING_INTERVAL";

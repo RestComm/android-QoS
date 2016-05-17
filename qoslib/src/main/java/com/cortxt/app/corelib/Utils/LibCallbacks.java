@@ -179,6 +179,11 @@ public class LibCallbacks implements ICallbacks {
             return MainService.getGpsManager().isGpsRunning();
         return false;
     }
+    public boolean isTravelling ()
+    {
+        if (mContext == null) return false;
+        return mContext.isTravelling();
+    }
     public boolean isInTracking ()
     {
         return MainService.isInTracking();

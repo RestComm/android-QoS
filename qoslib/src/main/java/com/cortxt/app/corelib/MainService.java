@@ -1223,7 +1223,15 @@ public class MainService extends Service {
 	public static GpsManagerOld getNetLocationManager(){
 		return netLocationManager;
 	}
-	
+
+	public boolean isTravelling ()
+	{
+		if (getTravelDetector() == null)
+			return false;
+		if (getTravelDetector().isTravelling() || getTravelDetector().isConfirmed())
+			return true;
+		return false;
+	}
 	public static boolean isInTracking (){
 		if (trackingManager == null)
 			return false;
@@ -1231,7 +1239,7 @@ public class MainService extends Service {
 	}
 	public static String getDriveTestTrigger (){
 		if (trackingManager == null)
-			return null;
+			return "";
 		if (trackingManager.getDriveTestTrigger() == null)
 			return "";
 		return trackingManager.getDriveTestTrigger();

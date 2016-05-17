@@ -1,4 +1,4 @@
-package com.cortxt.app.utillib.DataObjects;
+package com.cortxt.app.corelib.Utils;
 
 import android.app.Service;
 import android.content.Context;
@@ -13,10 +13,11 @@ import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 
+import com.cortxt.app.corelib.R;
 import com.cortxt.app.utillib.ContentProvider.Provider;
 import com.cortxt.app.utillib.ContentProvider.Tables;
 import com.cortxt.app.utillib.ContentProvider.UriMatch;
-import com.cortxt.app.utillib.R;
+import com.cortxt.app.utillib.DataObjects.PhoneState;
 import com.cortxt.app.utillib.Reporters.ReportManager;
 import com.cortxt.app.utillib.Utils.CommonIntentActionsOld;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
@@ -28,7 +29,21 @@ import java.sql.Date;
 import java.util.BitSet;
 
 /**
- * Created by bscheurman on 16-04-26.
+ * QosInfo is a class that consolidates a wide variety of information about the network state of the phone
+ * The information originated from several sources such as apis, listeners, hidden methods and possibly even service mode
+ * QosInfo contains 4 inner classes representing the main network types, and each is only populated if in that network type
+ * <ul>
+ * <li>GSMINfo
+ * <li>WiFiInfo
+ * <li>LTEInfo
+ * <li>CDMAInfo
+ * <li>plus general info in main class
+ * </ul>
+ * <p>
+ *
+ * @author      Brad Scheurman
+ * @version     %I%, %G%
+ * @since       1.0
  */
 public class QosInfo {
 
@@ -61,9 +76,431 @@ public class QosInfo {
     public int MCC, MNC;
 
     public CDMAInfo CDMAInfo;
-    public GSMInfo GSMInfo;
+    public GSM_2GInfo GSM_2GInfo;
+    public GSM_3GInfo GSM_3GInfo;
     public LTEInfo LTEInfo;
     public WIFIInfo WiFiInfo;
+    public NetworkInfo NetworkInfo;
+
+    public class NetworkInfo
+    {
+        protected int signal=0;
+        protected int sigMin=0, sigMax=0;
+        protected int sigExcellent=0;  // the minimum signal strength that would be considered as excellent
+        protected String sigLabel="", sigUnits="";
+        protected String sigDoc="";
+
+        protected float noise = 0;
+        protected int noiseMin=0, noiseMax=0;
+        protected int noiseExcellent;  // the minimum signal strength that would be considered as excellent
+        protected String noiseLabel="", noiseUnits="";
+        protected String noiseDoc="";
+
+        protected String[] identifierLabels, identifierDocs;
+        protected long[] identifierValues;
+        protected String networkType;
+
+        public int getSignalRating ()
+        {
+            // calculate a rating from 0 to 5
+
+            // unknown signal is rated as -1 and should be ignored
+            if (signal == 0) return -1;
+            // anything <= sigMin is rated as 0 for no signal
+            if (signal <= sigMin) return 0;
+            // anything >= sigExcellent is rated as 5
+            if (signal >= sigExcellent) return 5;
+
+            // all others are scaled from 1 to 4
+            int quarter = (sigExcellent - sigMin) / 4;
+            int rating = 1 + (signal-sigMin) * 4 / (sigExcellent-sigMin);
+            return rating;
+
+        }
+        public String getSignalDetails (boolean withValue, boolean withRating) {
+            if (getSignalLabel() == "")
+                return "";
+            String details = getSignalLabel() + ": ";
+            if (withValue) {
+                if (signal != 0)
+                    details += signal + " " + getSignalUnits();
+                else
+                    details += "unknown";
+            }
+            if (withRating && signal != 0 && getSignalRating() > 0)
+                details += " rating " + getSignalRating() + "/5";
+            return details;
+        }
+        public String getSignalLabel () { return sigLabel; }
+        public String getSignalUnits () { return sigUnits; }
+        public int getSignalRangeMin () { return sigMin; }
+        public int getSignalRangeMax () { return sigMax; }
+        public String getSignalDoc () { return noiseDoc; }
+
+        public int getNoiseRating ()
+        {
+            // calculate a rating from 0 to 5
+
+            // unknown signal is rated as -1 and should be ignored
+            if (noise == 0) return -1;
+            // anything <= sigMin is rated as 0 for no signal
+            if (noise <= noiseMin) return 0;
+            // anything >= sigExcellent is rated as 5
+            if (noise >= noiseExcellent) return 5;
+
+            // all others are scaled from 1 to 4
+            int quarter = (noiseExcellent - noiseMin) / 4;
+            int rating = 1 + (int)(noise*10-noiseMin*10) * 4 / (int)(noiseExcellent*10-noiseMin*10);
+            return rating;
+
+        }
+        public String getNoiseDetails (boolean withValue, boolean withRating) {
+            if (getNoiseLabel() == "")
+                return "";
+            String details = getNoiseLabel() + ": ";
+            if (withValue)
+            {
+                if (noise != 0)
+                    details += noise + " " + getNoiseUnits() + " ";
+                else
+                    details += "unknown ";
+            }
+            if (withRating && noise != 0 && getNoiseRating() >= 0)
+                details += "rating " + getNoiseRating() + "/5";
+
+            return details;
+        }
+        public String getNoiseLabel () { return noiseLabel; }
+        public String getNoiseUnits () { return noiseUnits; }
+        public int getNoiseRangeMin () { return noiseMin; }
+        public int getNoiseRangeMax () { return noiseMax; }
+        public String getNoiseDoc () { return noiseDoc; }
+
+        public String getIdentifier ()
+        {
+            String identifiers = "";
+
+            int i;
+            if (identifierValues != null && identifierLabels != null) {
+                for (i = 0; i < identifierValues.length; i++) {
+                    if (i < identifierLabels.length) {
+                        identifiers += identifierLabels[i] + ": ";
+                        if (identifierValues[i] == 0)
+                            identifiers += "n/a ";
+                        else
+                            identifiers += identifierValues[i] + " ";
+                    }
+                }
+            }
+            return identifiers;
+        }
+        public String[] getIdentifierLabels () { return identifierLabels; };
+        public long[] getIdentifierValues (){ return identifierValues; };
+        public String[] getIdentifierDocs (){ return identifierDocs; };
+
+        public String getType () { return networkType; }
+    }
+
+    /**
+     * CDMAInfo exposes information relevant to CDMA Networks
+     * <ul>
+     * <li>SID
+     * <li>BID
+     * <li>NID
+     * <li>RSSI
+     * <li>ECI0 (Ec/n0)
+     * <li>SNR
+     * </ul>
+     */
+    public class CDMAInfo extends NetworkInfo
+    {
+        public int BID = 0, SID = 0, NID = 0, RSSI = 0, ECIO = 0, SNR = 0;
+        public CDMAInfo (QosInfo qos)
+        {
+            SID = qos.SID;
+            BID = qos.BID;
+            NID = qos.NID;
+            RSSI = qos.CDMA_RSSI;
+            ECIO = qos.ECIO;
+            SNR = qos.SNR;
+
+            // base class assignments to describe LTE info in a unified way
+            networkType = "CDMA";
+            signal = qos.RSSI;
+            sigLabel = "RSCP";
+            sigUnits = "dBm";
+            sigDoc = "RSSI gives the total power of all received signal (Receive Signal Strength Indicator). RSSI includes noise enery, but subtracting Ec/i0 from RSSI gives the actual usable signal.";
+            sigMax = -40;
+            sigMin = -120;
+            sigExcellent = -65;
+
+            noise = qos.ECIO;
+            noiseLabel = "Ec/iO";
+            noiseUnits = "dB";
+            noiseDoc = "Ec/iO gives a ratio expressed in dBs of signal to noise and/or interference (Energy/interference). ";
+            noiseMax = -2;
+            noiseMin = -22;
+            noiseExcellent = -6;
+
+            identifierLabels = new String[] {"SID","NID","BID"};
+            identifierDocs = new String[] {"SID is the 'System ID' which identifies a region of towers, unique worldwide", "NID is the 'Network ID'", "BID is the 'Billing ID' which Uniquely identifies a cell tower, sector and band within a SID and NID"};
+            identifierValues = new long[] {SID,NID,BID};
+        }
+        @Override
+        public String toString () {
+            String str =  "CDMA Info:" + "\n";
+            str +=  "SID: " + SID + "\n";
+            str +=  "NID: " + NID + "\n";
+            str +=  "BID: " + BID + "\n";
+            str +=  "RSSI: " + RSSI + "\n";
+            if (ECIO < 0)
+                str +=  "ECIO: " + ECIO + "\n";
+            if (SNR != 0)
+                str +=  "SNR: " + SNR + "\n";
+            return str;
+        }
+    }
+
+    /**
+     * GSMInfo exposes information relevant to CDMA Networks
+     * <ul>
+     * <li>LAC
+     * <li>RNC
+     * <li>CellID
+     * <li>PSC
+     * <li>RSCP
+     * <li>ECI0 (Ec/n0)
+     * <li>SNR
+     * </ul>
+     */
+    public class GSM_2GInfo extends NetworkInfo
+    {
+        public int LAC = 0, RNC = 0, CellID = 0, PSC = 0;
+        public int RSCP = 0, ECIO = 0;
+
+        public GSM_2GInfo (QosInfo qos)
+        {
+            LAC = qos.LAC;
+            CellID = qos.CellID;
+            RSSI = qos.RSSI;
+
+            // base class assignments to describe LTE info in a unified way
+            networkType = "2G GSM";
+            signal = qos.RSSI;
+            sigLabel = "RSSI";
+            sigUnits = "dBm";
+            sigDoc = "RSSI gives the total power of all received signal (Receive Signal Strength Indicator). A stronger signal is better, but noise and signal from other cell sectors is included in the total RSSI.";
+            sigMax = -40;
+            sigMin = -120;
+            sigExcellent = -65;
+
+            identifierLabels = new String[] {"LAC","CellId"};
+            identifierDocs = new String[] {"Local Area Code, identifies a group of cell towers", "Cell Id uniquely identifies a cell tower, sector and band when combined with LAC"};
+            identifierValues = new long[] {LAC,CellID};
+        }
+
+        @Override
+        public String toString () {
+            String str =  "GSM Info:" + "\n";
+            str +=  "LAC: " + LAC + "\n";
+            str +=  "RNC: " + RNC + "\n";
+            str +=  "CellID: " + CellID + "\n";
+            str +=  "PSC: " + PSC + "\n";
+            if (RSCP < 0)
+                str +=  "RSCP: " + RSCP + "\n";
+            else
+                str +=  "RSSI: " + RSSI + "\n";
+            if (ECIO < 0)
+                str +=  "EC/I0: " + ECIO + "\n";
+            if (Neighbors != null && !Neighbors.isEmpty())
+                str +=  "Neighbors: " + Neighbors;
+            return str;
+        }
+    }
+
+    /**
+     * GSMInfo exposes information relevant to CDMA Networks
+     * <ul>
+     * <li>LAC
+     * <li>RNC
+     * <li>CellID
+     * <li>PSC
+     * <li>RSCP
+     * <li>ECI0 (Ec/n0)
+     * <li>SNR
+     * </ul>
+     */
+    public class GSM_3GInfo extends NetworkInfo
+    {
+        public int LAC = 0, RNC = 0, CellID = 0, PSC = 0;
+        public int RSCP = 0, ECIO = 0;
+
+        public GSM_3GInfo (QosInfo qos)
+        {
+            LAC = qos.LAC;
+            RNC = qos.RNC;
+            CellID = qos.CellID;
+            PSC = qos.PSC;
+            RSCP = qos.RSCP;
+            ECIO = qos.ECIO;
+            Neighbors = qos.Neighbors;
+
+            // base class assignments to describe LTE info in a unified way
+            networkType = "3G GSM";
+            signal = qos.RSCP;
+            sigLabel = "RSCP";
+            sigUnits = "dBm";
+            sigDoc = "RSCP gives the power of the usable component of 3G signal (Receive Signal Code Power). It is lower compared to the RSSI because it measures a specific part of the signal that carries data.";
+            sigMax = -40;
+            sigMin = -120;
+            sigExcellent = -75;
+
+            noise = qos.ECIO;
+            noiseLabel = "Ec/iO";
+            noiseUnits = "dB";
+            noiseDoc = "Ec/iO gives a ratio expressed in dBs of signal to noise and/or interference (Energy/interference). Android rarely reports Ec/i0 for GSM, except on some rooted devices";
+            noiseMax = -2;
+            noiseMin = -22;
+            noiseExcellent = -6;
+
+            identifierLabels = new String[] {"LAC","RNC","CellId","PSC"};
+            identifierDocs = new String[] {"Local Area Code, identifies a group of cell towers", "RNC Radio Network Controller is the top 12 bits of a 28 bit Cell Identifier", "Cell Id is the bottom 16 bits of a 28 bit Cell identifier in 3G. Uniquely identifies a cell tower, sector and band when combined with LAC", "PSC Primary Scrambling Code, short non-unique cell identifier"};
+            identifierValues = new long[] {LAC,RNC,CellID,PSC};
+        }
+
+        @Override
+        public String toString () {
+            String str =  "GSM Info:" + "\n";
+            str +=  "LAC: " + LAC + "\n";
+            str +=  "RNC: " + RNC + "\n";
+            str +=  "CellID: " + CellID + "\n";
+            str +=  "PSC: " + PSC + "\n";
+            if (RSCP < 0)
+                str +=  "RSCP: " + RSCP + "\n";
+            else
+                str +=  "RSSI: " + RSSI + "\n";
+            if (ECIO < 0)
+                str +=  "EC/I0: " + ECIO + "\n";
+            if (Neighbors != null && !Neighbors.isEmpty())
+                str +=  "Neighbors: " + Neighbors;
+            return str;
+        }
+    }
+
+    public class LTEInfo extends NetworkInfo
+    {
+        public int RSSI, RSRP, RSRQ;
+        public float SNR;
+        public int Tac, Pci, Ci;
+        public String LTEIdentity;
+
+        public LTEInfo (QosInfo qos)
+        {
+            RSSI = qos.LTE_RSSI;
+            RSRP = qos.LTE_RSRP;
+            RSRQ = qos.LTE_RSRQ;
+            SNR = qos.LTE_SNR;
+            LTEIdentity = qos.LTEIdentity;
+            // LTEIdentity =  "LTE Tac:" + tac + " Ci:" + ci + " pCi:" + pci + " eNB:" + eNB + "/" + cellid;
+            if (LTEIdentity != null)
+            {
+                int pos = LTEIdentity.indexOf("Tac:");
+                int pos2 = LTEIdentity.indexOf(" Ci:");
+                String val = LTEIdentity.substring(pos+4, pos2);
+                Tac = Integer.parseInt(val);
+
+                pos = pos2;
+                pos2 = LTEIdentity.indexOf(" pCi:");
+                val = LTEIdentity.substring(pos + 4, pos2);
+                Ci = Integer.parseInt(val);
+
+                pos = pos2;
+                pos2 = LTEIdentity.indexOf(" eNB:");
+                if (pos2 <= 0)
+                    pos2 = LTEIdentity.length();
+                val = LTEIdentity.substring(pos + 5, pos2);
+                Pci = Integer.parseInt(val);
+            }else
+            {
+                Tac = qos.LAC;
+                Ci = qos.CellID + (qos.RNC<<16);
+                Pci = qos.PSC;
+            }
+
+            // base class assignments to describe LTE info in a unified way
+            networkType = "LTE";
+            signal = qos.LTE_RSRP;
+            sigLabel = "RSRP";
+            sigUnits = "dBm";
+            sigDoc = "RSRP gives the power of the reference component of LTE signal (Reference Signal Receive Power). It is about 20 dBm lower compared to the RSSI because it measures a specific part of the signal that carries data.";
+            sigMax = -40;
+            sigMin = -122;
+            sigExcellent = -80;
+
+            noise = qos.LTE_SNR;
+            if (noise == 0)
+                noise = 0.1f;
+            noiseLabel = "SINR";
+            noiseUnits = "";
+            noiseDoc = "SINR gives the ratio of signal to noise+interference (Signal to Interference+Noise Ratio). SINR is a good predictor data bit rate.";
+            noiseMax = 30;
+            noiseMin = -5;
+            noiseExcellent = 20;
+
+            identifierLabels = new String[] {"Tac","Ci","Pci"};
+            identifierDocs = new String[] {"Tracking Area Code, like a GSM LAC", "Cell Id", "Physical cell id, 0-504, not unique"};
+            identifierValues = new long[] {Tac,Ci,Pci};
+        }
+        @Override
+        public String toString () {
+            String str =  "LTE Info:" + "\n";
+            str +=  "Tac: " + Tac + "\n";
+            str +=  "Ci: " + Ci + "\n";
+            str +=  "Pci: " + Pci + "\n";
+            str +=  "RSRP: " + RSRP + "\n";
+            str +=  "SNR: " + SNR + "\n";
+            if (RSRQ < 0)
+                str +=  "RSRQ: " + RSRQ + "\n";
+            return str;
+        }
+    }
+
+    public class WIFIInfo extends NetworkInfo
+    {
+        public int RSSI = 0;
+        public int Frequency = 0;
+        public long WifiID = 0;
+
+        public WIFIInfo (QosInfo qos)
+        {
+            RSSI = qos.WifiSig;
+            Frequency = qos.WifiFreq;
+            WifiID = qos.WifiID;
+
+            // base class assignments to describe WiFi info in a unified way
+            networkType = "WiFi";
+            signal = RSSI;
+            sigLabel = "RSSI";
+            sigUnits = "dBm";
+            sigDoc = "RSSI gives the overall power of the WiFi signal (Received Signal Strength Indicator)";
+            sigMax = -40;
+            sigMin = -120;
+            sigExcellent = -65;
+            identifierLabels = new String[] {"BSSID"};
+            identifierDocs = new String[] {"BSSID is a unique number identifying the WiFi access point (Basic Service Set Identifier)"};
+            identifierValues = new long[] {WifiID};
+        }
+        @Override
+        public String toString () {
+            String str =  "WIFI Info:" + "\n";
+            str +=  "RSSI: " + RSSI + "\n";
+            str +=  "Frequency: " + Frequency + "\n";
+            str +=  "WifiID: " + WifiID + "\n";
+            return str;
+        }
+    }
+
+
 
     /**
      * This method updates the percentometer using the cursor given. It is assumed that the cursor includes either the
@@ -303,14 +740,17 @@ public class QosInfo {
                 WifiConfiguration wifiConfig = getWifiConfig ();
                 setWifi(wifiinfo, wifiConfig);
 
+                // Instantiate only the relevant Network type
                 if (netType.equals("cdma"))
-                    CDMAInfo = new CDMAInfo (this);
+                    NetworkInfo = CDMAInfo = new CDMAInfo (this);
+                else if (netType.equals("gsm") && networkTier < 3)
+                    NetworkInfo = GSM_2GInfo = new GSM_2GInfo (this);
                 else if (netType.equals("gsm") && networkTier < 5)
-                    GSMInfo = new GSMInfo (this);
+                    NetworkInfo = GSM_3GInfo = new GSM_3GInfo (this);
                 if (networkTier == 5) // LTE
-                    LTEInfo = new LTEInfo (this);
-                if (wifiinfo != null)
-                    WiFiInfo = new WIFIInfo (this);
+                    NetworkInfo = LTEInfo = new LTEInfo (this);
+                if (wifiConfig != null)
+                    NetworkInfo = WiFiInfo = new WIFIInfo (this);  // The most relevant network ends up in NetworkInfo
             }
             catch (Exception e)
             {
@@ -358,7 +798,7 @@ public class QosInfo {
         return null;
     }
     public void setWifi(WifiInfo wifiInfo, WifiConfiguration wifiConfig) {
-        if (wifiInfo == null)
+        if (wifiInfo == null || wifiConfig == null)
             return;
 
         String macid = wifiInfo.getBSSID();
@@ -521,142 +961,5 @@ public class QosInfo {
         return str;
     }
 
-    public class CDMAInfo
-    {
-        public int BID = 0, SID = 0, NID = 0, RSSI = 0, ECIO = 0, SNR = 0;
-        public CDMAInfo (QosInfo qos)
-        {
-            SID = qos.SID;
-            BID = qos.BID;
-            NID = qos.NID;
-            RSSI = qos.CDMA_RSSI;
-            ECIO = qos.ECIO;
-            SNR = qos.SNR;
-        }
-        @Override
-        public String toString () {
-            String str =  "CDMA Info:" + "\n";
-            str +=  "SID: " + SID + "\n";
-            str +=  "NID: " + NID + "\n";
-            str +=  "BID: " + BID + "\n";
-            str +=  "RSSI: " + RSSI + "\n";
-            if (ECIO < 0)
-                str +=  "ECIO: " + ECIO + "\n";
-            if (SNR != 0)
-                str +=  "SNR: " + SNR + "\n";
-            return str;
-        }
-    }
 
-    public class GSMInfo
-    {
-        public int LAC = 0, RNC = 0, CellID = 0, PSC = 0;
-        public int RSSI = 0, RSCP = 0, ECIO = 0;
-
-        public GSMInfo (QosInfo qos)
-        {
-            LAC = qos.LAC;
-            RNC = qos.RNC;
-            CellID = qos.CellID;
-            PSC = qos.PSC;
-            RSSI = qos.RSSI;
-            RSCP = qos.RSCP;
-            ECIO = qos.ECIO;
-            Neighbors = qos.Neighbors;
-        }
-
-        @Override
-        public String toString () {
-            String str =  "GSM Info:" + "\n";
-            str +=  "LAC: " + LAC + "\n";
-            str +=  "RNC: " + RNC + "\n";
-            str +=  "CellID: " + CellID + "\n";
-            str +=  "PSC: " + PSC + "\n";
-            if (RSCP < 0)
-                str +=  "RSCP: " + RSCP + "\n";
-            else
-                str +=  "RSSI: " + RSSI + "\n";
-            if (ECIO < 0)
-                str +=  "EC/I0: " + ECIO + "\n";
-            if (Neighbors != null && !Neighbors.isEmpty())
-                str +=  "Neighbors: " + Neighbors;
-            return str;
-        }
-    }
-
-    public class LTEInfo
-    {
-        public int RSSI, RSRP, RSRQ;
-        public float SNR;
-        public int Tac, Pci, Ci;
-        public String LTEIdentity;
-
-        public LTEInfo (QosInfo qos)
-        {
-            RSSI = qos.LTE_RSSI;
-            RSRP = qos.LTE_RSRP;
-            RSRQ = qos.LTE_RSRQ;
-            SNR = qos.LTE_SNR;
-            LTEIdentity = qos.LTEIdentity;
-            // LTEIdentity =  "LTE Tac:" + tac + " Ci:" + ci + " pCi:" + pci + " eNB:" + eNB + "/" + cellid;
-            if (LTEIdentity != null)
-            {
-                int pos = LTEIdentity.indexOf("Tac:");
-                int pos2 = LTEIdentity.indexOf(" Ci:");
-                String val = LTEIdentity.substring(pos+4, pos2);
-                Tac = Integer.parseInt(val);
-
-                pos = pos2;
-                pos2 = LTEIdentity.indexOf(" pCi:");
-                val = LTEIdentity.substring(pos + 4, pos2);
-                Ci = Integer.parseInt(val);
-
-                pos = pos2;
-                pos2 = LTEIdentity.indexOf(" eNB:");
-                if (pos2 <= 0)
-                    pos2 = LTEIdentity.length();
-                val = LTEIdentity.substring(pos + 5, pos2);
-                Pci = Integer.parseInt(val);
-            }else
-            {
-                Tac = qos.LAC;
-                Ci = qos.CellID + (qos.RNC<<16);
-                Pci = qos.PSC;
-            }
-        }
-        @Override
-        public String toString () {
-            String str =  "LTE Info:" + "\n";
-            str +=  "Tac: " + Tac + "\n";
-            str +=  "Ci: " + Ci + "\n";
-            str +=  "Pci: " + Pci + "\n";
-            str +=  "RSRP: " + RSRP + "\n";
-            str +=  "SNR: " + SNR + "\n";
-            if (RSRQ < 0)
-                str +=  "RSRQ: " + RSRQ + "\n";
-            return str;
-        }
-    }
-
-    public class WIFIInfo
-    {
-        public int RSSI = 0;
-        public int Frequency = 0;
-        public long WifiID = 0;
-
-        public WIFIInfo (QosInfo qos)
-        {
-            RSSI = qos.WifiSig;
-            Frequency = qos.WifiFreq;
-            WifiID = qos.WifiID;
-        }
-        @Override
-        public String toString () {
-            String str =  "WIFI Info:" + "\n";
-            str +=  "RSSI: " + RSSI + "\n";
-            str +=  "Frequency: " + Frequency + "\n";
-            str +=  "WifiID: " + WifiID + "\n";
-            return str;
-        }
-    }
 }

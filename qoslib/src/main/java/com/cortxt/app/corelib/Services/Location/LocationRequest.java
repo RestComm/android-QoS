@@ -1,4 +1,4 @@
-package com.cortxt.app.utillib.Utils;
+package com.cortxt.app.corelib.Services.Location;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,9 @@ import android.os.Handler;
 import android.os.PowerManager;
 
 import com.cortxt.app.utillib.Reporters.ReportManager;
+import com.cortxt.app.utillib.Utils.Global;
+import com.cortxt.app.utillib.Utils.GpsListener;
+import com.cortxt.app.utillib.Utils.LoggerUtil;
 
 
 public class LocationRequest {
@@ -214,7 +217,7 @@ public class LocationRequest {
 			locListener.setProvider(LocationManager.GPS_PROVIDER);
 			bGPSRunning = true;
 			gpsStartTime = System.currentTimeMillis();
-			Global.registerLocationListener (true, locListener);
+			Global.registerLocationListener(true, locListener);
 		}
 
 

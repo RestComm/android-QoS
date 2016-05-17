@@ -6,8 +6,10 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,10 +23,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cortxt.app.corelib.Utils.QosAPI;
-import com.cortxt.app.utillib.DataObjects.QosInfo;
+import com.cortxt.app.corelib.Utils.QosInfo;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 
 import java.util.HashMap;
+import java.util.Timer;
+
 
 import org.mobicents.restcomm.android.client.sdk.RCClient;
 import org.mobicents.restcomm.android.client.sdk.RCConnection;
@@ -290,7 +294,7 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
             }
         }
         else if (view.getId() == R.id.button_info) {
-            showInfo();
+            showUnifiedInfo();
         }
     }
 
@@ -429,6 +433,51 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         }
     }
 
+    private void showUnifiedInfo () {
+        try {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            CharSequence qosInfo = getQosInfo ();
+            builder1.setMessage(qosInfo);
+            builder1.setTitle("QOS Info");
+            builder1.setCancelable(true);
+            final AlertDialog alert11 = builder1.create();
+            alert11.show();
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    CharSequence qosInfo = getQosInfo();
+                    if (alert11.isShowing()) {
+                        try {
+                            alert11.setMessage(qosInfo);
+                            handler.postDelayed(this, 1000);
+                        } catch (Exception e) {
+                        }
+                    }
+                }
+            }, 1000);
+
+        } catch (Exception e) {
+            LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "CreateDevInfoAlertDialog", "exeption", e);
+        }
+    }
+
+    private CharSequence getQosInfo ()
+    {
+        // Request all known Network information from QoS library
+        QosInfo info = QosAPI.getQoSInfo(this);
+        if (info.NetworkInfo == null)
+            return "";
+        // The basic info as a string
+        String strInfo = info.NetworkInfo.getType() + "\n";
+        strInfo += info.NetworkInfo.getSignalDetails(true, true) + "\n";
+        strInfo += info.NetworkInfo.getNoiseDetails(true, true) + "\n";
+        strInfo += info.NetworkInfo.getIdentifier() + "\n";
+        return strInfo;
+        //strInfo = strInfo.replace("\n", "<br>");
+        //return Html.fromHtml(strInfo);
+    }
+
     private void showInfo () {
         try {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
@@ -440,9 +489,12 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
             // CDMAInfo is null unless device is connected to a CDMA network, can co-exist with LTE
             if (info.CDMAInfo != null)
                 devInfo += info.CDMAInfo.toString();
-            // GSMInfo is null unless connected to 2G or 3G GSM Network, it is null in LTE
-            if (info.GSMInfo != null)
-                devInfo += info.GSMInfo.toString();
+            // GSM_2GInfo is null unless connected to 2G GSM Network, it is null in LTE
+            if (info.GSM_2GInfo != null)
+                devInfo += info.GSM_2GInfo.toString();
+            // GSMInfo is null unless connected to 3G GSM Network, it is null in LTE
+            if (info.GSM_3GInfo != null)
+                devInfo += info.GSM_3GInfo.toString();
             // LTEInfo is null unless on LTE
             if (info.LTEInfo != null)
                 devInfo += info.LTEInfo.toString();
