@@ -33,7 +33,7 @@ import java.util.BitSet;
  * The information originated from several sources such as apis, listeners, hidden methods and possibly even service mode
  * QosInfo contains 4 inner classes representing the main network types, and each is only populated if in that network type
  * <ul>
- * <li>GSMINfo
+ * <li>GSMInfo
  * <li>WiFiInfo
  * <li>LTEInfo
  * <li>CDMAInfo
@@ -76,12 +76,30 @@ public class QosInfo {
     public int MCC, MNC;
 
     public CDMAInfo CDMAInfo;
-    public GSM_2GInfo GSM_2GInfo;
-    public GSM_3GInfo GSM_3GInfo;
+    public GSMInfo GSM_2GInfo;
+    public WCDMAInfo GSM_3GInfo;
     public LTEInfo LTEInfo;
     public WIFIInfo WiFiInfo;
-    public NetworkInfo NetworkInfo;
+    /**
+     * The connectedNetwork represents the network that is currently connected, whether it be LTE, WiFi etc..
+     * As a NetworkInfo object, it can be used in a unified way to access the relevant type of signal indicator, quality indicator,
+     * and an array of all the cellular identifiers used to uniquely identify the base station the device is connected to for the current network
+     * For example: CDMA, LTE and WiFi can all be active at the same time, and it will populate CDMAInfo, LTEInfo and WiFiInfo
+     * In this case, the connectedNetwork will be set to the WiFiInfo object because that is the only network in use for data connections
+     * In other words, you can assume the connectedNetwork always has the relevant details
+     */
+    public NetworkInfo connectedNetwork;
 
+    /**
+     * NetworkInfo is the base class for all of the main types of data network including LTE, WiFi
+     * It is meant to be used directly to simplify access to the most relevant indicators and identifiers for the active network
+     * Thus it is recommended to use the connectedNetwork object directly, accessing the methods of this class
+     * Alternatively you can use the derived classes such as LTEInfo or WiFiInfo more more specific information
+     *
+     * NetworkInfo provides a signal indicator, quality indicator, and an array of all the cellular identifiers
+     * The signal indicator consists of a label such as 'RSSI' or 'RSRP' to describe the measurement the represents signal strength for the current type of network
+     * 
+     */
     public class NetworkInfo
     {
         protected int signal=0;
@@ -264,23 +282,20 @@ public class QosInfo {
     }
 
     /**
-     * GSMInfo exposes information relevant to CDMA Networks
+     * GSMInfo exposes information relevant to 2G GSM Networks such as GPRS and EDGE
      * <ul>
      * <li>LAC
-     * <li>RNC
      * <li>CellID
-     * <li>PSC
-     * <li>RSCP
+     * <li>RSSI
      * <li>ECI0 (Ec/n0)
-     * <li>SNR
      * </ul>
      */
-    public class GSM_2GInfo extends NetworkInfo
+    public class GSMInfo extends NetworkInfo
     {
         public int LAC = 0, RNC = 0, CellID = 0, PSC = 0;
         public int RSCP = 0, ECIO = 0;
 
-        public GSM_2GInfo (QosInfo qos)
+        public GSMInfo(QosInfo qos)
         {
             LAC = qos.LAC;
             CellID = qos.CellID;
@@ -321,7 +336,7 @@ public class QosInfo {
     }
 
     /**
-     * GSMInfo exposes information relevant to CDMA Networks
+     * WCDMAInfo exposes information relevant to 3G Networks such as UMTS and HSDPA
      * <ul>
      * <li>LAC
      * <li>RNC
@@ -332,12 +347,12 @@ public class QosInfo {
      * <li>SNR
      * </ul>
      */
-    public class GSM_3GInfo extends NetworkInfo
+    public class WCDMAInfo extends NetworkInfo
     {
         public int LAC = 0, RNC = 0, CellID = 0, PSC = 0;
         public int RSCP = 0, ECIO = 0;
 
-        public GSM_3GInfo (QosInfo qos)
+        public WCDMAInfo(QosInfo qos)
         {
             LAC = qos.LAC;
             RNC = qos.RNC;
@@ -746,9 +761,9 @@ public class QosInfo {
                 if (netType.equals("cdma"))
                     NetworkInfo = CDMAInfo = new CDMAInfo (this);
                 else if (netType.equals("gsm") && networkTier < 3)
-                    NetworkInfo = GSM_2GInfo = new GSM_2GInfo (this);
+                    NetworkInfo = GSM_2GInfo = new GSMInfo(this);
                 else if (netType.equals("gsm") && networkTier < 5)
-                    NetworkInfo = GSM_3GInfo = new GSM_3GInfo (this);
+                    NetworkInfo = GSM_3GInfo = new WCDMAInfo(this);
                 if (networkTier == 5) // LTE
                     NetworkInfo = LTEInfo = new LTEInfo (this);
                 if (wifiConfig != null)
