@@ -471,8 +471,9 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         // The basic info as a string
         String strInfo = info.NetworkInfo.getType() + "\n";
         strInfo += info.NetworkInfo.getSignalDetails(true, true) + "\n";
-        strInfo += info.NetworkInfo.getNoiseDetails(true, true) + "\n";
+        strInfo += info.NetworkInfo.getQualityDetails(true, true) + "\n";
         strInfo += info.NetworkInfo.getIdentifier() + "\n";
+
         return strInfo;
         //strInfo = strInfo.replace("\n", "<br>");
         //return Html.fromHtml(strInfo);
