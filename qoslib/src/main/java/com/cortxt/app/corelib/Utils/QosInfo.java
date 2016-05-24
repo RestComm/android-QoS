@@ -76,29 +76,37 @@ public class QosInfo {
     public int MCC, MNC;
 
     public CDMAInfo CDMAInfo;
-    public GSMInfo GSM_2GInfo;
-    public WCDMAInfo GSM_3GInfo;
+    /**
+     * Specific information about the LTE network if LTE is active, otherwise this object is null
+     */
+    public GSMInfo GSMInfo;
+    /**
+     * Specific information about the 2G GSM network such as GPRS or EDGE if 2G active, otherwise this object is null
+     */
+    public WCDMAInfo WCDMAInfo;
+    /**
+     * Specific information about the 3G WCDMA network such as UMTS or HSPA if 3G active, otherwise this object is null
+     */
     public LTEInfo LTEInfo;
+    /**
+     * Specific information about the LTE network if LTE is active, otherwise this object is null
+     */
     public WIFIInfo WiFiInfo;
     /**
      * The connectedNetwork represents the network that is currently connected, whether it be LTE, WiFi etc..
-     * As a NetworkInfo object, it can be used in a unified way to access the relevant type of signal indicator, quality indicator,
-     * and an array of all the cellular identifiers used to uniquely identify the base station the device is connected to for the current network
-     * For example: CDMA, LTE and WiFi can all be active at the same time, and it will populate CDMAInfo, LTEInfo and WiFiInfo
-     * In this case, the connectedNetwork will be set to the WiFiInfo object because that is the only network in use for data connections
-     * In other words, you can assume the connectedNetwork always has the relevant details
+     * As a NetworkInfo object, it can be used in a unified way to access relevant info about the network
+     * For example: If CDMA, LTE and WiFi are active at the same time, the connectedNetwork is WiFi, because that is the only network in use for data connections
      */
     public NetworkInfo connectedNetwork;
 
     /**
-     * NetworkInfo is the base class for all of the main types of data network including LTE, WiFi
-     * It is meant to be used directly to simplify access to the most relevant indicators and identifiers for the active network
-     * Thus it is recommended to use the connectedNetwork object directly, accessing the methods of this class
-     * Alternatively you can use the derived classes such as LTEInfo or WiFiInfo more more specific information
+     * NetworkInfo is meant to be used directly to simplify access to information about the connected network
+     * NetworkInfo is also the base class for all of the main types of data network including LTEInfo, WiFiInfo
+     * The connectedNetwork object is a NetworkInfo object
      *
      * NetworkInfo provides a signal indicator, quality indicator, and an array of all the cellular identifiers
      * The signal indicator consists of a label such as 'RSSI' or 'RSRP' to describe the measurement the represents signal strength for the current type of network
-     * 
+     *
      */
     public class NetworkInfo
     {
@@ -118,7 +126,12 @@ public class QosInfo {
         protected long[] identifierValues;
         protected String networkType;
 
-        public int getSignalRating ()
+        /**
+         *  Easy to understand rating for the signal type for the connected network
+         *
+         *  @return rating from 0 to 5, equivalent to 'bars' where 5 bars is an excellent signal level
+         */
+         public int getSignalRating ()
         {
             // calculate a rating from 0 to 5
 
@@ -135,6 +148,14 @@ public class QosInfo {
             return rating;
 
         }
+
+        /**
+         * getSignalDetails returns a text description of the signal type for the connected network
+         * the text is composed of the signalLabel and, optionally, the value, rating and units
+         * @param withValue  to include the dBm value of the signal  {@link int getSignal ()} and its units {@link String getSignalUnits ()}
+         * @param withRating to include the rating of the signal {@link int getSignalRating ()}
+         * @return
+         */
         public String getSignalDetails (boolean withValue, boolean withRating) {
             if (getSignalLabel() == "")
                 return "";
@@ -149,13 +170,57 @@ public class QosInfo {
                 details += " rating " + getSignalRating() + "/5";
             return details;
         }
+
+        /**
+         * Get the name of the type of signal for the connected network
+         * @return the name of the relevent type of signal (RSSI, RSRP etc)
+         */
         public String getSignalLabel () { return sigLabel; }
+        /**
+         * Get the unit for the type of signal for the connected network
+         * @return the unit for the relevent type of signal (usually dBm)
+         */
         public String getSignalUnits () { return sigUnits; }
+        /**
+         * Get the minimum value of the signal range
+         * @return the minimum signal value (usually -120 dBm)
+         */
         public int getSignalRangeMin () { return sigMin; }
+        /**
+         * Get the maximum value of the signal range
+         * @return the maximum signal value (usually -40 dBm)
+         */
         public int getSignalRangeMax () { return sigMax; }
+        /**
+         * Get the value of the signal that gives excellent performance, expected near the tower
+         * Values above excellent are rated as 5 bars
+         * depends on network type, RSRP -85 dBm is 'excellent' for LTE
+         * @return the excellent signal value
+         */
+        public int getSignalRangeExcellent () { return sigMax; }
+        /**
+         * Get a short documentation of the relevent type of signal for the network
+         * @return the description document
+         */
         public String getSignalDoc () { return noiseDoc; }
+        /**
+         * Get the actual value of the signal
+         * @return the signal value (usually -40 to -120)
+         */
         public int getSignal () { return signal;}
 
+        /**
+         * Get the actual value of the noise or quality indicator
+         * Some network types can provide an additional performance indicator
+         * This is usually a measure of noise and is a good indicator or data throughput or voice quality
+         * @return the indicator value
+         */
+        public float getQuality () { return noise;}
+        /**
+         *  Easy to understand rating for the signal type for the connected network
+         *
+         *  @return rating from 0 to 5, equivalent to 'bars' where 5 bars is an excellent signal level
+         */
         public int getQualityRating ()
         {
             // calculate a rating from 0 to 5
@@ -194,7 +259,7 @@ public class QosInfo {
         public int getQualityRangeMin () { return noiseMin; }
         public int getQualityRangeMax () { return noiseMax; }
         public String getQualityDoc () { return noiseDoc; }
-        public float getQuality () { return noise;}
+
 
         public String getIdentifier ()
         {
@@ -759,15 +824,15 @@ public class QosInfo {
 
                 // Instantiate only the relevant Network type
                 if (netType.equals("cdma"))
-                    NetworkInfo = CDMAInfo = new CDMAInfo (this);
+                    connectedNetwork = CDMAInfo = new CDMAInfo (this);
                 else if (netType.equals("gsm") && networkTier < 3)
-                    NetworkInfo = GSM_2GInfo = new GSMInfo(this);
+                    connectedNetwork = GSMInfo = new GSMInfo(this);
                 else if (netType.equals("gsm") && networkTier < 5)
-                    NetworkInfo = GSM_3GInfo = new WCDMAInfo(this);
+                    connectedNetwork = WCDMAInfo = new WCDMAInfo(this);
                 if (networkTier == 5) // LTE
-                    NetworkInfo = LTEInfo = new LTEInfo (this);
+                    connectedNetwork = LTEInfo = new LTEInfo (this);
                 if (wifiConfig != null)
-                    NetworkInfo = WiFiInfo = new WIFIInfo (this);  // The most relevant network ends up in NetworkInfo
+                    connectedNetwork = WiFiInfo = new WIFIInfo (this);  // The most relevant network ends up in NetworkInfo
             }
             catch (Exception e)
             {

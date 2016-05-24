@@ -466,13 +466,13 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
     {
         // Request all known Network information from QoS library
         QosInfo info = QosAPI.getQoSInfo(this);
-        if (info.NetworkInfo == null)
+        if (info.connectedNetwork == null)
             return "";
         // The basic info as a string
-        String strInfo = info.NetworkInfo.getType() + "\n";
-        strInfo += info.NetworkInfo.getSignalDetails(true, true) + "\n";
-        strInfo += info.NetworkInfo.getQualityDetails(true, true) + "\n";
-        strInfo += info.NetworkInfo.getIdentifier() + "\n";
+        String strInfo = info.connectedNetwork.getType() + "\n";
+        strInfo += info.connectedNetwork.getSignalDetails(true, true) + "\n";
+        strInfo += info.connectedNetwork.getQualityDetails(true, true) + "\n";
+        strInfo += info.connectedNetwork.getIdentifier() + "\n";
 
         return strInfo;
         //strInfo = strInfo.replace("\n", "<br>");

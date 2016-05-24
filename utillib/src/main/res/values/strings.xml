@@ -124,7 +124,7 @@
     <string name="getstarted_completed_message">Your password has been emailed to you. You can use this password and your email to log into\nwww.mymobilecoverage.com\nfrom your desktop browser</string>
     <!-- Strings for Dashboard activity -->
     <string name="dashboard_settings">Settings</string>
-    <string name="dashboard_engineer">Engineer Mode</string>
+    <string name="dashboard_engineer">Network QoS</string>
     <string name="dashboard_feedback">Feedback</string>
     <string name="dashboard_about">About, Terms and Privacy </string>
     <string name="dashboard_surveys">Survey</string>
@@ -153,7 +153,7 @@
     <string-array name="dashboard_didyouknow_messages">
         <item>That you can share your coverage experience with your carrier or friends?</item>
         <item>That you contribute to a worldwide coverage map that you can view in greater detail on mymobilecoverage.com?</item>
-        <item>You get even more network performance details in Engineer Mode?</item>
+        <item>You get even more network performance details in Network QoS Mode?</item>
         <item>That MyMobileCoverage improves your GPS performance?</item>
         <item>That you can choose how much you share?</item>
     </string-array>
@@ -719,8 +719,8 @@
     <string name="LiveStatus_sending">sending</string>
     <string name="LiveStatus_sendrecv">send/receive</string>
     <string name="LiveStatus_noactivty">no activity</string>
-    <string name="nerdmode_title_nerd">Engineer</string>
-    <string name="nerdmode_title_mode">Mode</string>
+    <string name="nerdmode_title_nerd">Network</string>
+    <string name="nerdmode_title_mode">QoS</string>
     <string name="Chart_SignalStrength">Signal Strength</string>
     <string name="Chart_CellIDs">CellIDs</string>
     <string name="Chart_Locations">Locations</string>

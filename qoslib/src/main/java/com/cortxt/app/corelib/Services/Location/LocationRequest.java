@@ -26,8 +26,9 @@ public class LocationRequest {
 	Location nearLocation;
 	long gpsStartTime = 0;
 	double firstAccuracyDeg = 0;
-	public boolean bLastKnownLocation, bLocationChanged, bGPSTimeout = false, bFirstNewLocation = false;
+	public boolean bLastKnownLocation, bLocationChanged, bGPSTimeout = false, bFirstLocation = false;
 	public boolean bNWRunning = false, bGPSRunning = false, bFinalLocation = false;
+	private boolean bFirstNewLocation = true;
 	Activity activity = null;
 	Context mContext = null;
 
@@ -222,7 +223,10 @@ public class LocationRequest {
 
 
 		locListener2 = new LocationListenerForRequest();
-		locListener2.setFirstFixTimeout(20 * 1000); // for network location, try for 20 seconds and decide whether to use it
+		int locationTimout = 20*1000;
+		if (gpsTimeout == 0)
+			locationTimout = 0;
+		locListener2.setFirstFixTimeout(locationTimout); // for network location, try for 20 seconds and decide whether to use it
 		locListener2.setOperationTimeout(0);
 		locListener2.setProvider(LocationManager.NETWORK_PROVIDER);
 		bNWRunning = true;
@@ -336,14 +340,17 @@ public class LocationRequest {
 					bLocationChanged = bLocChanged;
 					if (finalAccuracy < firstAccuracy)
 						bLocationChanged = true;
-					if (location.getAccuracy() < finalAccuracy)
+					if (location.getAccuracy() < finalAccuracy && satellites > 0)
 						bFinalLocation = true;
 					boolean bNewLocation = false;
 					if (bLocChanged && bFirstNewLocation)
 					{
 						bNewLocation = true;
 						bFirstNewLocation = false;
+						bFirstLocation = true;
 					}
+					else
+						bFirstLocation = false;
 					handleLocation (bNewLocation | bFinalLocation);
 					//if (mOnNewLocationListener != null)
 					//	mOnNewLocationListener.onLocation (LocationRequest.this);
@@ -443,7 +450,10 @@ public class LocationRequest {
 					{
 						handleLocation(true);
 						bFirstNewLocation = false;
+						bFirstLocation = true;
 					}
+					else
+						bFirstLocation = false;
 
 					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "LocationListenerForRequest.onLocationUpdate", "LocationStopped (false)");
 					LocationStopped (false);
@@ -491,7 +501,7 @@ public class LocationRequest {
 
 	void releaseWakeLock ()
 	{
-		while (wakeLock.isHeld())
+		while (wakeLock != null && wakeLock.isHeld())
 		{
 			wakeLock.release();
 			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "acquireWakeLock", "RELEASE");
