@@ -202,7 +202,7 @@ public class QosInfo {
          * Get a short documentation of the relevent type of signal for the network
          * @return the description document
          */
-        public String getSignalDoc () { return noiseDoc; }
+        public String getSignalDoc () { return sigDoc; }
         /**
          * Get the actual value of the signal
          * @return the signal value (usually -40 to -120)
