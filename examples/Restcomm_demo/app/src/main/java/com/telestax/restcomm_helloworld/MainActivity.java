@@ -491,11 +491,11 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
             if (info.CDMAInfo != null)
                 devInfo += info.CDMAInfo.toString();
             // GSM_2GInfo is null unless connected to 2G GSM Network, it is null in LTE
-            if (info.GSM_2GInfo != null)
-                devInfo += info.GSM_2GInfo.toString();
+            if (info.GSMInfo != null)
+                devInfo += info.GSMInfo.toString();
             // GSMInfo is null unless connected to 3G GSM Network, it is null in LTE
-            if (info.GSM_3GInfo != null)
-                devInfo += info.GSM_3GInfo.toString();
+            if (info.WCDMAInfo != null)
+                devInfo += info.WCDMAInfo.toString();
             // LTEInfo is null unless on LTE
             if (info.LTEInfo != null)
                 devInfo += info.LTEInfo.toString();
