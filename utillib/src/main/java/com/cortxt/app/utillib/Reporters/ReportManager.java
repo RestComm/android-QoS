@@ -545,6 +545,8 @@ public class ReportManager {
 
     public Location getLastKnownLocation ()
     {
+        if (mmcService != null)
+            return mmcService.getLastLocation();
         return mLocalStorageReporter.getLastKnownLocation ();
     }
     private Bitmap carrierLogo = null;

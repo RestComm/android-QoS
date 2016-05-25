@@ -246,13 +246,13 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 //				owner.sendBroadcast(intent);
 //			}
 			
-			Log.v(TAG, String.format(Locale.US,
-				"transmiting location (%f, %f, %f) to listeners[%s]", 
-				location.getLatitude(), 
-				location.getLongitude(), 
-				location.getAccuracy(), 
-				listeners
-			));
+//			Log.v(TAG, String.format(Locale.US,
+//				"transmiting location (%f, %f, %f) to listeners[%s]",
+//				location.getLatitude(),
+//				location.getLongitude(),
+//				location.getAccuracy(),
+//				listeners
+//			));
 			owner.getIntentDispatcher().updateLocation(location);
 			owner.processNewFilteredLocation(location, mNumberOfSatellites);
 			for (int i=0; i<listeners.size(); i++) {

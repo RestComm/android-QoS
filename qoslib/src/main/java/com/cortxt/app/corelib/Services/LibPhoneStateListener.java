@@ -1558,7 +1558,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 
 				// Store signal in a sharedPreference for tools such as Indoor/Transit sample mapper, which dont have reference to service
 				if (isLTE == true)   // improve the value of the signal for LTE, so that Indoor samples don't look redder in LTE
-					PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.SIGNAL_STRENGTH, (dbmValue+10)).commit();
+					PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.SIGNAL_STRENGTH, (dbmValue+15)).commit();
 				else
 					PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.SIGNAL_STRENGTH, dbmValue).commit();
 

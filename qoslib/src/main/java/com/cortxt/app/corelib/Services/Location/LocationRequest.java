@@ -25,6 +25,7 @@ public class LocationRequest {
 	Location statsLocation;
 	Location nearLocation;
 	long gpsStartTime = 0;
+	long lastGpsTime = 0, lastNetworkTime = 0;
 	double firstAccuracyDeg = 0;
 	public boolean bLastKnownLocation, bLocationChanged, bGPSTimeout = false, bFirstLocation = false;
 	public boolean bNWRunning = false, bGPSRunning = false, bFinalLocation = false;
@@ -86,6 +87,10 @@ public class LocationRequest {
 	public void setOnLocationListener(OnLocationListener listener)
 	{
 		mOnLocationListener = listener;
+		if (this.lastLocation != null && listener != null) {
+			this.netLocation = null;
+			handleLocation(true);
+		}
 		//if (this.lastLocation != null && listener != null)
 		//	handleLocation(true);
 		//	mOnNewLocationListener.onLocation (this);
@@ -98,12 +103,17 @@ public class LocationRequest {
 
 	public void handleLocation (boolean bNew)
 	{
-		if (bNew && mOnNewLocationListener != null){
+
+		if (bNew && mOnNewLocationListener != null) {
 			if (bUpdateUI == true && activity != null) {
 				activity.runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						mOnNewLocationListener.onLocation(LocationRequest.this);
+						synchronized (LocationRequest.this) {
+							try {
+								mOnNewLocationListener.onLocation(LocationRequest.this);
+							} catch (Exception e) {}
+						}
 					}
 				});
 			} else
@@ -114,12 +124,17 @@ public class LocationRequest {
 				activity.runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						mOnLocationListener.onLocation(LocationRequest.this);
+						synchronized (LocationRequest.this) {
+							try{
+								mOnLocationListener.onLocation(LocationRequest.this);
+							} catch (Exception e) {}
+						}
 					}
 				});
 			} else
 				mOnLocationListener.onLocation(this);
 		}
+
 	}
 
 	public interface OnLocationListener
@@ -305,71 +320,68 @@ public class LocationRequest {
 		public boolean onLocationUpdate(Location location, int satellites) {
 			gpsSatellites = satellites;
 			boolean bLiveLocation = false; // consider it a live location if it has fluctuated
-			if (location == null)
-			{
-				//gpsLocation = null;
-				handleLocation (false);
-				return true;
-			}
-			else
-			{
+			synchronized (LocationRequest.this) {
+				if (location == null) {
+					//gpsLocation = null;
+					handleLocation(false);
+					return true;
+				} else {
 
-				if (firstGpsLocation == null)
-					firstGpsLocation = location;
-				// consider it a live location if it has fluctuated
-				if (location.getLatitude() != firstGpsLocation.getLatitude() || location.getLongitude() != firstGpsLocation.getLongitude())
-				{
-					if (gpsStartTime + 5000 < System.currentTimeMillis() || finalAccuracy == firstAccuracy)
-						bLiveLocation = true;
-				}
-			}
-			if (location.getAccuracy() < firstAccuracy && bLiveLocation) // We'll settle for 400 for statistics
-			{
-				boolean bLocChanged = false;
-
-				gpsLocation = location;
-				if (statsLocation == null || Math.abs(statsLocation.getLatitude() - location.getLatitude()) > firstAccuracyDeg || Math.abs(statsLocation.getLongitude() - location.getLongitude()) > firstAccuracyDeg)
-				{
-					if (netLocation == null || gpsLocation.getAccuracy() < netLocation.getAccuracy())
-						bLocChanged = true;
-				}
-				if (bLastKnownLocation == true || bLocChanged == true || location.getAccuracy() < finalAccuracy) {
-					statsLocation = location;
-
-					bLastKnownLocation = false;
-					bLocationChanged = bLocChanged;
-					if (finalAccuracy < firstAccuracy)
-						bLocationChanged = true;
-					if (location.getAccuracy() < finalAccuracy && satellites > 0)
-						bFinalLocation = true;
-					boolean bNewLocation = false;
-					if (bLocChanged && bFirstNewLocation)
-					{
-						bNewLocation = true;
-						bFirstNewLocation = false;
-						bFirstLocation = true;
+					if (firstGpsLocation == null)
+						firstGpsLocation = location;
+					// consider it a live location if it has fluctuated
+					if (location.getLatitude() != firstGpsLocation.getLatitude() || location.getLongitude() != firstGpsLocation.getLongitude()) {
+						if (gpsStartTime + 5000 < System.currentTimeMillis() || finalAccuracy == firstAccuracy)
+							bLiveLocation = true;
 					}
-					else
-						bFirstLocation = false;
-					handleLocation (bNewLocation | bFinalLocation);
-					//if (mOnNewLocationListener != null)
-					//	mOnNewLocationListener.onLocation (LocationRequest.this);
-					// if (handler != null)
-					//	 handler.sendMessage(new Message ());
-					//return false;
 				}
+				if (location.getAccuracy() < firstAccuracy && bLiveLocation) // We'll settle for 400 for statistics
+				{
+					boolean bLocChanged = false;
+					lastGpsTime = System.currentTimeMillis();
 
-				//return true;
-				if (bFinalLocation) {
-					bGPSRunning = false;
-					LocationStopped(true);
-					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "GpsListenerForRequest.onLocationUpdate", "LocationStopped (true)");
-					return false;
+					gpsLocation = location;
+					if (statsLocation == null || Math.abs(statsLocation.getLatitude() - location.getLatitude()) > firstAccuracyDeg || Math.abs(statsLocation.getLongitude() - location.getLongitude()) > firstAccuracyDeg) {
+						if (netLocation == null || gpsLocation.getAccuracy() < netLocation.getAccuracy())
+							bLocChanged = true;
+					}
+					bLocationChanged = bLocChanged;
+					bLastKnownLocation = false;
+					if (bLastKnownLocation == true || bLocChanged == true || location.getAccuracy() < finalAccuracy) {
+						statsLocation = location;
+
+						if (finalAccuracy < firstAccuracy)
+							bLocationChanged = true;
+						if (location.getAccuracy() < finalAccuracy && satellites > 0)
+							bFinalLocation = true;
+						boolean bNewLocation = false;
+						if (bLocChanged && bFirstNewLocation) {
+							bNewLocation = true;
+							bFirstNewLocation = false;
+							bFirstLocation = true;
+						} else
+							bFirstLocation = false;
+						handleLocation(bNewLocation | bFinalLocation);
+						//if (mOnNewLocationListener != null)
+						//	mOnNewLocationListener.onLocation (LocationRequest.this);
+						// if (handler != null)
+						//	 handler.sendMessage(new Message ());
+						//return false;
+					}
+
+					//return true;
+					if (bFinalLocation) {
+						bGPSRunning = false;
+						LocationStopped(true);
+						LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "GpsListenerForRequest.onLocationUpdate", "LocationStopped (true)");
+						return false;
+					}
+					return true;
 				}
+				handleLocation(false);
 				return true;
 			}
-			handleLocation (false);
-			return true;
+
 		}
 
 		@Override
@@ -426,49 +438,53 @@ public class LocationRequest {
 		public boolean onLocationUpdate(Location location, int satellites) {
 			if (location == null)
 				return true;
-			boolean bLocChanged = false;
-			boolean bBetterThanLastLocation = false;
-			if (location.getAccuracy() < 50)
-				location.setAccuracy(51);
-			if (statsLocation == null || Math.abs(statsLocation.getLatitude() - location.getLatitude()) > firstAccuracyDeg || Math.abs(statsLocation.getLongitude() - location.getLongitude()) > firstAccuracyDeg)
-			{
-				if (bLastKnownLocation)
-				{
-					bLocChanged = true;
-					if (lastLocation == null || Math.abs(lastLocation.getLatitude() - location.getLatitude()) > location.getAccuracy() * 0.000005 * 2 || Math.abs(lastLocation.getLongitude() - location.getLongitude()) > location.getAccuracy() * 0.000005 * 2)
-						bBetterThanLastLocation = true;
-				}
-			}
-			netLocation = location;
-			if (location.getAccuracy() < finalAccuracy || bBetterThanLastLocation == true) // We'll settle for 400 for statistics
-			{
-				if (bLastKnownLocation == true || bLocChanged == true) {
-					statsLocation = location;
-					bLastKnownLocation = false;
-					bLocationChanged = bLocChanged;
-					if (bFirstNewLocation)
-					{
-						handleLocation(true);
-						bFirstNewLocation = false;
-						bFirstLocation = true;
+			synchronized (LocationRequest.this) {
+				boolean bLocChanged = false;
+				boolean bBetterThanLastLocation = false;
+				if (location.getAccuracy() < 50)
+					location.setAccuracy(51);
+				if (statsLocation == null || Math.abs(statsLocation.getLatitude() - location.getLatitude()) > firstAccuracyDeg || Math.abs(statsLocation.getLongitude() - location.getLongitude()) > firstAccuracyDeg) {
+					if (bLastKnownLocation) {
+						bLocChanged = true;
+						if (lastLocation == null || Math.abs(lastLocation.getLatitude() - location.getLatitude()) > location.getAccuracy() * 0.000005 * 2 || Math.abs(lastLocation.getLongitude() - location.getLongitude()) > location.getAccuracy() * 0.000005 * 2)
+							bBetterThanLastLocation = true;
 					}
-					else
-						bFirstLocation = false;
-
-					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "LocationListenerForRequest.onLocationUpdate", "LocationStopped (false)");
-					LocationStopped (false);
-					return false;
-					//if (mOnNewLocationListener != null)
-					//	mOnNewLocationListener.onLocation (LocationRequest.this);
-					//if (handler != null)
-					//	handler.sendMessage(new Message ());
-					//return false;
 				}
+				netLocation = location;
+				bLocationChanged = bLocChanged;
+				bLastKnownLocation = false;
+				if (location.getAccuracy() < finalAccuracy || bBetterThanLastLocation == true) // We'll settle for 400 for statistics
+				{
+
+					if (bLastKnownLocation == true || bLocChanged == true) {
+						statsLocation = location;
+						bLastKnownLocation = false;
+						bLocationChanged = bLocChanged;
+						if (bFirstNewLocation) {
+							handleLocation(true);
+							bFirstNewLocation = false;
+							bFirstLocation = true;
+						} else
+							bFirstLocation = false;
+
+						if (gpsTimeout > 0) {  // If timeout is indefinate, keep getting locations
+							LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "LocationListenerForRequest.onLocationUpdate", "LocationStopped (false)");
+							LocationStopped(false);
+							return false;
+						}
+						//if (mOnNewLocationListener != null)
+						//	mOnNewLocationListener.onLocation (LocationRequest.this);
+						//if (handler != null)
+						//	handler.sendMessage(new Message ());
+						//return false;
+					}
+				}
+
+				if (System.currentTimeMillis() - lastGpsTime > 10000)
+					handleLocation(false);
+				return true;
 			}
 
-			handleLocation (false);
-			return true;
-			//return true;
 		}
 
 		@Override
