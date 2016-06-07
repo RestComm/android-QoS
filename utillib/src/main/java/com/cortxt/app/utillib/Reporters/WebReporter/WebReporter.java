@@ -598,7 +598,8 @@ public class WebReporter  {
 		conn.setRequestProperty("MMCBrand", Global.getAppName(mContext));
 		conn.setRequestProperty("MMCVersion", Global.getString(mContext, "app_versionName"));
 
-		LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "authorizeDevice", url.toString());
+		LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "sendJSONPacket", url.toString());
+		//LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "sendJSONPacket json: ", jsonPacket);
 
 		//open
 		conn.connect();
@@ -789,7 +790,7 @@ public class WebReporter  {
         }
         return result.toString();
     }
-	private static String encode (final String content) {
+	public static String encode (final String content) {
         try {
             return URLEncoder.encode(content, "utf-8");
         } catch (UnsupportedEncodingException problem) {

@@ -129,142 +129,136 @@ public class EventUploader implements Runnable{
 		report (false, null); // report not local (to internet)
 	}
 	
-	public void report (boolean local, Location location) {	
-		//now create a list of eventData variables
-		List<EventData> eventDataList = new ArrayList<EventData>();
-		String strPhone = "";
-		long duration = 0;
-		
-	    
-		EventDataEnvelope eventDataEnvelope = null;
-		if (event != null)
-		{
-			// Dont send an unconfirmed Travel event
-			if (event.getEventType() == EventType.TRAVEL_CHECK && owner.getTravelDetector().isConfirmed() == false)
-			{
-				LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "report", "skip unconfirmed travel event");
-				return;
-			}
+	public void report (boolean local, Location location) {
+		try {
+			//now create a list of eventData variables
+			List<EventData> eventDataList = new ArrayList<EventData>();
+			String strPhone = "";
+			long duration = 0;
 
-			EventData eventData = generateEventDataFromEvent(event, local);
-			if (eventData == null)
-				return;
-			//MMCLogger.logToFile(MMCLogger.Level.DEBUG, TAG, "run", "reporting event type=" + event.getEventType() + ",lat:" + eventData.getFltEventLat() + ",local=" + local);
-			if ( eventData.getFltEventLat() == 0 && location != null)
-			{
-				eventData.setFltEventLat((float)location.getLatitude());
-				eventData.setFltEventLng((float)location.getLongitude());
-				eventData.setiUncertainty((int)location.getAccuracy());
-			}
-			eventData.setCallID(event.getLocalID());
-			EventData eventData2 = null;
-			eventDataList.add(eventData);
-			
-			if(event.getEventType() == EventType.APP_MONITORING && event.getDownloadSpeed() > 0 && event.getUploadSpeed() > 0) {
-				//App throughput was getting stored twice
-				boolean stored = PreferenceManager.getDefaultSharedPreferences(owner).getBoolean(PreferenceKeys.Miscellaneous.THROUGHPUT_STORED, false);
-				if(!stored) {
-					owner.getReportManager().storeEvent(eventData);
-					PreferenceManager.getDefaultSharedPreferences(owner).edit().putBoolean(PreferenceKeys.Miscellaneous.THROUGHPUT_STORED, true).commit();
+
+			EventDataEnvelope eventDataEnvelope = null;
+			if (event != null) {
+				// Dont send an unconfirmed Travel event
+				if (event.getEventType() == EventType.TRAVEL_CHECK && owner.getTravelDetector().isConfirmed() == false) {
+					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "report", "skip unconfirmed travel event");
+					return;
 				}
-				else
-					PreferenceManager.getDefaultSharedPreferences(owner).edit().putBoolean(PreferenceKeys.Miscellaneous.THROUGHPUT_STORED, false).commit();;
-			}
-			if (event.getEventType() == EventType.MAN_PLOTTING) {
-				eventData.setLookupid1(event.getBuildingID());
-				eventData.setRunningApps(event.getAppData());  // contains user's polyline
-			}
-			
-			// Event is 'reported' locally before GPS sampling is complete
-			// to make it show up on the map as soon as it gets a first fix
-			//if (local == true && ((event.getEventType() != EventType.MAN_SPEEDTEST && event.getEventType() != EventType.LATENCY_TEST && event.getEventType() != EventType.APP_MONITORING) || event.latency != 0))
-			if (local == true && (event.getEventType().waitsForSpeed() == false || event.getLatency() != 0))
+
+				EventData eventData = generateEventDataFromEvent(event, local);
+				if (eventData == null)
+					return;
+				//MMCLogger.logToFile(MMCLogger.Level.DEBUG, TAG, "run", "reporting event type=" + event.getEventType() + ",lat:" + eventData.getFltEventLat() + ",local=" + local);
+				if (eventData.getFltEventLat() == 0 && location != null) {
+					eventData.setFltEventLat((float) location.getLatitude());
+					eventData.setFltEventLng((float) location.getLongitude());
+					eventData.setiUncertainty((int) location.getAccuracy());
+				}
+				eventData.setCallID(event.getLocalID());
+				EventData eventData2 = null;
+				eventDataList.add(eventData);
+
+				if (event.getEventType() == EventType.APP_MONITORING && event.getDownloadSpeed() > 0 && event.getUploadSpeed() > 0) {
+					//App throughput was getting stored twice
+					boolean stored = PreferenceManager.getDefaultSharedPreferences(owner).getBoolean(PreferenceKeys.Miscellaneous.THROUGHPUT_STORED, false);
+					if (!stored) {
+						owner.getReportManager().storeEvent(eventData);
+						PreferenceManager.getDefaultSharedPreferences(owner).edit().putBoolean(PreferenceKeys.Miscellaneous.THROUGHPUT_STORED, true).commit();
+					} else
+						PreferenceManager.getDefaultSharedPreferences(owner).edit().putBoolean(PreferenceKeys.Miscellaneous.THROUGHPUT_STORED, false).commit();
+					;
+				}
+				if (event.getEventType() == EventType.MAN_PLOTTING) {
+					eventData.setLookupid1(event.getBuildingID());
+					eventData.setRunningApps(event.getAppData());  // contains user's polyline
+				}
+
+				// Event is 'reported' locally before GPS sampling is complete
+				// to make it show up on the map as soon as it gets a first fix
+				//if (local == true && ((event.getEventType() != EventType.MAN_SPEEDTEST && event.getEventType() != EventType.LATENCY_TEST && event.getEventType() != EventType.APP_MONITORING) || event.latency != 0))
+				if (local == true && (event.getEventType().waitsForSpeed() == false || event.getLatency() != 0))
 				//	(local == false && event.getEventType() == EventType.MAN_SPEEDTEST))  // but for speedtest, wait until complete
-			{
-				if (event.getLocalID() > 0 && eventData.getFltEventLng() != 0)
 				{
-					owner.getReportManager().updateEventField (event.getLocalID(), Events.KEY_LATITUDE, String.valueOf(eventData.getFltEventLat()));
-					owner.getReportManager().updateEventField (event.getLocalID(), Events.KEY_LONGITUDE, String.valueOf(eventData.getFltEventLng()));
-				}
-				else if (event.getLocalID() == 0 )
-				{
-					int evtID = owner.getReportManager().storeEvent(eventData); // .reportEvent (eventData, event, local, location);
-					event.setLocalID (evtID);
-					eventData.setCallID(evtID);
-				}
-				if (complimentaryEvent != null)
-				{
-					if (complimentaryEvent.getLocalID() > 0 && location != null)
-					{
-						owner.getReportManager().updateEventField (complimentaryEvent.getLocalID(), Events.KEY_LATITUDE, String.valueOf(location.getLatitude()));
-						owner.getReportManager().updateEventField (complimentaryEvent.getLocalID(), Events.KEY_LONGITUDE, String.valueOf(location.getLongitude()));
+					if (event.getLocalID() > 0 && eventData.getFltEventLng() != 0) {
+						owner.getReportManager().updateEventField(event.getLocalID(), Events.KEY_LATITUDE, String.valueOf(eventData.getFltEventLat()));
+						owner.getReportManager().updateEventField(event.getLocalID(), Events.KEY_LONGITUDE, String.valueOf(eventData.getFltEventLng()));
+					} else if (event.getLocalID() == 0) {
+						int evtID = owner.getReportManager().storeEvent(eventData); // .reportEvent (eventData, event, local, location);
+						event.setLocalID(evtID);
+						eventData.setCallID(evtID);
 					}
-					else if (complimentaryEvent.getLocalID() == 0)
-					{
-						int evtID = owner.getReportManager().storeEvent(eventData); //(eventData2, complimentaryEvent, local, location);
-						complimentaryEvent.setLocalID (evtID);
+					if (complimentaryEvent != null) {
+						if (complimentaryEvent.getLocalID() > 0 && location != null) {
+							owner.getReportManager().updateEventField(complimentaryEvent.getLocalID(), Events.KEY_LATITUDE, String.valueOf(location.getLatitude()));
+							owner.getReportManager().updateEventField(complimentaryEvent.getLocalID(), Events.KEY_LONGITUDE, String.valueOf(location.getLongitude()));
+						} else if (complimentaryEvent.getLocalID() == 0) {
+							int evtID = owner.getReportManager().storeEvent(eventData); //(eventData2, complimentaryEvent, local, location);
+							complimentaryEvent.setLocalID(evtID);
+						}
 					}
 				}
-			}
-			if (local)
-				return;
-			
-			//if the complimentary event is not null, then this event must be 
-			//the "starting end" of an event couple. If so, then this event should
-			//be uploaded alongside the main event
-			if (complimentaryEvent != null && local == false)
-			{
-				eventData2 = generateEventDataFromEvent(complimentaryEvent, local);
-				if (eventData2 != null)
-				{
-					//complimentaryEvent.setFlag (EventObj.SERVER_SENDING, true);
-					eventData2.setCallID(complimentaryEvent.getLocalID());
-					eventDataList.add(eventData2);
+				if (local)
+					return;
+
+				//if the complimentary event is not null, then this event must be
+				//the "starting end" of an event couple. If so, then this event should
+				//be uploaded alongside the main event
+				if (complimentaryEvent != null && local == false) {
+					eventData2 = generateEventDataFromEvent(complimentaryEvent, local);
+					if (eventData2 != null) {
+						//complimentaryEvent.setFlag (EventObj.SERVER_SENDING, true);
+						eventData2.setCallID(complimentaryEvent.getLocalID());
+						eventDataList.add(eventData2);
+					}
+				}
+				//now create the eventDataEnvelope to wrap the list of eventData variables
+				//along with other required variables
+				String phoneNumFirst4 = "";
+				if (strPhone != null && strPhone.length() > 4)
+					phoneNumFirst4 = strPhone.substring(0, 4);
+
+
+				eventDataEnvelope = generateEventDataEnvFromEventList(eventDataList, phoneNumFirst4);
+				// when event is filled in, travel and fillin would like to see it before sending
+				if (owner.isServiceRunning() && owner.getTravelDetector() != null)
+					owner.getTravelDetector().eventCompleted(event);
+			} else  // null event create dummy event envelope to trigger sending the event queue (without adding a new event)
+				eventDataEnvelope = new EventDataEnvelope();
+
+			boolean bSent = false, bFromQueue = false, bAddedQueue = false;
+			loadEventsQueue();  // only loads if queue hasn't loaded yet (ensure loaded)
+			ConcurrentLinkedQueue<EventDataEnvelope> eventQueue = owner.getEventManager().getEventQueue();
+
+			// Send this event and any other events that were in the queue, as long as it didn't fail to send
+			while (eventDataEnvelope != null) {
+				bSent = uploadEventEnvelope(eventDataEnvelope, bFromQueue);  // as long as event was sent to server, it sent (even if server had an error)
+				if (!bSent) {
+					//if (!bFromQueue)
+					{
+						bAddedQueue = true;
+						eventQueue.add(eventDataEnvelope);
+						while (eventQueue.size() > 200)
+							eventQueue.poll();
+					}
+					break;
+				} else {
+					eventDataEnvelope = eventQueue.poll();
+					bFromQueue = true;
 				}
 			}
-			//now create the eventDataEnvelope to wrap the list of eventData variables
-			//along with other required variables
-			String phoneNumFirst4 = "";
-			if (strPhone != null && strPhone.length() > 4)
-				phoneNumFirst4 = strPhone.substring(0,4);
-			
-			
-			eventDataEnvelope = generateEventDataEnvFromEventList(eventDataList, phoneNumFirst4);
-			// when event is filled in, travel and fillin would like to see it before sending
-			if (owner.isServiceRunning() && owner.getTravelDetector() != null)
-				owner.getTravelDetector().eventCompleted (event);
+			// persist the queue every 3 hrs in case something happens
+			if (event != null && (event.isCheckin || bAddedQueue))
+				saveEvents(eventQueue);
 		}
-		else  // null event create dummy event envelope to trigger sending the event queue (without adding a new event)
-			eventDataEnvelope = new EventDataEnvelope ();
-		
-		boolean bSent = false,bFromQueue =false, bAddedQueue = false;
-		loadEventsQueue();  // only loads if queue hasn't loaded yet (ensure loaded)
-		ConcurrentLinkedQueue<EventDataEnvelope> eventQueue = owner.getEventManager().getEventQueue();
-		
-		// Send this event and any other events that were in the queue, as long as it didn't fail to send
- 		while (eventDataEnvelope != null)
+		finally
 		{
-			bSent = uploadEventEnvelope (eventDataEnvelope, bFromQueue);  // as long as event was sent to server, it sent (even if server had an error)
-			if (!bSent)
-			{	
-				//if (!bFromQueue)
-				{
-					bAddedQueue = true;
-					eventQueue.add (eventDataEnvelope);
-					while (eventQueue.size() > 200)
-						eventQueue.poll();
-				}
-				break;
-			}
-			else
+			if (!local)
 			{
-				eventDataEnvelope = eventQueue.poll();
-				bFromQueue = true;
+				//LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "report(false)", "uploadingEvent(false)");
+				owner.uploadingEvent(false);
+
 			}
-		} 
-		// persist the queue every 3 hrs in case something happens
-		if (event != null && (event.isCheckin || bAddedQueue))
- 			saveEvents(eventQueue);
+		}
 	}
 	
 	/*

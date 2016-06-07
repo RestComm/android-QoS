@@ -343,7 +343,7 @@ public class MainService extends Service {
 
 	public void restartNextIdle ()
 	{
-		if (mmcActive == false)
+		if (mmcActive == false && uploadEventCount <= 0)
 			restartSelf ();
 		else
 			bRestartNextIdle = true;
@@ -883,6 +883,30 @@ public class MainService extends Service {
 			return true;
 		return false;
 	}
+
+	private int uploadEventCount = 0;
+	// keep reference count of events being uploaded, so service can't stop while uploading
+	public void uploadingEvent (boolean increment)
+	{
+		if (increment)
+			uploadEventCount ++;
+		else {
+			if (uploadEventCount > 0)
+				uploadEventCount--;
+			else
+				LoggerUtil.logToFile(LoggerUtil.Level.WTF, TAG, "uploadingEvent", "DECREMENT with count = " + uploadEventCount);
+			if (uploadEventCount <= 0) {
+				if (bRestartNextIdle == true && !getTravelDetector().isTravelling() && mmcActive == false) {
+					bRestartNextIdle = false;
+					restartSelf();
+				}
+			}
+		}
+	}
+	public int getUploadCount ()
+	{
+		return uploadEventCount;
+	}
 	/**
 	 * Put the service in Idle state, after evenru event has finished recording samples
 	 */
@@ -917,10 +941,10 @@ public class MainService extends Service {
 				}
 				netLocationManager.unregisterAllListeners();
 		   	 	gpsManager.unregisterAllListeners();
-				if (bRestartNextIdle == true && !getTravelDetector().isTravelling())
+				if (bRestartNextIdle == true && !getTravelDetector().isTravelling() && uploadEventCount <= 0)
 		   	 	{
-		   	 		bRestartNextIdle = false;
-		   	 		restartSelf ();
+					bRestartNextIdle = false;
+						restartSelf();
 		   	 	}
 				closeSvcPanel();
 				getPhoneStateListener().closedServicePanel = false; // allow panel to be opened again next time

@@ -1041,6 +1041,11 @@
     <string name="VQ_WaitForScore">Waiting for VQ Score</string>
     <string name="VQ_Recording">Recording Call</string>
     <string name="VQ_ScoreFailed">Unable to process VQ</string>
+    <string name="VQ_FileStale">Fresh voice recording file was not found.</string>
+    <string name="VQ_beastInstalled_title">Enable Bold Beast call recorder</string>
+    <string name="VQ_beastInstalled_message"><![CDATA[This version of Android no longer allows call recording.<br></br>VQ tests can use your Boldbeast call recorder. <br></br>Setup the following in Boldbeast Call Settings: <br></br><br></br>Auto record calls (Testing mode)<br></br>Outgoing calls / Auto Detect Max Time 5 seconds <br></br><br></br>Do you want to enable the Boldbeast method for VQ?]]></string>
+    <string name="VQ_noBeastInstalled_title">Install Bold Beast call recorder</string>
+    <string name="VQ_noBeastInstalled_message"><![CDATA[This version of Android no longer allows call recording.<br></br> However VQ tests can use <a href="https://play.google.com/store/apps/details?id=com.boldbeast.recorder">Boldbeast</a> call recorder to capture the recording for the tests.<br></br> Please Install and we will provide a few setup steps.]]></string>
 
     <string name="SettingsVQ_Useexternal">Use External Recording Device</string>
     <string name="SettingsVQ_Encoder">Audio Encoder</string>

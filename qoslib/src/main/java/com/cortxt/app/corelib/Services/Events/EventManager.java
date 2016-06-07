@@ -29,6 +29,7 @@ import com.cortxt.app.utillib.DataObjects.EventCouple;
 import com.cortxt.app.utillib.DataObjects.EventObj;
 import com.cortxt.app.utillib.DataObjects.EventTypeGenre;
 import com.cortxt.app.utillib.DataObjects.PhoneState;
+import com.cortxt.app.utillib.Reporters.ReportManager;
 import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.GpsListener;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
@@ -391,7 +392,7 @@ public class EventManager {
 								eventType == EventType.EVT_DROP || eventType == EventType.EVT_CALLFAIL || eventType == EventType.MAN_SPEEDTEST ||
 								eventType == EventType.SIP_DROP || eventType == EventType.SIP_CALLFAIL ||
 								eventType == EventType.SMS_TEST || eventType == EventType.APP_MONITORING || eventType == EventType.VIDEO_TEST || eventType == EventType.YOUTUBE_TEST
-								|| eventType == EventType.AUDIO_TEST || eventType == EventType.WEBPAGE_TEST)
+								|| eventType == EventType.AUDIO_TEST || eventType == EventType.WEBPAGE_TEST || eventType == EventType.EVT_VQ_CALL)
 							reason = eventType.getEventString(context);
 						else if (eventType == EventType.MAN_TRACKING)
 							reason = EventType.MAN_TRACKING.getEventString(context);// getString(R.string.Gene"recording";
@@ -545,6 +546,9 @@ public class EventManager {
 				event.setFlag (EventObj.SERVICE_WIFI, true);
 			else if (activeConnection == 11)
 				event.setFlag (EventObj.SERVICE_WIMAX, true);
+			ReportManager reportManager = ReportManager.getInstance(context);
+			if (reportManager.manualPlottingEvent != null)
+				event.setFlag (EventObj.MANUAL_SAMPLES, true);
 			
 			if (datastate == TelephonyManager.DATA_CONNECTED || activeConnection > 1)
 				event.setFlag (EventObj.SERVICE_DATA, true);
@@ -818,10 +822,11 @@ public class EventManager {
 				event.setFlag (EventObj.SERVER_READY, true);
 				MainService.getGpsManager().unregisterListener(event.gpsListener);
 				// dont upload an event if in roaming
+
 				final EventUploader uploader = new EventUploader(event, complimentaryEvent, context, false);
 				if (uploader.event != null)
 				{
-					
+					context.uploadingEvent (true);
 					if (context.isServiceRunning())
 					{
 						new Thread((Runnable)uploader, EventUploader.class.getSimpleName()).start();
@@ -910,6 +915,7 @@ public class EventManager {
 		// run an event uploader thread with a null event
 		// this will simply check the queue and send any events now eligable to be sent
 		EventUploader uploader = new EventUploader(null, null, context, false);
+		context.uploadingEvent(true);
 		uploadTimer.schedule(new UploadTimerTask(uploader), 20000);
 	}
 

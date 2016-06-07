@@ -33,11 +33,14 @@ import android.telephony.TelephonyManager;
 import com.cortxt.app.corelib.MainService;
 import com.cortxt.app.corelib.R;
 import com.cortxt.app.utillib.ContentProvider.TablesEnum;
+import com.cortxt.app.utillib.DataObjects.DeviceInfo;
+import com.cortxt.app.utillib.DataObjects.EventObj;
 import com.cortxt.app.utillib.DataObjects.EventType;
 import com.cortxt.app.utillib.DataObjects.PhoneState;
 import com.cortxt.app.utillib.Reporters.ReportManager;
 import com.cortxt.app.utillib.Reporters.WebReporter.WebReporter;
 import com.cortxt.app.utillib.Utils.CommonIntentActionsOld;
+import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 import com.cortxt.app.utillib.Utils.PreciseCallCodes;
 import com.cortxt.app.utillib.Utils.PreferenceKeys;
@@ -624,16 +627,18 @@ public class IntentHandler extends BroadcastReceiver {
 			reportManager.manualPlottingEvent = owner.getEventManager().triggerSingletonEvent(EventType.MAN_PLOTTING);
 			reportManager.manualPlottingEvent.setEventIndex(floor);
 			reportManager.manualPlottingEvent.setDuration(topFloor);
-			reportManager.manualPlottingEvent.setBuildingID (osm_id);
+			reportManager.manualPlottingEvent.setBuildingID(osm_id);
 			reportManager.manualPlottingEvent.setAppData(poly);
 			Location location = new Location("");	
-			location.setLatitude(lat/1000000.0);
-			location.setLongitude(lng/1000000.0);
+			location.setLatitude(lat / 1000000.0);
+			location.setLongitude(lng / 1000000.0);
 			location.setAccuracy(-1);
 
 			reportManager.manualPlottingEvent.setLocation(location, 0);
+			presetEventId (reportManager.manualPlottingEvent);  // reserve an EventID for this manual sampling event, to be used for Share links
 		}
 		else if(action.equals(MANUAL_PLOTTING_END)) {
+			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "onReceive", "MANUAL_PLOTTING_END");
 //			owner.getEventManager().unstageEvent(manulaPlottingEvent); //does not upload
 			if(reportManager.manualPlottingEvent != null)
 				owner.getEventManager().unstageAndUploadEvent(reportManager.manualPlottingEvent, null);
@@ -643,9 +648,6 @@ public class IntentHandler extends BroadcastReceiver {
 		else if(action.equals(MANUAL_PLOTTING_CANCEL)) {
 			if(reportManager.manualPlottingEvent != null)
 			{
-				owner.getEventManager().unstageEvent(reportManager.manualPlottingEvent);
-				ReportManager reportManager = ReportManager.getInstance(owner);
-				
 				reportManager.getDBProvider().delete(TablesEnum.LOCATIONS.getContentUri(), "timestamp > ? And accuracy < 0", new String[]{ String.valueOf(reportManager.manualPlottingEvent.getEventTimestamp())});
 				reportManager.manualPlottingEvent = null;
 				
@@ -1158,5 +1160,30 @@ public class IntentHandler extends BroadcastReceiver {
 						}
 					}
 				}).start();
+	}
+
+	// Reserve an event ID to use for the event, so we can use it for share-links
+	public void presetEventId(final EventObj event)
+	{
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					String master_url = owner.getString(R.string.MMC_URL_SPEED);
+					String apikey = Global.getApiKey(owner);
+					String master_complete_url = master_url + "/choose?apiKey=" + apikey;
+					master_complete_url += "&ipv4=" + DeviceInfo.getIPAddress();
+					String responseString = WebReporter.getHttpURLResponse(master_complete_url, true);
+					//complete URL
+					JSONObject json = new JSONObject(responseString);
+					String eventId = json.getString("eventid");
+					Long eventid = Long.valueOf(eventId);
+					event.setEventId (eventid);
+				} catch (Exception ex) {
+					LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "presetEventId", "exception", ex);
+
+				}
+			}
+		}).start();
 	}
 }

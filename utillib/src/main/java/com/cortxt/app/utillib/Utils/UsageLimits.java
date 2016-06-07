@@ -197,6 +197,7 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
         // These type of events will always invoke the GPS
         if (eventType == EventType.EVT_DROP || eventType == EventType.EVT_CALLFAIL || eventType == EventType.MAN_PLOTTING || eventType == EventType.TRAVEL_CHECK || eventType == EventType.EVT_FILLIN ||
                 eventType == EventType.MAN_SPEEDTEST || eventType == EventType.MAN_TRACKING || eventType == EventType.COV_UPDATE || eventType == EventType.MAN_TRANSIT ||
+				eventType == EventType.EVT_VQ_CALL || eventType == EventType.SIP_VQ_CALL || eventType == EventType.YOUTUBE_TEST ||
                 eventType == EventType.VIDEO_TEST || eventType == EventType.CONNECTION_FAILED || eventType == EventType.WEBPAGE_TEST || eventType == EventType.AUDIO_TEST || eventType == EventType.SMS_TEST)
 		{
 			if (increment == true)

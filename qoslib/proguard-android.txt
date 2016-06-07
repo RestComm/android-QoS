@@ -35,6 +35,8 @@
   *;
 }
 
+
+
 -keepclassmembers class * extends android.content.Context {
 public void *(android.view.View);
   public void *(android.view.MenuItem);

@@ -75,22 +75,30 @@ public class QosInfo {
     public int Band, Channel;
     public int MCC, MNC;
 
-    public CDMAInfo CDMAInfo;
     /**
-     * Specific information about the LTE network if LTE is active, otherwise this object is null
+     * Specific information about the CDMA network if CDMA is active, otherwise this object is null
      */
-    public GSMInfo GSMInfo;
+    public CDMAInfo CDMAInfo;
+
     /**
      * Specific information about the 2G GSM network such as GPRS or EDGE if 2G active, otherwise this object is null
      */
-    public WCDMAInfo WCDMAInfo;
+    public GSMInfo GSMInfo;
+
     /**
      * Specific information about the 3G WCDMA network such as UMTS or HSPA if 3G active, otherwise this object is null
      */
-    public LTEInfo LTEInfo;
+    public WCDMAInfo WCDMAInfo;
+
     /**
      * Specific information about the LTE network if LTE is active, otherwise this object is null
      */
+    public LTEInfo LTEInfo;
+
+    /**
+     * Specific information about the WiFi network if WiFi is active, otherwise this object is null
+     */
+
     public WIFIInfo WiFiInfo;
     /**
      * The connectedNetwork represents the network that is currently connected, whether it be LTE, WiFi etc..
@@ -154,7 +162,7 @@ public class QosInfo {
          * the text is composed of the signalLabel and, optionally, the value, rating and units
          * @param withValue  to include the dBm value of the signal  {@link int getSignal ()} and its units {@link String getSignalUnits ()}
          * @param withRating to include the rating of the signal {@link int getSignalRating ()}
-         * @return
+         * @return the full text description
          */
         public String getSignalDetails (boolean withValue, boolean withRating) {
             if (getSignalLabel() == "")
@@ -173,6 +181,7 @@ public class QosInfo {
 
         /**
          * Get the name of the type of signal for the connected network
+         * the label, units and ranges are defined in the constructor for each derived class
          * @return the name of the relevent type of signal (RSSI, RSRP etc)
          */
         public String getSignalLabel () { return sigLabel; }
@@ -194,10 +203,10 @@ public class QosInfo {
         /**
          * Get the value of the signal that gives excellent performance, expected near the tower
          * Values above excellent are rated as 5 bars
-         * depends on network type, RSRP -85 dBm is 'excellent' for LTE
+         * set for each derived network type, RSRP -85 dBm is 'excellent' for LTE
          * @return the excellent signal value
          */
-        public int getSignalRangeExcellent () { return sigMax; }
+        public int getSignalRangeExcellent () { return sigExcellent; }
         /**
          * Get a short documentation of the relevent type of signal for the network
          * @return the description document
@@ -238,6 +247,14 @@ public class QosInfo {
             return rating;
 
         }
+
+        /**
+         * getQualityDetails returns a text description of the main noise/quality indicator, if available, for the connected network
+         * the text is composed of the qualityLabel and, optionally, the value, rating and units
+         * @param withValue  to include the value of the quality indicator  {@link int getQuality ()} and its units {@link String getQualityUnits ()}
+         * @param withRating to include the rating of the quality indicator {@link int getQualityRating ()}
+         * @return
+         */
         public String getQualityDetails (boolean withValue, boolean withRating) {
             if (getQualityLabel() == "")
                 return "";
@@ -254,13 +271,47 @@ public class QosInfo {
 
             return details;
         }
+        /**
+         * Get the name of the type of quality/noise indicator the connected network
+         * the label, units and ranges are defined in the constructor for each derived class
+         * @return the name of the indicator for the connected network (Ec/i0, SNR etc)
+         */
         public String getQualityLabel () { return noiseLabel; }
+        /**
+         * Get the unit for the type of quality/noise indicator for the connected network
+         * @return the unit for the connected network (may be unitless and return a blank string)
+         */
         public String getQualityUnits () { return noiseUnits; }
+        /**
+         * Get the minimum value of the range for the main quality/noise indicator
+         * @return the minimum value (usually -30 for Ec/i0 or -10 for SNR)
+         */
         public int getQualityRangeMin () { return noiseMin; }
+        /**
+         * Get the maximum value of the range for the main quality/noise indicator
+         * @return the maximum signal value (usually -40 dBm)
+         */
         public int getQualityRangeMax () { return noiseMax; }
+        /**
+         * Get the value of the main quality/noise indicator that gives excellent performance, expected near the tower
+         * Values above excellent are rated as 5 bars
+         * set for each derived network type, SNR 20 dBm is 'excellent' for LTE
+         * @return the excellent signal value
+         */
+        public int getQualityRangeExcellent () { return sigMax; }
+        /**
+         * Get a short documentation of the relevent type of signal for the network
+         * @return the description document
+         */
         public String getQualityDoc () { return noiseDoc; }
 
-
+        /**
+         * getIdentifier returns a text description of the Base Station's full Identifier
+         * For example a full 3G cell identifier consists of LAN,RNC,CellID and PSC
+         * Each derived Network type defines an array of labels, values and doc descriptions to represent
+         * all the components to be appended for getIdentifier
+         * @return the full text description to indentify the current base station
+         */
         public String getIdentifier ()
         {
             String identifiers = "";
@@ -279,11 +330,33 @@ public class QosInfo {
             }
             return identifiers;
         }
+        /**
+         * Get the array of names of the Identifier parts defined for the current Network type
+         * @return the array of labels
+         */
         public String[] getIdentifierLabels () { return identifierLabels; };
+        /**
+         * Get the array of values for the Identifier parts defined for the current Network type
+         * @return the array of values
+         */
         public long[] getIdentifierValues (){ return identifierValues; };
+        /**
+         * Get the array of docs for the Identifier parts defined for the current Network type
+         * @return the array of values
+         */
         public String[] getIdentifierDocs (){ return identifierDocs; };
 
+        /**
+         * Get the name of the type of network
+         * @return the type of network
+         */
         public String getType () { return networkType; }
+
+        /**
+         * Get the type of technology for the connected network
+         * @return the type of network
+         */
+        public String getTechnology () { return Data; }
     }
 
     /**
@@ -300,7 +373,10 @@ public class QosInfo {
     public class CDMAInfo extends NetworkInfo
     {
         public int BID = 0, SID = 0, NID = 0, RSSI = 0, ECIO = 0, SNR = 0;
-        public CDMAInfo (QosInfo qos)
+        /**
+         * Initialize all the special labels, units, value ranges appropriate for the CDMA type of network
+        */
+         public CDMAInfo (QosInfo qos)
         {
             SID = qos.SID;
             BID = qos.BID;
@@ -360,6 +436,9 @@ public class QosInfo {
         public int LAC = 0, RNC = 0, CellID = 0, PSC = 0;
         public int RSCP = 0, ECIO = 0;
 
+        /**
+         * Initialize all the special labels, units, value ranges appropriate for the 2G GSM type of network
+         */
         public GSMInfo(QosInfo qos)
         {
             LAC = qos.LAC;
@@ -417,6 +496,9 @@ public class QosInfo {
         public int LAC = 0, RNC = 0, CellID = 0, PSC = 0;
         public int RSCP = 0, ECIO = 0;
 
+        /**
+         * Initialize all the special labels, units, value ranges appropriate for the 3G WCDMA type of network
+         */
         public WCDMAInfo(QosInfo qos)
         {
             LAC = qos.LAC;
@@ -469,6 +551,20 @@ public class QosInfo {
         }
     }
 
+    /**
+     * LTEInfo exposes information relevant to LTE Networks
+     * <ul>
+     * <li>RSSI
+     * <li>RSRP (main signal indicator)
+     * <li>RSRQ
+     * <li>SNR (main quality indicator)
+     * <li>Base Station Identifiers
+     * <li>Tac
+     * <li>Ci
+     * <li>Pci
+     * <li>SNR
+     * </ul>
+     */
     public class LTEInfo extends NetworkInfo
     {
         public int RSSI, RSRP, RSRQ;
@@ -476,6 +572,9 @@ public class QosInfo {
         public int Tac, Pci, Ci;
         public String LTEIdentity;
 
+        /**
+         * Initialize all the special labels, units, value ranges appropriate for the LTE type of network
+         */
         public LTEInfo (QosInfo qos)
         {
             RSSI = qos.LTE_RSSI;
@@ -547,12 +646,24 @@ public class QosInfo {
         }
     }
 
+    /**
+     * WIFIInfo exposes information relevant to WiFi Networks
+     * <ul>
+     * <li>RSSI (main signal indicator)
+     * <li>(no quality indicator)
+     * <li>Base Station Identifiers
+     * <li>WifiID
+     * </ul>
+     */
     public class WIFIInfo extends NetworkInfo
     {
         public int RSSI = 0;
         public int Frequency = 0;
         public long WifiID = 0;
 
+        /**
+         * Initialize all the special labels, units, value ranges appropriate for the WiFi type of network
+         */
         public WIFIInfo (QosInfo qos)
         {
             RSSI = qos.WifiSig;
@@ -585,7 +696,9 @@ public class QosInfo {
 
 
     /**
-     * This method updates the percentometer using the cursor given. It is assumed that the cursor includes either the
+     * Called Internally to initialize all of the current measurements for every type of connected newtork
+     * This is like a snapshot of everything at this moment in time
+     * The information comes from various sources and it mainly fetched from the database for this call, or from APIs such as WiFi
      */
     private void updateFromDB() {
         Cursor sig_cursor = null;
@@ -848,7 +961,7 @@ public class QosInfo {
         }
     }
 
-    public WifiInfo getWifiInfo ()
+    private WifiInfo getWifiInfo ()
     {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
@@ -857,7 +970,7 @@ public class QosInfo {
     }
 
 
-    public WifiConfiguration getWifiConfig ()
+    private WifiConfiguration getWifiConfig ()
     {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
@@ -879,7 +992,7 @@ public class QosInfo {
         }
         return null;
     }
-    public void setWifi(WifiInfo wifiInfo, WifiConfiguration wifiConfig) {
+    private void setWifi(WifiInfo wifiInfo, WifiConfiguration wifiConfig) {
         if (wifiInfo == null || wifiConfig == null)
             return;
 
@@ -920,7 +1033,7 @@ public class QosInfo {
         WifiSig = sig;
     }
 
-    private static int getWifiFrequency (WifiInfo wifiInfo)
+    public static int getWifiFrequency (WifiInfo wifiInfo)
     {
         int returnValue = -1;
         try {
@@ -935,21 +1048,31 @@ public class QosInfo {
 
     }
 
+    /*
+    * Get the data connection state as a name
+    * (connected, disconnected etc)
+    * returns string name
+    */
     public String getStateName (int state)
     {
         switch (state)
         {
             case TelephonyManager.DATA_CONNECTED:
-                return "conn";
+                return "connected";
             case TelephonyManager.DATA_CONNECTING:
                 return "connecting";
             case TelephonyManager.DATA_DISCONNECTED:
-                return "disconnect";
+                return "disconnected";
             case TelephonyManager.DATA_SUSPENDED:
                 return "suspended";
         }
         return "-";
     }
+    /*
+    * Get the current state of data activity as a name, that is whether data is actively sending, receiving
+    * (send, recv, send recv, dormant, etc)
+    * returns string name
+    */
     public String getActivityName (int activity)
     {
         switch (activity)
@@ -969,6 +1092,11 @@ public class QosInfo {
         return "U";
     }
 
+    /*
+    * Get the cellular service state as a name
+    * (in service, no service, etc)
+    * returns string name
+     */
     public String getServiceStateName (int state)
     {
         String name = "";
@@ -983,15 +1111,15 @@ public class QosInfo {
         switch (state)
         {
             case ServiceState.STATE_OUT_OF_SERVICE:
-                name += "(no svc)"; break;
+                name += "no service"; break;
             case ServiceState.STATE_EMERGENCY_ONLY:
-                name += "(911 only)"; break;
+                name += "911 only"; break;
             case PhoneState.SERVICE_STATE_AIRPLANE:
-                name += "(airplane)"; break;
+                name += "airplane"; break;
             case ServiceState.STATE_IN_SERVICE:
-                name += "(in svc)"; break;
+                name += "in service"; break;
             case ServiceState.STATE_POWER_OFF:
-                name += "(power off)"; break;
+                name += "power off"; break;
         }
         return name;
     }

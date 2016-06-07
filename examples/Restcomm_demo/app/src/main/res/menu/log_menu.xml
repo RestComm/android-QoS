@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" tools:context=".QosLog">
+  <item android:title="Send log" android:id="@+id/Developer_Menu_SendLogEmail"
+      android:orderInCategory="100" app:showAsAction="never"></item>
+  <item android:title="Clear log" android:id="@+id/Developer_Menu_ClearLog"
+      android:orderInCategory="101" app:showAsAction="never"></item>
+</menu>

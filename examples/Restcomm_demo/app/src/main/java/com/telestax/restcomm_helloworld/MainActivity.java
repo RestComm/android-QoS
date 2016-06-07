@@ -204,6 +204,12 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
             return true;
         }
 
+        if (id == R.id.action_qoslog) {
+            Intent intent = new Intent (this, QosLog.class);
+            startActivity (intent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -261,7 +267,8 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
             PreferenceManager.getDefaultSharedPreferences(this).edit().putString("PREF_PWD", editPwd.getText().toString()).commit();
 
             // If user setting changed, register with the QoS server
-            QosAPI.setLogin(this, editUser.getText().toString());
+            String login = editUser.getText().toString() + "@" + editServer.getText().toString();
+            QosAPI.setLogin(this, login);
 
             params = new HashMap<String, Object>();
             // CHANGEME: update the IP address to your Restcomm instance
