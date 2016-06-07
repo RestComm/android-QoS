@@ -1069,9 +1069,9 @@ public class QosInfo {
         return "-";
     }
     /*
-    * Get the current state of data activity as a name, that is whether data is actively sending, receiving
+    * Get the current state of data activity, whether data is actively sending, receiving, etc
     * (send, recv, send recv, dormant, etc)
-    * returns string name
+    * returns string to describe activity
     */
     public String getActivityName (int activity)
     {
@@ -1157,6 +1157,10 @@ public class QosInfo {
         return signal;
     }
 
+    /**
+     * List the high level information about the Carrier Network such as the Carrier name, MCC and MNC
+     * @return a String describing the QosInfo object
+     */
     @Override
     public String toString () {
         String str =  "Carrier: " + Carrier + "\n";
@@ -1167,7 +1171,9 @@ public class QosInfo {
         if (Channel > 0)
             str +=  "Channel: " + Channel + "\n";
         if (location != null)
-            str += "location: " + location.toString();
+            str += "location: " + location.toString() + "\n";
+        if (connectedNetwork != null)
+            str +=  "\n" + "Connected Network:\n" + connectedNetwork.toString ();
         return str;
     }
 

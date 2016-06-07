@@ -361,14 +361,14 @@ public class QosAPI {
     }
 
     /**
-     * Request all of the Network data the service has obtained
-     * It is like a snapshot of all current or last known Network, Cell, Signal and Location data
+     * Request a snapshot of all of the Network data the service has obtained
+     * Network, Cell, Signal and Location data
      * The first call to this may not have up-to-date signal data, but it will begin listening so that subsequent calls will be up-to-date
      * The information will already be up to date during or just after a phone call, active test, or coverage sampling
-     * It can be a good idea to keep calling on an interval for updates
+     * For best results, call repeatedly on an interval
      * @param context pass your context
-     * @return {@link QosInfo} object containing Network info including {@link QosInfo.CDMAInfo},{@link QosInfo.GSMInfo},{@link QosInfo.LTEInfo},{@link QosInfo.WIFIInfo}
-     */
+     * @return {@link QosInfo} where The most relevant information is contained in the connectedNetwork {@link QosInfo.NetworkInfo}
+     * */
     public static QosInfo getQoSInfo (Context context)
     {
         QosInfo qos = new QosInfo(context);
