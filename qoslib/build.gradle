@@ -51,13 +51,13 @@ android {
         }
     }
 
-//    defaultPublishConfig 'release'
-//    publishNonDefault true
-//    productFlavors {
-//        library{
-//
-//        }
-//    }
+    defaultPublishConfig 'release'
+    publishNonDefault true
+    productFlavors {
+        library{
+
+        }
+    }
 
     lintOptions {
         checkReleaseBuilds false
@@ -69,7 +69,7 @@ repositories {
     jcenter()
 }
 dependencies {
-    compile project(':mmcextension')
-    //debugCompile project(path: ':mmcextension', configuration: "libraryDebug")
-    //releaseCompile project(path: ':mmcextension', configuration: "libraryRelease")
+    //compile project(':mmcextension')
+    debugCompile project(path: ':mmcextension', configuration: "libraryDebug")
+    releaseCompile project(path: ':mmcextension', configuration: "libraryRelease")
 }

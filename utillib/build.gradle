@@ -11,9 +11,12 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug {
+            debuggable true
+        }
         release {
             //minifyEnabled true
-            //shrinkResources false
+            //shrinkResources true
             //proguardFiles 'proguard-android.txt'
         }
     }
@@ -24,13 +27,13 @@ android {
 
         }
     }
-//    defaultPublishConfig 'release'
-//    publishNonDefault true
-//    productFlavors {
-//        library{
-//
-//        }
-//    }
+    defaultPublishConfig 'release'
+    publishNonDefault true
+    productFlavors {
+        library{
+
+        }
+    }
 }
 repositories {
     jcenter()

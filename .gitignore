@@ -41,10 +41,17 @@ bin/
 Todos.lst
 .DS_Store
 .metadata/
-
+.gradle
+.idea/
 .idea/workspace.xml
 .idea/libraries
 .idea/libraries/*.xml
+*.iml
+examples/Restcomm_demo/.idea/
+qoslib/.idea/
+mmcextension/.idea/
+uilib/.idea/
+utillib/.idea/
 
 !mmcsys.apk
 android-QoS.iml
