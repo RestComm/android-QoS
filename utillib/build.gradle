@@ -24,13 +24,13 @@ android {
 
         }
     }
-    defaultPublishConfig 'release'
-    publishNonDefault true
-    productFlavors {
-        library{
-
-        }
-    }
+//    defaultPublishConfig 'release'
+//    publishNonDefault true
+//    productFlavors {
+//        library{
+//
+//        }
+//    }
 }
 repositories {
     jcenter()
