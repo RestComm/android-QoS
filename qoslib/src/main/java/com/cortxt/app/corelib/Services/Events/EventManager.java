@@ -547,7 +547,7 @@ public class EventManager {
 			else if (activeConnection == 11)
 				event.setFlag (EventObj.SERVICE_WIMAX, true);
 			ReportManager reportManager = ReportManager.getInstance(context);
-			if (reportManager.manualPlottingEvent != null)
+			if (reportManager.manualPlottingEvent != null || event.getEventType() == EventType.MAN_PLOTTING)
 				event.setFlag (EventObj.MANUAL_SAMPLES, true);
 			
 			if (datastate == TelephonyManager.DATA_CONNECTED || activeConnection > 1)
