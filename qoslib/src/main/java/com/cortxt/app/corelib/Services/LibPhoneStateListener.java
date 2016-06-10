@@ -1156,7 +1156,11 @@ public class LibPhoneStateListener extends PhoneStateListener {
 				if (!mPhoneState.isCallConnected())
 				{
 					if (mPhoneState.callRinging)
+					{
 						LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "onDisconnect", "unspecified cause not considered failed because it rang (call may have been rejected)");
+						mPhoneState.lastCallDropped = true;
+						mPhoneState.lastDroppedCause = _cause;
+					}
 					else if (useFailedCause == 0)
 						LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "onDisconnect", "unspecified cause not considered failed because handset doesnt support unspecified failed cause");
 				}
