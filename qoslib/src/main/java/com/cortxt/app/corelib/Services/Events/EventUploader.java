@@ -497,7 +497,7 @@ public class EventUploader implements Runnable{
 		{
 			if (!bTroubleTweet) {	
 				String accuracyWhere = "";
-				if(_event.getEventType() == EventType.MAN_PLOTTING) {
+				if(_event.getEventType() == EventType.MAN_PLOTTING || (_event.getFlags() & EventObj.MANUAL_SAMPLES) > 0) {
 					accuracyWhere = " and accuracy = -1 or accuracy = -2";
 				} 
 				else if( _event.getEventType() == EventType.MAN_TRANSIT){

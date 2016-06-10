@@ -20,7 +20,7 @@ import com.cortxt.app.utillib.Utils.LoggerUtil;
 public class Carrier implements Serializable, Comparable<Carrier> {
 
 	public String Name = "";
-    public String Country = "";
+    public String Country = "", CCode = "";
     public int MCC = 0;
     public int MNC = 0;
     public int ID = 0;
@@ -34,11 +34,12 @@ public class Carrier implements Serializable, Comparable<Carrier> {
     public String OperatorId = "";
     public String Tech = "";
 
-    public Carrier(String name, String country, int mcc, int mnc, int id, boolean selected, 
+    public Carrier(String name, String country, String ccode, int mcc, int mnc, int id, boolean selected,
     		String facebook, String twitter, String email, String path, String tech)
     {
         Name = name;
         Country = country;
+		CCode = ccode;
         MCC = mcc;
         MNC = mnc;
         ID = id;
@@ -58,6 +59,7 @@ public class Carrier implements Serializable, Comparable<Carrier> {
         	{
         		Name = jobj.getString ("name");
         		Country = jobj.getString ("cntry");
+				CCode = jobj.getString ("ccode");
 	            MCC = jobj.getInt ("mcc");
 	            MNC = jobj.getInt ("mnc");
 	            ID = jobj.getInt ("carrierid");
@@ -78,6 +80,7 @@ public class Carrier implements Serializable, Comparable<Carrier> {
         	{
         		Name = jobj.getString ("name");
         		Country = jobj.getString ("cntry");
+				CCode = jobj.getString ("ccode");
 	            //MCC = jobj.getInt ("mcc");
 	            //MNC = jobj.getInt ("mnc");
 	            ID = jobj.getInt ("id");
