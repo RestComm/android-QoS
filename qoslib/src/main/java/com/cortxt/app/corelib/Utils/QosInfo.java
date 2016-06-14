@@ -29,8 +29,8 @@ import java.sql.Date;
 import java.util.BitSet;
 
 /**
- * QosInfo is a class that consolidates a wide variety of information about the network state of the phone
- * The information originated from several sources such as apis, listeners, hidden methods and possibly even service mode
+ * QosInfo is a class that consolidates a wide variety of information about the network state of the phone.
+ * The information originated from several sources such as apis, listeners, hidden methods and possibly even service mode.
  * QosInfo contains 4 inner classes representing the main network types, and each is only populated if in that network type
  * <ul>
  * <li>GSMInfo
@@ -102,18 +102,18 @@ public class QosInfo {
     public WIFIInfo WiFiInfo;
     /**
      * The connectedNetwork represents the network that is currently connected, whether it be LTE, WiFi etc..
-     * As a NetworkInfo object, it can be used in a unified way to access relevant info about the network
-     * For example: If CDMA, LTE and WiFi are active at the same time, the connectedNetwork is WiFi, because that is the only network in use for data connections
+     * As a NetworkInfo object, it can be used in a unified way to access relevant info about the network.
+     * For example: If CDMA, LTE and WiFi are active at the same time, the connectedNetwork is WiFi, because that is the only network in use for data connections.
      */
     public NetworkInfo connectedNetwork;
 
     /**
-     * NetworkInfo is meant to be used directly to simplify access to information about the connected network
-     * NetworkInfo is also the base class for all of the main types of data network including LTEInfo, WiFiInfo
-     * The connectedNetwork object is a NetworkInfo object
+     * NetworkInfo is meant to be used directly to simplify access to information about the connected network.
+     * NetworkInfo is also the base class for all of the main types of data network including LTEInfo, WiFiInfo, etc.
+     * The {@link NetworkInfo connectedNetwork} object is a NetworkInfo object.
      *
-     * NetworkInfo provides a signal indicator, quality indicator, and an array of all the cellular identifiers
-     * The signal indicator consists of a label such as 'RSSI' or 'RSRP' to describe the measurement the represents signal strength for the current type of network
+     * NetworkInfo provides a signal indicator, quality indicator, and an array of all the cellular identifiers.
+     * The signal indicator consists of a label such as 'RSSI' or 'RSRP' to describe the measurement the represents signal strength for the current type of network.
      *
      */
     public class NetworkInfo
@@ -135,7 +135,7 @@ public class QosInfo {
         protected String networkType;
 
         /**
-         *  Easy to understand rating for the signal type for the connected network
+         *  Easy to understand rating for the signal type for the connected network.
          *
          *  @return rating from 0 to 5, equivalent to 'bars' where 5 bars is an excellent signal level
          */
@@ -158,8 +158,8 @@ public class QosInfo {
         }
 
         /**
-         * getSignalDetails returns a text description of the signal type for the connected network
-         * the text is composed of the signalLabel and, optionally, the value, rating and units
+         * getSignalDetails returns a text description of the signal type for the connected network.
+         * the text is composed of the signalLabel and, optionally, the value, rating and units.
          * @param withValue  to include the dBm value of the signal  {@link int getSignal ()} and its units {@link String getSignalUnits ()}
          * @param withRating to include the rating of the signal {@link int getSignalRating ()}
          * @return the full text description
@@ -180,55 +180,55 @@ public class QosInfo {
         }
 
         /**
-         * Get the name of the type of signal for the connected network
-         * the label, units and ranges are defined in the constructor for each derived class
+         * Get the name of the type of signal for the connected network.
+         * The label, units and ranges are defined in the constructor for each derived class.
          * @return the name of the relevent type of signal (RSSI, RSRP etc)
          */
         public String getSignalLabel () { return sigLabel; }
         /**
-         * Get the unit for the type of signal for the connected network
+         * Get the unit for the type of signal for the connected network.
          * @return the unit for the relevent type of signal (usually dBm)
          */
         public String getSignalUnits () { return sigUnits; }
         /**
-         * Get the minimum value of the signal range
+         * Get the minimum value of the signal range.
          * @return the minimum signal value (usually -120 dBm)
          */
         public int getSignalRangeMin () { return sigMin; }
         /**
-         * Get the maximum value of the signal range
+         * Get the maximum value of the signal range.
          * @return the maximum signal value (usually -40 dBm)
          */
         public int getSignalRangeMax () { return sigMax; }
         /**
-         * Get the value of the signal that gives excellent performance, expected near the tower
-         * Values above excellent are rated as 5 bars
-         * set for each derived network type, RSRP -85 dBm is 'excellent' for LTE
+         * Get the value of the signal that gives excellent performance, expected near the tower.
+         * Values above excellent are rated as 5 bars.
+         * Each derived network type sets its range. RSRP -85 dBm is 'excellent' for LTE.
          * @return the excellent signal value
          */
         public int getSignalRangeExcellent () { return sigExcellent; }
         /**
-         * Get a short documentation of the relevent type of signal for the network
+         * Get a short documentation of the relevent type of signal for the network.
          * @return the description document
          */
         public String getSignalDoc () { return sigDoc; }
         /**
-         * Get the actual value of the signal
+         * Get the actual value of the signal.
          * @return the signal value (usually -40 to -120)
          */
         public int getSignal () { return signal;}
 
         /**
-         * Get the actual value of the noise or quality indicator
-         * Some network types can provide an additional performance indicator
-         * This is usually a measure of noise and is a good indicator or data throughput or voice quality
+         * Get the actual value of the noise or quality indicator.
+         * Some network types can provide an additional performance indicator.
+         * This is usually a measure of noise and is a good indicator or data throughput or voice quality.
          * @return the indicator value
          */
         public float getQuality () { return noise;}
         /**
-         *  Easy to understand rating for the signal type for the connected network
+         *  Easy to understand rating for the signal type for the connected network.
          *
-         *  @return rating from 0 to 5, equivalent to 'bars' where 5 bars is an excellent signal level
+         *  @return rating from 0 to 5, equivalent to 'bars' where 5 bars is an excellent signal level.
          */
         public int getQualityRating ()
         {
@@ -249,8 +249,8 @@ public class QosInfo {
         }
 
         /**
-         * getQualityDetails returns a text description of the main noise/quality indicator, if available, for the connected network
-         * the text is composed of the qualityLabel and, optionally, the value, rating and units
+         * getQualityDetails returns a text description of the main noise/quality indicator, if available, for the connected network.
+         * The text is composed of the qualityLabel and, optionally, the value, rating and units.
          * @param withValue  to include the value of the quality indicator  {@link int getQuality ()} and its units {@link String getQualityUnits ()}
          * @param withRating to include the rating of the quality indicator {@link int getQualityRating ()}
          * @return
@@ -272,8 +272,8 @@ public class QosInfo {
             return details;
         }
         /**
-         * Get the name of the type of quality/noise indicator the connected network
-         * the label, units and ranges are defined in the constructor for each derived class
+         * Get the name of the type of quality/noise indicator the connected network.
+         * The label, units and ranges are defined in the constructor for each derived class.
          * @return the name of the indicator for the connected network (Ec/i0, SNR etc)
          */
         public String getQualityLabel () { return noiseLabel; }

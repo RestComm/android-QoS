@@ -144,7 +144,7 @@ public class ContentValuesGenerator {
 				values.put(Tables.SignalStrengths.TIMESTAMP, System.currentTimeMillis());
 				values.put(Tables.SignalStrengths.EVENT_ID, stagedEventId);
 				values.put(Tables.SignalStrengths.COVERAGE, 0);
-				return null;
+				return values;
 			}
 			if (signal.getSignalStrength() == null)  // as a result of a screen off (signal unknown)
 				values.put(Tables.SignalStrengths.SIGNAL, (Integer) null);

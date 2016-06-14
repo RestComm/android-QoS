@@ -13,7 +13,7 @@
             <option value="$PROJECT_DIR$/mmcextension" />
             <option value="$PROJECT_DIR$/qoslib" />
             <option value="$PROJECT_DIR$/utillib" />
-            <option value="$PROJECT_DIR$/../restcommsdk/restcomm-android-sdk/restcomm.android.client.sdk" />
+            <option value="$PROJECT_DIR$/../restcomm-android-sdk/restcomm.android.client.sdk" />
           </set>
         </option>
       </GradleProjectSettings>

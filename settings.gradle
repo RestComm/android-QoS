@@ -4,6 +4,6 @@ project(':app').projectDir = new File('examples/Restcomm_demo/app')
 // TODO:  To set up the project to use actual Restcomm SDK module code, please edit actual path to sdk, and update app build.gradle dependencies
 // It needs to be a modified SDK which can send Intents to the QoS library, from this Fork: https://github.com/bscheurman/restcomm-android-sdk
 include ':restcomm.android.client.sdk'
-project(':restcomm.android.client.sdk').projectDir = new File(settingsDir, '../restcommsdk/restcomm-android-sdk/restcomm.android.client.sdk')
+project(':restcomm.android.client.sdk').projectDir = new File(settingsDir, '../restcomm-android-sdk/restcomm.android.client.sdk')
 // Only include uilib project if you want to include some MMC screens in the app. It requires Google APIs for Android.
 //include ':uilib'

@@ -1536,7 +1536,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 			if (wifiinfo != null && wifiinfo.getBSSID() != null)
 				wifiSignal =  wifiManager.getConnectionInfo().getRssi();
 
-			if (signal != null)
+			//if (signal != null) //  disabled because we do want the no-signal to be written to the signals table
 			{
 				values = ContentValuesGenerator.generateFromSignal(signal, telephonyManager.getPhoneType(), telephonyManager.getNetworkType(),
 						serviceState, telephonyManager.getDataState(), stagedEventId, wifiSignal, mPhoneState.mServicemode);
