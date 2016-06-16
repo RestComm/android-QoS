@@ -286,6 +286,10 @@ public final class PreferenceKeys {
 		public static final String AUTOSPEED_SIZEMB = "KEY_SETTINGS_AUTOSPEED_SIZEMB";
         public static final String AUTOSPEED_SVR_SIZEMB = "KEY_SETTINGS_AUTOSPEED_SVR_SIZEMB";
 		public static final String AUTOSPEED_MB_CHANGED = "KEY_SETTINGS_AUTOSPEED_MB_CHANGED";
+		public static final String GCMHEARTBEAT_SVR_ENABLE = "KEY_SETTINGS_GCMHEARTBEAT_SVR_ENABLE";
+		public static final String KEY_GCM_HEARTBEAT = "KEY_GCM_HEARTBEAT";
+		public static final String KEY_GCM_HEARTBEAT_CHANGED = "KEY_GCM_HEARTBEAT_CHANGED";
+
 		public static final String TOPOP_RESPONSE = "KEY_SETTINGS_TOPOP_RESPONSE";
 		public static final String TOPOP_LAT = "KEY_SETTINGS_TOPOP_LAT";
 		public static final String TOPOP_LNG = "KEY_SETTINGS_TOPOP_LNG";

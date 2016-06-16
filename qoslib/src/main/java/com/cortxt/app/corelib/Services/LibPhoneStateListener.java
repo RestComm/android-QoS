@@ -709,6 +709,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 			mPhoneState.offhookTime = System.currentTimeMillis();
 
 			mPhoneState.lastCallDropped = false;
+			mPhoneState.lastDroppedCause = null;
 
 			Intent intent = new Intent(IntentHandler.PHONE_CALL_CONNECT);
 			owner.sendBroadcast(intent);
@@ -1129,6 +1130,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 				}
 			}
 		}
+		mPhoneState.lastDroppedCause = _cause;
 
 
 		if (cause.equalsIgnoreCase("congestion") || cause.equalsIgnoreCase("call_drop") || (causeCode> 31 && causeCode != 510) || cause.equalsIgnoreCase("lost_signal") ||
@@ -1182,6 +1184,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 	{
 		//start a phone connected event
 		LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "onConnect", _state);
+		mPhoneState.lastDroppedCause = _state;
 
 		if(_state.equalsIgnoreCase("active"))
 		{

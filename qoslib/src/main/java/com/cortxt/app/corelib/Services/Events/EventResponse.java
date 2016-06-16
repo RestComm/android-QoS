@@ -200,6 +200,14 @@ public class EventResponse {
         else
             return null;
     }
+
+    public Integer getGCMHeartbeat() {
+        if (d.gcm_heartbeat != null)
+            return d.gcm_heartbeat;
+        else
+            return null;
+    }
+
     public Integer getSpeedMonthMB() {
         if (d.speed_month_mb != null)
             return d.speed_month_mb;
@@ -486,6 +494,14 @@ public class EventResponse {
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.AUTOSPEED_SVR_ENABLE, this.getAutoSpeedtest()).commit();
         if (this.getSpeedMonthMB() != null)
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.AUTOSPEED_SVR_SIZEMB, this.getSpeedMonthMB()).commit();
+        if (this.getGCMHeartbeat() != null)
+        {
+            if (PreferenceManager.getDefaultSharedPreferences(owner).getBoolean(PreferenceKeys.Miscellaneous.KEY_GCM_HEARTBEAT_CHANGED, false) == false)
+            {
+                PreferenceManager.getDefaultSharedPreferences(owner).edit().putBoolean(PreferenceKeys.Miscellaneous.KEY_GCM_HEARTBEAT, this.getGCMHeartbeat()==1).commit();
+                PreferenceManager.getDefaultSharedPreferences(owner).edit().putBoolean(PreferenceKeys.Miscellaneous.KEY_GCM_HEARTBEAT_CHANGED, false).commit();
+            }
+        }
 
         if (this.getDropProx() != null)
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.DROP_PROX, this.getDropProx()).commit();
@@ -596,7 +612,7 @@ class EventResponseContents {
 	public String extra_settings = null;
     //public String active_tests = null;
 	public Integer allow_travel_fillin = null, level_default = null;
-    public Integer use_gcm = 0, speed_month_mb = 0, auto_speedtest = 0, use_svcmode = 0;
+    public Integer use_gcm = 0, speed_month_mb = 0, auto_speedtest = 0, use_svcmode = 0, gcm_heartbeat = 0;
     public Integer websocket = 0;
     public String youtube_id = "";
 	//public long eventId = 0;
