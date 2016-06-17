@@ -585,6 +585,7 @@ public class IntentHandler extends BroadcastReceiver {
     			"transitEvent", String.valueOf(lat) + ","+ String.valueOf(lon)).commit();
 			reportManager.manualTransitEvent = owner.getEventManager().triggerSingletonEvent(EventType.MAN_TRANSIT);
 			reportManager.manualTransitEvent.setLocation(location, 0);
+			owner.getTravelDetector().setTravelling (false);
 		}
 		else if(action.equals(MANUAL_TRANSIT_END)) {
 			if(reportManager.manualTransitEvent == null)
@@ -636,6 +637,8 @@ public class IntentHandler extends BroadcastReceiver {
 
 			reportManager.manualPlottingEvent.setLocation(location, 0);
 			presetEventId (reportManager.manualPlottingEvent);  // reserve an EventID for this manual sampling event, to be used for Share links
+
+			owner.getTravelDetector().setTravelling (false);
 		}
 		else if(action.equals(MANUAL_PLOTTING_END)) {
 			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "onReceive", "MANUAL_PLOTTING_END");
