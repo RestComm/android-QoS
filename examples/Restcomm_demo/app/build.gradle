@@ -10,6 +10,7 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0.0-BETA2#1"
+        //multiDexEnabled true
 
     }
     buildTypes {
@@ -19,6 +20,7 @@ android {
         }
     }
 }
+
 
 repositories {
     flatDir {
@@ -37,4 +39,6 @@ dependencies {
     // Include the QoS library, and ensure it is debuggable when in debug, otherwise release
     debugCompile project(path: ':qoslib', configuration: "libraryDebug")
     releaseCompile project(path: ':qoslib', configuration: "libraryRelease")
+
+    //compile 'com.android.support:multidex:1.0.0'
 }

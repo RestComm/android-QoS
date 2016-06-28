@@ -32,6 +32,7 @@ public class ConnectionHistory {
 	private String lastConnectString = "";
 	public static final String TAG = ConnectionHistory.class.getSimpleName();
 	private long rxLast = 0, txLast = 0;
+	private TcpStats tcpstats = new TcpStats();
 	
 	// Called when a neighbor list is detected in the RadioLog
 	// It augments that neighbor list with the neighbor from the API
@@ -80,14 +81,21 @@ public class ConnectionHistory {
 			if (!lastConnectString.equals(stringConnections))
 			{
 				// Update Neighbor list history if state changes
-				connect_history.add (smp);
+				connect_history.add(smp);
 				lastConnectString = stringConnections;
 
 				long rx = TrafficStats.getTotalRxBytes();
 				long tx = TrafficStats.getTotalTxBytes();
-				if (rx > rxLast || tx > txLast)
+
+				tcpstats.readTcpStats(false);
+				tcpstats.updateCounts();
+				int tcprsts = tcpstats.tcpResets;
+				int tcperrs = tcpstats.tcpErrors;
+				int tcpretrans = tcpstats.tcpRetrans;
+
+				if (rx > rxLast || tx > txLast || tcpstats.tcpResets > tcpstats.prevResets || tcpstats.tcpErrors > tcpstats.prevErrors || tcpstats.tcpRetrans > tcpstats.prevRetrans)
 				{
-					ConnectionSample smp2 = new ConnectionSample(TYPE_RXTX, rx, tx);
+					ConnectionSample smp2 = new ConnectionSample(TYPE_RXTX, rx, tx, tcprsts, tcperrs, tcpretrans);
 					rxLast = rx; txLast = tx;
 					connect_history.add(smp2);
 				}
@@ -107,8 +115,14 @@ public class ConnectionHistory {
 			// Update Neighbor list history if state changes
 			long rx = TrafficStats.getTotalRxBytes();
 			long tx = TrafficStats.getTotalTxBytes();
-			if (rx > rxLast + 10000 || tx > txLast + 10000) {
-				ConnectionSample smp2 = new ConnectionSample(TYPE_RXTX, rx, tx);
+			tcpstats.readTcpStats(false);
+			tcpstats.updateCounts();
+			int tcprsts = tcpstats.tcpResets;
+			int tcperrs = tcpstats.tcpErrors;
+			int tcpretrans = tcpstats.tcpRetrans;
+
+			if (rx > rxLast + 10000 || tx > txLast + 10000 || tcpstats.tcpResets > tcpstats.prevResets || tcpstats.tcpErrors > tcpstats.prevErrors || tcpstats.tcpRetrans > tcpstats.prevRetrans) {
+				ConnectionSample smp2 = new ConnectionSample(TYPE_RXTX, rx, tx, tcprsts, tcperrs, tcpretrans);
 				rxLast = rx; txLast = tx;
 				connect_history.add(smp2);
 			}
@@ -118,7 +132,7 @@ public class ConnectionHistory {
 	public void updateThroughputHistory (int rxbytes, int txbytes)
 	{
 		ConnectionSample smp = new ConnectionSample(105, rxbytes, txbytes);
-		connect_history.add (smp);
+		addSample(smp);
 	}
 	
 	public void updateVideoTestHistory (int bufferProgress, int playProgress, int stalls, int bytes)
@@ -126,14 +140,23 @@ public class ConnectionHistory {
 		ConnectionSample smp = new ConnectionSample(TYPE_VIDEO, bufferProgress, playProgress);
 		smp.activeType = stalls;
 		smp.serviceState = bytes;
-		connect_history.add (smp);
+		addSample (smp);
 	}
 
 	public void updateSIPCallHistory (int rx, int tx, int state)
 	{
 		ConnectionSample smp = new ConnectionSample(TYPE_SIP, rx, tx);
 		smp.activeType = state;
+		addSample (smp);
+	}
+
+	ConnectionSample prevSample;
+	public void addSample (ConnectionSample smp)
+	{
+		if (smp.equals(prevSample))
+			return;
 		connect_history.add (smp);
+		prevSample = smp;
 	}
 	public void updateSpeedTestHistory(int latency, int latencyProgress, int downloadSpeed, int downloadProgress, int uploadSpeed, int uploadProgress, int counter)
 	{
@@ -152,7 +175,7 @@ public class ConnectionHistory {
 		}
 		ConnectionSample smp = new ConnectionSample(type, prog, counter);
 		// Update Neighbor list history if state changes
-		connect_history.add (smp);
+		addSample(smp);
 	}
 	
 	public void updateSMSTestHistory(long smsSendTime, long smsDeliveryTime, long smsSentFromServerTime, long smsArrivalTime) {
@@ -161,7 +184,7 @@ public class ConnectionHistory {
 		int smsRoundTripTime = (int)(smsArrivalTime - smsSendTime);
 		System.out.println ("updateSMSTestHistory :"+smsSendTime+" "+smsSentFromServerTime+" "+smsArrivalTime+" "+smsRoundTripTime+" "+responseDiff);
 		ConnectionSample smp = new ConnectionSample(smsSendTime, TYPE_SMSTEST, deliverDiff, responseDiff, smsRoundTripTime, (int) smsDeliveryTime);
-		connect_history.add(smp);
+		addSample(smp);
 	}
 	public void updatePreciseCallHistory(PreciseCallCodes preciseCall) {
 		
@@ -169,19 +192,19 @@ public class ConnectionHistory {
 		if (state > 0)
 		{
 			ConnectionSample smp = new ConnectionSample(System.currentTimeMillis(), TYPE_PRECISECALL, 0, state, 0, 0);
-			connect_history.add(smp);
+			addSample(smp);
 		}
 		state = preciseCall.getForegroundCallState();
 		if (state > 0)
 		{
 			ConnectionSample smp = new ConnectionSample(System.currentTimeMillis(), TYPE_PRECISECALL, 1, state, 0, 0);
-			connect_history.add(smp);
+			addSample(smp);
 		}
 		state = preciseCall.getBackgroundCallState();
 		if (state > 0)
 		{
 			ConnectionSample smp = new ConnectionSample(System.currentTimeMillis(), TYPE_PRECISECALL, 2, state, 0, 0);
-			connect_history.add(smp);
+			addSample (smp);
 		}
 	}
 
@@ -211,7 +234,7 @@ public class ConnectionHistory {
         for (i=0; i<size; i++)
 		{
 			ConnectionSample smp = connect_history.get(i);
-            if (smp.type < 100)
+            if (smp.type < 99)
                 netsmp = smp;
 			ConnectionSample smp2 = null;
 			if (i<size-1)
@@ -221,15 +244,33 @@ public class ConnectionHistory {
                 // Network Type sample before event started
                 txt += "," + ((smp.timestamp - eventTime)/1000);
                 txt += "," + netsmp.type + "," + netsmp.getStateName(evt) +"," + netsmp.getActivityName(evt); // + "," + smp.activity;
-                txt += "," + netsmp.activeType + "," + netsmp.serviceState + "," + netsmp.voiceType;
+				txt += "," + netsmp.activeType + "," + netsmp.serviceState + "," + netsmp.voiceType;
                 netsmp = null;
             }
 			//else if ((smp.timestamp >= startTime && smp.timestamp <= endTime) || (smp2 != null && smp.timestamp<startTime && smp2.timestamp>=startTime && smp.type < 100 )
 			//		|| (smp2 == null && smp.timestamp<startTime && smp.type < 100))
             else if (smp.timestamp >= startTime && smp.timestamp <= endTime)
 			{
-				//if (smp.sent == 0)
-				if ((evtType == EventType.MAN_SPEEDTEST && smp.type >= TYPE_LATENCY && smp.type <= TYPE_UPLOAD) ||
+				if (smp.type == TYPE_RXTX)
+				{
+					int resets = smp.activeType - evt.getTcpStats().prevResets;
+					int errors = smp.serviceState - evt.getTcpStats().prevErrors;
+					int retrans = smp.voiceType - evt.getTcpStats().prevRetrans;
+					txt += "," + ((smp.timestamp - eventTime)/1000) + ",99";
+					long rx = 0, tx = 0;
+					if (evt.getRX() > 0 && smp.state > evt.getRX()) {
+						rx = smp.state - evt.getRX();
+					}
+					txt += "," + String.valueOf(rx/1000);
+
+					if (evt.getTX() > 0 && smp.activity > evt.getTX()) {
+						tx = smp.activity - evt.getTX();
+					}
+					txt += "," + String.valueOf(tx/1000);
+
+					txt += "," + resets + "," + errors + "," + retrans;
+				}
+				else if ((evtType == EventType.MAN_SPEEDTEST && smp.type >= TYPE_LATENCY && smp.type <= TYPE_UPLOAD) ||
 						(evtType == EventType.APP_MONITORING && smp.type == TYPE_THROUGHPUT) || smp.type < TYPE_SPECIAL ||
 						(evtType == EventType.VIDEO_TEST && smp.type == TYPE_VIDEO) || (evtType == EventType.AUDIO_TEST && smp.type == TYPE_VIDEO) ||
 						(evtType == EventType.YOUTUBE_TEST && smp.type == TYPE_VIDEO)|| (evtType == EventType.WEBPAGE_TEST && smp.type == TYPE_VIDEO) ||
@@ -387,6 +428,16 @@ public class ConnectionHistory {
 			type = _type;
 			activity = _activity;
 		}
+
+		public ConnectionSample (int _type, long _rx, long _tx, int _tcprsts, int _tcperrs, int _tcpretrans) {
+			timestamp = System.currentTimeMillis();
+			state = _rx;
+			type = _type;
+			activity = _tx;
+			activeType = _tcprsts;
+			serviceState = _tcperrs;
+			voiceType = _tcpretrans;
+		}
 		
 		public ConnectionSample (long sampleTime, int _type, int _state, int _activity, int roundTrip) {
 			timestamp = sampleTime;
@@ -415,15 +466,7 @@ public class ConnectionHistory {
 
 				return String.valueOf(state);
 			}
-			if (type == TYPE_RXTX)  // report tx, rx
-			{
-				long rx = state;
-				if (evt.getRX() > 0 && rx > evt.getRX()) {
-					rx = rx - evt.getRX();
-					return String.valueOf(rx/1000);
-				}
-				return "";
-			}
+
 			switch ((int)state)
 			{
 			case TelephonyManager.DATA_CONNECTED:
@@ -447,15 +490,7 @@ public class ConnectionHistory {
 
 				return String.valueOf(activity);
 			}
-			if (type == TYPE_RXTX)  // report tx, rx
-			{
-				long tx = activity;
-				if (evt.getTX() > 0 && tx > evt.getTX()) {
-					tx = tx - evt.getTX();
-					return String.valueOf(tx/1000);
-				}
-				return "";
-			}
+
 			switch ((int)activity)
 			{
 			case TelephonyManager.DATA_ACTIVITY_DORMANT:
@@ -470,6 +505,20 @@ public class ConnectionHistory {
 				return "N";	
 			}
 			return "U";
+		}
+		@Override
+		public boolean equals (Object obj)
+		{
+			ConnectionSample sample = (ConnectionSample)obj;
+			if (sample != null)
+			{
+				if (this.activity == sample.activity && this.activeType == sample.activeType
+						&& this.serviceState == sample.serviceState && this.state == sample.state
+						&& this.voiceType == sample.voiceType) {
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 }

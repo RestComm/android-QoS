@@ -1,10 +1,12 @@
 package com.cortxt.app.corelib.Utils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 
 import com.cortxt.app.corelib.MainService;
@@ -373,5 +375,50 @@ public class QosAPI {
     {
         QosInfo qos = new QosInfo(context);
         return qos;
+    }
+
+    public static void showQoSPanel (final Activity activity) {
+        try {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+            CharSequence qosInfo = getQosInfo (activity);
+            builder1.setMessage(qosInfo);
+            builder1.setTitle("QOS Info");
+            builder1.setCancelable(true);
+            final AlertDialog alert11 = builder1.create();
+            alert11.show();
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    CharSequence qosInfo = getQosInfo(activity);
+                    if (alert11.isShowing()) {
+                        try {
+                            alert11.setMessage(qosInfo);
+                            handler.postDelayed(this, 1000);
+                        } catch (Exception e) {
+                        }
+                    }
+                }
+            }, 1000);
+
+        } catch (Exception e) {
+            LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "CreateDevInfoAlertDialog", "exeption", e);
+        }
+    }
+
+    public static CharSequence getQosInfo (Activity activity)
+    {
+        // Request all known Network information from QoS library
+        QosInfo info = QosAPI.getQoSInfo(activity);
+        if (info.connectedNetwork == null)
+            return "";
+        // The basic info as a string
+        String strInfo = info.connectedNetwork.getType() + "\n";
+        strInfo += info.connectedNetwork.getSignalDetails(true, true) + "\n";
+        strInfo += info.connectedNetwork.getQualityDetails(true, true) + "\n";
+        strInfo += info.connectedNetwork.getIdentifier() + "\n";
+
+        return strInfo;
+
     }
 }

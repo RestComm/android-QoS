@@ -58,6 +58,7 @@ public class TravelDetector {
 	{
 		return false;
 	}
+	public void setTravelling (boolean travelling) {}
 	
 
 	// Cancel travelling if the first fix on the first travel event is near the last known location

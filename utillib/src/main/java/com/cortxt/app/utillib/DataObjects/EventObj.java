@@ -39,6 +39,7 @@ public class EventObj {
 	private int signalFieldsMask = 0;
 	private int band = 0;
 	private long tx = 0,rx = 0;
+	private TcpStats tcpstats;
 	private Location location = null;
 	private SignalEx signal = null;
 	private CellLocationEx cell = null;
@@ -114,6 +115,8 @@ public class EventObj {
 		this.isUploaded = false;
 		this.rx = TrafficStats.getTotalRxBytes();
 		this.tx = TrafficStats.getTotalTxBytes();
+		this.tcpstats = new TcpStats ();
+		this.tcpstats.readTcpStats(true);
 	}
 		
 	public EventObj(EventType eventType, long eventTimestamp, long duration) {
@@ -239,6 +242,10 @@ public class EventObj {
 	public long getTX ()
 	{
 		return this.tx;
+	}
+	public TcpStats getTcpStats ()
+	{
+		return this.tcpstats;
 	}
 	
 	public WifiInfo getWifiInfo() {
@@ -389,6 +396,21 @@ public class EventObj {
         activeTest = smsTest;
         this.duration = avgDuration;
     }
+
+	public void setTcpStatsToJSON ()
+	{
+		try {
+			if (activeTest != null) {
+				tcpstats.readTcpStats(false);
+				activeTest.put("tcpInSegs", tcpstats.numIn);
+				activeTest.put("tcpResets", tcpstats.numResets);
+				activeTest.put("tcpErrs", tcpstats.numErrors);
+				activeTest.put("tcpRetrans", tcpstats.numRetrans);
+			}
+		} catch (Exception e)
+		{
+		}
+	}
 
     public String getJSONResult ()
     {

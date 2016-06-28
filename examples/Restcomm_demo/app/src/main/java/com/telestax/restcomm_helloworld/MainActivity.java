@@ -4,7 +4,7 @@ package com.telestax.restcomm_helloworld;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.opengl.GLSurfaceView;
+//import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -36,9 +36,8 @@ import org.mobicents.restcomm.android.client.sdk.RCConnectionListener;
 import org.mobicents.restcomm.android.client.sdk.RCDevice;
 import org.mobicents.restcomm.android.client.sdk.RCDeviceListener;
 import org.mobicents.restcomm.android.client.sdk.RCPresenceEvent;
-import org.webrtc.VideoRenderer;
-import org.webrtc.VideoRendererGui;
 import org.webrtc.VideoTrack;
+
 
 public class MainActivity extends Activity implements RCDeviceListener, RCConnectionListener, OnClickListener {
 
@@ -47,13 +46,11 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
     private HashMap<String, Object> params;
     private static final String TAG = "MainActivity";
 
-    private GLSurfaceView videoView;
-    private VideoRenderer.Callbacks localRender = null;
-    private VideoRenderer.Callbacks remoteRender = null;
+    //private GLSurfaceView videoView;
     private boolean videoReady = false;
     private EditText editServer, editUser, editPwd, editDial;
-    VideoTrack localVideoTrack, remoteVideoTrack;
-    VideoRenderer localVideoRenderer, remoteVideoRenderer;
+    //VideoTrack localVideoTrack, remoteVideoTrack;
+    //VideoRenderer localVideoRenderer, remoteVideoRenderer;
 
     // Local preview screen position before call is connected.
     private static final int LOCAL_X_CONNECTING = 0;
@@ -70,7 +67,7 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
     private static final int REMOTE_Y = 0;
     private static final int REMOTE_WIDTH = 100;
     private static final int REMOTE_HEIGHT = 100;
-    private VideoRendererGui.ScalingType scalingType;
+    //private ScalingType scalingType;
 
     // UI elements
     Button btnDial;
@@ -142,10 +139,13 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         params = new HashMap<String, Object>();
         // update the IP address to your Restcomm instance
         params.put("pref_proxy_domain", "sip:" + editServer.getText().toString() + ":5060"); // :5080
-        //params.put("pref_proxy_ip", editServer.getText().toString());
-        //params.put("pref_proxy_port", "5080");
         params.put("pref_sip_user", editUser.getText().toString());
         params.put("pref_sip_password", editPwd.getText().toString());
+        params.put("turn-enabled", true);
+        params.put("turn-url", "https://service.xirsys.com/ice");
+        params.put("turn-username", "atsakiridis");
+        params.put("turn-password", "4e89a09e-bf6f-11e5-a15c-69ffdcc2b8a7");
+
         device = RCClient.createDevice(params, this);
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         // we don't have a separate activity for the calls, so use the same intent both for calls and messages
@@ -154,21 +154,22 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         QosAPI.start(this);
 
         // Setup video stuff
-        scalingType = VideoRendererGui.ScalingType.SCALE_ASPECT_FILL;
-        videoView = (GLSurfaceView) findViewById(R.id.glview_call);
+//        scalingType = ScalingType.SCALE_ASPECT_FILL;
+//        videoView = (GLSurfaceView) findViewById(R.id.glview_call);
         // Create video renderers.
-        VideoRendererGui.setView(videoView, new Runnable() {
-            @Override
-            public void run() {
-                videoContextReady();
-            }
-        });
-        remoteRender = VideoRendererGui.create(
-                REMOTE_X, REMOTE_Y,
-                REMOTE_WIDTH, REMOTE_HEIGHT, scalingType, false);
-        localRender = VideoRendererGui.create(
-                LOCAL_X_CONNECTING, LOCAL_Y_CONNECTING,
-                LOCAL_WIDTH_CONNECTING, LOCAL_HEIGHT_CONNECTING, scalingType, true);
+//        VideoRendererGui.setView(videoView, new Runnable() {
+//            @Override
+//            public void run() {
+//                videoContextReady();
+//            }
+//        });
+//        remoteRender = VideoRendererGui.create(
+//                REMOTE_X, REMOTE_Y,
+//                REMOTE_WIDTH, REMOTE_HEIGHT, scalingType, false);
+//        localRender = VideoRendererGui.create(
+//                LOCAL_X_CONNECTING, LOCAL_Y_CONNECTING,
+//                LOCAL_WIDTH_CONNECTING, LOCAL_HEIGHT_CONNECTING, scalingType, true);
+//        videoContextReady(intent);
     }
 
     @Override
@@ -180,10 +181,11 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         device = null;
     }
 
-    private void videoContextReady()
-    {
-        videoReady = true;
-    }
+//    private void videoContextReady()
+//    {
+//        videoReady = true;
+//    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -231,6 +233,9 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
             //connectParams.put("username", "sip:+1235@cloud.restcomm.com");
             connectParams.put("username", "sip:+" + dial + ":5060");
             connectParams.put("video-enabled", false);
+
+            connectParams.put("local-video", findViewById(R.id.local_video_view));
+            connectParams.put("remote-video", findViewById(R.id.remote_video_view));
 
             // if you want to add custom SIP headers, please uncomment this
             //HashMap<String, String> sipHeaders = new HashMap<>();
@@ -301,7 +306,7 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
             }
         }
         else if (view.getId() == R.id.button_info) {
-            showUnifiedInfo();
+            QosAPI.showQoSPanel(this);
         }
     }
 
@@ -374,21 +379,21 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         this.connection = null;
         pendingConnection = null;
 
-        // reside local renderer to take up all screen now that the call is over
-        VideoRendererGui.update(localRender,
-                LOCAL_X_CONNECTING, LOCAL_Y_CONNECTING,
-                LOCAL_WIDTH_CONNECTING, LOCAL_HEIGHT_CONNECTING, scalingType, true);
-
-        if (localVideoTrack != null) {
-
-            localVideoTrack.removeRenderer(localVideoRenderer);
-            localVideoTrack = null;
-        }
-
-        if (remoteVideoTrack != null) {
-            remoteVideoTrack.removeRenderer(remoteVideoRenderer);
-            remoteVideoTrack = null;
-        }
+//        // reside local renderer to take up all screen now that the call is over
+//        VideoRendererGui.update(localRender,
+//                LOCAL_X_CONNECTING, LOCAL_Y_CONNECTING,
+//                LOCAL_WIDTH_CONNECTING, LOCAL_HEIGHT_CONNECTING, scalingType, true);
+//
+//        if (localVideoTrack != null) {
+//
+//            localVideoTrack.removeRenderer(localVideoRenderer);
+//            localVideoTrack = null;
+//        }
+//
+//        if (remoteVideoTrack != null) {
+//            remoteVideoTrack.removeRenderer(remoteVideoRenderer);
+//            remoteVideoTrack = null;
+//        }
     }
 
     public void onDisconnected(RCConnection connection, int errorCode, String errorText) {
@@ -409,117 +414,73 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         this.connection = null;
         pendingConnection = null;
     }
-    public void onReceiveLocalVideo(RCConnection connection, VideoTrack videoTrack) {
-        Log.v(TAG, "onReceiveLocalVideo(), VideoTrack: " + videoTrack);
-        if (videoTrack != null) {
-            //show media on screen
-            videoTrack.setEnabled(true);
-            localVideoRenderer = new VideoRenderer(localRender);
-            videoTrack.addRenderer(localVideoRenderer);
-            localVideoTrack = videoTrack;
-        }
-    }
+//    public void onReceiveLocalVideo(RCConnection connection, VideoTrack videoTrack) {
+//        Log.v(TAG, "onReceiveLocalVideo(), VideoTrack: " + videoTrack);
+//        if (videoTrack != null) {
+//            //show media on screen
+//            videoTrack.setEnabled(true);
+//            localVideoRenderer = new VideoRenderer(localRender);
+//            videoTrack.addRenderer(localVideoRenderer);
+//            localVideoTrack = videoTrack;
+//        }
+//    }
 
-    public void onReceiveRemoteVideo(RCConnection connection, VideoTrack videoTrack) {
-        Log.v(TAG, "onReceiveRemoteVideo(), VideoTrack: " + videoTrack);
-        if (videoTrack != null) {
-            //show media on screen
-            videoTrack.setEnabled(true);
-            remoteVideoRenderer = new VideoRenderer(remoteRender);
-            videoTrack.addRenderer(remoteVideoRenderer);
+//    public void onReceiveRemoteVideo(RCConnection connection, VideoTrack videoTrack) {
+//        Log.v(TAG, "onReceiveRemoteVideo(), VideoTrack: " + videoTrack);
+//        if (videoTrack != null) {
+//            //show media on screen
+//            videoTrack.setEnabled(true);
+//            remoteVideoRenderer = new VideoRenderer(remoteRender);
+//            videoTrack.addRenderer(remoteVideoRenderer);
+//
+//            VideoRendererGui.update(remoteRender,
+//                    REMOTE_X, REMOTE_Y,
+//                    REMOTE_WIDTH, REMOTE_HEIGHT, scalingType, false);
+//            VideoRendererGui.update(localRender,
+//                    LOCAL_X_CONNECTED, LOCAL_Y_CONNECTED,
+//                    LOCAL_WIDTH_CONNECTED, LOCAL_HEIGHT_CONNECTED,
+//                    VideoRendererGui.ScalingType.SCALE_ASPECT_FIT, true);
+//
+//            remoteVideoTrack = videoTrack;
+//        }
+//    }
 
-            VideoRendererGui.update(remoteRender,
-                    REMOTE_X, REMOTE_Y,
-                    REMOTE_WIDTH, REMOTE_HEIGHT, scalingType, false);
-            VideoRendererGui.update(localRender,
-                    LOCAL_X_CONNECTED, LOCAL_Y_CONNECTED,
-                    LOCAL_WIDTH_CONNECTED, LOCAL_HEIGHT_CONNECTED,
-                    VideoRendererGui.ScalingType.SCALE_ASPECT_FIT, true);
 
-            remoteVideoTrack = videoTrack;
-        }
-    }
-
-    private void showUnifiedInfo () {
-        try {
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-            CharSequence qosInfo = getQosInfo ();
-            builder1.setMessage(qosInfo);
-            builder1.setTitle("QOS Info");
-            builder1.setCancelable(true);
-            final AlertDialog alert11 = builder1.create();
-            alert11.show();
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    CharSequence qosInfo = getQosInfo();
-                    if (alert11.isShowing()) {
-                        try {
-                            alert11.setMessage(qosInfo);
-                            handler.postDelayed(this, 1000);
-                        } catch (Exception e) {
-                        }
-                    }
-                }
-            }, 1000);
-
-        } catch (Exception e) {
-            LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "CreateDevInfoAlertDialog", "exeption", e);
-        }
-    }
-
-    private CharSequence getQosInfo ()
-    {
-        // Request all known Network information from QoS library
-        QosInfo info = QosAPI.getQoSInfo(this);
-        if (info.connectedNetwork == null)
-            return "";
-        // The basic info as a string
-        String strInfo = info.connectedNetwork.getType() + "\n";
-        strInfo += info.connectedNetwork.getSignalDetails(true, true) + "\n";
-        strInfo += info.connectedNetwork.getQualityDetails(true, true) + "\n";
-        strInfo += info.connectedNetwork.getIdentifier() + "\n";
-
-        return strInfo;
-        //strInfo = strInfo.replace("\n", "<br>");
-        //return Html.fromHtml(strInfo);
-    }
-
-    private void showInfo () {
-        try {
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-            // Request all known Network information from QoS library
-            QosInfo info = QosAPI.getQoSInfo(this);
-            // The basic info as a string
-            String devInfo = info.toString();
-            // Network type specific info is divided into objects for CDMA, GSM, LTE, WiFi
-            // CDMAInfo is null unless device is connected to a CDMA network, can co-exist with LTE
-            if (info.CDMAInfo != null)
-                devInfo += info.CDMAInfo.toString();
-            // GSM_2GInfo is null unless connected to 2G GSM Network, it is null in LTE
-            if (info.GSMInfo != null)
-                devInfo += info.GSMInfo.toString();
-            // GSMInfo is null unless connected to 3G GSM Network, it is null in LTE
-            if (info.WCDMAInfo != null)
-                devInfo += info.WCDMAInfo.toString();
-            // LTEInfo is null unless on LTE
-            if (info.LTEInfo != null)
-                devInfo += info.LTEInfo.toString();
-            // WiFiInfo is null unless connected to WiFi
-            if (info.WiFiInfo != null)
-                devInfo += info.WiFiInfo.toString();
-
-            devInfo = devInfo.replace("\n", "<br>");
-            builder1.setMessage(Html.fromHtml(devInfo));
-            builder1.setTitle("QOS Info");
-            builder1.setCancelable(true);
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
-            // Make the textview clickable. Must be called after show()
-            ((TextView) alert11.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
-        } catch (Exception e) {
-            LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "CreateDevInfoAlertDialog", "exeption", e);
-        }
-    }
+//
+//    private void showInfo () {
+//        try {
+//            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+//            // Request all known Network information from QoS library
+//            QosInfo info = QosAPI.getQoSInfo(this);
+//            // The basic info as a string
+//            String devInfo = info.toString();
+//            // Network type specific info is divided into objects for CDMA, GSM, LTE, WiFi
+//            // CDMAInfo is null unless device is connected to a CDMA network, can co-exist with LTE
+//            if (info.CDMAInfo != null)
+//                devInfo += info.CDMAInfo.toString();
+//            // GSM_2GInfo is null unless connected to 2G GSM Network, it is null in LTE
+//            if (info.GSMInfo != null)
+//                devInfo += info.GSMInfo.toString();
+//            // GSMInfo is null unless connected to 3G GSM Network, it is null in LTE
+//            if (info.WCDMAInfo != null)
+//                devInfo += info.WCDMAInfo.toString();
+//            // LTEInfo is null unless on LTE
+//            if (info.LTEInfo != null)
+//                devInfo += info.LTEInfo.toString();
+//            // WiFiInfo is null unless connected to WiFi
+//            if (info.WiFiInfo != null)
+//                devInfo += info.WiFiInfo.toString();
+//
+//            devInfo = devInfo.replace("\n", "<br>");
+//            builder1.setMessage(Html.fromHtml(devInfo));
+//            builder1.setTitle("QOS Info");
+//            builder1.setCancelable(true);
+//            AlertDialog alert11 = builder1.create();
+//            alert11.show();
+//            // Make the textview clickable. Must be called after show()
+//            ((TextView) alert11.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+//        } catch (Exception e) {
+//            LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "CreateDevInfoAlertDialog", "exeption", e);
+//        }
+//    }
 }

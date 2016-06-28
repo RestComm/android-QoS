@@ -620,6 +620,7 @@ public class EventUploader implements Runnable{
                 }
                 if (_event.getJSONResult() != null)
                 {
+					_event.setTcpStatsToJSON ();
                     Stats = _event.getJSONResult();
                 }
 

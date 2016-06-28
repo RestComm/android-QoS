@@ -364,11 +364,11 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 		if (LoggerUtil.isDebuggable())
 			_userChangedTravel = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getBoolean(PreferenceKeys.Miscellaneous.CHANGED_TRAVEL, false);
 
-		if (getUsageProfile() > 1 && _detectionLevel < 1)
+		if (getUsageProfile() > 1)
 		{
-			if (getUsageProfile() > 2)
+			if (getUsageProfile() > 2 && _detectionLevel < 3)
 				_detectionLevel = 3;
-			else
+			else if (_detectionLevel < 1)
 				_detectionLevel = 1;
 		}
 		//_travelEnable = PreferenceManager.getDefaultSharedPreferences(owner).getBoolean(PreferenceKeys.Miscellaneous.TRAVEL_ENABLE, true);

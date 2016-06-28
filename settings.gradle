@@ -6,4 +6,3 @@ project(':app').projectDir = new File('examples/Restcomm_demo/app')
 include ':restcomm.android.client.sdk'
 project(':restcomm.android.client.sdk').projectDir = new File(settingsDir, '../restcomm-android-sdk/restcomm.android.client.sdk')
 // Only include uilib project if you want to include some MMC screens in the app. It requires Google APIs for Android.
-//include ':uilib'

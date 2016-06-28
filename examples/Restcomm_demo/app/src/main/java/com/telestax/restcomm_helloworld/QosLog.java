@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+//import com.cortxt.app.utillib.Utils.LoggerUtil;
+
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 
 import java.io.BufferedInputStream;
@@ -286,7 +288,7 @@ public class QosLog extends Activity {
 	 * Stop overridden methods
 	 * =================================================
 	 * Start public methods
-	 */	
+	 */
 
 	/**
 	 * Returns the tags for which log messages should be shown.
@@ -307,7 +309,7 @@ public class QosLog extends Activity {
 		logTextView.setText(oldText);
 	}
 
-	
+
 	/**
 	 * Updates the text displayed to <code>text</code>
 	 * @param text
@@ -315,14 +317,14 @@ public class QosLog extends Activity {
 	public void updateText(String text) {
 		logTextView.setText(text);
 	}
-	
-	
+
+
 
 	/*
 	 * Stop public methods
 	 * =================================================
 	 * Start helper classes and objects
-	 */	
+	 */
 
 	class ReadLogThreadRunnable implements Runnable {
 		private boolean killThread;
@@ -351,7 +353,7 @@ public class QosLog extends Activity {
 				if(transit) {
 					file = new File(LoggerUtil.LOG_TRANSIT_FILE);
 				}
-				else 
+				else
 					file = new File(LoggerUtil.LOG_FILE);
 				if(!file.exists()) {
 					return;
@@ -369,7 +371,7 @@ public class QosLog extends Activity {
 						if (strBlr.length() >= MAX_SIZE_LOG_BUFFER){
 							strBlr.delete(strBlr.length()/2, strBlr.length()); //delete half the log when its full
 						}
-						
+
 					}
 
 					handler.post(new Runnable() {
