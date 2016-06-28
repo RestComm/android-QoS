@@ -46,10 +46,10 @@ public class TcpStats
                 if (line.indexOf("Tcp:") == 0)
                 {
                     header = line.split(" ");
-                    LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "StatsManager", "readTcpStats header: ", line);
+                    //LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "StatsManager", "readTcpStats header: ", line);
                     line = reader.readLine();
                     vals = line.split(" ");
-                    LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "StatsManager", "readTcpStats values: ", line);
+                    //LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "StatsManager", "readTcpStats values: ", line);
                     break;
                 }
                 line = reader.readLine();
