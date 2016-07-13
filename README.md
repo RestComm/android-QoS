@@ -15,7 +15,7 @@ Reference Documentation
 
 Javadoc style reference documentation can be found at:
 
-http://mobicents.github.io/android-qos/doc/
+https://restcomm.github.io/android-QoS/doc/
 
 OS/Hardware requirements
 ================
