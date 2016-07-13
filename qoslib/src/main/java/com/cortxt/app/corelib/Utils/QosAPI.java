@@ -19,7 +19,7 @@ import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 import com.cortxt.app.utillib.Utils.PreferenceKeys;
 import com.cortxt.app.utillib.Utils.UsageLimits;
-import com.securepreferences.SecurePreferences;
+//import com.securepreferences.SecurePreferences;
 
 import org.json.JSONObject;
 
@@ -53,9 +53,9 @@ public class QosAPI {
      *
      * @param context pass your context
      */
-    public static void start (Context context)
+    public static void start (Context context, boolean bFromUI)
     {
-        Global.startService(context);
+        Global.startService(context, bFromUI);
     }
 
 
@@ -351,16 +351,16 @@ public class QosAPI {
      * When the service restarts it will have a new process, otherwise the process will continue to hold all the RAM the application was using
      * @param activity pass the activity that is being closed to close the App
      */
-    public static void finishUI (Activity activity)
-    {
-        SecurePreferences securePrefs = MainService.getSecurePreferences(activity);
-        boolean bStoppedService = securePrefs.getBoolean(PreferenceKeys.Miscellaneous.STOPPED_SERVICE, false);
-        if (!bStoppedService)
-        {
-            Intent intent = new Intent(IntentHandler.RESTART_MMC_SERVICE);
-            activity.sendBroadcast(intent);
-        }
-    }
+//    public static void finishUI (Activity activity)
+//    {
+//        SecurePreferences securePrefs = MainService.getSecurePreferences(activity);
+//        boolean bStoppedService = securePrefs.getBoolean(PreferenceKeys.Miscellaneous.STOPPED_SERVICE, false);
+//        if (!bStoppedService)
+//        {
+//            Intent intent = new Intent(IntentHandler.RESTART_MMC_SERVICE);
+//            activity.sendBroadcast(intent);
+//        }
+//    }
 
     /**
      * Request a snapshot of all of the Network data the service has obtained

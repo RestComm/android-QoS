@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 
 import com.cortxt.app.corelib.Services.Intents.IntentHandler;
 import com.cortxt.app.utillib.Reporters.ReportManager;
+import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 import com.cortxt.app.utillib.Utils.PreferenceKeys;
 import com.cortxt.app.utillib.Utils.SNTPClient;
@@ -116,7 +117,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
             {
                 LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "GcmBroadcastReceiver", "onReceive", "restarting dormant service");
                 int dormantMode = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getInt(PreferenceKeys.Miscellaneous.USAGE_DORMANT_MODE, 0);
-                if (dormantMode >= 100) {
+                if (dormantMode >= 100 && !Global.isServiceYeilded(context)) {
                     PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).edit().putInt(PreferenceKeys.Miscellaneous.USAGE_DORMANT_MODE, 1).commit();
                     bStoppedService = false;
                     securePrefs.edit().putBoolean(PreferenceKeys.Miscellaneous.STOPPED_SERVICE, false).commit();

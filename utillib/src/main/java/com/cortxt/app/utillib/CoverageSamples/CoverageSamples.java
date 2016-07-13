@@ -1,4 +1,4 @@
-package com.cortxt.app.utillib.DataObjects;
+package com.cortxt.app.utillib.CoverageSamples;
 
 import com.cortxt.app.utillib.CoverageSamples.CellSamples;
 

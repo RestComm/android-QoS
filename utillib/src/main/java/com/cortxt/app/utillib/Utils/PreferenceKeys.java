@@ -196,6 +196,7 @@ public final class PreferenceKeys {
 		public static final String MISC_OPT_COLLECT_USAGE_DATA = "KEY_SETTINGS_COLLECT_USAGE_DATA";
 		public static final String START_ON_BOOT = "KEY_SETTINGS_START_ON_BOOT";
 		public static final String STOPPED_SERVICE = "KEY_SETTINGS_STOPPED_SERVICE";
+		public static final String YEILDED_SERVICE = "KEY_SETTINGS_YEILDED_SERVICE";
 		public static final String MONITOR_IN_SLEEP = "KEY_SETTINGS_MONITOR_IN_SLEEP";
 		public static final String TRAVEL_DETECT = "KEY_SETTINGS_TRAVEL_DETECT";
 		public static final String ROOT_ACCESS_SWITCH = "KEY_SETTINGS_ROOT_ACCESS";

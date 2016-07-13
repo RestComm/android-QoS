@@ -99,5 +99,6 @@ public class CommonIntentActionsOld {
 	public static final String ACTION_TEST_VQ_DEVICE = "com.cortxt.app.MMC.Services.Intents.MMCIntentHandler.TEST_VQ_DEVICE";
 	public static final String ACTION_START_RECORDING = "com.cortxt.app.MMC.Activities.Livestatus.ACTION_START_RECORDING";
 	public static final String ACTION_TEST_COMPLETE = "com.cortxt.app.MMC.Activities.Livestatus.ACTION_TEST_COMPLETE";
+	public static final String ACTION_START_UI = "com.cortxt.app.MMC.intent.ACTION_START_UI";
 
 }

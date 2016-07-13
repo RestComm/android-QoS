@@ -1,7 +1,5 @@
 package com.cortxt.app.utillib.CoverageSamples;
 
-import com.cortxt.app.utillib.DataObjects.CoverageSamples;
-
 import java.util.ArrayList;
 
 /**

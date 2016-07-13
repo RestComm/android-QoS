@@ -130,7 +130,7 @@ public class MainService extends Service {
 		super.onCreate();
 
 		LoggerUtil.setDebuggable(this.isDebuggable());
-		LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "onCreate", "SERVICE WAS STARTED. isMainServiceRunning = " + isMainServiceRunning());
+		LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "onCreate", getPackageName() + " SERVICE WAS STARTED. isMainServiceRunning = " + isMainServiceRunning());
 
 		try {
 			mmcCallbacks = new LibCallbacks(this);
@@ -351,10 +351,13 @@ public class MainService extends Service {
 
 	public void restartSelf ()
 	{
-		LoggerUtil.logToFile(LoggerUtil.Level.WARNING, TAG, "restartSelf", "SERVICE WILL RESTART");
+		LoggerUtil.logToFile(LoggerUtil.Level.WARNING, TAG, "restartSelf", getPackageName() + " SERVICE WILL RESTART");
 		this.stopSelf();
 		SecurePreferences securePrefs = MainService.getSecurePreferences(this);
 		boolean stopped = securePrefs.getBoolean(PreferenceKeys.Miscellaneous.STOPPED_SERVICE, false);
+		// If this MMC app is yeilding to another MMC app, it will stop when safe, but not restart
+		if (Global.isServiceYeilded(this))
+			stopped = true;
 		if (stopped)  // if service is supposed to remain stopped, dont restart
 			return;
 
@@ -1321,8 +1324,7 @@ public class MainService extends Service {
 		QosAPI.setLogin(context, login);}
 	public static void setLoginToIMEI (Context context) {
 		QosAPI.setLoginToIMEI(context);}
-	public static void start (Context context) {
-		QosAPI.start(context);}
+
 	public static int startDriveTest (Context context, int minutes, boolean coverage, int speed, int connectivity, int sms, int video, int audio, int web, int vq, int youtube, int ping)
 	{ return QosAPI.startDriveTest(context, minutes, coverage, speed, connectivity, sms, video, audio, web, vq, youtube, ping);}
 

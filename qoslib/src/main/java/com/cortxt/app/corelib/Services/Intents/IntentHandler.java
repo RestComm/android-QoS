@@ -288,9 +288,16 @@ public class IntentHandler extends BroadcastReceiver {
 		}else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)){
 			owner.setBatteryCharging (false);
 			dataMonitorStats.setBattery(false);
-		}else if (action.equals(Intent.ACTION_VIEW)){
+		}else if (action.equals(Intent.ACTION_VIEW)) {
 			//this is supposed to trigger the update event
 			//owner.triggerUpdateEvent(false, false);
+		}else if (action.equals(CommonIntentActionsOld.ACTION_START_UI)) {
+			String packagename = intent.getStringExtra("packagename");
+			String mypackagename = context.getPackageName();
+			PreferenceManager.getDefaultSharedPreferences(context).edit().putString(PreferenceKeys.Miscellaneous.YEILDED_SERVICE, packagename).commit();
+			// If the UI started on a different MMC app UI, then we stop this service until this UI is launched
+			if (!packagename.equals(mypackagename))  // This will exit the service when safe, and won't restart it because it will be yeilded
+				owner.restartSelf();
 		}else if (action.equals(UPDATE_ACTION)){
 			owner.getEventManager().triggerUpdateEvent(false, false);
 		} else if (action.equals(COLDRESET_ACTION)){
@@ -944,6 +951,7 @@ public class IntentHandler extends BroadcastReceiver {
 		intentFilter.addAction(IntentHandler.STOP_TRACKING_ACTION);
 		intentFilter.addAction(IntentHandler.SPEED_TEST);
 		intentFilter.addAction(IntentHandler.RUN_WEBSOCKET);
+		intentFilter.addAction(CommonIntentActionsOld.ACTION_START_UI);
 
 		intentFilter.addAction(CommonIntentBundleKeysOld.ACTION_UPDATE);
 		intentFilter.addAction(CommonIntentBundleKeysOld.ACTION_LOCATION_UPDATE);

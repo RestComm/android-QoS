@@ -28,7 +28,7 @@ import com.cortxt.app.utillib.Utils.LoggerUtil;
 public class LocalStorageReporter {
 	private static final String TAG = LocalStorageReporter.class.getSimpleName();
 	
-	public static final int DATABASE_VERSION = 4;
+	public static final int DATABASE_VERSION = 5;
 	public static final String DATABASE_NAME = "mmcdb";
 	
 	public static final String PREFERENCE_KEY_DAYS_TO_KEEP_ENTRIES = "KEY_SETTINGS_DAYS_TO_KEEP_ENTRIES";
@@ -49,6 +49,7 @@ public class LocalStorageReporter {
 		public static final String KEY_OPERATOR_ID = "operatorid";
 		public static final String KEY_FROM_NETWORK_TYPE = "fromNetworkType";
 		public static final String KEY_TO_NETWORK_TYPE = "toNetworkType";
+		public static final String KEY_EVENTID = "eventid";
 	}
 	
 	public static class SpeedTest {
@@ -255,6 +256,8 @@ public class LocalStorageReporter {
 		event.put(EventKeys.ID, Integer.toString(cursor.getInt(cursor.getColumnIndex(Events.KEY_ID))));
 		event.put(EventKeys.TIMESTAMP, Long.toString(cursor.getLong(cursor.getColumnIndex(KEY_TIMESTAMP))));
 		event.put(EventKeys.RATING, Integer.toString(cursor.getInt(cursor.getColumnIndex(Events.KEY_TIER))));
+		event.put(EventKeys.EVENTID, Long.toString(cursor.getLong(cursor.getColumnIndex(Events.KEY_EVENTID))));
+		event.put(EventKeys.OPERATOR_ID, Long.toString(cursor.getLong(cursor.getColumnIndex(Events.KEY_OPERATOR_ID))));
 		
 		double latitude = cursor.getDouble(cursor.getColumnIndex(Events.KEY_LATITUDE));
 		double longitude = cursor.getDouble(cursor.getColumnIndex(Events.KEY_LONGITUDE));
@@ -473,6 +476,7 @@ public class LocalStorageReporter {
 		cv.put(Events.KEY_MCC, event.getMCC());
 		cv.put(Events.KEY_MNC, event.getMNC());
 		cv.put(Events.KEY_CARRIER, event.getCarrier());
+		cv.put(Events.KEY_EVENTID, "0");
 		
 		cv.put(Events.KEY_OPERATOR_ID, "");// event.getOperatorId());
 		//cv.put(Events.KEY_TIER, event.getTier());
@@ -637,7 +641,8 @@ public class LocalStorageReporter {
 					SpeedTest.KEY_DOWNLOAD + " integer," +
 					SpeedTest.KEY_UPLOAD + " integer," +
 					Events.KEY_FROM_NETWORK_TYPE + " integer," +
-					Events.KEY_TO_NETWORK_TYPE + " integer);");
+					Events.KEY_TO_NETWORK_TYPE + " integer," +
+					Events.KEY_EVENTID+ " long);");
 
 		}
 

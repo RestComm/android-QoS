@@ -377,6 +377,17 @@ public class EventUploader implements Runnable{
 					if (eventResponse != null) {
 						eventResponse.init();
 						eventResponse.handleEventResponse(owner, false);
+						long[] eventids = eventResponse.getEventIds();
+						int d=0;
+						iterator = eventDataEnvelope.getoEventData().iterator();
+						// Last chance to update fields on an event before its about to be sent to server
+						// read the event from the disk-based SQLite events database to see if the event type changed due to dropped call confirmation
+						for (;iterator.hasNext();) {
+							eventData = iterator.next();
+							eventId = (int) eventData.getCallID();  // local SQLite database id of the event
+							ReportManager.getInstance(owner.getApplicationContext()).updateEventField(eventId, "eventid", Long.toString(eventids[d]));
+							d++;
+						}
 					}
 					resultflag = EventObj.SERVER_SENT;
 					bSent = true;

@@ -9,6 +9,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 
 import com.cortxt.app.utillib.ICallbacks;
 
@@ -29,11 +30,37 @@ public class Global {
         usageLimits = new UsageLimits(cb);
     }
 
-    public static void startService (Context context)
+    public static void startService (Context context, boolean bUI)
     {
-        Intent bgServiceIntent = new Intent();
-        bgServiceIntent.setComponent(new ComponentName(context.getPackageName(), "com.cortxt.app.corelib.MainService"));
-        context.startService(bgServiceIntent);
+        String packagename = context.getPackageName();
+
+        // See if this app is yeilded to another app
+        if (bUI) {
+            PreferenceManager.getDefaultSharedPreferences(context).edit().putString(PreferenceKeys.Miscellaneous.YEILDED_SERVICE, packagename).commit();
+            Intent intent = new Intent(CommonIntentActionsOld.ACTION_START_UI);
+            intent.putExtra("packagename", packagename);
+            context.sendBroadcast(intent);
+        }
+        if (!isServiceYeilded (context)) {
+            Intent bgServiceIntent = new Intent();
+            bgServiceIntent.setComponent(new ComponentName(context.getPackageName(), "com.cortxt.app.corelib.MainService"));
+            LoggerUtil.logToFile(LoggerUtil.Level.ERROR, "Global", "isServiceYeilded", "MMC Service started for " + packagename);
+
+            context.startService(bgServiceIntent);
+        }
+    }
+
+    public static boolean isServiceYeilded (Context context)
+    {
+        String packagename = context.getPackageName();
+        String yeilded = PreferenceManager.getDefaultSharedPreferences(context).getString(PreferenceKeys.Miscellaneous.YEILDED_SERVICE, null);
+        if (yeilded != null && !packagename.equals(yeilded))
+        {
+            LoggerUtil.logToFile(LoggerUtil.Level.ERROR, "Global", "ISSERVICEYEILDED", "MMC Service for " + packagename + " yeilded to " + yeilded);
+            return true;
+        }
+
+        return false;
     }
 
     public static void stopService (Context context)

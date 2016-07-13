@@ -115,6 +115,7 @@ public class ReportManager {
         public static final String LATITUDE = "lat";
         public static final String LONGITUDE = "long";
         public static final String OPERATOR_ID = "opId";
+        public static final String EVENTID = "eventid";
     }
 
     public static class SpeedTestKeys {
@@ -984,7 +985,7 @@ public class ReportManager {
 
             if (!bStoppedService)
             {
-                Global.startService(mContext);
+                Global.startService(mContext, true);
             }
         }
         else {

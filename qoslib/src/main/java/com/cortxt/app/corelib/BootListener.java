@@ -1,6 +1,7 @@
 package com.cortxt.app.corelib;
 
 import com.cortxt.app.utillib.Reporters.ReportManager;
+import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 import com.cortxt.app.utillib.Utils.PreferenceKeys;
 import com.securepreferences.SecurePreferences;
@@ -23,7 +24,10 @@ public class BootListener extends BroadcastReceiver {
 			boolean isAuthorized = ReportManager.getInstance(context.getApplicationContext()).isAuthorized();
             SecurePreferences securePrefs = MainService.getSecurePreferences(context);
 			boolean bStoppedService = securePrefs.getBoolean(PreferenceKeys.Miscellaneous.STOPPED_SERVICE, false);
-			
+			String yeilded = PreferenceManager.getDefaultSharedPreferences(context).getString(PreferenceKeys.Miscellaneous.YEILDED_SERVICE, null);
+			if (Global.isServiceYeilded(context))
+				bStoppedService = true;
+
 			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "BootListener", "startOnBoot=" + startOnBoot + ",isAuthorized=" + isAuthorized + ",bStoppedService=" + bStoppedService, "");
 			
 			if (!bStoppedService)
