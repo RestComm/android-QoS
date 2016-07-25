@@ -385,7 +385,13 @@ public class EventUploader implements Runnable{
 						for (;iterator.hasNext();) {
 							eventData = iterator.next();
 							eventId = (int) eventData.getCallID();  // local SQLite database id of the event
-							ReportManager.getInstance(owner.getApplicationContext()).updateEventField(eventId, "eventid", Long.toString(eventids[d]));
+							ReportManager reportManager = ReportManager.getInstance(owner.getApplicationContext());
+							long svrEventID = event.getEventID();
+							if (svrEventID == 0)
+								svrEventID = eventids[d];
+							reportManager.updateEventField(eventId, "eventid", Long.toString(svrEventID));
+							//reportManager.updateEventField(eventId, "latitude", Double.toString(eventData.getFltEventLat()));
+							//reportManager.updateEventField(eventId, "longitude", Double.toString(eventData.getFltEventLng()));
 							d++;
 						}
 					}

@@ -15,6 +15,7 @@ import android.location.Location;
 import android.preference.PreferenceManager;
 
 import com.cortxt.app.utillib.ContentProvider.Tables;
+import com.cortxt.app.utillib.DataObjects.Carrier;
 import com.cortxt.app.utillib.DataObjects.EventData;
 import com.cortxt.app.utillib.DataObjects.EventObj;
 import com.cortxt.app.utillib.DataObjects.EventType;
@@ -28,7 +29,7 @@ import com.cortxt.app.utillib.Utils.LoggerUtil;
 public class LocalStorageReporter {
 	private static final String TAG = LocalStorageReporter.class.getSimpleName();
 	
-	public static final int DATABASE_VERSION = 5;
+	public static final int DATABASE_VERSION = 7;
 	public static final String DATABASE_NAME = "mmcdb";
 	
 	public static final String PREFERENCE_KEY_DAYS_TO_KEEP_ENTRIES = "KEY_SETTINGS_DAYS_TO_KEEP_ENTRIES";
@@ -49,6 +50,8 @@ public class LocalStorageReporter {
 		public static final String KEY_OPERATOR_ID = "operatorid";
 		public static final String KEY_FROM_NETWORK_TYPE = "fromNetworkType";
 		public static final String KEY_TO_NETWORK_TYPE = "toNetworkType";
+		public static final String KEY_SHORTNAME = "shortname";
+		public static final String KEY_LONGNAME = "longname";
 		public static final String KEY_EVENTID = "eventid";
 	}
 	
@@ -94,8 +97,8 @@ public class LocalStorageReporter {
 	}
 
 	
-	public int storeEvent(final EventData event) {
-		return saveEventToDB(event);
+	public int storeEvent(final EventData event, Carrier carrier) {
+		return saveEventToDB(event, carrier);
 	}
 
 	
@@ -167,6 +170,58 @@ public class LocalStorageReporter {
 			LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "getRecentEvents", "error", e);
 			return null;
 		}
+	}
+
+	public String getLastShortNameOfType(EventType eventType)
+	{
+		try{
+
+			String name = null;
+			Cursor eventCursor = mDB.query(
+					Events.TABLE_NAME,
+					new String[]{ Events.KEY_SHORTNAME },
+					Tables.TIMESTAMP_COLUMN_NAME + ">? AND " + Events.KEY_TYPE + "=? AND " + Events.KEY_SHORTNAME + " IS NOT NULL",
+					new String[]{ Long.toString(System.currentTimeMillis() - 30000000),Integer.toString(eventType.getIntValue())  },
+					null,null,"timeStamp DESC"
+			);
+			eventCursor.moveToFirst();
+			if (!eventCursor.isBeforeFirst())
+			{
+				name = eventCursor.getString(0);
+				return name;
+			}
+		}
+		catch (Exception e)
+		{
+			LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "getRecentEvents", "error", e);
+		}
+		return null;
+	}
+
+	public int getLastEventOfType(EventType eventType)
+	{
+		try{
+
+			int eventid = 0;
+			Cursor eventCursor = mDB.query(
+					Events.TABLE_NAME,
+					new String[]{ Events.KEY_ID },
+					Tables.TIMESTAMP_COLUMN_NAME + ">? AND " + Events.KEY_TYPE + "=?",
+					new String[]{ Long.toString(System.currentTimeMillis() - 300000),Integer.toString(eventType.getIntValue())  },
+					null,null,"timeStamp DESC"
+			);
+			eventCursor.moveToFirst();
+			if (!eventCursor.isBeforeFirst())
+			{
+				eventid = eventCursor.getInt(0);
+				return eventid;
+			}
+		}
+		catch (Exception e)
+		{
+			LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "getRecentEvents", "error", e);
+		}
+		return 0;
 	}
 	/**
 	 * Get events that have happened.
@@ -258,6 +313,9 @@ public class LocalStorageReporter {
 		event.put(EventKeys.RATING, Integer.toString(cursor.getInt(cursor.getColumnIndex(Events.KEY_TIER))));
 		event.put(EventKeys.EVENTID, Long.toString(cursor.getLong(cursor.getColumnIndex(Events.KEY_EVENTID))));
 		event.put(EventKeys.OPERATOR_ID, Long.toString(cursor.getLong(cursor.getColumnIndex(Events.KEY_OPERATOR_ID))));
+		event.put(EventKeys.CARRIER, (cursor.getString(cursor.getColumnIndex(Events.KEY_CARRIER))));
+		event.put(EventKeys.TIER, Long.toString(cursor.getLong(cursor.getColumnIndex(Events.KEY_TIER))));
+		event.put(EventKeys.SHORTNAME, (cursor.getString(cursor.getColumnIndex(Events.KEY_SHORTNAME))));
 		
 		double latitude = cursor.getDouble(cursor.getColumnIndex(Events.KEY_LATITUDE));
 		double longitude = cursor.getDouble(cursor.getColumnIndex(Events.KEY_LONGITUDE));
@@ -464,7 +522,7 @@ public class LocalStorageReporter {
 	 * Should be called from worker thread, as it can block.
 	 * @param event
 	 */
-	protected int saveEventToDB(EventData event) {
+	protected int saveEventToDB(EventData event, Carrier carrier) {
 		ContentValues cv = new ContentValues();
 		
 		cv.put(Events.KEY_TYPE, event.getEventType());
@@ -477,8 +535,11 @@ public class LocalStorageReporter {
 		cv.put(Events.KEY_MNC, event.getMNC());
 		cv.put(Events.KEY_CARRIER, event.getCarrier());
 		cv.put(Events.KEY_EVENTID, "0");
-		
-		cv.put(Events.KEY_OPERATOR_ID, "");// event.getOperatorId());
+
+		if (carrier != null)
+			cv.put(Events.KEY_OPERATOR_ID, carrier.ID);
+		else
+			cv.put(Events.KEY_OPERATOR_ID, "");// event.getOperatorId());
 		//cv.put(Events.KEY_TIER, event.getTier());
 		
 		if (event.getEventType() == EventType.MAN_SPEEDTEST.getIntValue() ||
@@ -507,7 +568,8 @@ public class LocalStorageReporter {
 			
 		}
 		else if (event.getEventType() == EventType.EVT_DROP.getIntValue() || event.getEventType() == EventType.EVT_CALLFAIL.getIntValue() ||
-			event.getEventType() == EventType.EVT_DISCONNECT.getIntValue() || event.getEventType() == EventType.EVT_UNANSWERED.getIntValue())
+			event.getEventType() == EventType.EVT_DISCONNECT.getIntValue() || event.getEventType() == EventType.EVT_UNANSWERED.getIntValue() ||
+				event.getEventType() == EventType.MAN_PLOTTING.getIntValue())
 			cv.put(Events.KEY_TIER, event.getEventIndex());
 		int evtId = 0;
 		try
@@ -642,14 +704,17 @@ public class LocalStorageReporter {
 					SpeedTest.KEY_UPLOAD + " integer," +
 					Events.KEY_FROM_NETWORK_TYPE + " integer," +
 					Events.KEY_TO_NETWORK_TYPE + " integer," +
-					Events.KEY_EVENTID+ " long);");
+					Events.KEY_EVENTID + " long," +
+					Events.KEY_SHORTNAME + " text," +
+					Events.KEY_LONGNAME + " text" +
+					");");
 
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			if (oldVersion == 3)
-				remapEventTypes ( db);
+			if (newVersion == 7)
+				addNameColumns (db);
 			else
 			{
 				db.execSQL("DROP TABLE IF EXISTS " + Events.TABLE_NAME);
@@ -657,19 +722,12 @@ public class LocalStorageReporter {
 				onCreate(db);
 			}
 		}
-		
-		public void remapEventTypes (SQLiteDatabase db)
+
+		private void addNameColumns (SQLiteDatabase db)
 		{
-			db.execSQL("DELETE FROM " + Events.TABLE_NAME + " WHERE type=5 or type=9");  // delete data change events
-			db.execSQL("UPDATE " + Events.TABLE_NAME + " SET type=17 WHERE type=6");  // change service outages
-			db.execSQL("UPDATE " + Events.TABLE_NAME + " SET type=16 WHERE type=7");  // change service outages
-			db.execSQL("UPDATE " + Events.TABLE_NAME + " SET type=24 WHERE type=8");  // change speed test
-			db.execSQL("UPDATE " + Events.TABLE_NAME + " SET type=6 WHERE type=1");  // change failed calls
-			db.execSQL("UPDATE " + Events.TABLE_NAME + " SET type=1 WHERE type=4");  // change disconnect calls
-			db.execSQL("UPDATE " + Events.TABLE_NAME + " SET type=4 WHERE type=2");  // change dropped calls
-			db.execSQL("UPDATE " + Events.TABLE_NAME + " SET type=5 WHERE type=3");  // change connect calls
-			db.execSQL("UPDATE " + Events.TABLE_NAME + " SET type=18 WHERE type=10");  // change update events
-			
+			db.execSQL("ALTER TABLE " + Events.TABLE_NAME + " ADD COLUMN shortname text");
+			db.execSQL("ALTER TABLE " + Events.TABLE_NAME + " ADD COLUMN longname text");
+
 		}
 	}
 }

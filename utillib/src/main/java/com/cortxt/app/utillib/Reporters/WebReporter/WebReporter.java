@@ -691,21 +691,42 @@ public class WebReporter  {
 	public static String readString (HttpURLConnection connection) throws IOException, UnsupportedEncodingException
 	{
 		InputStream stream = null;
-		try {
+		String msg = "readString from url: ";
 
-			BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		try {
+			int code = connection.getResponseCode();
+			BufferedReader br = null;
+			msg += connection.getURL().toString();
+
+			boolean error = false;
+			try {
+				 br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			} catch (Exception e)
+			{
+				error = true;
+				try{
+					br = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+				}
+				catch (Exception e2) {
+					LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, msg, "exception", e2);
+				}
+			}
 			StringBuilder sb = new StringBuilder();
 			String line;
 			while ((line = br.readLine()) != null) {
 				sb.append(line+"\n");
 			}
 			br.close();
-			return sb.toString();
+			String str = sb.toString();
+			if (error)
+			{
+				LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, msg, "error " + str);
+				return "";
+			}
+			return str;
 
 		}
 		catch (Exception ex) {
-			String msg = "readString from url: ";
-			msg += connection.getURL().toString();
 			LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, msg, "exception", ex);
 		}
 		finally
@@ -733,7 +754,8 @@ public class WebReporter  {
 		String addressString = String.format("%.4f, %.4f", latitude, longitude);
 		try {
 			String apiKey = Global.getApiKey(context);
-			String url = "https://lb1.mymobilecoverage.com" + "/api/osm/location?apiKey=" + apiKey + "&location=" + latitude + "&location=" + longitude;
+			String server = Global.getApiUrl(context);
+			String url = server + "/api/osm/location?apiKey=" + apiKey + "&location=" + latitude + "&location=" + longitude;
 			String response = WebReporter.getHttpURLResponse(url, false);
 
 			JSONObject json = null;
@@ -755,13 +777,15 @@ public class WebReporter  {
 						return null;
 					}
 					else {
+						addressString = "";
 						json = json.getJSONObject("address");
 						String number = "";
 						if(json.has("house_number")) {
 							number = json.getString("house_number");
+							addressString += number + " ";
 						}
 						String road = json.getString("road");
-						addressString = number + " " + road;// + suburb;
+						addressString += road;// + suburb;
 						return addressString;
 					}
 				}

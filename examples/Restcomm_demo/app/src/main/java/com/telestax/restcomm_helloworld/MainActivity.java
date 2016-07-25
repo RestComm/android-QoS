@@ -151,7 +151,7 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         // we don't have a separate activity for the calls, so use the same intent both for calls and messages
         device.setPendingIntents(intent, intent);
         device.listen();
-        QosAPI.start(this);
+        QosAPI.start(this, true);
 
         // Setup video stuff
 //        scalingType = ScalingType.SCALE_ASPECT_FILL;

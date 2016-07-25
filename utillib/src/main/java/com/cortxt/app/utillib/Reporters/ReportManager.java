@@ -115,6 +115,9 @@ public class ReportManager {
         public static final String LATITUDE = "lat";
         public static final String LONGITUDE = "long";
         public static final String OPERATOR_ID = "opId";
+        public static final String CARRIER = "carrier";
+        public static final String TIER = "tier";
+        public static final String SHORTNAME = "tier";
         public static final String EVENTID = "eventid";
     }
 
@@ -196,7 +199,8 @@ public class ReportManager {
     //}
 
     public int storeEvent(EventData event) {
-        return mLocalStorageReporter.storeEvent(event);
+        Carrier carrier = getCurrentCarrier();
+        return mLocalStorageReporter.storeEvent(event, carrier);
     }
     public void updateEventField(int evtID, String field, String value ) {
         mLocalStorageReporter.updateEventDBField(evtID, field, value);
@@ -641,6 +645,22 @@ public class ReportManager {
     {
         if (mmcService != null)
             return mmcService.getLatestEvent();
+        else
+            return null;
+    }
+
+    public int getLastEventOfType (EventType eventType)
+    {
+        if (mLocalStorageReporter != null)
+            return mLocalStorageReporter.getLastEventOfType(eventType);
+        else
+            return 0;
+    }
+
+    public String getLastShortNameOfType (EventType eventType)
+    {
+        if (mLocalStorageReporter != null)
+            return mLocalStorageReporter.getLastShortNameOfType(eventType);
         else
             return null;
     }

@@ -641,6 +641,8 @@ public class IntentHandler extends BroadcastReceiver {
 			location.setLatitude(lat / 1000000.0);
 			location.setLongitude(lng / 1000000.0);
 			location.setAccuracy(-1);
+			reportManager.updateEventField(reportManager.manualPlottingEvent.getLocalID(), "latitude", Double.toString(location.getLatitude()));
+			reportManager.updateEventField(reportManager.manualPlottingEvent.getLocalID(), "longitude", Double.toString(location.getLongitude()));
 
 			reportManager.manualPlottingEvent.setLocation(location, 0);
 			presetEventId (reportManager.manualPlottingEvent);  // reserve an EventID for this manual sampling event, to be used for Share links

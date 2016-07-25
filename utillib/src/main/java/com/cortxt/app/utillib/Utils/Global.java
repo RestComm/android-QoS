@@ -30,6 +30,11 @@ public class Global {
         usageLimits = new UsageLimits(cb);
     }
 
+    public static UsageLimits getUsageLimits ()
+    {
+        return usageLimits;
+    }
+
     public static void startService (Context context, boolean bUI)
     {
         String packagename = context.getPackageName();
@@ -186,6 +191,17 @@ public class Global {
             context = callbacks.getContext ();
         SharedPreferences securePref = PreferenceKeys.getSecurePreferences(context);
         String value = securePref.getString(PreferenceKeys.User.APIKEY, null);
+        return value;
+    }
+
+    public static String getLogin (Context context)
+    {
+        //if (mApikey != null)
+        //    return mApikey;
+        if (context == null && callbacks != null)
+            context = callbacks.getContext ();
+        SharedPreferences securePref = PreferenceKeys.getSecurePreferences(context);
+        String value = securePref.getString(PreferenceKeys.User.USER_EMAIL, null);
         return value;
     }
 
