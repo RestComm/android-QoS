@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/screen_container"
+android:layout_width="match_parent"
+android:layout_height="match_parent" >
+
+<RelativeLayout
+    android:id="@+id/scallingWrapepr"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/webView"/>
+
+
+</RelativeLayout>
+
+</RelativeLayout>

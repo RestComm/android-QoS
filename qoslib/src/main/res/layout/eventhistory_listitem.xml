@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scallingWrapperlayout"
+    android:layout_width="fill_parent"
+    android:paddingTop="10px"
+	android:paddingBottom="10px"    
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/eventhistory_type"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20px"
+        android:gravity="center_vertical"
+        android:layout_toLeftOf="@+id/horizontalSeparator"
+        android:textColor="#5e5e5e"
+        android:text="Speed Test"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/eventhistory_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/eventhistory_type"
+        android:layout_below="@+id/eventhistory_type"
+        android:gravity="center_vertical"
+        android:text="4:05 PM"
+        android:textColor="#5e5e5e"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/eventhistory_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/eventhistory_time"
+        android:layout_toRightOf="@+id/eventhistory_time"
+        android:gravity="center_vertical"
+        android:text=" / Oct 3,2012"
+        android:textColor="#5e5e5e"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/eventhistory_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/eventhistory_time"
+        android:layout_below="@+id/eventhistory_time"
+        android:gravity="center_vertical"
+        android:textColor="#5e5e5e"
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/horizontalSeparator"
+        android:layout_width="1px"
+        android:layout_height="50px"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20px"
+        android:layout_toLeftOf="@+id/eventhistory_icon"
+        android:background="#cccccc"
+        android:tag="constantwidth" />
+
+    <ImageView
+        android:id="@+id/eventhistory_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20px"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/eventhistory_eventicon" />
+
+</RelativeLayout>
