@@ -377,6 +377,20 @@ public class QosAPI {
         return qos;
     }
 
+    public static void showHistory (final Activity activity, EventType[] eventTypes) {
+        try {
+            Intent intent = new Intent(activity, EventHistory.class);
+            int[] ieventtypes = new int[eventTypes.length];
+            for (int i=0; i<eventTypes.length;i++)
+                ieventtypes[i] = eventTypes[i].getIntValue();
+            intent.putExtra("eventtypes", ieventtypes);
+            activity.startActivity(intent);
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
     public static void showQoSPanel (final Activity activity) {
         try {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);

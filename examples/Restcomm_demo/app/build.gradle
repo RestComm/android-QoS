@@ -1,4 +1,17 @@
 apply plugin: 'com.android.application'
+// make sure this line comes *after* you apply the Android plugin
+//apply plugin: 'com.getkeepsafe.dexcount'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.5.5'
+
+    }
+}
+apply plugin: 'com.getkeepsafe.dexcount'
 
 android {
     compileSdkVersion 22
@@ -10,7 +23,7 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0.0-BETA2#1"
-        //multiDexEnabled true
+        multiDexEnabled true
 
     }
     buildTypes {
@@ -40,5 +53,7 @@ dependencies {
     debugCompile project(path: ':qoslib', configuration: "libraryDebug")
     releaseCompile project(path: ':qoslib', configuration: "libraryRelease")
 
-    //compile 'com.android.support:multidex:1.0.0'
+    compile 'com.android.support:multidex:1.0.0'
+
 }
+

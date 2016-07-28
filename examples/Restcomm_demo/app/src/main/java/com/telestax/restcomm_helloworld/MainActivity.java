@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.cortxt.app.corelib.Utils.QosAPI;
 import com.cortxt.app.corelib.Utils.QosInfo;
+import com.cortxt.app.utillib.DataObjects.EventType;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 
 import java.util.HashMap;
@@ -75,6 +76,7 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
     Button btnHangup;
     Button btnApply;
     Button btnInfo;
+    Button btnHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,8 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         btnApply.setOnClickListener(this);
         btnInfo = (Button)findViewById(R.id.button_info);
         btnInfo.setOnClickListener(this);
+        btnHistory = (Button)findViewById(R.id.button_history);
+        btnHistory.setOnClickListener(this);
 
         editServer = (EditText)findViewById(R.id.editServer);
         editUser = (EditText)findViewById(R.id.editUser);
@@ -151,25 +155,13 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         // we don't have a separate activity for the calls, so use the same intent both for calls and messages
         device.setPendingIntents(intent, intent);
         device.listen();
-        QosAPI.start(this, true);
 
-        // Setup video stuff
-//        scalingType = ScalingType.SCALE_ASPECT_FILL;
-//        videoView = (GLSurfaceView) findViewById(R.id.glview_call);
-        // Create video renderers.
-//        VideoRendererGui.setView(videoView, new Runnable() {
-//            @Override
-//            public void run() {
-//                videoContextReady();
-//            }
-//        });
-//        remoteRender = VideoRendererGui.create(
-//                REMOTE_X, REMOTE_Y,
-//                REMOTE_WIDTH, REMOTE_HEIGHT, scalingType, false);
-//        localRender = VideoRendererGui.create(
-//                LOCAL_X_CONNECTING, LOCAL_Y_CONNECTING,
-//                LOCAL_WIDTH_CONNECTING, LOCAL_HEIGHT_CONNECTING, scalingType, true);
-//        videoContextReady(intent);
+        // Make sure Qos server is started
+        QosAPI.start(this, true);
+        // make sure user is registered with the QoS server
+        String login = editUser.getText().toString() + "@" + editServer.getText().toString();
+        QosAPI.setLogin(this, login);
+
     }
 
     @Override
@@ -307,6 +299,11 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         }
         else if (view.getId() == R.id.button_info) {
             QosAPI.showQoSPanel(this);
+        }
+        else if (view.getId() == R.id.button_history) {
+            EventType[] eventTypes = {EventType.SIP_DISCONNECT, EventType.SIP_DROP, EventType.SIP_UNANSWERED, EventType.SIP_CALLFAIL};
+            QosAPI.showHistory(this, eventTypes);
+
         }
     }
 

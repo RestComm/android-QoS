@@ -108,6 +108,15 @@
         android:layout_above="@+id/button_dial"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="History"
+        android:id="@+id/button_history"
+        android:minWidth="60dp"
+        android:layout_above="@+id/button_dial"
+        android:layout_toRightOf="@+id/button_apply"
+        />
 
     <Button
         android:layout_width="wrap_content"
@@ -137,6 +146,7 @@
         android:layout_toRightOf="@+id/button_answer"
         android:layout_alignParentBottom="true"
         />
+
 
     <Button
         android:layout_width="wrap_content"

@@ -83,6 +83,14 @@
             android:enabled="true"
             android:label="MMC Service"
             android:screenOrientation="user" />
+
+        <activity
+            android:name=".Utils.EventHistory"
+            android:screenOrientation="user" />
+
+        <activity
+            android:name=".Utils.EventDetailWeb"
+            android:screenOrientation="user" />
         <!--service
             android:name="com.cortxt.app.MMC.sms.SMSService"
             android:enabled="true"

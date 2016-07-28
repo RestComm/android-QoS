@@ -3,7 +3,6 @@ package com.cortxt.app.corelib.Utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -16,11 +15,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cortxt.app.corelib.R;
-import com.cortxt.app.utillib.DataObjects.Carrier;
 import com.cortxt.app.utillib.DataObjects.EventType;
 import com.cortxt.app.utillib.Reporters.ReportManager;
 import com.cortxt.app.utillib.Reporters.WebReporter.WebReporter;
-import com.cortxt.app.utillib.Utils.Constants;
 import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 
@@ -29,17 +26,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
 // TODO: use Compatibility Package
 @SuppressLint("NewApi")
-public class CallHistoryFragment extends ListFragment {
+public class EventHistoryFragment extends ListFragment {
 	private static final HashSet<Integer> EVENTS_TO_DISPLAY = new HashSet<Integer>();
 	static {
 		EVENTS_TO_DISPLAY.add(EventType.EVT_DROP.getIntValue());
@@ -64,81 +58,24 @@ public class CallHistoryFragment extends ListFragment {
 		Intent intent = this.getActivity().getIntent();
 		boolean bFromStats = false;
 		boolean bFromNerd = false;
+		HashSet<Integer> eventsToDisplay = new HashSet<Integer>();
+
 		int eventtype = 0;
 		if (intent.hasExtra("eventtype"))
 			eventtype = intent.getIntExtra("eventtype",0);
+		int[] eventtypes;
+		if (intent.hasExtra("eventtypes"))
+		{
+			eventtypes = intent.getIntArrayExtra("eventtypes");
+			for (int i=0; i<eventtypes.length; i++)
+				eventsToDisplay.add(eventtypes[i]);
+		}
 
 		mEmptyMessage = (TextView) getActivity().findViewById(R.id.eventhistory_emptymessage);
 
-		HashSet<Integer> eventsToDisplay = new HashSet<Integer>();
 		if (eventtype > 0)
 			eventsToDisplay.add(eventtype);
-		else {
-			eventsToDisplay.add(EventType.EVT_DROP.getIntValue());
-			eventsToDisplay.add(EventType.EVT_CALLFAIL.getIntValue());
-			if (!bFromStats) {
-				eventsToDisplay.add(EventType.COV_VOD_NO.getIntValue());
-				eventsToDisplay.add(EventType.COV_VOD_YES.getIntValue());
-				eventsToDisplay.add(EventType.COV_DATA_YES.getIntValue());
-				eventsToDisplay.add(EventType.COV_3G_YES.getIntValue());
-				eventsToDisplay.add(EventType.COV_4G_YES.getIntValue());
-				eventsToDisplay.add(EventType.COV_DATA_NO.getIntValue());
-				eventsToDisplay.add(EventType.COV_3G_NO.getIntValue());
-				eventsToDisplay.add(EventType.COV_4G_NO.getIntValue());
-				eventsToDisplay.add(EventType.MAN_SPEEDTEST.getIntValue());
-				eventsToDisplay.add(EventType.VIDEO_TEST.getIntValue());
-				eventsToDisplay.add(EventType.AUDIO_TEST.getIntValue());
-				eventsToDisplay.add(EventType.WEBPAGE_TEST.getIntValue());
-				eventsToDisplay.add(EventType.YOUTUBE_TEST.getIntValue());
-				eventsToDisplay.add(EventType.SMS_TEST.getIntValue());
-				eventsToDisplay.add(EventType.EVT_VQ_CALL.getIntValue());
 
-				// eventsToDisplay.add(DataNetworkChangeEvent.TYPE_DATA_NETWORK_CHANGE);
-				if (bFromNerd) {
-					eventsToDisplay = null;
-					//				eventsToDisplay.add(EventType.EVT_CONNECT.getIntValue());
-					//				eventsToDisplay.add(EventType.EVT_DISCONNECT.getIntValue());
-					//				eventsToDisplay.add(EventType.EVT_UNANSWERED.getIntValue());
-					//				eventsToDisplay.add(EventType.COV_UPDATE.getIntValue());
-					//				eventsToDisplay.add(EventType.MAN_TRACKING.getIntValue());
-					//				eventsToDisplay.add(EventType.TT_DROP.getIntValue());
-					//				eventsToDisplay.add(EventType.TT_FAIL.getIntValue());
-					//				eventsToDisplay.add(EventType.TT_DATA.getIntValue());
-					//				eventsToDisplay.add(EventType.TT_NO_SVC.getIntValue());
-					//				eventsToDisplay.add(EventType.APP_MONITORING.getIntValue());
-					//				eventsToDisplay.add(EventType.MAN_PLOTTING.getIntValue());
-					//				eventsToDisplay.add(EventType.LATENCY_TEST.getIntValue());
-					//				eventsToDisplay.add(EventType.WIFI_CONNECT.getIntValue());
-					//				eventsToDisplay.add(EventType.WIFI_DISCONNECT.getIntValue());
-					//				eventsToDisplay.add(EventType.SMS_TEST.getIntValue());
-					//				eventsToDisplay.add(EventType.VIDEO_TEST.getIntValue());
-					//				// if (!MMCLogger.isDebuggable())
-					//				{
-					//					eventsToDisplay.add(EventType.TRAVEL_CHECK.getIntValue());
-					//					eventsToDisplay.add(EventType.EVT_FILLIN.getIntValue());
-					//				}
-				} else {
-					// Dashboard.customizeTitleBar(this.getActivity(), view,
-					// R.string.dashboard_eventhistory,
-					// R.string.dashcustom_eventhistory);
-				}
-			} else { // compare screen might call this
-				// Dashboard.customizeTitleBar(this.getActivity(), view,
-				// R.string.dashboard_eventhistory,
-				// R.string.dashcustom_eventhistory);
-			}
-		}
-
-		/*
-		 * mListView.setOnItemClickListener(new OnItemClickListener() {
-		 * 
-		 * @Override public void onItemClick(AdapterView<?> parent, View view,
-		 * int position, long id) { int eventId = (Integer) view.getTag();
-		 * Intent intent = new Intent(EventHistoryFragment.this.getActivity(),
-		 * EventDetail.class); intent.putExtra(EventDetail.EXTRA_EVENT_ID,
-		 * eventId); startActivity(intent); } });
-		 */
-		
 		//load lat/lons for locations before trying to geocode
 		preGeocode(eventsToDisplay);
 		
@@ -169,49 +106,6 @@ public class CallHistoryFragment extends ListFragment {
 				//	suburb = ", " + json.getString("suburb");
 				String address = number + " " + road + suburb;
 				event.put(KEY_ADDRESS, address.trim());
-				/*
-=======
-		TaskHelper.execute(
-		new AsyncTask<Void, Void, List<HashMap<String, String>>>() {
-			@Override
-			protected List<HashMap<String, String>> doInBackground(Void... params) {
-				List<HashMap<String, String>> results = ReportManager.getInstance(getActivity()).getEvents(eventsToDisplay);
-				for (HashMap<String, String> event : results) {
-					try
-					{
-						if (event == null)
-							continue;
-						if (!(event.containsKey(EventKeys.LATITUDE) && event.containsKey(EventKeys.LONGITUDE))) {
-							event.put(KEY_ADDRESS, getActivity().getString(R.string.mycoverage_unknownlocation));
-							continue;
-						}
-						Double lat = Double.parseDouble(event.get(EventKeys.LATITUDE));
-						Double lon = Double.parseDouble(event.get(EventKeys.LONGITUDE));
-						String address = String.format("%.4f, %.4f", lat, lon);
-						event.put(KEY_ADDRESS, address);
-						// Geocoder geocoder = new Geocoder(EventHistory.this);
-						// String addressString = "";
-						// try {
-						// List<Address> addresses = geocoder.getFromLocation(lat,
-						// lon, 1);
-						// if(addresses == null || addresses.size() <= 0){
-						// continue;
-						// }
-						// Address address = addresses.get(0);
-						// for(int i=0; i<=address.getMaxAddressLineIndex(); i++) {
-						// addressString += address.getAddressLine(i) + " ";
-						// }
-						// event.put(KEY_ADDRESS, addressString);
-						// } catch (Exception e) {
-						// String address = String.format("%.4f, %.4f", lat, lon);
-						// event.put(KEY_ADDRESS, address);
-						// }
-					}
-					catch (Exception e){}
-				}
-				return results;
->>>>>>> mmc_white_GM_feature_transit_sampling
-*/
 			}
 		}
 		catch (JSONException e) {
@@ -305,8 +199,8 @@ public class CallHistoryFragment extends ListFragment {
 		Integer eventId = (Integer) v.getTag();
 //		openEventShare (eventId);
 
-		Intent intent = new Intent(CallHistoryFragment.this.getActivity(), CallDetailWeb.class);
-		intent.putExtra(CallDetailWeb.EXTRA_EVENT_ID, eventId);
+		Intent intent = new Intent(EventHistoryFragment.this.getActivity(), EventDetailWeb.class);
+		intent.putExtra(EventDetailWeb.EXTRA_EVENT_ID, eventId);
 		startActivity(intent);
 	}
 
@@ -418,7 +312,7 @@ public class CallHistoryFragment extends ListFragment {
 					mEmptyMessage = (TextView) getActivity().findViewById(R.id.eventhistory_emptymessage);
 				}
 				if (!results.isEmpty()) {
-					EventListAdapter adapter = new EventListAdapter(CallHistoryFragment.this.getActivity(), results);
+					EventListAdapter adapter = new EventListAdapter(EventHistoryFragment.this.getActivity(), results);
 					setListAdapter(adapter);
 					mEmptyMessage.setVisibility(View.INVISIBLE);
 				}
@@ -491,8 +385,8 @@ public class CallHistoryFragment extends ListFragment {
 					
 					mEmptyMessage = (TextView) getActivity().findViewById(R.id.eventhistory_emptymessage);
 				}
-				if (!results.isEmpty() && CallHistoryFragment.this.getActivity() != null) {
-					EventListAdapter adapter = new EventListAdapter(CallHistoryFragment.this.getActivity(), results);
+				if (!results.isEmpty() && EventHistoryFragment.this.getActivity() != null) {
+					EventListAdapter adapter = new EventListAdapter(EventHistoryFragment.this.getActivity(), results);
 					// mListView.setAdapter(adapter);
 					setListAdapter(adapter);
 					mEmptyMessage.setVisibility(View.INVISIBLE);

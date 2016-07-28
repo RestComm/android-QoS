@@ -3,6 +3,7 @@ package com.cortxt.app.corelib.Utils;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -13,7 +14,7 @@ import com.cortxt.app.utillib.Utils.TaskHelper;
 import java.util.HashSet;
 
 
-public class CallHistory extends Activity {
+public class EventHistory extends FragmentActivity {
 	private static final HashSet<Integer> EVENTS_TO_DISPLAY = new HashSet<Integer>();
 	static {
 		EVENTS_TO_DISPLAY.add(EventType.EVT_DROP.getIntValue());

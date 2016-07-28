@@ -38,7 +38,7 @@
                 android:id="@+id/historyList"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                class="com.cortxt.app.corelib.Utils.CallHistoryFragment"/>
+                class="com.cortxt.app.corelib.Utils.EventHistoryFragment"/>
         </FrameLayout>
     </RelativeLayout>
 

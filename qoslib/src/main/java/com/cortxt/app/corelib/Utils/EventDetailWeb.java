@@ -3,7 +3,6 @@ package com.cortxt.app.corelib.Utils;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -28,17 +27,17 @@ import java.util.HashMap;
 
 /**
  * Activity that shows details of an event. It must be passed an integer event id in the Intent, with the key
- * {@link CallDetailWeb#EXTRA_EVENT_ID}
+ * {@link EventDetailWeb#EXTRA_EVENT_ID}
  *
  * @author brad scheurman
  *
  */
-public class CallDetailWeb extends Activity {
+public class EventDetailWeb extends Activity {
     public static final String EXTRA_EVENT_ID = "eventId";
 
     TextView mdropcallText;
     Button dropButton;
-    public static final String TAG = CallDetailWeb.class.getSimpleName();
+    public static final String TAG = EventDetailWeb.class.getSimpleName();
     private static HashMap<String, String> mEvent;
     private AsyncTask<Void, Void, HashMap<String, String>> mGetEventInfoTask;
     private static RelativeLayout scalingLayout = null;
@@ -124,16 +123,16 @@ public class CallDetailWeb extends Activity {
                         else
                             carrierID = reportManager.getCurrentCarrier().ID;
 
-                        String appurl = Global.getApiUrl(CallDetailWeb.this);
+                        String appurl = Global.getApiUrl(EventDetailWeb.this);
                         String servername = "app";
                         if (appurl.indexOf("dev.") >= 0)
                             servername = "devmynetwork";
 
-                        String linkMN = "https://" + servername + ".mymobilecoverage.com/MyNetwork/simpleshare.html?userID=" + Global.getUserID(CallDetailWeb.this) + "&type=" + eventtype + "&carrierID=" + carrierID;
+                        String linkMN = "https://" + servername + ".mymobilecoverage.com/MyNetwork/simpleshare.html?userID=" + Global.getUserID(EventDetailWeb.this) + "&type=" + eventtype + "&carrierID=" + carrierID;
                         linkMN += "&id=" + eventid + "&eventsmode=evt&limit=20000&startdate=" + startdate + "&enddate=" + enddate;
                         linkMN += "&filternames=all";
                         linkMN += "&zoom=14&lat=" + fLat + "&lng=" + fLng + "&expand=1&mob=1";
-                        linkMN += "&apiKey=" + Global.getApiKey(CallDetailWeb.this);
+                        linkMN += "&apiKey=" + Global.getApiKey(EventDetailWeb.this);
 
                         String url = linkMN;
                         webview.setWebChromeClient(new WebChromeClient() {});
