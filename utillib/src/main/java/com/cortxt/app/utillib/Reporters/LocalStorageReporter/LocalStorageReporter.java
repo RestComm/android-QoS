@@ -314,7 +314,6 @@ public class LocalStorageReporter {
 		event.put(EventKeys.EVENTID, Long.toString(cursor.getLong(cursor.getColumnIndex(Events.KEY_EVENTID))));
 		event.put(EventKeys.OPERATOR_ID, Long.toString(cursor.getLong(cursor.getColumnIndex(Events.KEY_OPERATOR_ID))));
 		event.put(EventKeys.CARRIER, (cursor.getString(cursor.getColumnIndex(Events.KEY_CARRIER))));
-		event.put(EventKeys.TIER, Long.toString(cursor.getLong(cursor.getColumnIndex(Events.KEY_TIER))));
 		event.put(EventKeys.SHORTNAME, (cursor.getString(cursor.getColumnIndex(Events.KEY_SHORTNAME))));
 		
 		double latitude = cursor.getDouble(cursor.getColumnIndex(Events.KEY_LATITUDE));

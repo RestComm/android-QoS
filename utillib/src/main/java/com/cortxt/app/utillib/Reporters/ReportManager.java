@@ -116,7 +116,6 @@ public class ReportManager {
         public static final String LONGITUDE = "long";
         public static final String OPERATOR_ID = "opId";
         public static final String CARRIER = "carrier";
-        public static final String TIER = "tier";
         public static final String SHORTNAME = "tier";
         public static final String EVENTID = "eventid";
     }
