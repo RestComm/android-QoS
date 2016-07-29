@@ -386,12 +386,18 @@ public class EventUploader implements Runnable{
 							eventData = iterator.next();
 							eventId = (int) eventData.getCallID();  // local SQLite database id of the event
 							ReportManager reportManager = ReportManager.getInstance(owner.getApplicationContext());
-							long svrEventID = event.getEventID();
+							long svrEventID = 0;
+							if (d==0 && event != null)
+								svrEventID = event.getEventID();
+							if (d==1 && complimentaryEvent != null)
+								svrEventID = complimentaryEvent.getEventID();
 							if (svrEventID == 0)
 								svrEventID = eventids[d];
 							reportManager.updateEventField(eventId, "eventid", Long.toString(svrEventID));
-							//reportManager.updateEventField(eventId, "latitude", Double.toString(eventData.getFltEventLat()));
-							//reportManager.updateEventField(eventId, "longitude", Double.toString(eventData.getFltEventLng()));
+							if (eventData.getEventType() == EventType.EVT_VQ_CALL.getIntValue() || eventData.getEventType() == EventType.SIP_VQ_CALL.getIntValue() ||
+												eventData.getEventType() == EventType.CONNECTION_FAILED.getIntValue())
+								reportManager.updateEventField(eventId, Events.KEY_TYPE, Integer.toString(eventData.getEventType()));
+
 							d++;
 						}
 					}
@@ -633,7 +639,7 @@ public class EventUploader implements Runnable{
 				}
                 if (_event.getEventType() == EventType.EVT_VQ_CALL)
                 {
-                    Apps = _event.getAppData();
+                    //Apps = _event.getAppData();
                 }
                 if (_event.getJSONResult() != null)
                 {
