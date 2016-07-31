@@ -334,7 +334,7 @@ public class WebReporter  {
 		
 			URL request = DidYouKnowRequest.getURL(path, mApiKey, opid);
 			HttpURLConnection connection = (HttpURLConnection) request.openConnection();
-			connection.connect ();
+			connection.connect();
 			String responseString = readString(connection);
 			jsonfact = new JSONObject(responseString);
 
@@ -423,6 +423,7 @@ public class WebReporter  {
 		}
 		return areastats;
 	}
+
 	/**
 	 * Gets the logo of the carrier specified by <code>carrier</code>
 	 * @param carrier
@@ -438,8 +439,10 @@ public class WebReporter  {
 
 			String networksResponseString = null;
  			String opresponse = securePreferences.getString(PreferenceKeys.Miscellaneous.OPERATOR_RESPONSE, null);
- 			String oprequest = securePreferences.getString(PreferenceKeys.Miscellaneous.OPERATOR_REQUEST, null);
- 			if (opresponse != null && oprequest != null)
+			String userresponse = securePreferences.getString(PreferenceKeys.Miscellaneous.USER_RESPONSE, null);
+			String oprequest = securePreferences.getString(PreferenceKeys.Miscellaneous.OPERATOR_REQUEST, null);
+
+			if (opresponse != null && oprequest != null && userresponse != null)
 			{
  				if (oprequest.equals(request.getQuery()))
  				{
@@ -454,7 +457,17 @@ public class WebReporter  {
 				networksResponseString = readString(connection);
                 securePreferences.edit().putString(PreferenceKeys.Miscellaneous.OPERATOR_RESPONSE, networksResponseString).commit();
                 securePreferences.edit().putString(PreferenceKeys.Miscellaneous.OPERATOR_REQUEST, request.getQuery()).commit();
- 			}JSONObject operator = new JSONObject(networksResponseString).getJSONObject(JSON_NETWORK_KEY);
+
+				int userid = Global.getUserID(mContext);
+				URL requestuser = UserRequest.getURL(mHost, mApiKey, userid);
+				connection = (HttpURLConnection) requestuser.openConnection();
+				connection.connect();
+				verifyConnectionResponse(connection);
+				String userResponseString = readString(connection);
+				securePreferences.edit().putString(PreferenceKeys.Miscellaneous.USER_RESPONSE, userResponseString).commit();
+
+
+			}JSONObject operator = new JSONObject(networksResponseString).getJSONObject(JSON_NETWORK_KEY);
 			carrierCurr = new Carrier(operator);
 			
 			String carriername = carrierCurr.Name;

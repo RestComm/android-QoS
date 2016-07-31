@@ -139,14 +139,14 @@
     <string name="dashboard_title_coverage">Coverage</string>
     <string name="dashboard_icon_maps">my coverage icon</string>
     <string name="dashboard_icon_compare">my stats icon</string>
-    <string name="dashboard_icon_troubletweet">trouble spot icon</string>
+    <string name="dashboard_icon_troubletweet">report icon</string>
     <string name="dashboard_icon_speedtest">speed test icon</string>
     <string name="dashboard_title">MyMobileCoverage</string>
     <string name="dashboard_maps">Maps</string>
     <string name="dashboard_compare">Compare</string>
     <string name="dashboard_speed">Speed Test</string>
     <string name="dashboard_test">Test</string>
-    <string name="dashboard_trouble">Trouble Tweet</string>
+    <string name="dashboard_trouble">Report</string>
     <string name="dashboard_tweet">Tweet</string>
     <string name="dashboard_didyouknow">Did you know?</string>
 
@@ -492,8 +492,8 @@
     <string name="eventdetail_phone">Phone:</string>
     <string name="eventdetail_carrierlogo">carrier logo</string>
     <!-- Strings for TroubleSpot activity -->
-    <string name="troublespot_title_trouble">Trouble</string>
-    <string name="troublespot_title_tweet">Tweet</string>
+    <string name="troublespot_title_trouble">Report</string>
+    <string name="troublespot_title_tweet"></string>
     <string name="troublespot_intromessage">Center the map over the problem area</string>
     <string name="troublespot_step1_message">1. My issue is related to:</string>
     <string name="troublespot_crosshairs">crosshairs</string>
@@ -950,7 +950,7 @@
     <string name="Settings_ContactEmail_Summary">You may change the email used to send raw data or password resets to, but this will not affect your login.</string>
     <string name="Settings_Twitter">Twitter Username</string>
     <string name="Settings_RootAccess">Root Access</string>
-    <string name="Settings_Twitter_Summary">(optional) By providing your Twitter username, you enable your carrier to see your Trouble Tweet and fix your problem!</string>
+    <string name="Settings_Twitter_Summary">(optional) By providing your Twitter username, you enable your carrier to see your Report and fix your problem!</string>
     <string name="Settings_MonitorInSleep">Wake to monitor in sleep</string>
     <string name="Settings_MonitorInSleep_Summary">May need to blink screen periodically to allow network measurements. Has tiny effect on battery.</string>
     <string name="Settings_StartOnBootOld">Start on boot</string>

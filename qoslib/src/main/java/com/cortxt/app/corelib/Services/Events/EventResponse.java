@@ -62,6 +62,9 @@ public class EventResponse {
                             d.userCovOnly = Integer.parseInt(value);
                         if (name.equals("carriercovonly"))
                             d.carrierCovOnly = Integer.parseInt(value);
+                        if (name.equals("mynetwork_link"))
+                            d.mynetwork_link = Integer.parseInt(value);
+
 
                     } catch (Exception e) {
                         LoggerUtil.logToFile(LoggerUtil.Level.ERROR, "EventResponseContents", "exception in jsonarray " + i, d.extra_settings, e);
@@ -155,6 +158,13 @@ public class EventResponse {
     public Integer getCarrierCovOnly() {
         if (d.carrierCovOnly != null)
             return d.carrierCovOnly;
+        else
+            return null;
+    }
+
+    public Integer getMyNetworkLinks() {
+        if (d.mynetwork_link != null)
+            return d.mynetwork_link;
         else
             return null;
     }
@@ -469,6 +479,8 @@ public class EventResponse {
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.USER_COV_ONLY, this.getUserCovOnly()).commit();
         if (this.getCarrierCovOnly() != null)
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.CARRIER_COV_ONLY, this.getCarrierCovOnly()).commit();
+        if (this.getMyNetworkLinks() != null)
+            PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.MYNETWORK_LINKS, this.getMyNetworkLinks()).commit();
         if (this.getAllowBuildings() != null)
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.ALLOW_BUILDINGS, this.getAllowBuildings()).commit();
         if (this.getAllowTransit() != null)
@@ -619,7 +631,7 @@ class EventResponseContents {
 	public long[] eventids;
     public long starttime = 0;
     public Integer hideCompare = 0, hideMap = 0, userCovOnly = 0, carrierCovOnly = 0;
-    public Integer allow_sms = 1;
+    public Integer allow_sms = 1, mynetwork_link = 0;
 	public EventResponseContents(){
 		
 	}

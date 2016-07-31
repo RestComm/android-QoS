@@ -217,6 +217,7 @@ public final class PreferenceKeys {
 		public static final String HIDE_MAP = "KEY_SETTINGS_HIDE_MAP";
 		public static final String USER_COV_ONLY = "KEY_SETTINGS_USER_COV_ONLY";
 		public static final String CARRIER_COV_ONLY = "KEY_SETTINGS_CARRIER_COV_ONLY";
+		public static final String MYNETWORK_LINKS = "KEY_SETTINGS_MYNETWORK_LINKS";
 		public static final String HIDE_TWEET_SHARE = "KEY_SETTINGS_HIDE_TWEET_SHARE";
 		public static final String ALLOW_TRAVEL_FILLINS = "KEY_SETTINGS_ALLOW_FILLINS";
 		public static final String ALLOW_BUILDINGS = "KEY_SETTINGS_ALLOW_BUILDINGS";
@@ -304,6 +305,7 @@ public final class PreferenceKeys {
 		public static final String SCREEN_ON_UPDATE = "KEY_SETTINGS_SCREEN_ON_UPDATE";
 		public static final String OPERATOR_RESPONSE = "KEY_SETTINGS_OPERATOR_RESPONSE";
 		public static final String OPERATOR_REQUEST = "KEY_SETTINGS_OPERATOR_REQUEST";
+		public static final String USER_RESPONSE = "KEY_SETTINGS_USER_RESPONSE";
 		public static final String DROP_PROX = "KEY_SETTINGS_DROP_PROX";
 		public static final String EVENTS_QUEUE  = "KEY_SETTINGS_EVENTS_QUEUE";
 		public static final String LAST_TIME  = "KEY_SETTINGS_LAST_TIME";
