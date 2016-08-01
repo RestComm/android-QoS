@@ -624,7 +624,7 @@ class EventResponseContents {
 	public String extra_settings = null;
     //public String active_tests = null;
 	public Integer allow_travel_fillin = null, level_default = null;
-    public Integer use_gcm = 0, speed_month_mb = 0, auto_speedtest = 0, use_svcmode = 0, gcm_heartbeat = 0;
+    public Integer use_gcm = 0, speed_month_mb = 0, auto_speedtest = 0, use_svcmode = 1, gcm_heartbeat = 0;
     public Integer websocket = 0;
     public String youtube_id = "";
 	//public long eventId = 0;
