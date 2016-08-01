@@ -480,6 +480,11 @@ public class TrackingManager {
 				owner.getEventManager().queueActiveTest(EventType.AUDIO_TEST, 2);
 			else if (cmdtype.equals("predelay"))  // in case a pre-delay doesn't follow a test, treat as a post delay
 				cmdtype = "postdelay";
+			else if (cmdtype.equals("cov"))  // in case a pre-delay doesn't follow a test, treat as a post delay
+			{
+				cmdtype = "predelay";
+				loop = 300;
+			}
 			else if (!cmdtype.equals("postdelay")) // unrecognized command
 			{
 				cmdtype = "postdelay";
