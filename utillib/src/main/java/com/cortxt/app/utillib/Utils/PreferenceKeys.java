@@ -220,6 +220,7 @@ public final class PreferenceKeys {
 		public static final String MYNETWORK_LINKS = "KEY_SETTINGS_MYNETWORK_LINKS";
 		public static final String HIDE_TWEET_SHARE = "KEY_SETTINGS_HIDE_TWEET_SHARE";
 		public static final String ALLOW_TRAVEL_FILLINS = "KEY_SETTINGS_ALLOW_FILLINS";
+		public static final String TRAVEL_MODE = "KEY_SETTINGS_TRAVEL_MODE";
 		public static final String ALLOW_BUILDINGS = "KEY_SETTINGS_ALLOW_BUILDINGS";
 		public static final String ALLOW_TRANSIT = "KEY_SETTINGS_ALLOW_TRANSIT";
 		public static final String AUTO_CONNECTION_TESTS = "KEY_SETTINGS_AUTO_CONN_TESTS";

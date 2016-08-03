@@ -42,6 +42,8 @@ public class EventResponse {
                             d.hide_tt_share = Integer.parseInt(value);
                         if (name.equals("allow_travel_fillin"))
                             d.allow_travel_fillin = Integer.parseInt(value);
+                        if (name.equals("travel_mode"))
+                            d.travel_mode = Integer.parseInt(value);
                         if (name.equals("level_default"))
                             d.level_default = Integer.parseInt(value);
                         if (name.equals("use_gcm"))
@@ -186,6 +188,13 @@ public class EventResponse {
     public Integer getAllowTravelFillins() {
         if (d.allow_travel_fillin != null)
             return d.allow_travel_fillin;
+        else
+            return null;
+    }
+
+    public Integer getTravelMode() {
+        if (d.travel_mode != null)
+            return d.travel_mode;
         else
             return null;
     }
@@ -497,6 +506,8 @@ public class EventResponse {
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.HIDE_TWEET_SHARE, this.getHideTweetShare()).commit();
         if (this.getAllowTravelFillins() != null)
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.ALLOW_TRAVEL_FILLINS, this.getAllowTravelFillins()).commit();
+        if (this.getTravelMode() != null)
+            PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.TRAVEL_MODE, this.getTravelMode()).commit();
         if (this.getUseGCM() != null)
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.USE_GCM, this.getUseGCM()).commit();
         if (this.getUseSvcMode() != null)
@@ -623,7 +634,7 @@ class EventResponseContents {
 	public String speed_sizes = null;
 	public String extra_settings = null;
     //public String active_tests = null;
-	public Integer allow_travel_fillin = null, level_default = null;
+	public Integer allow_travel_fillin = null, level_default = null, travel_mode = null;
     public Integer use_gcm = 0, speed_month_mb = 0, auto_speedtest = 0, use_svcmode = 1, gcm_heartbeat = 0;
     public Integer websocket = 0;
     public String youtube_id = "";
