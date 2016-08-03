@@ -195,10 +195,17 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 	public boolean exceededGps (EventType eventType, boolean increment)
 	{
         // These type of events will always invoke the GPS
-        if (eventType == EventType.EVT_DROP || eventType == EventType.EVT_CALLFAIL || eventType == EventType.MAN_PLOTTING || eventType == EventType.TRAVEL_CHECK || eventType == EventType.EVT_FILLIN ||
+        if (eventType == EventType.EVT_DROP || eventType == EventType.EVT_CALLFAIL || eventType == EventType.MAN_PLOTTING || eventType == EventType.EVT_FILLIN ||
                 eventType == EventType.MAN_SPEEDTEST || eventType == EventType.MAN_TRACKING || eventType == EventType.COV_UPDATE || eventType == EventType.MAN_TRANSIT ||
 				eventType == EventType.EVT_VQ_CALL || eventType == EventType.SIP_VQ_CALL || eventType == EventType.YOUTUBE_TEST ||
                 eventType == EventType.VIDEO_TEST || eventType == EventType.CONNECTION_FAILED || eventType == EventType.WEBPAGE_TEST || eventType == EventType.AUDIO_TEST || eventType == EventType.SMS_TEST)
+		{
+			if (increment == true)
+				_countGpsAttempts ++;
+			return false;
+		}
+
+		if (eventType == EventType.TRAVEL_CHECK && (owner.getDriveTestTrigger() == "travel" || _usageLimit > 1))
 		{
 			if (increment == true)
 				_countGpsAttempts ++;
@@ -392,6 +399,12 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 	
 	public int getTravelDetectionLevel ()
 	{
+		if (owner.getDriveTestTrigger().equals("travel")) {
+			if (_detectionLevel < 2)
+				_detectionLevel = 2;
+			if (WAKEUP_PERIOD > 3)
+				WAKEUP_PERIOD = 3;
+		}
 		return _detectionLevel;
 	}
 	

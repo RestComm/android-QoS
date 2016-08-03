@@ -451,6 +451,11 @@ public class TrackingManager {
 	{
 		if ((durMinutes > 0 && trackingElapsed >= durMinutes*60) || bTracking == false)
 			return;
+		if (testTrigger.equals("travel") && !owner.getTravelDetector().isTravelling())
+		{
+			owner.getEventManager().stopTracking();
+			return;
+		}
 
 		count += 1;
 
@@ -534,6 +539,12 @@ public class TrackingManager {
 
 	private long prevTrackingTime = 0;
 	public void runTracking () {
+
+		if (testTrigger.equals("travel") && !owner.getTravelDetector().isTravelling())
+		{
+			owner.getEventManager().stopTracking();
+			return;
+		}
 
 		LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "runTracking", "covInterval=" + coverageInterval + ",speedInterval=" + speedtestInterval + ",count=" + count + ",videoInterval=" + videoInterval);
 		if (prevTrackingTime > 0)

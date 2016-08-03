@@ -210,6 +210,7 @@ public class MainService extends Service {
 			// in case app was killed in the middle of tracking, it will resume
 			trackingManager.resumeTracking();
 
+
 			// intentFilter is MMCIntentHandlerOld, it will declare and handle a large number of Intents
 			registerReceiver(intentHandler, intentHandler.declareIntentFilters());
 
@@ -1420,7 +1421,7 @@ public class MainService extends Service {
 				if (!notifyToLaunch.toLowerCase().equals("none")) {
 					Intent notificationIntent = new Intent();//, "com.cortxt.app.mmcui.Activities.Dashboard");
 					if (notifyToLaunch.length() == 0)
-						notifyToLaunch = "com.cortxt.app.mmcui.Activities.Dashboard";
+						notifyToLaunch = "com.cortxt.app.uilib.Activities.Dashboard";
 					notificationIntent.setClassName(MainService.this, notifyToLaunch);
 					notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 					pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);

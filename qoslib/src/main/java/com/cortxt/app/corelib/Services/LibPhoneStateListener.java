@@ -1410,7 +1410,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 				notification.flags |= Notification.FLAG_AUTO_CANCEL;
 				//Intent notificationIntent = new Intent(MainService.this, Dashboard.class);
 				Intent notificationIntent = new Intent();//, "com.cortxt.app.mmcui.Activities.Dashboard");
-				notificationIntent.setClassName(owner, "com.cortxt.app.mmcui.Activities.Dashboard");
+				notificationIntent.setClassName(owner, "com.cortxt.app.uilib.Activities.Dashboard");
 				notificationIntent.putExtra("eventId", evtId);
 
 				notificationIntent.setData((Uri.parse("foobar://" + SystemClock.elapsedRealtime())));
@@ -1613,13 +1613,16 @@ public class LibPhoneStateListener extends PhoneStateListener {
 			//event = owner.startPhoneEvent(EventType.COV_DATA_DISC, EventType.COV_DATA_CONN);
 			// 4G Outage defined as switching to and connecting to 2G from 4G
 			if (mPhoneState.previousNetworkTier > 4){
-				event = owner.getEventManager().startPhoneEvent(EventType.COV_4G_NO, EventType.COV_4G_YES);
+				if (mPhoneState.isScreenOn() || mPhoneState.isOffHook() || owner.isTravelling())
+					event = owner.getEventManager().startPhoneEvent(EventType.COV_4G_NO, EventType.COV_4G_YES);
 			}
 			if (mPhoneState.previousNetworkTier > 2){
-				event = owner.getEventManager().startPhoneEvent(EventType.COV_3G_NO, EventType.COV_3G_YES);
+				if (mPhoneState.isScreenOn() || mPhoneState.isOffHook() || owner.isTravelling())
+					event = owner.getEventManager().startPhoneEvent(EventType.COV_3G_NO, EventType.COV_3G_YES);
 			}
 			if (mPhoneState.previousNetworkTier > 0){
-				event = owner.getEventManager().startPhoneEvent(EventType.COV_DATA_NO, EventType.COV_DATA_YES);
+				if (mPhoneState.isScreenOn() || mPhoneState.isOffHook() || owner.isTravelling())
+					event = owner.getEventManager().startPhoneEvent(EventType.COV_DATA_NO, EventType.COV_DATA_YES);
 			}
 		}
 
@@ -1633,15 +1636,18 @@ public class LibPhoneStateListener extends PhoneStateListener {
 		//} 
 		// DATA Outage defined as switching to and connecting to 1G (GPRS) from > 1G (EDGE or higher)
 		if (state == TelephonyManager.DATA_CONNECTED && mPhoneState.previousNetworkTier > 1 && mPhoneState.getNetworkGeneration() == 1){
-			event = owner.getEventManager().startPhoneEvent(EventType.COV_DATA_NO, EventType.COV_DATA_YES);
+			if (mPhoneState.isScreenOn() || mPhoneState.isOffHook() || owner.isTravelling())
+				event = owner.getEventManager().startPhoneEvent(EventType.COV_DATA_NO, EventType.COV_DATA_YES);
 		} 
 		// 3G Outage defined as switching to and connecting to 2G from >2G
 		if (state == TelephonyManager.DATA_CONNECTED && mPhoneState.previousNetworkTier > 2){
-			event = owner.getEventManager().startPhoneEvent(EventType.COV_3G_NO, EventType.COV_3G_YES);
+			if (mPhoneState.isScreenOn() || mPhoneState.isOffHook() || owner.isTravelling())
+				event = owner.getEventManager().startPhoneEvent(EventType.COV_3G_NO, EventType.COV_3G_YES);
 		} 
 		// 4G Outage defined as switching to and connecting to 2G from 4G
 		if (state == TelephonyManager.DATA_CONNECTED && mPhoneState.previousNetworkTier > 4){
-			event = owner.getEventManager().startPhoneEvent(EventType.COV_4G_NO, EventType.COV_4G_YES);
+			if (mPhoneState.isScreenOn() || mPhoneState.isOffHook() || owner.isTravelling())
+				event = owner.getEventManager().startPhoneEvent(EventType.COV_4G_NO, EventType.COV_4G_YES);
 		} 
 
 
@@ -1662,7 +1668,8 @@ public class LibPhoneStateListener extends PhoneStateListener {
 		} 
 		// 4G Outage defined as switching to and connecting to 3G from LTE 4G
 		if (state == TelephonyManager.DATA_CONNECTED && mPhoneState.previousNetworkTier > 4 && !mPhoneState.bOffHook){
-			event = owner.getEventManager().startPhoneEvent(EventType.COV_4G_NO, EventType.COV_4G_YES);
+			if (mPhoneState.isScreenOn() || mPhoneState.isOffHook() || owner.isTravelling())
+				event = owner.getEventManager().startPhoneEvent(EventType.COV_4G_NO, EventType.COV_4G_YES);
 		} 
 		
 	}
