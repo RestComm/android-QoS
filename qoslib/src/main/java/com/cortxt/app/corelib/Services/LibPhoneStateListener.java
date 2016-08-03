@@ -1648,7 +1648,10 @@ public class LibPhoneStateListener extends PhoneStateListener {
 		if (state == TelephonyManager.DATA_CONNECTED && mPhoneState.previousNetworkTier > 4){
 			if (mPhoneState.isScreenOn() || mPhoneState.isOffHook() || owner.isTravelling())
 				event = owner.getEventManager().startPhoneEvent(EventType.COV_4G_NO, EventType.COV_4G_YES);
-		} 
+		}
+
+		if (state == TelephonyManager.DATA_CONNECTED && mPhoneState.previousNetworkTier < 2 && mPhoneState.getNetworkGeneration() == 2)
+			event = owner.getEventManager().stopPhoneEvent(EventType.COV_DATA_NO, EventType.COV_DATA_YES);
 
 
 	}

@@ -698,10 +698,11 @@ public class WebReporter  {
 			verifyConnectionResponse(connection);
 		String responseString = readString(connection);
 
+
 		return responseString;
 	}
 
-	public static String readString (HttpURLConnection connection) throws IOException, UnsupportedEncodingException
+	public static String readString (HttpURLConnection connection) throws Exception, UnsupportedEncodingException
 	{
 		InputStream stream = null;
 		String msg = "readString from url: ";
@@ -716,12 +717,13 @@ public class WebReporter  {
 				 br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			} catch (Exception e)
 			{
+				LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "readString getInputStream", "exception", e);
 				error = true;
 				try{
 					br = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
 				}
 				catch (Exception e2) {
-					LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, msg, "exception", e2);
+					LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "readString getErrorStream", "exception", e2);
 				}
 			}
 			StringBuilder sb = new StringBuilder();
@@ -733,14 +735,15 @@ public class WebReporter  {
 			String str = sb.toString();
 			if (error)
 			{
-				LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, msg, "error " + str);
-				return "";
+				LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "readString ", "error " + str);
+				return null;
 			}
 			return str;
 
 		}
 		catch (Exception ex) {
-			LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, msg, "exception", ex);
+			LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "readString ", "exception", ex);
+			throw (ex);
 		}
 		finally
 		{
@@ -755,7 +758,7 @@ public class WebReporter  {
 				}
 			}
 		}
-		return null;
+		//return null;
 	}
 
 	public static String geocode (Context context, Location location)

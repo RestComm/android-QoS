@@ -1,6 +1,8 @@
 package com.cortxt.app.corelib.Services.Events;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -362,13 +364,13 @@ public class EventUploader implements Runnable{
 		}
 		else
 		{
-			try {
-
-				{
+			//synchronized (owner)
+			{
+				try {
 					int allowSpeedTest = 0;
 					if (!PhoneState.isNetworkWifi(owner) && !queued)
 						allowSpeedTest = owner.getUsageLimits().allowSpeedTest(100000);
-					eventDataEnvelope.setAllowSpeedTest (allowSpeedTest);
+					eventDataEnvelope.setAllowSpeedTest(allowSpeedTest);
 					//MMCLogger.logToFile(MMCLogger.Level.DEBUG, TAG, "run", "uploading staged event type=" + eventType + " id=" + eventId);
 					Gson gson = new Gson();
 					String eventJSON = gson.toJson(eventDataEnvelope);
@@ -378,24 +380,24 @@ public class EventUploader implements Runnable{
 						eventResponse.init();
 						eventResponse.handleEventResponse(owner, false);
 						long[] eventids = eventResponse.getEventIds();
-						int d=0;
+						int d = 0;
 						iterator = eventDataEnvelope.getoEventData().iterator();
 						// Last chance to update fields on an event before its about to be sent to server
 						// read the event from the disk-based SQLite events database to see if the event type changed due to dropped call confirmation
-						for (;iterator.hasNext();) {
+						for (; iterator.hasNext(); ) {
 							eventData = iterator.next();
 							eventId = (int) eventData.getCallID();  // local SQLite database id of the event
 							ReportManager reportManager = ReportManager.getInstance(owner.getApplicationContext());
 							long svrEventID = 0;
-							if (d==0 && event != null)
+							if (d == 0 && event != null)
 								svrEventID = event.getEventID();
-							if (d==1 && complimentaryEvent != null)
+							if (d == 1 && complimentaryEvent != null)
 								svrEventID = complimentaryEvent.getEventID();
 							if (svrEventID == 0)
 								svrEventID = eventids[d];
 							reportManager.updateEventField(eventId, "eventid", Long.toString(svrEventID));
 							if (eventData.getEventType() == EventType.EVT_VQ_CALL.getIntValue() || eventData.getEventType() == EventType.SIP_VQ_CALL.getIntValue() ||
-												eventData.getEventType() == EventType.CONNECTION_FAILED.getIntValue())
+									eventData.getEventType() == EventType.CONNECTION_FAILED.getIntValue())
 								reportManager.updateEventField(eventId, Events.KEY_TYPE, Integer.toString(eventData.getEventType()));
 
 							d++;
@@ -403,13 +405,15 @@ public class EventUploader implements Runnable{
 					}
 					resultflag = EventObj.SERVER_SENT;
 					bSent = true;
-                    LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "run", "uploaded staged event type=" + eventType + " id=" + eventId);
+					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "run", "uploaded staged event type=" + eventType + " id=" + eventId);
+				} catch (Exception e) {
+					if (e instanceof UnknownHostException || e instanceof IOException || e instanceof SocketTimeoutException)
+						bSent = false;
+					else
+						bSent = true;
+					LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "uploadEventEnvelope", "exception uploading event type=" + eventType + " id=" + eventId, e);
 				}
-			} catch (Exception e){
-				bSent = true;
-				LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "uploadEventEnvelope", "exception uploading event type=" + eventType + " id=" + eventId, e);
 			}
-
 		}
 		try
 		{
@@ -443,7 +447,7 @@ public class EventUploader implements Runnable{
 		if (secureSettings.contains(PreferenceKeys.Miscellaneous.EVENTS_QUEUE)){
 			try {
 				String strQueue = secureSettings.getString(PreferenceKeys.Miscellaneous.EVENTS_QUEUE, "");
-				LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "loadQueue", strQueue);
+				//LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "loadQueue", strQueue);
 				if (strQueue.length() < 100)
 					return;
 				JSONArray jsonqueue = new JSONArray(strQueue);
