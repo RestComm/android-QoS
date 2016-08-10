@@ -116,7 +116,11 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 		if (_dormantMode > 0)
 			return (-_dormantMode);
 		if (DeviceInfoOld.batteryCharging == true)
+		{
+			if (_usageProfile > _usageProfileCharger)
+				return _usageProfile;  // go with the higher usage when charging
 			return _usageProfileCharger;
+		}
 		return _usageProfile;
 	}
 	

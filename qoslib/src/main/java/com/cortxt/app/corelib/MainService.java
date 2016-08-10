@@ -769,10 +769,11 @@ public class MainService extends Service {
 		{
 			try
 			{
+				LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "startRadioLog", "bStart="+ bStart + " reason: " + reason);
 				if (bStart == true)
 				{
 					boolean allowSvc = true;// this.getResources().getBoolean(R.bool.ALLOW_SVCMODE);
-					if (bRadioActive == false && getUseRadioLog() && reason != null) //  && reason.equals("call"))
+					if (bRadioActive == false && getUseRadioLog()) // && reason != null) //  && reason.equals("call"))
 			        {
 						boolean useServiceMode = false;
 						if (allowSvc == true) {
@@ -795,7 +796,8 @@ public class MainService extends Service {
 					if (reason != null && reason.equals("call"))
 						reason = null;
 					mmcActive = true;
-						
+
+					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "startRadioLog", "makeApplicationForeground");
 					makeApplicationForeground(true, reason);
 					// schedule to check in 5 seconds for no-events, then stop radio log
 					if (eventActiveTimer == null)

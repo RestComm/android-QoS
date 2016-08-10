@@ -546,6 +546,7 @@ public class LocalStorageReporter {
 				event.getEventType() == EventType.LATENCY_TEST.getIntValue() ||
 				event.getEventType() == EventType.VIDEO_TEST.getIntValue() ||
 				event.getEventType() == EventType.AUDIO_TEST.getIntValue() ||
+				event.getEventType() == EventType.SMS_TEST.getIntValue() ||
 				event.getEventType() == EventType.WEBPAGE_TEST.getIntValue() ||
 				event.getEventType() == EventType.YOUTUBE_TEST.getIntValue()
 				)

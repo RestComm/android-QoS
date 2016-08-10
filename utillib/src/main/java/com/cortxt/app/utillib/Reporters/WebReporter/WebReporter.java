@@ -448,6 +448,13 @@ public class WebReporter  {
  				{
  					networksResponseString = opresponse;
  				}
+				else if (isCarrierKnown(oprequest) && !isCarrierKnown(request.getQuery()))
+				{
+					networksResponseString = opresponse;
+					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "getCarrierLogo", "keep last known carrier" + request.getQuery());
+				}
+				else
+					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "getCarrierLogo", "REQUEST CARRIER " + request.getQuery());
 			}
  			if (networksResponseString == null)
  			{
@@ -500,6 +507,35 @@ public class WebReporter  {
     {
         return carrierCurr;
     }
+
+	private boolean isCarrierKnown (String oprequest)
+	{
+		String[] parts = oprequest.split("&");
+		if (parts == null)
+			return false;
+		boolean knownMCC = false, knownMNC = false;
+		for (int i=0; i<parts.length; i++)
+		{
+			if (parts[i].indexOf("mcc") >= 0)
+			{
+				int pos = parts[i].indexOf('=');
+				String mcc = parts[i].substring(pos+1);
+				if (mcc.length() > 0 && !mcc.equals("0"))
+					knownMCC = true;
+			}
+			if (parts[i].indexOf("mnc") >= 0)
+			{
+				int pos = parts[i].indexOf('=');
+				String mnc = parts[i].substring(pos+1);
+				if (mnc.length() > 0 && !mnc.equals("0"))
+					knownMNC = true;
+			}
+
+		}
+		if (knownMCC || knownMNC)
+			return true;
+		return false;
+	}
 	
 	
     private static String ReplaceCharacters (String str, String c, String r)

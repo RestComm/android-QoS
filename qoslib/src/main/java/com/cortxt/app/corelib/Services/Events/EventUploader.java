@@ -379,6 +379,7 @@ public class EventUploader implements Runnable{
 					if (eventResponse != null) {
 						eventResponse.init();
 						eventResponse.handleEventResponse(owner, false);
+
 						long[] eventids = eventResponse.getEventIds();
 						int d = 0;
 						iterator = eventDataEnvelope.getoEventData().iterator();
@@ -395,6 +396,7 @@ public class EventUploader implements Runnable{
 								svrEventID = complimentaryEvent.getEventID();
 							if (svrEventID == 0)
 								svrEventID = eventids[d];
+							LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "run", "uploaded eventtype=" + eventType + " eventid=" + svrEventID);
 							reportManager.updateEventField(eventId, "eventid", Long.toString(svrEventID));
 							if (eventData.getEventType() == EventType.EVT_VQ_CALL.getIntValue() || eventData.getEventType() == EventType.SIP_VQ_CALL.getIntValue() ||
 									eventData.getEventType() == EventType.CONNECTION_FAILED.getIntValue())
