@@ -783,12 +783,14 @@ public class MainService extends Service {
 								useServiceMode = true;
 						}
 
-						if (useServiceMode || reason.equals("call"))
+						if (useServiceMode || (reason != null && reason.equals("call")))
 						{
 							LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "startRadioLog", "start service mode");
 
 							getPhoneState().setServicemode (null);
-							boolean useLogcat = reason.equals("call");
+							boolean useLogcat = false;
+							if (reason != null && reason.equals("call"))
+								useLogcat = true;
 							MMCSystemUtil.startRilReader (this, true, useLogcat);
 							bRadioActive = true;
 						}
@@ -813,7 +815,7 @@ public class MainService extends Service {
 			}
 			catch (Exception e)
 			{
-
+				LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "startRadioLog", "exception", e);
 			}
 		}
 	}
@@ -879,6 +881,8 @@ public class MainService extends Service {
 		if (timeEngg > 0 && timeEngg + 120000 > System.currentTimeMillis())
 			return true;
 		if (webSocketManager.isConnected())
+			return true;
+		if (mReportManager.manualTransitEvent != null || mReportManager.manualPlottingEvent != null)
 			return true;
 		timeEngg = 0;
 		return false;
