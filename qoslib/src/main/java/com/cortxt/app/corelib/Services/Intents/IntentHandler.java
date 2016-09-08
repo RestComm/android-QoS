@@ -32,6 +32,7 @@ import android.telephony.TelephonyManager;
 
 import com.cortxt.app.corelib.MainService;
 import com.cortxt.app.corelib.R;
+import com.cortxt.app.corelib.Utils.QosAPI;
 import com.cortxt.app.utillib.ContentProvider.TablesEnum;
 import com.cortxt.app.utillib.DataObjects.DeviceInfo;
 import com.cortxt.app.utillib.DataObjects.EventObj;
@@ -486,6 +487,7 @@ public class IntentHandler extends BroadcastReceiver {
 		else if(action.equals(ACTION_ALARM_MINUTE)) {
 			// CPU wakes very briefly only in order to spur cellid updates
 			owner.getTravelDetector().triggerTravelCheck();
+			QosAPI.checkHostApp(context);
 		}
 		else if(action.equals(ACTION_TRACKING_5MINUTE)) {
 			owner.getTrackingManager().runTracking();

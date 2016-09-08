@@ -1,17 +1,16 @@
 package com.cortxt.app.utillib.Reporters.WebReporter;
 
+import android.util.Pair;
+
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.LinkedList;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
 
-public class StatsRequest extends HttpGet {
+public class StatsRequest  {
 	public static final String TAG = StatsRequest.class.getSimpleName();
 	private static final String END_POINT = "/api/stats";
 	
@@ -30,29 +29,36 @@ public class StatsRequest extends HttpGet {
 	 * @param radius (in meters)
 	 * @param networkIds
 	 */
-	public StatsRequest(String host, String apiKey, long startTime, long endTime,
-			double latitude, double longitude, float radius, String... networkIds) {
-		LinkedList<NameValuePair> params = new LinkedList<NameValuePair>();
-		params.add(new BasicNameValuePair(WebReporter.JSON_API_KEY, apiKey));
-		
+	//public StatsRequest(String host, String apiKey, long startTime, long endTime,
+	//		double latitude, double longitude, float radius, String... networkIds) {
+
+		public static URL getURL (String host, String apiKey, long startTime, long endTime,
+								  		double latitude, double longitude, float radius, String... networkIds) {
+
+		LinkedList<Pair> params = new LinkedList<Pair>();
+		params.add(new Pair(WebReporter.JSON_API_KEY, apiKey));
+
 		if (networkIds != null)
 			for(String networkId : networkIds) {
-				params.add(new BasicNameValuePair(KEY_NETWORKS, networkId));
+				params.add(new Pair(KEY_NETWORKS, networkId));
 			}
 		
 		if(latitude != Double.MAX_VALUE && longitude != Double.MAX_VALUE && radius != Float.MAX_VALUE) {
-			params.add(new BasicNameValuePair(KEY_CENTER, Double.toString(latitude)));
-			params.add(new BasicNameValuePair(KEY_CENTER, Double.toString(longitude)));
-			params.add(new BasicNameValuePair(KEY_RADIUS, Float.toString(radius)));
+			params.add(new Pair(KEY_CENTER, Double.toString(latitude)));
+			params.add(new Pair(KEY_CENTER, Double.toString(longitude)));
+			params.add(new Pair(KEY_RADIUS, Float.toString(radius)));
 		}
-		
-		String paramsString = URLEncodedUtils.format(params, "utf-8");
-		
+
+		String paramsString = WebReporter.URLEncodedFormat(params);
+
 		try {
-			setURI(new URI(host + END_POINT + "?" + paramsString));
-		} catch (URISyntaxException e) {
-			LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "constructor", "invalid uri", e);
+			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "StatsRequest ", paramsString);
+			return new URL(host + END_POINT + "?" + paramsString);
+
+		} catch (Exception e) {
+			LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "StatsRequest", "exception", e);
 			throw new RuntimeException(e);
 		}
+
 	}
 }

@@ -9,6 +9,8 @@ import android.view.View;
 
 import com.cortxt.app.corelib.R;
 import com.cortxt.app.utillib.DataObjects.EventType;
+import com.cortxt.app.utillib.Utils.ScalingUtility;
+import com.cortxt.app.utillib.Utils.ShareInviteTask;
 import com.cortxt.app.utillib.Utils.TaskHelper;
 
 import java.util.HashSet;
@@ -31,6 +33,7 @@ public class EventHistory extends FragmentActivity {
 		
 		LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view  = inflater.inflate(R.layout.callhistory, null, false);
+		ScalingUtility.getInstance(this).scaleView(view);
 		setContentView(view);
 	}
 	
@@ -38,4 +41,9 @@ public class EventHistory extends FragmentActivity {
 		this.finish();
 	}
 
+	public void shareClicked(View view){
+		String msg=getString(R.string.history_sharetitle);
+		TaskHelper.execute(
+				new ShareInviteTask(this, msg, msg, findViewById(R.id.eventhistoryContainer)));
+	}
 }

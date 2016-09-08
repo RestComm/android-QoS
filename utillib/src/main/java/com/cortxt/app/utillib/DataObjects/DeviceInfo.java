@@ -1,13 +1,12 @@
 package com.cortxt.app.utillib.DataObjects;
 
 import java.io.File;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
-
-import org.apache.http.conn.util.InetAddressUtils;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -168,9 +167,10 @@ public abstract class DeviceInfo {
 				for (Enumeration<InetAddress> enumIpAddr = intf
 						.getInetAddresses(); enumIpAddr.hasMoreElements();) {
 					InetAddress inetAddress = enumIpAddr.nextElement();
-					if (!inetAddress.isLoopbackAddress() && InetAddressUtils.isIPv4Address(inetAddress.getHostAddress()) ) {
+					if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address)
+					//if (!inetAddress.isLoopbackAddress() && InetAddressUtils.isIPv4Address(inetAddress.getHostAddress()) ) {
 						return inetAddress.getHostAddress();
-					}
+					//}
 				}
 			}
 		} catch (Exception ex) {

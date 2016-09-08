@@ -32,6 +32,10 @@
             android:name="QosLog"
             android:label="@string/action_qoslog"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".EventHistory"
+            android:label="@string/action_callhistory"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

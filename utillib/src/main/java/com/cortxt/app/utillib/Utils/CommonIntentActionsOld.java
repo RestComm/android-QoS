@@ -101,4 +101,7 @@ public class CommonIntentActionsOld {
 	public static final String ACTION_TEST_COMPLETE = "com.cortxt.app.MMC.Activities.Livestatus.ACTION_TEST_COMPLETE";
 	public static final String ACTION_START_UI = "com.cortxt.app.MMC.intent.ACTION_START_UI";
 
+	public static final String GCM_MESSAGE = "com.cortxt.app.MMC.Services.Intents.MMCIntentHandler.GCM_MESSAGE";
+	public static final String GCM_MESSAGE_EXTRA = "gsm_message_extra";
+
 }

@@ -1,6 +1,7 @@
 package com.cortxt.app.utillib.Utils;
 
 import android.app.ActivityManager;
+import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,8 @@ import android.preference.PreferenceManager;
 import com.cortxt.app.utillib.ICallbacks;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by bscheurman on 16-03-18.
@@ -231,9 +234,35 @@ public class Global {
     {
         if (callbacks != null)
         {
-            String s = callbacks.getStackTrace (e);
+            String s = callbacks.getStackTrace(e);
             return s;
         }
         return null;
+    }
+
+    public static int getAppImportance(String packageName, Context context) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Service.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningProcesses = manager.getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo info : runningProcesses) {
+            String process = info.processName;
+            if(process.equals(packageName)) {
+                if(info.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                    return 1;  //foreground
+                }
+                else if(info.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_BACKGROUND) {
+                    return 2; //background
+                }
+                else if(info.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE) {
+                    return 3; //visible - actively visible to the user, but not in the immediate foreground
+                }
+                else if(info.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_PERCEPTIBLE) {
+                    return 4; //visible - actively visible to the user, but not in the immediate foreground
+                }
+                else if(info.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_SERVICE) {
+                    return 5; //visible - actively visible to the user, but not in the immediate foreground
+                }
+            }
+        }
+        return 0;
     }
 }

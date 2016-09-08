@@ -371,6 +371,12 @@ public class EventData {
 	public void setEventType(int iEventType) {
 		this.iEventType = iEventType;
 	}
+	public long getEventId() {
+		return iEvtID;
+	}
+	public void setEventId(int iEventID) {
+		this.iEvtID = iEventID;
+	}
 	public int getEventIndex() {
 		return EventIndex;
 	}

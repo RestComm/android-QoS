@@ -154,7 +154,7 @@ public class QosAPI {
             public void run() {
                 try {
                     reportmanager.authorizeDevice(login,password,false);
-                    reportmanager.checkPlayServices(context, true);
+                    //reportmanager.checkPlayServices(context, true);
                 } catch (Exception e) {
                 }
             }
@@ -434,5 +434,45 @@ public class QosAPI {
 
         return strInfo;
 
+    }
+
+    public static String watchActivity = null;
+    public static long lastWatchActivity = 0;
+    public static void watchHostApp (Context context, Class launchActivity, boolean bWatch)
+    {
+        LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "watchHostApp", launchActivity.getCanonicalName());
+        if (bWatch)
+            watchActivity = launchActivity.getCanonicalName();
+        else
+            watchActivity = null;
+        PreferenceKeys.getSecurePreferences(context).edit().putString("PREF_WATCH_ACTIVITY", watchActivity).commit();
+    }
+
+
+    public static void checkHostApp (Context context)
+    {
+        watchActivity = PreferenceKeys.getSecurePreferences(context).getString("PREF_WATCH_ACTIVITY", watchActivity);
+        if (watchActivity != null)
+        {
+            if (System.currentTimeMillis() - lastWatchActivity < 60000)
+                return;
+            lastWatchActivity = System.currentTimeMillis();
+            int app = Global.getAppImportance (context.getPackageName(), context);
+            // 1 indicates foreground app and 2 indicates background (but not service-only)
+            if (app == 1 || app == 2)
+                return;
+            try {
+                // otherwise, launch the apps main activity
+                Intent intent = new Intent();
+                intent.setClassName(context, watchActivity);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+                LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "checkHostApp", "start " + watchActivity);
+            }
+            catch (Exception e)
+            {
+                LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "checkHostApp", "exception", e);
+            }
+        }
     }
 }

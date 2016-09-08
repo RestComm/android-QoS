@@ -10,11 +10,11 @@ android {
         }
 
     }
-    compileSdkVersion 17
-    buildToolsVersion '21.1.2'
+    compileSdkVersion 22
+    buildToolsVersion '22.0.1'
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 17
+        minSdkVersion 9
+        targetSdkVersion 22
         versionCode System.getenv("BUILD_NUMBER") as Integer ?: 0
         versionName "2.0.1." + System.getenv("BUILD_NUMBER") ?: "0"
         testApplicationId "com.cortxt.app.MMC.test"
@@ -29,9 +29,9 @@ android {
     buildTypes {
         debug {
             resValue "string", "google_maps_api_key", "0kdHHzVVjg3MenrXSvZ2NpYta1j64_MF9bK17ag"
-            resValue "string", "MMC_URL_LIN", "https://dev.mymobilecoverage.com"
+            resValue "string", "MMC_URL_LIN", "https://lb1.mymobilecoverage.com"
             resValue "string", "MMC_STATIC_ASSET_URL", "http://lb1.mymobilecoverage.com"
-            resValue "string", "MMC_URL_SPEED", "http://dev.mymobilecoverage.com:5005"
+            resValue "string", "MMC_URL_SPEED", "http://sts.mymobilecoverage.com:5005"
             resValue "string", "app_versionCode", "0"
             resValue "string", "MMC_WEBSOCKET_URL", "wss://lb.mymobilecoverage.com:4444/ws"
             signingConfig signingConfigs.configDebug

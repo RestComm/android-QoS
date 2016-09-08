@@ -330,6 +330,8 @@ public final class PreferenceKeys {
 		public static final String USE_SVCMODE = "KEY_USE_SVCMODE";
         public static final String KEY_GCM_REG_ID = "KEY_GCM_REG_ID";
         public static final String KEY_GCM_APP_VERSION = "KEY_GCM_APP_VERSION";
+		public static final String KEY_GCM_REG_SENTTO = "KEY_GCM_APP_SENTTO";
+
         public static final String SIGNED_OUT = "KEY_SIGNED_OUT";
 		public static final String YOUTUBE_VIDEOID = "KEY_YOUTUBE_VIDEOID";
 		public static final String KEY_SETTINGS_SERVICEMODE = "KEY_SETTINGS_SERVICEMODE";

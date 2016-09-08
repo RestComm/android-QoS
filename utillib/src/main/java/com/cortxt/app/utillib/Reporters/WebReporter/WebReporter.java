@@ -76,7 +76,7 @@ public class WebReporter  {
 	 */
 	private WakeLock mFlushQueueWakeLock;
 
-	protected ConcurrentLinkedQueue<Request> mRequestQueue;
+	//protected ConcurrentLinkedQueue<Request> mRequestQueue;
 	/**
 	 * The api key that the server requires for each request that
 	 * gets sent to the server
@@ -93,7 +93,7 @@ public class WebReporter  {
 		mHost = Global.getApiUrl(context);
 		mStaticAssetURL = Global.getString(context, "MMC_STATIC_ASSET_URL");
 
-		mRequestQueue = new ConcurrentLinkedQueue<Request>();
+		//mRequestQueue = new ConcurrentLinkedQueue<Request>();
 		
 		mFlushQueueWakeLock = ((PowerManager)mContext.getSystemService(Context.POWER_SERVICE))
 				.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
@@ -104,29 +104,29 @@ public class WebReporter  {
 	 * Cleans up any used resources. Saves all events that have not been sent
 	 */
 	public void stop() {
-		saveEvents();
+		//saveEvents();
 	}
 
 	/**
 	 * Persists the queue of events to the phone's preferences
 	 */
-	protected void saveEvents(){
-		JSONArray jsonQueue= new JSONArray();
-		for(Request request: mRequestQueue){
-			try {
-				jsonQueue.put(request.serialize());
-			} catch (Exception e) {
-				LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "persistQueue", "failed to persist event request", e);
-			}
-		}
-
-		SharedPreferences preferenceSettings = PreferenceManager.getDefaultSharedPreferences(mContext);
-		String stringQueue = jsonQueue.toString();
-
-		LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "saveEvents", stringQueue);
-
-		preferenceSettings.edit().putString(EVENTS_QUEUE_KEY_PREFERENCE, jsonQueue.toString()).commit();
-	}
+//	protected void saveEvents(){
+//		JSONArray jsonQueue= new JSONArray();
+//		for(Request request: mRequestQueue){
+//			try {
+//				jsonQueue.put(request.serialize());
+//			} catch (Exception e) {
+//				LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "persistQueue", "failed to persist event request", e);
+//			}
+//		}
+//
+//		SharedPreferences preferenceSettings = PreferenceManager.getDefaultSharedPreferences(mContext);
+//		String stringQueue = jsonQueue.toString();
+//
+//		LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "saveEvents", stringQueue);
+//
+//		preferenceSettings.edit().putString(EVENTS_QUEUE_KEY_PREFERENCE, jsonQueue.toString()).commit();
+//	}
 
 	
 	/**
@@ -585,11 +585,14 @@ public class WebReporter  {
 				contents = readString(connection);
 				LoggerUtil.logToFile(LoggerUtil.Level.WTF, TAG, "verifyResponse", "response = " + contents);
 
-				JSONObject json = new JSONObject(contents);
-				String message = json.optString(JSON_ERROR_KEY, "response had no error message");
+				if (contents != null) {
+					JSONObject json = new JSONObject(contents);
+					String message = json.optString(JSON_ERROR_KEY, "response had no error message");
+					throw new LibException(message);
+				}
 				//MMCLogger.logToFile(MMCLogger.Level.ERROR, TAG, "verifyResponse", "error in request "
 				//		+ responseCode + " " + message);
-				throw new LibException(message);
+				throw new LibException("response " + responseCode);
 			} catch (Exception e) {
 				LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "verifyResponse", contents, e);
 				throw new LibException(e);

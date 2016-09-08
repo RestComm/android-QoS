@@ -1,13 +1,16 @@
 package com.telestax.restcomm_helloworld;
 
-//import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 //import android.opengl.GLSurfaceView;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
@@ -22,9 +25,11 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.cortxt.app.corelib.Utils.EventDetailWeb;
 import com.cortxt.app.corelib.Utils.QosAPI;
 import com.cortxt.app.corelib.Utils.QosInfo;
 import com.cortxt.app.utillib.DataObjects.EventType;
+import com.cortxt.app.utillib.Utils.FirebaseInvite;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 
 import java.util.HashMap;
@@ -40,7 +45,7 @@ import org.mobicents.restcomm.android.client.sdk.RCPresenceEvent;
 import org.webrtc.VideoTrack;
 
 
-public class MainActivity extends Activity implements RCDeviceListener, RCConnectionListener, OnClickListener {
+public class MainActivity extends FragmentActivity implements RCDeviceListener, RCConnectionListener, OnClickListener {
 
     private RCDevice device;
     private RCConnection connection, pendingConnection;
@@ -161,7 +166,36 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         // make sure user is registered with the QoS server
         String login = editUser.getText().toString() + "@" + editServer.getText().toString();
         QosAPI.setLogin(this, login);
+        // Check Firebase invites before proceeding from SplashScreen
+        FirebaseInvite firebaseInvite = new FirebaseInvite(this);
+        firebaseInvite.setOnResponseListener(new FirebaseInvite.OnResponseListener() {
+            @Override
+            public void onResponse(final FirebaseInvite invite) {
+                // By the time the Splash screen delay is done, we should have the invitation result
+                if (invite.invited) {
+                    LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "OnResponseListener", "Firebase Invite: " + invite.url);
+                    if (invite.url.indexOf ("simpleshare") > 0) {
+                        Uri uri = Uri.parse (invite.url);
+                        String evtid = uri.getQueryParameter("id");
+                        final long iEventID = Long.parseLong(evtid);
+                        String evttype= uri.getQueryParameter("type");
+                        int iEventType = Integer.parseInt(evttype);
 
+                        Handler invitehandler = new Handler ();
+                        invitehandler.postDelayed(new Runnable () {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(MainActivity.this, EventDetailWeb.class);
+                                intent.putExtra("url", invite.deepLink);
+                                intent.putExtra("eventId", 0);
+                                startActivity(intent);
+                            }
+                        }, 2000);
+
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -303,7 +337,18 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
         else if (view.getId() == R.id.button_history) {
             EventType[] eventTypes = {EventType.SIP_DISCONNECT, EventType.SIP_DROP, EventType.SIP_UNANSWERED, EventType.SIP_CALLFAIL};
             QosAPI.showHistory(this, eventTypes);
-
+//            try {
+//                Intent intent = new Intent(this, EventHistory.class);
+//                int[] ieventtypes = new int[eventTypes.length];
+//                for (int i=0; i<eventTypes.length;i++)
+//                    ieventtypes[i] = eventTypes[i].getIntValue();
+//                intent.putExtra("eventtypes", ieventtypes);
+//                this.startActivity(intent);
+//            }
+//            catch (Exception e)
+//            {
+//
+//            }
         }
     }
 

@@ -104,5 +104,6 @@
     <item name="ALLOW_CHECK_INS" type="bool" format="boolean">true</item>
     <item name="ALLOW_SVCMODE" type="bool" format="boolean">false</item>
 
+    <color name="title_background">#333333</color>
 </resources>
 

@@ -34,11 +34,27 @@
         android:name="com.google.android.maps.v2.API_KEY"
         android:value="@string/google_maps_api_key"/>
 
+    <meta-data android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+
     <application>
         <uses-library android:name="com.google.android.maps" />
 
 
-        <receiver
+        <service
+            android:name="com.cortxt.app.utillib.Utils.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.cortxt.app.utillib.Utils.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <!--receiver
             android:name="com.cortxt.app.corelib.GcmBroadcastReceiver"
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND" >
@@ -46,7 +62,7 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <category android:name="com.cortxt.app.mmccore" />
             </intent-filter>
-        </receiver>
+        </receiver-->
 
         <!-- activity android:label="@string/testing_RIL_OEMHook" android:name=".Activities.RilOemHookTest" android:process="com.android.phone" android:screenOrientation="user"/ -->
         <!--activity

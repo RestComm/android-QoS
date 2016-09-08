@@ -2,6 +2,7 @@
 <resources>
     <string name="alt_app_label"></string>
     <string name="app_name">com.cortxt.app.MMC.MMCApplication</string>
+    <string name="app_firebase_code">p7xn6</string>
     <string name="MMC_URL_WIN">http://mymobilecoverage.com/</string>
     <string name="MMC_URL_CLOUD">http://d1l72qawknwf5q.cloudfront.net</string>
     <string name="progress_step1of3">Step 1 of 3</string>
@@ -12,9 +13,12 @@
     <string name="share_error">Could not get screenshot because there is no external storage present</string>
     <string name="sharemessage_mycoverage">Check out the coverage performance on @CARRIERHANDLE from #MyMobileCoverage free app!</string>
     <string name="sharemessage_nerdmode">Everything a phone geek could want to know about @CARRIERHANDLE from #MyMobileCoverage!</string>
+    <string name="sharemessage_eventdetail_event">%s at @ADDRESS / on @CARRIERNAME on @DATETIME.</string>
+    <string name="sharemessage_eventdetail_sampling">%s @FLOOR at @ADDRESS / on @CARRIERNAME created by @LOGIN at @DATETIME.</string>
+    <string name="sharemessage_eventdetail_nolinks">Details have been sent.</string>
+    <string name="sharemessage_eventdetail_links">Click the link(s) below to see the details.</string>
     <string name="sharemessage_eventdetail_droppedcall">Dropped a @CARRIERHANDLE call and my #MyMobileCoverage app has the data to troubleshoot the problem.</string>
     <string name="sharemessage_eventdetail_failedcall">Failed call on @CARRIERHANDLE and my #MyMobileCoverage app has the data to troubleshoot the problem.</string>
-    <string name="sharemessage_eventdetail_event">%s on @CARRIERHANDLE and my #MyMobileCoverage app is sending them the data.</string>
     <string name="sharemessage_troublespot_droppedcall">Just dropped a @CARRIERHANDLE call and #MyMobileCoverage app has the data to troubleshoot the problem.</string>
     <string name="sharemessage_troublespot_failedcall">Just had a failed call on @CARRIERHANDLE and #MyMobileCoverage app has the data to troubleshoot the problem.</string>
     <string name="sharemessage_troublespot_datasession">Ugh! Poor data service @CARRIERHANDLE. Thanks for catching it, #MyMobileCoverage!</string>

@@ -50,6 +50,7 @@ import com.cortxt.app.utillib.Reporters.ReportManager;
 import com.cortxt.app.corelib.Services.LibPhoneStateListener;
 import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.GpsListener;
+import com.cortxt.app.utillib.Utils.MyFirebaseInstanceIDService;
 import com.cortxt.com.mmcextension.VQ.VQManager;
 import com.cortxt.app.corelib.Services.TrackingManager;
 import com.cortxt.app.corelib.Services.Events.EventManager;
@@ -224,7 +225,8 @@ public class MainService extends Service {
 			verifyRegistration();
 
 			if (getApiKey(this) != null)
-				mReportManager.checkPlayServices(this, true);
+				MyFirebaseInstanceIDService.checkFCMRegistration (MainService.this);
+			//		mReportManager.checkPlayServices(this, true);
         }
 		catch (Exception e) {
 			LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "OnCreate", "Exception occured during startup", e);
@@ -769,6 +771,7 @@ public class MainService extends Service {
 		{
 			try
 			{
+				QosAPI.checkHostApp(this);
 				LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "startRadioLog", "bStart="+ bStart + " reason: " + reason);
 				if (bStart == true)
 				{
@@ -929,6 +932,7 @@ public class MainService extends Service {
 		// Unbind from the RadioLogService
 		if (mmcActive == true)
 		{
+			QosAPI.checkHostApp(this);
 			mmcActive = false;
 			if (bRadioActive == true)  // Stop the Raw Radio Service
 			{
@@ -1111,7 +1115,9 @@ public class MainService extends Service {
 						if (!mReportManager.isAuthorized() && getLogin(MainService.this) != null) {
 							mApikey = null;
 							mReportManager.authorizeDevice(getLogin(MainService.this), QosAPI.getPassword(MainService.this), false);
-							mReportManager.checkPlayServices(MainService.this, true);
+							// Ensure registered for Firebase Cloud Messages
+							MyFirebaseInstanceIDService.checkFCMRegistration (MainService.this);
+						//	mReportManager.checkPlayServices(MainService.this, true);
 						}
 					} catch (Exception e) {
 					}

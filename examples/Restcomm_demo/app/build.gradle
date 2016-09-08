@@ -17,6 +17,9 @@ android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
 
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
     defaultConfig {
         applicationId "com.telestax.restcomm_helloworld"
         minSdkVersion 16
@@ -53,7 +56,7 @@ dependencies {
     debugCompile project(path: ':qoslib', configuration: "libraryDebug")
     releaseCompile project(path: ':qoslib', configuration: "libraryRelease")
 
-    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.android.support:multidex:1.0.1'
 
 }
 

@@ -34,9 +34,9 @@ import com.cortxt.app.utillib.DataObjects.Carrier;
 import com.cortxt.app.utillib.DataObjects.EventType;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 import com.cortxt.app.utillib.Utils.PreferenceKeys;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
+//import com.google.android.gms.common.ConnectionResult;
+//import com.google.android.gms.common.GooglePlayServicesUtil;
+//import com.google.android.gms.gcm.GoogleCloudMessaging;
 //import com.google.android.maps.GeoPoint;
 
 import org.json.JSONArray;
@@ -837,51 +837,51 @@ public class ReportManager {
      * it doesn't, display a dialog that allows users to download the APK from
      * the Google Play Store or enable it in the device's system settings.
      */
-    public boolean checkPlayServices(Context context, boolean forceGCM) {
-
-        PackageManager pkMan = mContext.getPackageManager();
-        int GCMPermissionValue = pkMan.checkPermission("com.google.android.c2dm.permission.RECEIVE", mContext.getPackageName());
-        if (GCMPermissionValue != 0)
-            return false;
-
-        // See if GCM services are enabled by MMC
-        if (forceGCM == false) {
-            int useGCM = PreferenceManager.getDefaultSharedPreferences(context).getInt(PreferenceKeys.Miscellaneous.USE_GCM, 0);
-            if (useGCM == 1)
-                forceGCM = true;
-        }
-        if (forceGCM == false)
-            return false;
-
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
-        if (resultCode != ConnectionResult.SUCCESS) {
-//            if (context instanceof Activity) {
-//                Activity activity = (Activity) context;
-//                if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-//                    GooglePlayServicesUtil.getErrorDialog(resultCode, activity,
-//                            PLAY_SERVICES_RESOLUTION_REQUEST).show();
-//                } else {
-//                    MMCLogger.logToFile(MMCLogger.Level.WTF, TAG, "checkPlayServices", "this Device does not support Google Play Services");
-//                    //Log.i(TAG, "This device is not supported.");
-//                    //finish();
-//                }
-//			}
-            LoggerUtil.logToFile(LoggerUtil.Level.WTF, TAG, "checkPlayServices", "this Device does not support Google Play Services");
-            return false;
-        }
-        else
-        {
-            GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(context);
-            String regid = getRegistrationId(context);
-
-            LoggerUtil.logToFile(LoggerUtil.Level.WTF, TAG, "checkPlayServices", "getRegistrationId = " + regid);
-
-            if (regid.equals("")) {
-                registerInBackground(context);
-            }
-        }
-        return true;
-    }
+//    public boolean checkPlayServices(Context context, boolean forceGCM) {
+//
+//        PackageManager pkMan = mContext.getPackageManager();
+//        int GCMPermissionValue = pkMan.checkPermission("com.google.android.c2dm.permission.RECEIVE", mContext.getPackageName());
+//        if (GCMPermissionValue != 0)
+//            return false;
+//
+//        // See if GCM services are enabled by MMC
+//        if (forceGCM == false) {
+//            int useGCM = PreferenceManager.getDefaultSharedPreferences(context).getInt(PreferenceKeys.Miscellaneous.USE_GCM, 0);
+//            if (useGCM == 1)
+//                forceGCM = true;
+//        }
+//        if (forceGCM == false)
+//            return false;
+//
+//        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
+//        if (resultCode != ConnectionResult.SUCCESS) {
+////            if (context instanceof Activity) {
+////                Activity activity = (Activity) context;
+////                if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+////                    GooglePlayServicesUtil.getErrorDialog(resultCode, activity,
+////                            PLAY_SERVICES_RESOLUTION_REQUEST).show();
+////                } else {
+////                    MMCLogger.logToFile(MMCLogger.Level.WTF, TAG, "checkPlayServices", "this Device does not support Google Play Services");
+////                    //Log.i(TAG, "This device is not supported.");
+////                    //finish();
+////                }
+////			}
+//            LoggerUtil.logToFile(LoggerUtil.Level.WTF, TAG, "checkPlayServices", "this Device does not support Google Play Services");
+//            return false;
+//        }
+//        else
+//        {
+////            GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(context);
+////            String regid = getRegistrationId(context);
+////
+////            LoggerUtil.logToFile(LoggerUtil.Level.WTF, TAG, "checkPlayServices", "getRegistrationId = " + regid);
+////
+////            if (regid.equals("")) {
+////                registerInBackground(context);
+////            }
+//        }
+//        return true;
+//    }
 
     /**
      * Registers the application with GCM servers asynchronously.
@@ -889,95 +889,95 @@ public class ReportManager {
      * Stores the registration ID and app versionCode in the application's
      * shared preferences.
      */
-    private void registerInBackground(final Context context) {
+//    private void registerInBackground(final Context context) {
+//
+//        new Thread(new Runnable()
+//        {
+//            @Override
+//            public void run() {
+//                String msg = "";
+//
+//                try {
+//                    GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(context);
+//
+//                    String regid = gcm.register(GCM_SENDER_ID);
+//                    msg = "Device registered, registration ID=" + regid;
+//                    //MMCLogger.logToFile(MMCLogger.Level.WTF, TAG, "registerInBackground", msg);
+//
+//
+//                    // You should send the registration ID to your server over HTTP,
+//                    // so it can use GCM/HTTP or CCS to send messages to your app.
+//                    // The request to your server should be authenticated if your app
+//                    // is using accounts.
+//                    if (sendGCMRegistrationIdToBackend(regid)) {
+//                        // Persist the registration ID - no need to register again.
+//                        storeRegistrationId(context, regid);
+//                    }
+//                } catch (Exception ex) {
+//                    msg = "Error :" + ex.getMessage();
+//                    LoggerUtil.logToFile(LoggerUtil.Level.WTF, TAG, "registerInBackground", msg);
+//
+//                    // If there is an error, don't just keep trying to register.
+//                    // Require the user to click a button again, or perform
+//                    // exponential back-off.
+//                }
+//
+//            }
+//        }).start();
+//    }
 
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run() {
-                String msg = "";
-
-                try {
-                    GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(context);
-
-                    String regid = gcm.register(GCM_SENDER_ID);
-                    msg = "Device registered, registration ID=" + regid;
-                    //MMCLogger.logToFile(MMCLogger.Level.WTF, TAG, "registerInBackground", msg);
-
-
-                    // You should send the registration ID to your server over HTTP,
-                    // so it can use GCM/HTTP or CCS to send messages to your app.
-                    // The request to your server should be authenticated if your app
-                    // is using accounts.
-                    if (sendGCMRegistrationIdToBackend(regid)) {
-                        // Persist the registration ID - no need to register again.
-                        storeRegistrationId(context, regid);
-                    }
-                } catch (Exception ex) {
-                    msg = "Error :" + ex.getMessage();
-                    LoggerUtil.logToFile(LoggerUtil.Level.WTF, TAG, "registerInBackground", msg);
-
-                    // If there is an error, don't just keep trying to register.
-                    // Require the user to click a button again, or perform
-                    // exponential back-off.
-                }
-
-            }
-        }).start();
-    }
-
-    /**
-     * Gets the current registration ID for application on GCM service.
-     * <p>
-     * If result is empty, the app needs to register.
-     *
-     * @return registration ID, or empty string if there is no existing
-     *         registration ID.
-     */
-    private static String getRegistrationId(Context context) {
-        SharedPreferences securePreferences = PreferenceKeys.getSecurePreferences(context);
-        String registrationId = securePreferences.getString(PreferenceKeys.Miscellaneous.KEY_GCM_REG_ID, "");
-        if (registrationId.equals("")) {
-            return "";
-        }
-        // Check if app was updated; if so, it must clear the registration ID
-        // since the existing registration ID is not guaranteed to work with
-        // the new app version.
-        int gcmRegisteredVersion = securePreferences.getInt(PreferenceKeys.Miscellaneous.KEY_GCM_APP_VERSION, Integer.MIN_VALUE);
-        int currentVersion = securePreferences.getInt(PreferenceKeys.User.VERSION, -1);
-
-        if (gcmRegisteredVersion != currentVersion) {
-            return "";
-        }
-        return registrationId;
-    }
-
-    /**
-     * Sends the registration ID to your server over HTTP, so it can use GCM/HTTP
-     * or CCS to send messages to your app. Not needed for this demo since the
-     * device sends upstream messages to a server that echoes back the message
-     * using the 'from' address in the message.
-     */
-    private boolean sendGCMRegistrationIdToBackend(String registrationId) {
-        return reportSettingChange(ServerUpdateRequest.DEVICE, ServerUpdateRequest.KEY_GCM_REG_ID, registrationId);
-
-    }
-    /**
-     * Stores the registration ID and app versionCode in the application's
-     * {@code SharedPreferences}.
-     *
-     * @param context application's context.
-     * @param regId registration ID
-     */
-    private void storeRegistrationId(Context context, String regId) {
-        SharedPreferences securePreferences = PreferenceKeys.getSecurePreferences(context);
-        int gcmRegisteredVersion = securePreferences.getInt(PreferenceKeys.Miscellaneous.KEY_GCM_APP_VERSION, Integer.MIN_VALUE);
-        int appVersion = securePreferences.getInt(PreferenceKeys.User.VERSION, -1);
-
-        //Log.i(TAG, "Saving regId on app version " + appVersion);
-        securePreferences.edit().putInt(PreferenceKeys.Miscellaneous.KEY_GCM_APP_VERSION, appVersion).commit();
-        securePreferences.edit().putString(PreferenceKeys.Miscellaneous.KEY_GCM_REG_ID, regId).commit();
-    }
+//    /**
+//     * Gets the current registration ID for application on GCM service.
+//     * <p>
+//     * If result is empty, the app needs to register.
+//     *
+//     * @return registration ID, or empty string if there is no existing
+//     *         registration ID.
+//     */
+//    private static String getRegistrationId(Context context) {
+//        SharedPreferences securePreferences = PreferenceKeys.getSecurePreferences(context);
+//        String registrationId = securePreferences.getString(PreferenceKeys.Miscellaneous.KEY_GCM_REG_ID, "");
+//        if (registrationId.equals("")) {
+//            return "";
+//        }
+//        // Check if app was updated; if so, it must clear the registration ID
+//        // since the existing registration ID is not guaranteed to work with
+//        // the new app version.
+//        int gcmRegisteredVersion = securePreferences.getInt(PreferenceKeys.Miscellaneous.KEY_GCM_APP_VERSION, Integer.MIN_VALUE);
+//        int currentVersion = securePreferences.getInt(PreferenceKeys.User.VERSION, -1);
+//
+//        if (gcmRegisteredVersion != currentVersion) {
+//            return "";
+//        }
+//        return registrationId;
+//    }
+//
+//    /**
+//     * Sends the registration ID to your server over HTTP, so it can use GCM/HTTP
+//     * or CCS to send messages to your app. Not needed for this demo since the
+//     * device sends upstream messages to a server that echoes back the message
+//     * using the 'from' address in the message.
+//     */
+//    private boolean sendGCMRegistrationIdToBackend(String registrationId) {
+//        return reportSettingChange(ServerUpdateRequest.DEVICE, ServerUpdateRequest.KEY_GCM_REG_ID, registrationId);
+//
+//    }
+//    /**
+//     * Stores the registration ID and app versionCode in the application's
+//     * {@code SharedPreferences}.
+//     *
+//     * @param context application's context.
+//     * @param regId registration ID
+//     */
+//    private void storeRegistrationId(Context context, String regId) {
+//        SharedPreferences securePreferences = PreferenceKeys.getSecurePreferences(context);
+//        int gcmRegisteredVersion = securePreferences.getInt(PreferenceKeys.Miscellaneous.KEY_GCM_APP_VERSION, Integer.MIN_VALUE);
+//        int appVersion = securePreferences.getInt(PreferenceKeys.User.VERSION, -1);
+//
+//        //Log.i(TAG, "Saving regId on app version " + appVersion);
+//        securePreferences.edit().putInt(PreferenceKeys.Miscellaneous.KEY_GCM_APP_VERSION, appVersion).commit();
+//        securePreferences.edit().putString(PreferenceKeys.Miscellaneous.KEY_GCM_REG_ID, regId).commit();
+//    }
     /**
      * Start the MMC Service if we have an apikey from registration, otherwise register in the background and then start the service
      * {@code SharedPreferences}.
@@ -986,92 +986,92 @@ public class ReportManager {
      * @param isEmail should login be an email and be validated?
      * @param context application's context.
      */
-    public boolean registerAndStartService (String login, boolean isEmail, String password, Context context)
-    {
-        SharedPreferences preferenceSettings = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences secureSettings = PreferenceKeys.getSecurePreferences(context);
+//    public boolean registerAndStartService (String login, boolean isEmail, String password, Context context)
+//    {
+//        SharedPreferences preferenceSettings = PreferenceManager.getDefaultSharedPreferences(context);
+//        SharedPreferences secureSettings = PreferenceKeys.getSecurePreferences(context);
+//
+//        boolean isRegistered = this.isAuthorized();
+//        if (!isRegistered)
+//        {
+//            int userID = Global.getUserID(context);
+//            if (userID > 0)
+//                isRegistered = true;
+//        }
+//
+//        if(isRegistered) {
+//            boolean bStoppedService = secureSettings.getBoolean(PreferenceKeys.Miscellaneous.STOPPED_SERVICE, false);
+//
+//            if (!bStoppedService)
+//            {
+//                Global.startService(mContext, true);
+//            }
+//        }
+//        else {
+//            // Background registration
+//            //Intent intent = new Intent(SplashScreen.this, GetStarted2.class);
+//            //startActivity(intent);
+//            backgroundRegistration (login, isEmail, password, context);
+//        }
+//        secureSettings.edit().putInt(PreferenceKeys.User.VERSION, getAppVersionCode(context)).commit();
+//        return true;
+//    }
 
-        boolean isRegistered = this.isAuthorized();
-        if (!isRegistered)
-        {
-            int userID = Global.getUserID(context);
-            if (userID > 0)
-                isRegistered = true;
-        }
-
-        if(isRegistered) {
-            boolean bStoppedService = secureSettings.getBoolean(PreferenceKeys.Miscellaneous.STOPPED_SERVICE, false);
-
-            if (!bStoppedService)
-            {
-                Global.startService(mContext, true);
-            }
-        }
-        else {
-            // Background registration
-            //Intent intent = new Intent(SplashScreen.this, GetStarted2.class);
-            //startActivity(intent);
-            backgroundRegistration (login, isEmail, password, context);
-        }
-        secureSettings.edit().putInt(PreferenceKeys.User.VERSION, getAppVersionCode(context)).commit();
-        return true;
-    }
-
-    private void backgroundRegistration (final String login, final boolean isEmail, final String password, final Context context)
-    {
-        if(isEmail == false || validateEmail(login) == true) {
-            new Thread(new Runnable()
-            {
-                @Override
-                public void run() {
-                    String msg = "";
-
-                    try {
-                        ReportManager manager = ReportManager.getInstance(context);
-
-                        DeviceInfo device = manager.getDevice();
-                        String regLogin = login;
-                        if (login == null || login.equals(""))
-                        {
-                            regLogin = getDevice().getIMEI();
-                        }
-                        manager.authorizeDevice(regLogin,  password, true);
-
-                        return; // success
-                    }
-                    catch (final LibException e) {
-                        // error in registration. show it if we have an activity context
-                        if (context instanceof Activity)
-                        {
-                            final Activity activity = (Activity)context;
-                            Handler handler = new Handler();
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    String error = context.getString(R.string.getstarted_register_error);
-                                    String message = e.getMessage();
-                                    if (e.getMessage().equals("api key was empty"))
-                                        message = context.getString(R.string.getstarted_register_apikeyempty);
-                                    if (e.getCause() instanceof UnknownHostException) //  || e.getCause() instanceof HttpHostConnectException)
-                                        message = context.getString(R.string.getstarted_register_unknownhost);
-                                    else if (e.getCause() instanceof IOException)
-                                        message = context.getString(R.string.getstarted_register_ioexception);
-                                    try {
-                                        new AlertDialog.Builder(activity).setTitle(error).setMessage(message).setNeutralButton(R.string.GenericText_Close, null).show();
-                                    } catch (Exception e) {
-                                    }
-                                }
-                            });
-
-                            return; // failed
-                        }
-                    }
-
-                }
-            }).start();
-        }
-
-    }
+//    private void backgroundRegistration (final String login, final boolean isEmail, final String password, final Context context)
+//    {
+//        if(isEmail == false || validateEmail(login) == true) {
+//            new Thread(new Runnable()
+//            {
+//                @Override
+//                public void run() {
+//                    String msg = "";
+//
+//                    try {
+//                        ReportManager manager = ReportManager.getInstance(context);
+//
+//                        DeviceInfo device = manager.getDevice();
+//                        String regLogin = login;
+//                        if (login == null || login.equals(""))
+//                        {
+//                            regLogin = getDevice().getIMEI();
+//                        }
+//                        manager.authorizeDevice(regLogin,  password, true);
+//
+//                        return; // success
+//                    }
+//                    catch (final LibException e) {
+//                        // error in registration. show it if we have an activity context
+//                        if (context instanceof Activity)
+//                        {
+//                            final Activity activity = (Activity)context;
+//                            Handler handler = new Handler();
+//                            handler.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    String error = context.getString(R.string.getstarted_register_error);
+//                                    String message = e.getMessage();
+//                                    if (e.getMessage().equals("api key was empty"))
+//                                        message = context.getString(R.string.getstarted_register_apikeyempty);
+//                                    if (e.getCause() instanceof UnknownHostException) //  || e.getCause() instanceof HttpHostConnectException)
+//                                        message = context.getString(R.string.getstarted_register_unknownhost);
+//                                    else if (e.getCause() instanceof IOException)
+//                                        message = context.getString(R.string.getstarted_register_ioexception);
+//                                    try {
+//                                        new AlertDialog.Builder(activity).setTitle(error).setMessage(message).setNeutralButton(R.string.GenericText_Close, null).show();
+//                                    } catch (Exception e) {
+//                                    }
+//                                }
+//                            });
+//
+//                            return; // failed
+//                        }
+//                    }
+//
+//                }
+//            }).start();
+//        }
+//
+//    }
 
     public EventObj manualPlottingEvent = null;
     public EventObj manualTransitEvent = null;
