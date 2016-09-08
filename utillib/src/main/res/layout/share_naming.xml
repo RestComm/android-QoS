@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/webtest_container"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/upperBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/prepareShare"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:text="Prepare to Share"
+            android:textColor="#666666"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/shortName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/prepareShare"
+            android:text="Short name: (for file naming)"
+            android:textColor="#666666"
+            android:textSize="18dp" />
+
+        <EditText
+            android:id="@+id/editShortName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="21dp"
+            android:layout_below="@id/shortName"
+            android:textColor="#666666"
+            android:textSize="17dp" />
+        <TextView
+            android:id="@+id/askName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:text="Long Name: (short name plus details)"
+            android:layout_below="@id/editShortName"
+            android:textColor="#666666"
+            android:textSize="18dp" />
+        <EditText
+            android:id="@+id/editName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="21dp"
+            android:layout_below="@id/askName"
+            android:textColor="#666666"
+            android:textSize="17dp" />
+
+        <CheckBox
+            android:id="@+id/checkEmailLinks"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_below="@id/editName"
+            android:text="Email with links to content"
+            android:textColor="#666666"
+            android:textSize="18dp" />
+
+        <LinearLayout
+            android:id="@+id/topButtons"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/checkEmailLinks"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonShare"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16px"
+                android:text="Share"
+                android:textColor="#666666"
+                android:textSize="16dp" />
+            <Button
+                android:id="@+id/buttonCancel"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:textColor="#666666"
+                android:textSize="16dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/imageLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/topButtons"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/imageScreen"
+                android:layout_below="@id/topButtons"
+                android:scaleType="centerInside"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="5dp"
+                android:layout_width="210dp"
+                android:layout_height="280dp" />
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
