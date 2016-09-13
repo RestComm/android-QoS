@@ -545,15 +545,15 @@ public class MainService extends Service {
 
 			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "set15MinuteAlarmManager", "Stats alarm was set to 0 in onCreate: alarm not on");
 			// If we're not using ACTION_ALARM_SCANAPPS alarm every 5 minutes for scanning apps, we may still want to use it as a heartbeat
-			boolean useHeartbeat = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("KEY_GCM_HEARTBEAT", false);
-			if (useHeartbeat)
-			{
-				// re-using the same timer here to avoid 2 timers in the event that both heartbeat and scanapps are in effect
-				// 2 independent timers might wake up device twice as often, doubling the battery impact, so I'm forcing it to use one for both cases
-				Intent intent = new Intent(IntentHandler.ACTION_ALARM_SCANAPPS);
-				PendingIntent alarm = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_CANCEL_CURRENT);
-				alarmMgr.setRepeating(AlarmManager.RTC, System.currentTimeMillis() + 5000, 60000 * 5L, alarm);
-			}
+//			boolean useHeartbeat = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("KEY_GCM_HEARTBEAT", false);
+//			if (useHeartbeat)
+//			{
+//				// re-using the same timer here to avoid 2 timers in the event that both heartbeat and scanapps are in effect
+//				// 2 independent timers might wake up device twice as often, doubling the battery impact, so I'm forcing it to use one for both cases
+//				Intent intent = new Intent(IntentHandler.ACTION_ALARM_SCANAPPS);
+//				PendingIntent alarm = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_CANCEL_CURRENT);
+//				alarmMgr.setRepeating(AlarmManager.RTC, System.currentTimeMillis() + 5000, 60000 * 5L, alarm);
+//			}
 		}
 	}
 	

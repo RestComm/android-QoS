@@ -171,6 +171,14 @@ public class Global {
             return callbacks.isInTracking();
         return false;
     }
+    static public boolean isMMCServiceRunning() {
+        if (callbacks != null)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
 
     public static boolean isHeadsetPlugged ()
     {

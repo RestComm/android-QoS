@@ -538,11 +538,11 @@ public class IntentHandler extends BroadcastReceiver {
 
 			// Also using this timer for GCM heartbeats (its a 5 minute heartbeat to tell Google Cloud Messaging to check the socket more often for more reliable push messages)
 			// 2 independent timers might wake up device twice as often, doubling the battery impact, so I'm forcing it to use one for both cases
-			boolean useHeartbeat = PreferenceManager.getDefaultSharedPreferences(owner).getBoolean("KEY_GCM_HEARTBEAT", false);
-			if (useHeartbeat) {
-				GcmKeepAlive gcm = new GcmKeepAlive(owner);
-				gcm.broadcastIntents();
-			}
+//			boolean useHeartbeat = PreferenceManager.getDefaultSharedPreferences(owner).getBoolean("KEY_GCM_HEARTBEAT", false);
+//			if (useHeartbeat) {
+//				GcmKeepAlive gcm = new GcmKeepAlive(owner);
+//				gcm.broadcastIntents();
+//			}
 		}
 		else if(action.equals(ACTION_ALARM_15MINUTE)) {
 			

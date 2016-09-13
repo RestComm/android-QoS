@@ -10,6 +10,7 @@ import com.google.android.gms.appinvite.AppInvite;
 import com.google.android.gms.appinvite.AppInviteInvitationResult;
 import com.google.android.gms.appinvite.AppInviteReferral;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import java.net.URLDecoder;
@@ -41,6 +42,14 @@ public class FirebaseInvite implements GoogleApiClient.OnConnectionFailedListene
                     .addApi(AppInvite.API)
                     .build();
 
+            int bGoogle = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(activity);
+
+            if (bGoogle != 0)
+            {
+                LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "FirebaseInvite", "isGooglePlayServicesAvailable error " + bGoogle, "");
+                error = "GooglePlayServices error " + bGoogle;
+                mOnResponseListener.onResponse(this);
+            }
             // Check if this app was launched from a deep link. Setting autoLaunchDeepLink to true
             // would automatically launch the deep link if one is found.
             boolean autoLaunchDeepLink = false;

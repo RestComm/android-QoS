@@ -1,7 +1,9 @@
 package com.cortxt.app.corelib.Utils;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +24,8 @@ import com.cortxt.app.utillib.Utils.UsageLimits;
 //import com.securepreferences.SecurePreferences;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 
 /**
@@ -440,9 +444,11 @@ public class QosAPI {
     public static long lastWatchActivity = 0;
     public static void watchHostApp (Context context, Class launchActivity, boolean bWatch)
     {
-        LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "watchHostApp", launchActivity.getCanonicalName());
-        if (bWatch)
+        if (bWatch && launchActivity != null)
+        {
+            LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "watchHostApp", launchActivity.getCanonicalName());
             watchActivity = launchActivity.getCanonicalName();
+        }
         else
             watchActivity = null;
         PreferenceKeys.getSecurePreferences(context).edit().putString("PREF_WATCH_ACTIVITY", watchActivity).commit();
@@ -457,9 +463,10 @@ public class QosAPI {
             if (System.currentTimeMillis() - lastWatchActivity < 60000)
                 return;
             lastWatchActivity = System.currentTimeMillis();
-            int app = Global.getAppImportance (context.getPackageName(), context);
+            //int app = Global.getAppImportance (context.getPackageName(), context);
+            boolean isRunning = isRunning(context, context.getPackageName());
             // 1 indicates foreground app and 2 indicates background (but not service-only)
-            if (app == 1 || app == 2)
+            if (isRunning)
                 return;
             try {
                 // otherwise, launch the apps main activity
@@ -467,12 +474,42 @@ public class QosAPI {
                 intent.setClassName(context, watchActivity);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
-                LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "checkHostApp", "start " + watchActivity);
+                LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "checkHostApp mode=", "start " + watchActivity);
             }
             catch (Exception e)
             {
                 LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "checkHostApp", "exception", e);
             }
         }
+    }
+
+    static public boolean isMMCServiceRunning() {
+        return Global.isMMCServiceRunning();
+    }
+    static public boolean isRunning(Context context, String PackageName){
+        // Get the Activity Manager
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+
+        // Get a list of running tasks, we are only interested in the last one,
+        // the top most so we give a 1 as parameter so we only get the topmost.
+        List< ActivityManager.RunningTaskInfo > rtasks = manager.getRunningTasks(10000);
+        // Get the info we need for comparison.
+        for (ActivityManager.RunningTaskInfo task:rtasks) {
+            ComponentName c = task.baseActivity;
+            if (c != null && c.toString().indexOf (PackageName) >= 0)
+                return true;
+        }
+
+//        List<ActivityManager.AppTask> tasks = manager.getAppTasks();
+//
+//        // Get the info we need for comparison.
+//        for (ActivityManager.AppTask task:tasks) {
+//            ComponentName c = task.getTaskInfo().origActivity;
+//            if (c == null && c.equals(watchActivity))
+//                return true;
+//        }
+
+        // If not then our app is not on the foreground.
+        return false;
     }
 }

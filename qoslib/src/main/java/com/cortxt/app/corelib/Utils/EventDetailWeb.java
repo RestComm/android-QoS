@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -68,6 +69,13 @@ public class EventDetailWeb extends Activity {
         View view = inflater.inflate(R.layout.call_details_web, null, false);
         ScalingUtility.getInstance(this).scaleView(view);
         setContentView(view);
+
+        String eventname = getString(R.string.dashboard_eventdetail);
+        if (getIntent().hasExtra("eventName")) {
+            eventname = getIntent().getStringExtra("eventName");
+        }
+        TextView headerText = (TextView) view.findViewById(R.id.actionbartitle);
+        headerText.setText(eventname);
 
         scalingLayout = (RelativeLayout) findViewById(R.id.scallingWrapepr);
         busyIndicator = (ProgressBar) view.findViewById(R.id.busyIndicator);
@@ -154,6 +162,10 @@ public class EventDetailWeb extends Activity {
                         }
                     }
                     webview.setWebChromeClient(new WebChromeClient() {});
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        webview.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+                    }
+                    webview.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
                     //webview.getSettings().setLoadWithOverviewMode(true);
                     //webview.getSettings().setUseWideViewPort(true);
                     webview.getSettings().setJavaScriptEnabled(true);

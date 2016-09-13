@@ -196,11 +196,15 @@ public class EventHistoryFragment extends ListFragment {
 		// Toast.makeText(this.getActivity(), "Selected: " + position, Toast.LENGTH_SHORT).show();
 //		v.setBackgroundColor(Color.WHITE);
 
-		Integer eventId = (Integer) v.getTag();
+		HashMap<String, String> event  = (HashMap<String,String>) v.getTag();
 //		openEventShare (eventId);
+		long eventId = Long.parseLong(event.get(ReportManager.EventKeys.EVENTID));
+		int evtid = Integer.parseInt(event.get(ReportManager.EventKeys.ID));
+		String name = event.get("name");
 
 		Intent intent = new Intent(EventHistoryFragment.this.getActivity(), EventDetailWeb.class);
-		intent.putExtra(EventDetailWeb.EXTRA_EVENT_ID, eventId);
+		intent.putExtra(EventDetailWeb.EXTRA_EVENT_ID, evtid);
+		intent.putExtra("eventName", name);
 		startActivity(intent);
 	}
 
