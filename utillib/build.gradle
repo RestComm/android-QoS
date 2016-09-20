@@ -49,12 +49,9 @@ dependencies {
     //compile 'com.securepreferences:secure-preferences-lib-0.0.4@aar'
     //compile(name:'secure-preferences', ext:'aar')
     //compile 'com.google.android.gms:play-services:3.1.+'
-    compile 'com.google.android.gms:play-services-appinvite:9.4.0'
     compile 'com.google.code.gson:gson:2.3.1'
 
-    compile 'com.google.firebase:firebase-core:9.4.0'
-    compile 'com.google.firebase:firebase-messaging:9.4.0'
-    compile 'com.google.firebase:firebase-invites:9.4.0'
+
     //compile files('libs/gson-2.3.1.jar')
 }
-apply plugin: 'com.google.gms.google-services'
+

@@ -1,6 +1,5 @@
 package com.cortxt.app.corelib;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.Random;
@@ -50,7 +49,7 @@ import com.cortxt.app.utillib.Reporters.ReportManager;
 import com.cortxt.app.corelib.Services.LibPhoneStateListener;
 import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.GpsListener;
-import com.cortxt.app.utillib.Utils.MyFirebaseInstanceIDService;
+import com.cortxt.com.mmcextension.firebase.MyFirebaseInstanceIDService;
 import com.cortxt.com.mmcextension.VQ.VQManager;
 import com.cortxt.app.corelib.Services.TrackingManager;
 import com.cortxt.app.corelib.Services.Events.EventManager;
