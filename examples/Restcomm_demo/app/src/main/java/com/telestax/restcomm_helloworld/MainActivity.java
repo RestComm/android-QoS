@@ -36,18 +36,25 @@ import java.util.HashMap;
 import java.util.Timer;
 
 
-import org.mobicents.restcomm.android.client.sdk.RCClient;
-import org.mobicents.restcomm.android.client.sdk.RCConnection;
-import org.mobicents.restcomm.android.client.sdk.RCConnectionListener;
-import org.mobicents.restcomm.android.client.sdk.RCDevice;
-import org.mobicents.restcomm.android.client.sdk.RCDeviceListener;
-import org.mobicents.restcomm.android.client.sdk.RCPresenceEvent;
+import org.restcomm.android.sdk.RCClient;
+import org.restcomm.android.sdk.RCConnection;
+import org.restcomm.android.sdk.RCConnectionListener;
+import org.restcomm.android.sdk.RCDevice;
+import org.restcomm.android.sdk.RCDeviceListener;
+import org.restcomm.android.sdk.RCPresenceEvent;
 import org.webrtc.VideoTrack;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 
-public class MainActivity extends FragmentActivity implements RCDeviceListener, RCConnectionListener, OnClickListener {
+public class MainActivity extends FragmentActivity implements RCDeviceListener, RCConnectionListener, OnClickListener,
+        ServiceConnection {
 
     private RCDevice device;
+    boolean serviceBound = false;
+
     private RCConnection connection, pendingConnection;
     private HashMap<String, Object> params;
     private static final String TAG = "MainActivity";
@@ -134,6 +141,7 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
         if (prefDial != null)
             editDial.setText(prefDial);
 
+        /*
         RCClient.setLogLevel(Log.VERBOSE);
         RCClient.initialize(getApplicationContext(), new RCClient.RCInitListener() {
             public void onInitialized() {
@@ -196,6 +204,32 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
                 }
             }
         });
+        */
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        // The activity is about to become visible.
+        Log.i(TAG, "%% onStart");
+
+        bindService(new Intent(this, RCDevice.class), this, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        // The activity is no longer visible (it is now "stopped")
+        Log.i(TAG, "%% onStop");
+
+        // Unbind from the service
+        if (serviceBound) {
+            //device.detach();
+            unbindService(this);
+            serviceBound = false;
+        }
     }
 
     @Override
@@ -203,8 +237,87 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
         super.onDestroy();
         // The activity is about to be destroyed.
         Log.i(TAG, "%% onDestroy");
+        device.release();
+        /*
         RCClient.shutdown();
         device = null;
+        */
+    }
+
+    // Callbacks for service binding, passed to bindService()
+    @Override
+    public void onServiceConnected(ComponentName className, IBinder service)
+    {
+        Log.i(TAG, "%% onServiceConnected");
+        // We've bound to LocalService, cast the IBinder and get LocalService instance
+        RCDevice.RCDeviceBinder binder = (RCDevice.RCDeviceBinder) service;
+        device = binder.getService();
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        // we don't have a separate activity for the calls and messages, so let's use the same intent both for calls and messages
+        params.put(RCDevice.ParameterKeys.INTENT_INCOMING_CALL, intent);
+        params.put(RCDevice.ParameterKeys.INTENT_INCOMING_MESSAGE, intent);
+
+        params.put(RCDevice.ParameterKeys.SIGNALING_DOMAIN, "sip:" + editServer.getText().toString() + ":5060"); // :5080
+        params.put(RCDevice.ParameterKeys.SIGNALING_USERNAME, editUser.getText().toString());
+        params.put(RCDevice.ParameterKeys.SIGNALING_PASSWORD, editPwd.getText().toString());
+        params.put(RCDevice.ParameterKeys.MEDIA_TURN_ENABLED, true);
+        params.put(RCDevice.ParameterKeys.MEDIA_ICE_URL, "https://service.xirsys.com/ice");
+        params.put(RCDevice.ParameterKeys.MEDIA_ICE_USERNAME, "atsakiridis");
+        params.put(RCDevice.ParameterKeys.MEDIA_ICE_PASSWORD, "4e89a09e-bf6f-11e5-a15c-69ffdcc2b8a7");
+
+        if (!device.isInitialized()) {
+            device.initialize(getApplicationContext(), params, this);
+            device.setLogLevel(Log.VERBOSE);
+        }
+
+
+        // Make sure Qos server is started
+        QosAPI.start(this, true);
+        // make sure user is registered with the QoS server
+        String login = editUser.getText().toString() + "@" + editServer.getText().toString();
+        QosAPI.setLogin(this, login);
+        // Check Firebase invites before proceeding from SplashScreen
+        FirebaseInvite firebaseInvite = new FirebaseInvite(this);
+        firebaseInvite.setOnResponseListener(new FirebaseInvite.OnResponseListener() {
+            @Override
+            public void onResponse(final FirebaseInvite invite) {
+                // By the time the Splash screen delay is done, we should have the invitation result
+                if (invite.invited) {
+                    LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "OnResponseListener", "Firebase Invite: " + invite.url);
+                    if (invite.url.indexOf ("simpleshare") > 0) {
+                        Uri uri = Uri.parse (invite.url);
+                        String evtid = uri.getQueryParameter("id");
+                        final long iEventID = Long.parseLong(evtid);
+                        String evttype= uri.getQueryParameter("type");
+                        int iEventType = Integer.parseInt(evttype);
+
+                        Handler invitehandler = new Handler ();
+                        invitehandler.postDelayed(new Runnable () {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(MainActivity.this, EventDetailWeb.class);
+                                intent.putExtra("url", invite.deepLink);
+                                intent.putExtra("eventId", 0);
+                                startActivity(intent);
+                            }
+                        }, 2000);
+
+                    }
+                }
+            }
+        });
+
+        serviceBound = true;
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName arg0)
+    {
+        Log.i(TAG, "%% onServiceDisconnected");
+        serviceBound = false;
     }
 
 //    private void videoContextReady()
