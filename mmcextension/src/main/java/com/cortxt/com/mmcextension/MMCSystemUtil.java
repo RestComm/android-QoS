@@ -69,5 +69,8 @@ public class MMCSystemUtil {
     public static void startRilReader (Context context, boolean bStart, boolean useLogcat)
     {
     }
+    public static void checkFirebaseRegistration (Context context)
+    {
+    }
 
 }

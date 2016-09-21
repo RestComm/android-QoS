@@ -49,7 +49,7 @@ import com.cortxt.app.utillib.Reporters.ReportManager;
 import com.cortxt.app.corelib.Services.LibPhoneStateListener;
 import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.GpsListener;
-import com.cortxt.com.mmcextension.firebase.MyFirebaseInstanceIDService;
+//import com.cortxt.com.mmcextension.firebase.MyFirebaseInstanceIDService;
 import com.cortxt.com.mmcextension.VQ.VQManager;
 import com.cortxt.app.corelib.Services.TrackingManager;
 import com.cortxt.app.corelib.Services.Events.EventManager;
@@ -224,7 +224,8 @@ public class MainService extends Service {
 			verifyRegistration();
 
 			if (getApiKey(this) != null)
-				MyFirebaseInstanceIDService.checkFCMRegistration (MainService.this);
+				MMCSystemUtil.checkFirebaseRegistration (this);
+
 			//		mReportManager.checkPlayServices(this, true);
         }
 		catch (Exception e) {
@@ -1115,7 +1116,8 @@ public class MainService extends Service {
 							mApikey = null;
 							mReportManager.authorizeDevice(getLogin(MainService.this), QosAPI.getPassword(MainService.this), false);
 							// Ensure registered for Firebase Cloud Messages
-							MyFirebaseInstanceIDService.checkFCMRegistration (MainService.this);
+							MMCSystemUtil.checkFirebaseRegistration (MainService.this);
+
 						//	mReportManager.checkPlayServices(MainService.this, true);
 						}
 					} catch (Exception e) {

@@ -70,6 +70,7 @@ repositories {
 }
 dependencies {
     //compile project(':mmcextension')
+    compile 'com.android.support:appcompat-v7:22.2.0'
     debugCompile project(path: ':mmcextension', configuration: "libraryDebug")
     releaseCompile project(path: ':mmcextension', configuration: "libraryRelease")
 }

@@ -29,7 +29,7 @@ import com.cortxt.app.corelib.Utils.EventDetailWeb;
 import com.cortxt.app.corelib.Utils.QosAPI;
 import com.cortxt.app.corelib.Utils.QosInfo;
 import com.cortxt.app.utillib.DataObjects.EventType;
-import com.cortxt.app.utillib.Utils.FirebaseInvite;
+//import com.cortxt.app.utillib.Utils.FirebaseInvite;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 
 import java.util.HashMap;
