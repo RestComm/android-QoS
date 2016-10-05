@@ -1664,16 +1664,20 @@ public class LibPhoneStateListener extends PhoneStateListener {
 		// 3G Regained defined as switching to and connecting to 3G+ from <3G
 		if (state == TelephonyManager.DATA_CONNECTED && mPhoneState.previousNetworkTier < 1)
 			event = owner.getEventManager().stopPhoneEvent(EventType.COV_DATA_NO, EventType.COV_DATA_YES);
-		if (state == TelephonyManager.DATA_CONNECTED && mPhoneState.previousNetworkTier < 3){
+		if (state == TelephonyManager.DATA_CONNECTED && mPhoneState.previousNetworkTier < 3) {
 			if (mPhoneState.previousNetworkTier <= 1)
 				event = owner.getEventManager().stopPhoneEvent(EventType.COV_DATA_NO, EventType.COV_DATA_YES);
 			event = owner.getEventManager().stopPhoneEvent(EventType.COV_3G_NO, EventType.COV_3G_YES);
-		} 
+		}
 		// 4G Outage defined as switching to and connecting to 3G from LTE 4G
-		if (state == TelephonyManager.DATA_CONNECTED && mPhoneState.previousNetworkTier > 4 && !mPhoneState.bOffHook){
-			if (mPhoneState.isScreenOn() || mPhoneState.isOffHook() || owner.isTravelling())
+		if (state == TelephonyManager.DATA_CONNECTED && mPhoneState.previousNetworkTier > 4) {// && !mPhoneState.bOffHook){
+			if (mPhoneState.isOffHook()) {
+				EventCouple targetEventCouple = owner.getEventManager().getEventCouple(EventType.EVT_CONNECT, EventType.EVT_DISCONNECT);
+				EventObj connectEvent = targetEventCouple.getStartEvent();
+				connectEvent.setFlag(EventObj.CALL_CSFB, true);
+			} else if (mPhoneState.isScreenOn() || owner.isTravelling())
 				event = owner.getEventManager().startPhoneEvent(EventType.COV_4G_NO, EventType.COV_4G_YES);
-		} 
+		}
 		
 	}
 	

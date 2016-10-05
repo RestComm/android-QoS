@@ -81,6 +81,8 @@ public class EventObj {
     public static final int MANUAL_SAMPLES = (1<<24);
     public static final int CALL_LOGCAT = (1<<25);
     public static final int CALL_PRECISE = (1<<26);
+	public static final int CALL_CSFB = (1<<27);
+	public static final int CALL_CONF = (1<<28);
     public static final int CALL_INCOMING = 256;
     //public static final int CALL_PROXIMITY = 2048;  // Call ended with proximity sensor against face, which could indicate call was dropped
     //public static final int CALL_RECORDING = 131072;
