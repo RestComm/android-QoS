@@ -280,6 +280,8 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
         String login = editUser.getText().toString() + "@" + editServer.getText().toString();
         QosAPI.setLogin(this, login);
         // Check Firebase invites before proceeding from SplashScreen
+
+        /*
         FirebaseInvite firebaseInvite = new FirebaseInvite(this);
         firebaseInvite.setOnResponseListener(new FirebaseInvite.OnResponseListener() {
             @Override
@@ -309,6 +311,7 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
                 }
             }
         });
+        */
 
         serviceBound = true;
     }
@@ -418,15 +421,18 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
             // CHANGEME: update the IP address to your Restcomm instance
             //params.put("pref_proxy_ip", editServer.getText());
             //params.put("pref_proxy_port", "5080");
-            params.put("pref_proxy_domain", "sip:" + editServer.getText().toString() + ":5060");// + ":5080");
-            params.put("pref_sip_user", editUser.getText());
-            params.put("pref_sip_password", editPwd.getText());
+            params.put(RCDevice.ParameterKeys.SIGNALING_DOMAIN, "sip:" + editServer.getText().toString() + ":5060");// + ":5080");
+            params.put(RCDevice.ParameterKeys.SIGNALING_USERNAME, editUser.getText());
+            params.put(RCDevice.ParameterKeys.SIGNALING_PASSWORD, editPwd.getText());
+            device.updateParams(params);
+            /*
             device = RCClient.createDevice(params, this);
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             // we don't have a separate activity for the calls, so use the same intent both for calls and messages
             device.setPendingIntents(intent, intent);
 
             device.listen();
+            */
 
         }else if (view.getId() == R.id.button_answer) {
             if (this.pendingConnection == null) {
@@ -517,13 +523,18 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
 
     }
 
+    public void onDigitSent(RCConnection connection, int statusCode, String statusText)
+    {
+
+    }
+
     // RCConnection Listeners
     public void onConnecting(RCConnection connection)
     {
         Log.i(TAG, "RCConnection connecting");
     }
 
-    public void onConnected(RCConnection connection)
+    public void onConnected(RCConnection connection, HashMap<String, String> customHeaders)
     {
         Log.i(TAG, "RCConnection connected");
     }
@@ -550,6 +561,10 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
 //            remoteVideoTrack = null;
 //        }
     }
+    public void onError(RCConnection connection, int errorCode, String errorText)
+    {
+
+    }
 
     public void onDisconnected(RCConnection connection, int errorCode, String errorText) {
 
@@ -568,6 +583,41 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
         Log.i(TAG, "RCConnection declined");
         this.connection = null;
         pendingConnection = null;
+    }
+
+    public void onStartListening(RCDevice device, RCDeviceListener.RCConnectivityStatus connectivityStatus)
+    {
+
+    }
+
+    public void onMessageSent(RCDevice device, int statusCode, String statusText)
+    {
+
+    }
+
+    public void onReleased(RCDevice device, int statusCode, String statusText)
+    {
+
+    }
+
+    public void onInitialized(RCDevice device, RCDeviceListener.RCConnectivityStatus connectivityStatus, int statusCode, String statusText)
+    {
+
+    }
+
+    public void onInitializationError(int errorCode, String errorText)
+    {
+
+    }
+
+    public void onLocalVideo(RCConnection connection)
+    {
+
+    }
+
+    public void onRemoteVideo(RCConnection connection)
+    {
+
     }
 //    public void onReceiveLocalVideo(RCConnection connection, VideoTrack videoTrack) {
 //        Log.v(TAG, "onReceiveLocalVideo(), VideoTrack: " + videoTrack);
