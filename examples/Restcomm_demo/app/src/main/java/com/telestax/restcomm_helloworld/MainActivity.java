@@ -376,8 +376,8 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
             connectParams.put("username", "sip:+" + dial + ":5060");
             connectParams.put("video-enabled", false);
 
-            connectParams.put("local-video", findViewById(R.id.local_video_view));
-            connectParams.put("remote-video", findViewById(R.id.remote_video_view));
+            connectParams.put("local-video", findViewById(R.id.local_video_layout));
+            connectParams.put("remote-video", findViewById(R.id.remote_video_layout));
 
             // if you want to add custom SIP headers, please uncomment this
             //HashMap<String, String> sipHeaders = new HashMap<>();
