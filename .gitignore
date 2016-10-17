@@ -47,6 +47,7 @@ Todos.lst
 .idea/libraries
 .idea/libraries/*.xml
 *.iml
+**/*.iml
 examples/Restcomm_demo/.idea/
 qoslib/.idea/
 mmcextension/.idea/

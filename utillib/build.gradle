@@ -1,6 +1,10 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 
+group = 'com.cortxt.app'
+version = '1.0.5'
 android {
+
     compileSdkVersion 22
     buildToolsVersion '22.0.1'
 
@@ -27,13 +31,13 @@ android {
 
         }
     }
-    defaultPublishConfig 'release'
-    publishNonDefault true
-    productFlavors {
-        library{
-
-        }
-    }
+//    defaultPublishConfig 'release'
+//    publishNonDefault true
+//    productFlavors {
+//        library{
+//
+//        }
+//    }
 }
 repositories {
     jcenter()
@@ -55,3 +59,52 @@ dependencies {
     //compile files('libs/gson-2.3.1.jar')
 }
 
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "${nexusUrl}/content/repositories/releases") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+            snapshotRepository(url: "${nexusUrl}/content/repositories/snapshots") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+
+//            pom.project {
+//                name POM_NAME
+//                packaging POM_PACKAGING
+//                description POM_DESCRIPTION
+//                //url POM_URL
+//
+//                scm {
+//                    url POM_SCM_URL
+//                    connection POM_SCM_CONNECTION
+//                    developerConnection POM_SCM_DEV_CONNECTION
+//                }
+//
+//                licenses {
+//                    license {
+//                        name POM_LICENCE_NAME
+//                        url POM_LICENCE_URL
+//                        distribution POM_LICENCE_DIST
+//                    }
+//                }
+//
+//                developers {
+//                    developer {
+//                        id POM_DEVELOPER_ID
+//                        name POM_DEVELOPER_NAME
+//                    }
+//                }
+//            }
+//
+//            pom.whenConfigured { pom ->
+//                pom.dependencies.forEach { dep ->
+//                    if (dep.getVersion() == "unspecified") {
+//                        dep.setGroupId(group)
+//                        dep.setVersion(version)
+//                    }
+//                }
+//            }
+        }
+    }
+}

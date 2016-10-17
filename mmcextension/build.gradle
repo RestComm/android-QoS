@@ -16,20 +16,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    defaultPublishConfig 'release'
-    publishNonDefault true
-    productFlavors {
-        library{
-
-        }
-    }
+//    defaultPublishConfig 'release'
+//    publishNonDefault true
+//    productFlavors {
+//        library{
+//
+//        }
+//    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    //compile project(':mmcutility')
-    debugCompile project(path: ':utillib', configuration: "libraryDebug")
-    releaseCompile project(path: ':utillib', configuration: "libraryRelease")
+    compile project(':utillib')
+    //debugCompile project(path: ':utillib', configuration: "libraryDebug")
+    //releaseCompile project(path: ':utillib', configuration: "libraryRelease")
     //compile 'com.scottyab:secure-preferences-lib:0.0.4'
 }

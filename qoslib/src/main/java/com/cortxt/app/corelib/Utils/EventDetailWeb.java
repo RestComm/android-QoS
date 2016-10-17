@@ -260,8 +260,10 @@ public class EventDetailWeb extends Activity {
                 EventType eventType = EventType.get(Integer.parseInt(mEvent.get(ReportManager.EventKeys.TYPE)));
                 int markerResource = eventType.getImageResource();
 
+                webview.buildDrawingCache();
+                Bitmap screenshot = webview.getDrawingCache();
                 TaskHelper.execute(
-                        new ShareInviteTask(EventDetailWeb.this, message, subject, webview, eventId));
+                        new ShareInviteTask(EventDetailWeb.this, message, subject,webview, eventId, screenshot));
 
             }
         }, 500);

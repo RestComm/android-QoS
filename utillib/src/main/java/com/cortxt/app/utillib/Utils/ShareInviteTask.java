@@ -83,8 +83,10 @@ public class ShareInviteTask extends AsyncTask<Void, Void, Boolean> {
 		eventType = evttype;
 		init (context, textToShare, subject, viewToScreenshot);
 	}
-	public ShareInviteTask(Context context, String textToShare, String subject, View viewToScreenshot, int evtid) {
+	public ShareInviteTask(Context context, String textToShare, String subject, View viewToScreenshot, int evtid, Bitmap screenshot) {
 		eventid = evtid;
+		mScreenshot = screenshot;
+		mViewToScreenshot = viewToScreenshot;
 		init(context, textToShare, subject, viewToScreenshot);
 	}
 	public ShareInviteTask(Context context, String textToShare, String subject, View viewToScreenshot) {
@@ -104,8 +106,9 @@ public class ShareInviteTask extends AsyncTask<Void, Void, Boolean> {
 	
 	@Override
 	protected void onPreExecute() {
-		if (mViewToScreenshot != null)
+
 		{
+			if (mViewToScreenshot != null && mScreenshot == null)
 			{
 				mViewToScreenshot.buildDrawingCache();
 				mScreenshot = mViewToScreenshot.getDrawingCache();

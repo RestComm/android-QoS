@@ -1,4 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+group = 'com.cortxt.app'
+version = '1.0.5'
 
 android {
     signingConfigs {
@@ -51,13 +55,13 @@ android {
         }
     }
 
-    defaultPublishConfig 'release'
-    publishNonDefault true
-    productFlavors {
-        library{
+    //defaultPublishConfig 'release'
+    //publishNonDefault true
+    //productFlavors {
+    //    library{
 
-        }
-    }
+    //    }
+    //}
 
     lintOptions {
         checkReleaseBuilds false
@@ -66,11 +70,65 @@ android {
 }
 
 repositories {
-    jcenter()
+    //jcenter()
+    maven {
+        url "${nexusUrl}/content/repositories/releases"
+    }
 }
 dependencies {
-    //compile project(':mmcextension')
     compile 'com.android.support:appcompat-v7:22.2.0'
-    debugCompile project(path: ':mmcextension', configuration: "libraryDebug")
-    releaseCompile project(path: ':mmcextension', configuration: "libraryRelease")
+    compile project(':mmcextension')
+    //compile "com.cortxt.app:mmcextension:1.0.5"
+    //debugCompile project(path: ':mmcextension', configuration: "libraryDebug")
+    //releaseCompile project(path: ':mmcextension', configuration: "libraryRelease")
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "${nexusUrl}/content/repositories/releases") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+            snapshotRepository(url: "${nexusUrl}/content/repositories/snapshots") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+
+//            pom.project {
+//                name POM_NAME
+//                packaging POM_PACKAGING
+//                description POM_DESCRIPTION
+//                //url POM_URL
+//
+//                scm {
+//                    url POM_SCM_URL
+//                    connection POM_SCM_CONNECTION
+//                    developerConnection POM_SCM_DEV_CONNECTION
+//                }
+//
+//                licenses {
+//                    license {
+//                        name POM_LICENCE_NAME
+//                        url POM_LICENCE_URL
+//                        distribution POM_LICENCE_DIST
+//                    }
+//                }
+//
+//                developers {
+//                    developer {
+//                        id POM_DEVELOPER_ID
+//                        name POM_DEVELOPER_NAME
+//                    }
+//                }
+//            }
+
+//            pom.whenConfigured { pom ->
+//                pom.dependencies.forEach { dep ->
+//                    if (dep.getVersion() == "unspecified") {
+//                        dep.setGroupId(group)
+//                        dep.setVersion(version)
+//                    }
+//                }
+//            }
+        }
+    }
 }

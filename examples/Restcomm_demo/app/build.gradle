@@ -42,6 +42,9 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+    maven {
+        url "${nexusUrl}/content/repositories/releases"
+    }
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -51,9 +54,10 @@ dependencies {
     // TODO: Otherwise for now, I shipped .aar file with the modified SDK
     //compile(name:'restcomm.android.client.sdk-debug', ext:'aar')
     // Include the QoS library, and ensure it is debuggable when in debug, otherwise release
-    debugCompile project(path: ':qoslib', configuration: 'libraryDebug')
-    releaseCompile project(path: ':qoslib', configuration: 'libraryRelease')
+    compile project(':qoslib')
+    //debugCompile project(path: ':qoslib', configuration: 'libraryDebug')
+    //releaseCompile project(path: ':qoslib', configuration: 'libraryRelease')
     compile 'com.android.support:multidex:1.0.1'
-    compile project(':restcomm.android.sdk')
+    //compile project(':restcomm.android.sdk')
 }
 
