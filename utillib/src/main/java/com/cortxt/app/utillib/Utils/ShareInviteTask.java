@@ -89,6 +89,11 @@ public class ShareInviteTask extends AsyncTask<Void, Void, Boolean> {
 		mViewToScreenshot = viewToScreenshot;
 		init(context, textToShare, subject, viewToScreenshot);
 	}
+	public ShareInviteTask(Context context, String textToShare, String subject, View viewToScreenshot, int evtid) {
+		eventid = evtid;
+		mViewToScreenshot = viewToScreenshot;
+		init(context, textToShare, subject, viewToScreenshot);
+	}
 	public ShareInviteTask(Context context, String textToShare, String subject, View viewToScreenshot) {
 		init(context, textToShare, subject, viewToScreenshot);
 	}
