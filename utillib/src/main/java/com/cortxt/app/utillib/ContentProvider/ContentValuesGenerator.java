@@ -306,8 +306,8 @@ public class ContentValuesGenerator {
 
 				// allow for the possibility of sending a 3G signal and LTE signal at the same time
 				// but if LTE signal is present, and 3G signal says -120 or worse, ignore regular signal
-				if (lteRssi > -120 && dBm != null && dBm <= -120)
-					values.put(Tables.SignalStrengths.SIGNAL, (Integer) null);
+				if (lteRssi > -120 && (dBm == null || dBm <= -120))
+					values.put(Tables.SignalStrengths.SIGNAL, (Integer) lteRssi);
 
 			}
 			values.put(Tables.SignalStrengths.LTE_SIGNAL, lteRssi);

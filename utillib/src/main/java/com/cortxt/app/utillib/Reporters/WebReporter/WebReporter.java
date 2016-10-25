@@ -775,7 +775,7 @@ public class WebReporter  {
 			if (error)
 			{
 				LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "readString ", "error " + str);
-				return null;
+				return str;
 			}
 			return str;
 

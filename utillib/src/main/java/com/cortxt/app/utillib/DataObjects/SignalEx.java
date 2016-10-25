@@ -2,9 +2,12 @@ package com.cortxt.app.utillib.DataObjects;
 
 import java.lang.reflect.Field;
 
+import android.provider.ContactsContract;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+
+import com.cortxt.app.utillib.ContentProvider.Tables;
 
 /**
  * This class contains the information about the signal of the phone that
@@ -55,6 +58,25 @@ public class SignalEx {
 	{
 		if (this.signalStrength == null)
 			return null;
+		if (networkType == PhoneState.NETWORK_NEWTYPE_LTE)
+		{
+			Integer lteRssi = this.getLayer3("mLteRssi");
+			if (lteRssi == null)
+				lteRssi = this.getLayer3("mLteSignalStrength");
+			if (lteRssi != null) {
+				if (lteRssi >= 0 && lteRssi < 32) {
+					if (lteRssi == 0)
+						lteRssi = -119;  // officially 0 means -113dB or less, but since lowest possible signal on Blackberry = -120, call it -120 for consistency
+					else if (lteRssi == 1)
+						lteRssi = -111;  // officially 1 = -111 dB
+					else if (lteRssi > 1 && lteRssi <= 31)
+						lteRssi = (lteRssi - 2) * 2 + -109;
+				}
+
+				if (lteRssi > -130)
+					return lteRssi;
+			}
+		}
 		// Easy way to get GSM DB
 		if (phoneType == TelephonyManager.PHONE_TYPE_GSM)
 		{
@@ -69,14 +91,7 @@ public class SignalEx {
 			else if (rssi < -30 && rssi >= -130)
 				return rssi;
 			else if (rssi == 99) {
-				Integer signalLte = this.getLayer3("mLteSignalStrength");
-				if (signalLte != null && signalLte < 99)
-				{
-					if (signalLte == 0)
-						return -120;
-					else
-						return -113 + signalLte*2;
-				}
+
 				return null;
 			}
 			else

@@ -78,7 +78,7 @@ public class ConnectionHistory {
 			
 			}
 			stringConnections = cellnettype + "," + state + "," + activity + "," + activeType + "," + serviceState + "," + smp.voiceType;
-			if (!lastConnectString.equals(stringConnections))
+			if (!lastConnectString.equals(stringConnections) && tcpstats != null)
 			{
 				// Update Neighbor list history if state changes
 				connect_history.add(smp);

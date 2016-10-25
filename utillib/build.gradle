@@ -1,8 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
 
-group = 'com.cortxt.app'
-version = '1.0.5'
+//group = 'com.cortxt.app'
+group = 'com.restcomm.app'
+version = '1.0.6'
 android {
 
     compileSdkVersion 22
@@ -25,6 +26,10 @@ android {
         }
     }
 
+    packagingOptions {
+        pickFirst 'META-INF/LICENSE.txt' // picks the JavaMail license file
+    }
+
     android {
         lintOptions {
             disable 'MissingTranslation'
@@ -41,7 +46,9 @@ android {
 }
 repositories {
     jcenter()
-
+    maven {
+        url "https://maven.java.net/content/groups/public/"
+    }
 }
 
 
@@ -54,7 +61,6 @@ dependencies {
     //compile(name:'secure-preferences', ext:'aar')
     //compile 'com.google.android.gms:play-services:3.1.+'
     compile 'com.google.code.gson:gson:2.3.1'
-
 
     //compile files('libs/gson-2.3.1.jar')
 }
@@ -69,42 +75,6 @@ uploadArchives {
                 authentication(userName: nexusUsername, password: nexusPassword)
             }
 
-//            pom.project {
-//                name POM_NAME
-//                packaging POM_PACKAGING
-//                description POM_DESCRIPTION
-//                //url POM_URL
-//
-//                scm {
-//                    url POM_SCM_URL
-//                    connection POM_SCM_CONNECTION
-//                    developerConnection POM_SCM_DEV_CONNECTION
-//                }
-//
-//                licenses {
-//                    license {
-//                        name POM_LICENCE_NAME
-//                        url POM_LICENCE_URL
-//                        distribution POM_LICENCE_DIST
-//                    }
-//                }
-//
-//                developers {
-//                    developer {
-//                        id POM_DEVELOPER_ID
-//                        name POM_DEVELOPER_NAME
-//                    }
-//                }
-//            }
-//
-//            pom.whenConfigured { pom ->
-//                pom.dependencies.forEach { dep ->
-//                    if (dep.getVersion() == "unspecified") {
-//                        dep.setGroupId(group)
-//                        dep.setVersion(version)
-//                    }
-//                }
-//            }
         }
     }
 }

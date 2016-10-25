@@ -1284,12 +1284,12 @@ public class EventManager {
 				stageEventIfNeeded(location);
 
 			// Can we force extra neighbor list updates by requesting more Cell Locations?
-			if (tmNeighborUpdate + 15000 < System.currentTimeMillis())
-			{
-				CellLocation.requestLocationUpdate();
-				//cellHistory.updateNeighborHistory (null, null);
-				tmNeighborUpdate = System.currentTimeMillis();
-			}
+//			if (tmNeighborUpdate + 15000 < System.currentTimeMillis())
+//			{
+//				CellLocation.requestLocationUpdate();
+//				//cellHistory.updateNeighborHistory (null, null);
+//				tmNeighborUpdate = System.currentTimeMillis();
+//			}
 			return true;
 		}
 
