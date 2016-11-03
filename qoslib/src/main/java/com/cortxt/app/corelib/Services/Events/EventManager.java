@@ -217,6 +217,8 @@ public class EventManager {
 	 */
 	public EventObj triggerSingletonEvent(EventType eventType)
 	{
+		if ((eventType == EventType.EVT_CALLFAIL || eventType == EventType.EVT_DROP) && EventObj.isDisabledEvent(context, EventObj.DISABLE_DROPCALL))
+			return null;
 		final EventObj singletonEvent  = registerSingletonEvent(eventType);
 
 		if (eventType == EventType.MAN_TRACKING)
@@ -250,7 +252,6 @@ public class EventManager {
 		if (startEventType == EventType.COV_4G_NO)
 			context.getIntentDispatcher().updateLTEIdentity (null);
 
-
 		return startPhoneEvent(startEventType, stopEventType, System.currentTimeMillis());
 	}
 	public EventObj startPhoneEvent(EventType startEventType, EventType stopEventType, long time)
@@ -268,6 +269,17 @@ public class EventManager {
 				(startEventType == EventType.COV_4G_NO || startEventType == EventType.COV_3G_NO || startEventType == EventType.COV_DATA_NO || startEventType == EventType.COV_4G_NO || startEventType == EventType.COV_VOD_NO))
 			// phone must see at least one valid signal before allowing these events
 			return null;
+
+		// These events can also be disabled by the event response
+		if ((startEventType == EventType.COV_3G_NO && EventObj.isDisabledEvent(context, EventObj.DISABLE_LOST3G)) ||
+				startEventType == EventType.COV_DATA_NO && EventObj.isDisabledEvent(context, EventObj.DISABLE_LOST2G) ||
+				startEventType == EventType.COV_4G_NO && EventObj.isDisabledEvent(context, EventObj.DISABLE_LOST4G) ||
+				startEventType == EventType.COV_VOD_NO && EventObj.isDisabledEvent(context, EventObj.DISABLE_LOSTSVC) ||
+				startEventType == EventType.EVT_CONNECT && EventObj.isDisabledEvent(context, EventObj.DISABLE_ALLCALL) ||
+				startEventType == EventType.EVT_CONNECT && EventObj.isDisabledEvent(context, EventObj.DISABLE_NONDROPCALL))
+			return null;
+
+
 
 		if (this.isEventRunning(startEventType)){
 			if (startEventType == EventType.SIP_CONNECT)
@@ -1154,10 +1166,12 @@ public class EventManager {
 					reason = "not enabled";
 				if (context.getPhoneState().isCallConnected() || context.getPhoneState().isCallDialing() == true)
 					reason = "phone call";
-				if (context.getUsageLimits().getUsageProfile () <= UsageLimits.MINIMAL)
+				if (context.getUsageLimits().getUsageProfile() <= UsageLimits.MINIMAL)
 					reason = "minimal";
 				if (context.getUsageLimits().getDormantMode () >= 1)
 					reason = "dormant";
+				if (EventObj.isDisabledEvent(context,EventObj.DISABLE_AUTOCONNTEST))
+					reason = "disableevent";
 				if (reason != null)
 				{
 					LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "runLatencyTest cancelled ", reason);
@@ -1216,7 +1230,9 @@ public class EventManager {
 			int stageTime = event.getEventType().getPostEventStageTime();
 			if (event.getEventType() == EventType.EVT_CONNECT || event.getEventType() == EventType.SIP_CONNECT)
 			{
-				if (getUsageLimits().getUsageProfile() == 0)
+				if (EventObj.isDisabledEvent(context, EventObj.DISABLE_LONGCALL))
+					stageTime = 30000;
+				else if (getUsageLimits().getUsageProfile() == 0)
 					stageTime = 60000;
 				else if (getUsageLimits().getUsageProfile() == 1)
 					stageTime = 600000;

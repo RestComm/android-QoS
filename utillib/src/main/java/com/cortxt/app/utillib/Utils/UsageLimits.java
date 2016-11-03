@@ -8,6 +8,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
+import com.cortxt.app.utillib.DataObjects.EventObj;
 import com.cortxt.app.utillib.DataObjects.EventType;
 import com.cortxt.app.utillib.ICallbacks;
 import com.securepreferences.SecurePreferences;
@@ -291,7 +292,7 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 					_consecFillinLimit = 2;
 					_gpsFailsPer3hr = 5;
 					_gpsAttemptsPer3hr = 17;
-					WAKEUP_PERIOD = 6;
+					WAKEUP_PERIOD = 5;
 					_coverageFillSamples = 2;
 					_speedtestsPerDay = 4;
 					_speedTestMBperMonth = 250;
@@ -383,6 +384,8 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 				_detectionLevel = 1;
 		}
 		//_travelEnable = PreferenceManager.getDefaultSharedPreferences(owner).getBoolean(PreferenceKeys.Miscellaneous.TRAVEL_ENABLE, true);
+		if (EventObj.isDisabledEvent(owner.getContext(),EventObj.DISABLE_TRAVEL))
+			_travelEnable = false;
 		getUsageProfileSetting ();
 		//owner.changeWakeType (getUsageProfile());
 		

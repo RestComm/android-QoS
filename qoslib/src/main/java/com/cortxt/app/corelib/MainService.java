@@ -2,6 +2,7 @@ package com.cortxt.app.corelib;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,6 +14,8 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,6 +28,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
@@ -143,7 +147,7 @@ public class MainService extends Service {
 			mReportManager.getCarrierLogo(null);
 
 			eventManager = new EventManager(this);
-			dataMonitorStats = new DataMonitorStats(this);
+			dataMonitorStats = new DataMonitorStats(this, new Handler());
 			webSocketManager = new RTWebSocket(this);
 			mVQManager = new VQManager(mmcCallbacks, mPhoneState);
 
@@ -160,6 +164,8 @@ public class MainService extends Service {
 			netLocationManager = new GpsManagerOld(this);
 
 			trackingManager = new TrackingManager(this);
+
+
 
 			serviceRunning = true;
 
@@ -457,6 +463,8 @@ public class MainService extends Service {
 			{
 				if (!this.getResources().getBoolean(R.bool.ALLOW_FULL_WAKELOCK))
 					bPartial = true;
+				if (EventObj.isDisabledEvent(this, EventObj.DISABLE_SCREENON))
+					bPartial = true;
 				LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "keepAwake", "Wake=" + bWake);
 				while (wakeLockScreen.isHeld() && (!bPartial))
 					wakeLockScreen.release();
@@ -517,6 +525,7 @@ public class MainService extends Service {
 		int dormantMode = PreferenceManager.getDefaultSharedPreferences(MainService.this).getInt(PreferenceKeys.Miscellaneous.USAGE_DORMANT_MODE, 0);
 		if (dormantMode > 0)
 			return;
+
 		if (interval == 0)
 			interval = 30*60*1000;
 		if (appscan_sec == null || appscan_sec < 30)
@@ -531,15 +540,37 @@ public class MainService extends Service {
 			
 			//default: AlarmManager.INTERVAL_FIFTEEN_MINUTES will do alarm every 15 minutes after the first alarm (set in onCreateOld)
 			alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, getFirst15MinUpdateTime(interval), interval, alarm);
+
+
 			if (appscan_sec != null)
 				Global.SCANAPP_PERIOD = appscan_sec*1000;
 			else
 				Global.SCANAPP_PERIOD = 60000 * 5L;
+
+			// Test if new UsageStats works
+			// If so, we can reduce the wakeups which are needed to constantly check who is running foreground
+//			if (Build.VERSION.SDK_INT >= 21) {
+//				try {
+//					UsageStatsManager usageStatsManager = (UsageStatsManager) this.getSystemService("usagestats");// Context.USAGE_STATS_SERVICE);
+//					List<UsageStats> queryUsageStats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, System.currentTimeMillis() - 3600000, System.currentTimeMillis());
+//					if (queryUsageStats.size() > 1 && Global.SCANAPP_PERIOD < 60000 * 10L)
+//						Global.SCANAPP_PERIOD = 60000 * 10L;
+//				} catch (Exception e){}
+//			}
+
 			intent = new Intent(IntentHandler.ACTION_ALARM_SCANAPPS);
 			alarm = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_CANCEL_CURRENT);	
 			
 			//default: AlarmManager.INTERVAL_FIFTEEN_MINUTES will do alarm every 15 minutes after the first alarm (set in onCreateOld)
-			alarmMgr.setRepeating(AlarmManager.RTC, System.currentTimeMillis()+5000, Global.SCANAPP_PERIOD,  alarm);
+			if (EventObj.isDisabledStat(this, EventObj.DISABLESTAT_APPS))
+				alarmMgr.cancel(alarm);
+			else {
+				// if we dont need app foreground time, just use normal interval to scan apps and save battery
+				if (EventObj.isDisabledStat(this, EventObj.DISABLESTAT_APPS_FORETIME))
+					Global.SCANAPP_PERIOD = interval;
+				//alarmMgr.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + 5000, Global.SCANAPP_PERIOD, alarm);
+				alarmMgr.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, alarm);
+			}
 		}
 		else {
 
@@ -1027,6 +1058,8 @@ public class MainService extends Service {
 
 	public boolean getUseRadioLog ()
 	{
+		if (EventObj.isDisabledEvent(this, EventObj.DISABLE_RILREADER))
+			return false;
 		if (MMCSystemUtil.isServiceModeEnabled())
 			return true;
 		String pname = this.getPackageName();
@@ -1202,7 +1235,7 @@ public class MainService extends Service {
         delay += spreadDelay;
 		if (Global.UPDATE_PERIOD > 3600 * 4 * 1000)
 			delay = (int)(Global.UPDATE_PERIOD/1000 + spreadDelay);
-        //delay = 1800;
+
         lNextUpdate = System.currentTimeMillis() + delay*1000;
         return lNextUpdate;
     }

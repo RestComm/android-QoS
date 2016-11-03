@@ -77,8 +77,8 @@ repositories {
 }
 dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
-    //compile project(':mmcextension')
-    compile "com.restcomm.app:mmcextension:1.0.6"
+    compile project(':mmcextension')
+    //compile "com.restcomm.app:mmcextension:1.0.6"
 
 }
 

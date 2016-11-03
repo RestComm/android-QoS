@@ -134,7 +134,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 		mPhoneState.telephonyManager = telephonyManager;
 		restcommManager = new RestCommManager(this, owner);
 		dataActivtyHandler = new Handler();
-		dataActivityRunnable = new AppDataStatisticsRunnable(owner.getCallbacks(), dataActivtyHandler);
+		dataActivityRunnable = new AppDataStatisticsRunnable(owner.getCallbacks(), dataActivtyHandler, owner.getDataMonitorStats().getStatsManager());
 		mySensorManager = (SensorManager)owner.getSystemService(
 				owner.SENSOR_SERVICE);
 
@@ -260,7 +260,8 @@ public class LibPhoneStateListener extends PhoneStateListener {
 				owner.getIntentDispatcher().updateConnection(activity, true);
 			}
 			//User allows - default yes
-			if(PreferenceManager.getDefaultSharedPreferences(owner).getBoolean(PreferenceKeys.User.PASSIVE_SPEED_TEST, true)) {
+			if (PreferenceManager.getDefaultSharedPreferences(owner).getBoolean(PreferenceKeys.User.PASSIVE_SPEED_TEST, true)
+					|| Global.SCANAPP_PERIOD > 0) {
 				//Don't allow if a speedtest is in progress
 				if(PreferenceManager.getDefaultSharedPreferences(owner).getBoolean(PreferenceKeys.Miscellaneous.SPEEDTEST_INPROGRESS, false)) {
 					return;
@@ -268,10 +269,10 @@ public class LibPhoneStateListener extends PhoneStateListener {
 				if(PreferenceManager.getDefaultSharedPreferences(owner).getBoolean(PreferenceKeys.Miscellaneous.VIDEOTEST_INPROGRESS, false)) {
 					return;
 				}
-				if (owner.getUsageLimits().getUsageProfile () == UsageLimits.MINIMAL)
-					return;
+				//if (owner.getUsageLimits().getUsageProfile () == UsageLimits.MINIMAL)
+				//	return;
 				//server allows - default no
-				int allow = PreferenceManager.getDefaultSharedPreferences(owner).getInt(PreferenceKeys.Miscellaneous.PASSIVE_SPEEDTEST_SERVER, 0);
+				int allow = 1;//PreferenceManager.getDefaultSharedPreferences(owner).getInt(PreferenceKeys.Miscellaneous.PASSIVE_SPEEDTEST_SERVER, 0);
 				if(allow > 0) {
 					dataThrougput();  
 				}
@@ -485,15 +486,29 @@ public class LibPhoneStateListener extends PhoneStateListener {
 			if (targetEventCouple != null && Build.VERSION.SDK_INT >= 16 && !mPhoneState.isCallConnected())//permissionForReadLogs != 0 && permissionForPrecise != 0 ) // && !owner.isCallConnected())  //  && !owner.getUsageLimits().getUseRadioLog())
 				checkCallLog();
 
+			if (EventObj.isDisabledEvent(owner, EventObj.DISABLE_DROPCALL) && mPhoneState.lastCallDropped == true)
+				mPhoneState.lastCallDropped = false;
+
 			if (mPhoneState.lastCallDropped == true)
 			{
 				mPhoneState.lastCallDropped = false;
 				if (targetEventCouple == null)
 				{
-					EventObj evt = owner.getEventManager().triggerSingletonEvent(EventType.EVT_CALLFAIL);
-					popupDropped(EventType.EVT_CALLFAIL, 5, evt.getLocalID());
-					evt.setCause (mPhoneState.lastDroppedCause);
-					evt.setEventTimestamp(mPhoneState.disconnectTime);
+					EventObj evt = null;
+					if (mPhoneState.isCallConnected())
+					{
+						evt = owner.getEventManager().triggerSingletonEvent(EventType.EVT_DROP);
+						popupDropped(EventType.EVT_DROP, 5, evt.getLocalID());
+					}
+					else
+					{
+						evt = owner.getEventManager().triggerSingletonEvent(EventType.EVT_CALLFAIL);
+						popupDropped(EventType.EVT_CALLFAIL, 5, evt.getLocalID());
+					}
+					if (evt != null) {
+						evt.setCause(mPhoneState.lastDroppedCause);
+						evt.setEventTimestamp(mPhoneState.disconnectTime);
+					}
 				}
 				else if (mPhoneState.isCallConnected() && targetEventCouple != null)
 				{
@@ -574,7 +589,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 				
 				int rating = 0;
 
-				if (DeviceInfoOld.getPlatform() != 3)
+				if (DeviceInfoOld.getPlatform() != 3 && !EventObj.isDisabledEvent(owner, EventObj.DISABLE_DROPCALL))
 				{
 					PhoneHeuristic heur = new PhoneHeuristic (owner.getCallbacks(), mPhoneState);
 					rating = heur.heuristicDropped(mPhoneState);
@@ -931,7 +946,8 @@ public class LibPhoneStateListener extends PhoneStateListener {
 			}
 			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "onServiceStateChanged", "roaming status: " + status);
 			owner.trackAccessPoints(roamValue);
-			owner.getEventManager().triggerUpdateEvent(false, false);
+			if (!EventObj.isDisabledEvent(owner, EventObj.DISABLE_ROAMUPDATE))
+				owner.getEventManager().triggerUpdateEvent(false, false);
 			PreferenceManager.getDefaultSharedPreferences(owner).edit().putBoolean(PreferenceKeys.Miscellaneous.WAS_ROAMING, mPhoneState.isRoaming()).commit();
 		}		
 		

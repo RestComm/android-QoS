@@ -35,8 +35,8 @@ repositories {
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile "com.restcomm.app:utillib:1.0.6"
-    //compile project(':utillib')
+    //compile "com.restcomm.app:utillib:1.0.6"
+    compile project(':utillib')
     //compile 'com.scottyab:secure-preferences-lib:0.0.4'
 }
 

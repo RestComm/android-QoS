@@ -1,13 +1,17 @@
 package com.cortxt.app.utillib.DataObjects;
 
+import android.content.Context;
 import android.location.Location;
 import android.net.TrafficStats;
 import android.net.Uri;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.telephony.ServiceState;
 
 import com.cortxt.app.utillib.Utils.GpsListener;
+import com.cortxt.app.utillib.Utils.PreferenceKeys;
 
 import org.json.JSONObject;
 
@@ -59,7 +63,33 @@ public class EventObj {
 	
 	private int lookupid1 = 0;
 	private int lookupid2 = 0;
-    
+
+
+	public static final int DISABLE_LOST2G = (1<<0); // 1 disable 2G outage events
+	public static final int DISABLE_LOST3G = (1<<1); // 2 disable 3G outage events
+	public static final int DISABLE_LOST4G = (1<<2); // 4 disable LTE outage events
+	public static final int DISABLE_LOSTSVC = (1<<3); // 8 disable Service outage events
+	public static final int DISABLE_LONGCALL = (1<<4); // 16 only record 30 seconds of coverage on calls
+	public static final int DISABLE_DROPCALL = (1<<5); // 32 disable dropped call events
+	public static final int DISABLE_ALLCALL = (1<<6); // 64 disable all call events
+	public static final int DISABLE_NONDROPCALL = (1<<7); // 128 disable all call events, except to send dropped and failed calls
+	public static final int DISABLE_AUTOCONNTEST = (1<<8); // 256 disable all call events
+	public static final int DISABLE_TRAVEL = (1<<9); // 512 disable travel detection
+	public static final int DISABLE_FILLINS = (1<<10); // 1024 disable fill-ins
+	public static final int DISABLE_SCREENON = (1<<11); // 2048 disable turning the screen on during events
+	public static final int DISABLE_RILREADER = (1<<12); // 4096 disable trying to read ril or logcat for rooted or system
+	public static final int DISABLE_ROAMUPDATE = (1<<13); // 8192 disable sending update event when roaming changes
+
+
+	public static final int DISABLESTAT_APPS = (1<<0); // 1 Disable app monitoring
+	public static final int DISABLESTAT_CPUTCP = (1<<1); // 2 Disable cpu and tcp error monitoring, which requires reading linux files
+	public static final int DISABLESTAT_APPS_FORETIME = (1<<2); // 4 Disable monitoring for foreground time of apps, which causes wakeups
+	public static final int DISABLESTAT_APPS_THROUGHPUT = (1<<3); // 8 Disable measuring the throughput of foreground apps
+	public static final int DISABLESTAT_SMS = (1<<4); // 16 Disable SMS send and received stats
+	public static final int DISABLESTAT_APPDATAUSAGE = (1<<5); // 32 Disable data usage stats for apps
+	public static final int DISABLESTAT_DATAUSAGE = (1<<6); // 64 Disable overall data usage stats
+	public static final int DISABLESTAT_PHONE = (1<<7); // 128 Disable overall phone stats, keeping only the apps stats
+
 	public static final int SERVICE_VOICE = 1;  // If 
 	public static final int SERVICE_DATA = 2;
 	public static final int SERVICE_3G = 4;
@@ -494,5 +524,36 @@ public class EventObj {
 		if (gpsListener == null)
 			return null;
 		return gpsListener.getLastLocation();
+	}
+
+	public static Integer disabledEvents;
+	public static Integer disabledStats;
+	public static void setDisabledEvents (Context context, int disabled)
+	{
+		PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(PreferenceKeys.Miscellaneous.DISABLED_EVENTS, disabled).commit();
+		disabledEvents = disabled;
+	}
+	public static void setDisabledStats (Context context, int disabledstats)
+	{
+		PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(PreferenceKeys.Miscellaneous.DISABLED_STATS, disabledstats).commit();
+		disabledStats = disabledstats;
+	}
+
+	public static boolean isDisabledEvent (Context context, int checkEvent)
+	{
+		if (disabledEvents == null)
+			disabledEvents = PreferenceManager.getDefaultSharedPreferences(context).getInt(PreferenceKeys.Miscellaneous.DISABLED_EVENTS, 0);
+		if ((disabledEvents & checkEvent) > 0)
+			return true;
+		return false;
+	}
+
+	public static boolean isDisabledStat (Context context, int checkStat)
+	{
+		if (disabledStats == null)
+			disabledStats = PreferenceManager.getDefaultSharedPreferences(context).getInt(PreferenceKeys.Miscellaneous.DISABLED_STATS, 0);
+		if ((disabledStats & checkStat) > 0)
+			return true;
+		return false;
 	}
 }

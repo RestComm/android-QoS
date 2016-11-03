@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,8 +42,8 @@ import com.cortxt.app.utillib.DataObjects.EventDataEnvelope;
 import com.cortxt.app.utillib.DataObjects.EventCouple;
 import com.cortxt.app.utillib.DataObjects.EventObj;
 import com.cortxt.app.utillib.DataObjects.EventTypeGenre;
-import com.cortxt.app.utillib.DataObjects.database.DataMonitorDBReader;
-import com.cortxt.app.utillib.DataObjects.database.DataMonitorDBWriter;
+import com.cortxt.com.mmcextension.datamonitor.database.DataMonitorDBReader;
+import com.cortxt.com.mmcextension.datamonitor.database.DataMonitorDBWriter;
 import com.google.gson.Gson;
 
 /**
@@ -623,7 +622,7 @@ public class EventUploader implements Runnable{
 									LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "generateEventDataFromEvent", "exception in clearAccessPointsHistory: ", e);
 								}
 								try{
-									Apps = owner.getDataMonitorStats().getRunningAppsString();
+									Apps = owner.getDataMonitorStats().getRunningAppsString(true);
 									//cleanup
 									dbWriter.deleteAppsFromDB(owner.getApplicationContext());							
 									check = dbWriter.delete15MinStatsBucket(owner.getApplicationContext());

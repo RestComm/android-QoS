@@ -269,7 +269,7 @@ public class EventHistoryFragment extends ListFragment {
 					loc.setText(event.get(KEY_ADDRESS));
 				}
 				int id = Integer.parseInt(event.get(ReportManager.EventKeys.ID));
-				row.setTag(id);
+				row.setTag(event);
 			} catch (Exception e) {
 				LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "EventHistory", "getView", "", e);
 			}

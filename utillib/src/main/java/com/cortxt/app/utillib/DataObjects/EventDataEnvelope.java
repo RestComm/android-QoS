@@ -43,6 +43,7 @@ public class EventDataEnvelope {
                 this.oCallData.appName = altLabel;
             else
                 this.oCallData.appName = Global.getAppName(context);
+			this.oCallData.appCategory = Global.getAppCategory(context);
         }
 
 	}
@@ -225,7 +226,7 @@ class OCallData{
 	public String IMSI;
 	public String apiKey;
 	public int mcc, mnc;
-	public String appName;
+	public String appName, appCategory;
 	
 	/**
 	 * List of events.

@@ -132,6 +132,9 @@ public class CellHistory {
 					{
 						return updateLteNeighborHistory(cells);
 					}
+					if (cells == null)
+						LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "updateNeighborHistory", "cells = null");
+
 					if (cells != null && cells.size() > 1)//1)
 					{
 						
@@ -145,7 +148,7 @@ public class CellHistory {
 							CellInfo neighbor = cells.get(i);
 							String msg =  "cells[" + i + "]=" + neighbor.toString();
 							String classname = neighbor.getClass().toString();
-							//MMCLogger.logToFile(MMCLogger.Level.ERROR, TAG, "updateNeighborHistory", "cells[" + i + "]=" + neighbor.toString());
+							LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "updateNeighborHistory", "cells[" + i + "]=" + neighbor.toString());
 							//Log.d(TAG, "cells[" + c + "]=" + cells.get(c).toString());
 							if (gen < 3)
 								_type[i] = "2G";

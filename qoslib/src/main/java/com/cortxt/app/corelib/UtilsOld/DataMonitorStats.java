@@ -1,7 +1,9 @@
 package com.cortxt.app.corelib.UtilsOld;
 
 import android.content.Context;
+import android.os.Handler;
 
+import com.cortxt.com.mmcextension.datamonitor.SMSObserver;
 import com.cortxt.com.mmcextension.datamonitor.StatsManager;
 import com.cortxt.com.mmcextension.datamonitor.StatsManager.BatteryChargeState;
 import com.cortxt.com.mmcextension.datamonitor.StatsManager.GPSState;
@@ -13,6 +15,7 @@ import com.cortxt.com.mmcextension.datamonitor.StatsManager.WifiState;
 public class DataMonitorStats {
 	
 	private StatsManager mStatsManager;
+	private SMSObserver smsObserver;
 	private WifiState wifiState;			
 	private RoamingState  roamingState;
 	private ScreenState  sceenState;
@@ -21,9 +24,10 @@ public class DataMonitorStats {
 	private BatteryChargeState  batteryChargeState;
 	private Context mContext;
 	
-	public DataMonitorStats (Context context) {		
+	public DataMonitorStats (Context context, Handler handler) {
 		mContext = context;
-		mStatsManager = new StatsManager(context);
+		this.smsObserver = smsObserver;
+		mStatsManager = new StatsManager(context, handler);
 	}
 	
 	public void setWifi(boolean wifi) {
@@ -89,11 +93,13 @@ public class DataMonitorStats {
 	}
 	
 	public void monitor() {
+		if (smsObserver != null)
+			smsObserver.verifyQueuedSMSesStatus();
 		mStatsManager.startMonitoring();
 	}
 	
-	public String getRunningAppsString() {
-		return mStatsManager.getRunningAppsString();
+	public String getRunningAppsString(boolean bSend) {
+		return mStatsManager.getRunningAppsString(bSend);
 	}
 	
 	public void firstBucket() {
@@ -102,6 +108,9 @@ public class DataMonitorStats {
 	
 	public void scanApps() {
 		mStatsManager.startScan();
+	}
+	public StatsManager getStatsManager() {
+		return mStatsManager;
 	}
 
 	public String getForegroundAppName () {return mStatsManager.getForegroundApp();}

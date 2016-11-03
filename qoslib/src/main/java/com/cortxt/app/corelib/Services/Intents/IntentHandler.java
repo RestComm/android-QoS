@@ -220,7 +220,10 @@ public class IntentHandler extends BroadcastReceiver {
 	public static final String PHONE_CALL_DISCONNECT = "com.cortxt.app.MMC.intent.action.PHONE_CALL_DISCONNECT";
 	public static final String ACTION_ALARM_15MINUTE = "com.cortxt.app.MMC.intent.action.ACTION_ALARM_15MINUTE";
 	public static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
-	public static final String SMS_SENT = "android.provider.Telephony.SMS_SENT";
+	public static final String SMS_SENT = "android.provider.Telephony.SMS_DELIVER";
+	//public static final String SMS_REJECTED = "android.provider.Telephony.SMS_REJECTED";
+	//public static final String MMS_RECEIVED = "android.provider.Telephony.DATA_SMS_RECEIVED";
+	//public static final String MMS_SENT = "android.provider.Telephony.WAP_PUSH_DELIVER";
 	public static final String MANUAL_PLOTTING_START = "com.cortxt.app.MMC.intent.action.MANUAL_PLOTTING_START";
 	public static final String MANUAL_PLOTTING_END = "com.cortxt.app.MMC.intent.action.MANUAL_PLOTTING_END";
 	public static final String MANUAL_PLOTTING_CANCEL = "com.cortxt.app.MMC.intent.action.MANUAL_PLOTTING_CANCEL";
@@ -533,7 +536,7 @@ public class IntentHandler extends BroadcastReceiver {
 			if (intervalDM > 0)
 			{
 				dataMonitorStats.scanApps();
-				dataMonitorStats.getRunningAppsString(); // for debug
+				dataMonitorStats.getRunningAppsString(false); // for debug
 			}
 
 			// Also using this timer for GCM heartbeats (its a 5 minute heartbeat to tell Google Cloud Messaging to check the socket more often for more reliable push messages)
@@ -667,6 +670,15 @@ public class IntentHandler extends BroadcastReceiver {
 				
 			}
 		}
+//		else if(intent.getAction().equals(MMS_RECEIVED)) {
+//			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "onReceived MMS_RECEIVED", intentExtras.toString());
+//		}
+//		else if(intent.getAction().equals(MMS_SENT)) {
+//			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "onReceived MMS_SENT", intentExtras.toString());
+//		}
+//		else if(intent.getAction().equals(SMS_REJECTED)) {
+//			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "onReceived SMS_REJECTED", intentExtras.toString());
+//		}
 		else if(intent.getAction().equals(SMS_RECEIVED)) {
 			SmsMessage[] msgs = null;
 //			String msg_from;
@@ -804,10 +816,10 @@ public class IntentHandler extends BroadcastReceiver {
 //				}
 //			}
 		}
-		else if (intent.getAction().equals("org.mobicents.restcomm.android.CONNECT_FAILED") ||
-				intent.getAction().equals("org.mobicents.restcomm.android.CALL_STATE") ||
-				intent.getAction().equals("org.mobicents.restcomm.android.DISCONNECT_ERROR")) {
-			owner.getPhoneStateListener().getRestCommManager().handleIntent (owner, intent);
+		else if (intent.getAction().equals("org.restcomm.android.CONNECT_FAILED") ||
+				intent.getAction().equals("org.restcomm.android.CALL_STATE") ||
+				intent.getAction().equals("org.restcomm.android.DISCONNECT_ERROR")) {
+			owner.getPhoneStateListener().getRestCommManager().handleIntent(owner, intent);
 		}
 		else if (intent.getAction().equals(ACTION_RADIOLOG_DISCONNECT))
 		{
@@ -1008,7 +1020,7 @@ public class IntentHandler extends BroadcastReceiver {
 		intentFilter.addAction(IntentHandler.PHONE_CALL_CONNECT);
 		intentFilter.addAction(IntentHandler.PHONE_CALL_DISCONNECT);
 		intentFilter.addAction(IntentHandler.HANDOFF);
-		intentFilter.addAction(IntentHandler.SMS_SENT);
+		//intentFilter.addAction(IntentHandler.SMS_SENT);
 		intentFilter.addAction(IntentHandler.SMS_RECEIVED);
 		intentFilter.addAction(Intent.ACTION_SEND);
 		intentFilter.addAction(IntentHandler.MANUAL_PLOTTING_START);
@@ -1045,9 +1057,9 @@ public class IntentHandler extends BroadcastReceiver {
 		intentFilter.addAction(IntentHandler.ACTION_STOP_VIDEOTEST);
 		intentFilter.addAction(IntentHandler.GCM_MESSAGE);
 
-		intentFilter.addAction ("org.mobicents.restcomm.android.CONNECT_FAILED");
-		intentFilter.addAction ("org.mobicents.restcomm.android.CALL_STATE");
-		intentFilter.addAction ("org.mobicents.restcomm.android.DISCONNECT_ERROR");
+		intentFilter.addAction ("org.restcomm.android.CONNECT_FAILED");
+		intentFilter.addAction ("org.restcomm.android.CALL_STATE");
+		intentFilter.addAction ("org.restcomm.android.DISCONNECT_ERROR");
 
 		intentFilter.addAction (IntentHandler.ACTION_RADIOLOG_DISCONNECT);
 		intentFilter.addAction (IntentHandler.ACTION_RADIOLOG_CONNECT);

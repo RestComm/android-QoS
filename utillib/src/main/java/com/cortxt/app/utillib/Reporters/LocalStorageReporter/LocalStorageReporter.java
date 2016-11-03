@@ -326,7 +326,7 @@ public class LocalStorageReporter {
 
 		if (eventType == EventType.MAN_SPEEDTEST.getIntValue() || eventType == EventType.LATENCY_TEST.getIntValue() || eventType == EventType.VIDEO_TEST.getIntValue() ||
 				eventType == EventType.AUDIO_TEST.getIntValue() || eventType == EventType.YOUTUBE_TEST.getIntValue() || eventType == EventType.SMS_TEST.getIntValue() ||
-				eventType == EventType.EVT_VQ_CALL.getIntValue() || eventType == EventType.WEBPAGE_TEST.getIntValue())
+				eventType == EventType.EVT_VQ_CALL.getIntValue() || eventType == EventType.WEBPAGE_TEST.getIntValue() || eventType == EventType.APP_MONITORING.getIntValue())
 		{
 			int downloadIndex = cursor.getColumnIndex(SpeedTest.KEY_DOWNLOAD);
 			int uploadIndex = cursor.getColumnIndex(SpeedTest.KEY_UPLOAD);

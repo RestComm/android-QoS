@@ -128,6 +128,28 @@ public class Global {
         return i;
     }
 
+    public static boolean checkPermission(Context context, String permission)
+    {
+        PackageManager pkMan = context.getPackageManager();
+        int permissionValue = pkMan.checkPermission(permission, context.getPackageName());
+        if (permissionValue == 0) {
+            return true;
+        }
+        return false;
+    }
+    /**
+     *
+     An app can supply a custom category value for an added layer of customization to select configurations from event responses
+     For example, the app can set category=VIP and then server can return special configuration when it sees an event with 'VIP'
+      */
+    public static String getAppCategory (Context context) {
+        String category = PreferenceManager.getDefaultSharedPreferences(context).getString(PreferenceKeys.Miscellaneous.APP_CATEGORY, null);
+        return category;
+    }
+    public static void setAppCategory (Context context, String val) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(PreferenceKeys.Miscellaneous.APP_CATEGORY, val);
+    }
+
     public static String getAppName (Context context)
     {
         String appname = "";

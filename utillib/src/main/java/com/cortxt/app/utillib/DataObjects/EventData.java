@@ -544,6 +544,7 @@ public class EventData {
 		AppName = app;
 	}
 
+
 	public void setEventId (long evtid)
 	{
 		id = evtid;

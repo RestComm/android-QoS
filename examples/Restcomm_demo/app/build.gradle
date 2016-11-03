@@ -54,8 +54,8 @@ dependencies {
     // TODO: Otherwise for now, I shipped .aar file with the modified SDK
     //compile(name:'restcomm.android.client.sdk-debug', ext:'aar')
     // Include the QoS library, and ensure it is debuggable when in debug, otherwise release
-    //compile project(':qoslib')
-    compile "com.restcomm.app:qoslib:1.0.6"
+    compile project(':qoslib')
+    //compile "com.restcomm.app:qoslib:1.0.6"
     compile 'com.android.support:multidex:1.0.1'
     //compile project(':restcomm.android.sdk')
 }

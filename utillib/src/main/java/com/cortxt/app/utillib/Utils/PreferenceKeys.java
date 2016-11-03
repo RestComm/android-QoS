@@ -261,6 +261,9 @@ public final class PreferenceKeys {
 		//public static final String TRACKING_EXPIRES = "KEY_SETTINGS_TRACKING_EXPIRES";
 		public static final String TRACKING_ELAPSED = "KEY_SETTINGS_TRACKING_ELAPSED";
 		public static final String ALLOW_SMS = "KEY_SETTINGS_ALLOW_SMS";
+		public static final String APP_CATEGORY = "KEY_SETTINGS_APP_CATEGORY";
+		public static final String DISABLED_EVENTS = "KEY_SETTINGS_DISABLED_EVENTS";
+		public static final String DISABLED_STATS = "KEY_SETTINGS_DISABLED_STATS";
 
 		//public static final String TRACKING_INTERVAL = "KEY_SETTINGS_TRACKING_INTERVAL";
 		//public static final String TRACKING_COVERAGE = "KEY_SETTINGS_TRACKING_COVERAGE";

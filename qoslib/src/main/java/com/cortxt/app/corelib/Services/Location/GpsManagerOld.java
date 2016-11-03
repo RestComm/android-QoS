@@ -24,6 +24,7 @@ import com.cortxt.app.corelib.Services.Events.EventManager;
 import com.cortxt.app.corelib.Services.Intents.IntentHandler;
 import com.cortxt.app.utillib.DataObjects.EventObj;
 import com.cortxt.app.utillib.DataObjects.EventType;
+import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.GpsListener;
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 
@@ -129,8 +130,11 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 	 * Turns the gps off and cancels the <code>Timer</code>s used by this class.
 	 */
 	public void stopGps() {
-		locManager.removeUpdates(this);
-		locManager.removeGpsStatusListener(this);
+		if (Global.checkPermission(owner, "android.permission.ACCESS_COARSE_LOCATION") ||
+				Global.checkPermission(owner, "android.permission.ACCESS_FINE_LOCATION")) {
+			locManager.removeUpdates(this);
+			locManager.removeGpsStatusListener(this);
+		}
 		gpsTimer.cancel();
 		gpsTimeout = 0;
 		//gpsHandlerThread.quit ();
@@ -533,7 +537,10 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 				//	MMCLogger.logToFile(MMCLogger.Level.DEBUG, TAG, "unregisterAllListeners", "all listeners were closed ");
 			}
 			// stop the gps
-			locManager.removeUpdates(this);
+			if (Global.checkPermission(owner, "android.permission.ACCESS_COARSE_LOCATION") ||
+					Global.checkPermission(owner, "android.permission.ACCESS_FINE_LOCATION")) {
+				locManager.removeUpdates(this);
+			}
 			//gpsHandlerThread.quit ();
 		}
 	}
@@ -562,14 +569,17 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 			{
 				//if the size of the collection is now 1, then the gps needs to be turned on
 				if (listeners.size() == 1){
-					locManager.removeUpdates(this);
+					if (Global.checkPermission(owner, "android.permission.ACCESS_COARSE_LOCATION") ||
+							Global.checkPermission(owner, "android.permission.ACCESS_FINE_LOCATION")) {
+						locManager.removeUpdates(this);
 
-					locManager.requestLocationUpdates(
-							listener.getProvider(), 
-						LOCATION_UPDATE_MIN_TIME, 
-						LOCATION_UPDATE_MIN_DIST, 
-						this, gpsHandlerThread.getLooper()
-					);
+						locManager.requestLocationUpdates(
+								listener.getProvider(),
+								LOCATION_UPDATE_MIN_TIME,
+								LOCATION_UPDATE_MIN_DIST,
+								this, gpsHandlerThread.getLooper()
+						);
+					}
 					listener.gpsStarted ();
 					if (false && listener.getProvider().equals(LocationManager.NETWORK_PROVIDER))
 						LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "addListenerToCollection", "started " + listener.getProvider() + " location provider");
@@ -611,12 +621,14 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 			
 			//if the collection is now empty, then stop the gps
 			if (listeners.isEmpty()){
-				locManager.removeUpdates(this);
+				if (Global.checkPermission(owner, "android.permission.ACCESS_COARSE_LOCATION") ||
+						Global.checkPermission(owner, "android.permission.ACCESS_FINE_LOCATION"))
+					locManager.removeUpdates(this);
 				//gpsHandlerThread.quit ();
-				listener.gpsStopped ();
+				listener.gpsStopped();
 				if (listener.getProvider().equals(LocationManager.GPS_PROVIDER))
 				{
-					owner.goIdle ();
+					owner.goIdle();
 					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "removeListenerFromCollection", "stopped listening for location updates " + listener.getProvider());
 				}
 			}

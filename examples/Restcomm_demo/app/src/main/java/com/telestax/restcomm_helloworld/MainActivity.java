@@ -454,7 +454,7 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
             QosAPI.showQoSPanel(this);
         }
         else if (view.getId() == R.id.button_history) {
-            EventType[] eventTypes = {EventType.SIP_DISCONNECT, EventType.SIP_DROP, EventType.SIP_UNANSWERED, EventType.SIP_CALLFAIL};
+            EventType[] eventTypes = {EventType.SIP_CONNECT, EventType.SIP_DISCONNECT, EventType.SIP_DROP, EventType.SIP_UNANSWERED, EventType.SIP_CALLFAIL};
             QosAPI.showHistory(this, eventTypes);
 //            try {
 //                Intent intent = new Intent(this, EventHistory.class);
