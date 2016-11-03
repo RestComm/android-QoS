@@ -9,7 +9,7 @@ public class AppDataStatisticsRunnable implements Runnable {
 	public int hasDataActivity = 0;
 	public static final String TAG = AppDataStatisticsRunnable.class.getSimpleName();
 	
-	public AppDataStatisticsRunnable(ICallbacks newOwner, Handler newHandler) {
+	public AppDataStatisticsRunnable(ICallbacks newOwner, Handler newHandler, StatsManager statsManager) {
 	}
 	
 

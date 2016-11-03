@@ -42,8 +42,7 @@ import com.cortxt.app.utillib.DataObjects.EventDataEnvelope;
 import com.cortxt.app.utillib.DataObjects.EventCouple;
 import com.cortxt.app.utillib.DataObjects.EventObj;
 import com.cortxt.app.utillib.DataObjects.EventTypeGenre;
-import com.cortxt.com.mmcextension.datamonitor.database.DataMonitorDBReader;
-import com.cortxt.com.mmcextension.datamonitor.database.DataMonitorDBWriter;
+
 import com.google.gson.Gson;
 
 /**
@@ -605,13 +604,13 @@ public class EventUploader implements Runnable{
 							SharedPreferences preferenceSettings = PreferenceManager.getDefaultSharedPreferences(owner);
 							int allowDM = preferenceSettings.getInt(PreferenceKeys.Miscellaneous.MANAGE_DATAMONITOR, 0);
 							if(allowDM > 0) {
-								DataMonitorDBReader dbReader = new DataMonitorDBReader();
-								DataMonitorDBWriter dbWriter = new DataMonitorDBWriter();	
+								//DataMonitorDBReader dbReader = new DataMonitorDBReader();
+								//DataMonitorDBWriter dbWriter = new DataMonitorDBWriter();
 								
 								try{
 									
 									//get Stats, APs, and Apps strings
-									Stats = "[" + dbReader.getStatsString(owner.getApplicationContext()) + "]";					
+									Stats = "[" + owner.getDataMonitorStats().getStatsString() + "]";
 									APs = "5,type,start,dur,id,sig," + owner.getAccessPointHistory().toString();	
 								} catch (Exception e) {
 									LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "generateEventDataFromEvent", "exception in getStatsString: ", e);
@@ -624,8 +623,8 @@ public class EventUploader implements Runnable{
 								try{
 									Apps = owner.getDataMonitorStats().getRunningAppsString(true);
 									//cleanup
-									dbWriter.deleteAppsFromDB(owner.getApplicationContext());							
-									check = dbWriter.delete15MinStatsBucket(owner.getApplicationContext());
+									owner.getDataMonitorStats().cleanupStatsDB ();
+
 								} catch (Exception e) {
 									LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "generateEventDataFromEvent", "exception in getRunningAppsString: ", e);
 								}

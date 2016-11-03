@@ -25,13 +25,11 @@ import android.net.NetworkInfo;
 import android.net.TrafficStats;
 import android.os.BatteryManager;
 import android.os.Build;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import com.cortxt.app.utillib.DataObjects.beans.DataStatsBean;
-import com.cortxt.app.utillib.DataObjects.beans.RunningAppsBean;
-import com.cortxt.app.utillib.DataObjects.database.DataMonitorDBReader;
-import com.cortxt.app.utillib.DataObjects.database.DataMonitorDBWriter;
+
 //import com.datamonitor.SMSObserver;
 
 /**
@@ -63,7 +61,7 @@ public class StatsManager {
 	/**
 	 * Constructor used to instantiate the StatsManager class
 	 */
-	public StatsManager(Context context) {
+	public StatsManager(Context context, Handler handler) {
 	}	
 	
 	public StatsManager getStatsManager()  {
@@ -142,8 +140,13 @@ public class StatsManager {
 		return null;
 	}
 
-	public String getRunningAppsString() {
+	public String getRunningAppsString(boolean bSend) {
 
 		return "";
 	}
+	public String getStatsString() {
+
+		return "";
+	}
+	public void cleanupStatsDB () {}
 }
