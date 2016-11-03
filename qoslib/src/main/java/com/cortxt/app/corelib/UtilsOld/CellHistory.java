@@ -139,10 +139,12 @@ public class CellHistory {
 					{
 						
 						len = cells.size();
+						if (len > 8)
+							len = 8;
 						_list = new int[len];
 						_list_rssi = new int[len];
 						_type = new String[len];
-						for ( i =0; i<cells.size(); i++)
+						for ( i =0; i<len; i++)
 						{ 
 							bValid = true;
 							CellInfo neighbor = cells.get(i);

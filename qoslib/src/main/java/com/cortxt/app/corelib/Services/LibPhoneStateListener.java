@@ -178,8 +178,8 @@ public class LibPhoneStateListener extends PhoneStateListener {
 			
 			// See if this cellLocation has inner GsmLocation
 			checkInnerGsmCellLocation (location);
+			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "onCellLocationChanged", location.toString());
 
-			
 		} catch (InterruptedException intEx){
 			LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "onCellLocationChanged", "InterruptedException: " + intEx.getMessage());
 		}
@@ -1476,7 +1476,8 @@ public class LibPhoneStateListener extends PhoneStateListener {
 			tmLastCell = System.currentTimeMillis();
 			//push the new location into the sqlite database
 			long stagedEventId = owner.getEventManager().getStagedEventId();
-
+			if (bsLow <= 0 && cellLoc.getCellLocation() instanceof CdmaCellLocation)
+				return;
 
 			ContentValues values = ContentValuesGenerator.generateFromCellLocation(cellLoc, stagedEventId);
 			owner.getDBProvider(owner).insert(TablesEnum.BASE_STATIONS.getContentUri(), values);
