@@ -147,7 +147,7 @@ public class MainService extends Service {
 			mReportManager.getCarrierLogo(null);
 
 			eventManager = new EventManager(this);
-			dataMonitorStats = new DataMonitorStats(this, new Handler());
+			dataMonitorStats = new DataMonitorStats(this, handler);
 			webSocketManager = new RTWebSocket(this);
 			mVQManager = new VQManager(mmcCallbacks, mPhoneState);
 
