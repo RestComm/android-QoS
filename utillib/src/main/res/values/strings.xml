@@ -14,7 +14,7 @@
     <string name="sharemessage_mycoverage">Check out the coverage performance on @CARRIERHANDLE from #MyMobileCoverage free app!</string>
     <string name="sharemessage_nerdmode">Everything a phone geek could want to know about @CARRIERHANDLE from #MyMobileCoverage!</string>
     <string name="sharemessage_eventdetail_event">%s at @ADDRESS / on @CARRIERNAME on @DATETIME.</string>
-    <string name="sharemessage_eventdetail_sampling">%s @FLOOR at @ADDRESS / on @CARRIERNAME created by @LOGIN at @DATETIME.</string>
+    <string name="sharemessage_eventdetail_sampling">%s @FLOOR at @ADDRESS / on @CARRIERNAME created by @LOGIN on @DATETIME.</string>
     <string name="sharemessage_eventdetail_nolinks">Details have been sent.</string>
     <string name="sharemessage_eventdetail_links">Click the link(s) below to see the details.</string>
     <string name="sharemessage_eventdetail_droppedcall">Dropped a @CARRIERHANDLE call and my #MyMobileCoverage app has the data to troubleshoot the problem.</string>
@@ -1219,5 +1219,9 @@
     <string name="activetest_progress">Progress</string>
     <string name="activetest_rate">Rate</string>
 
+    <string name="sharetask_prompt">Prepare to Share</string>
+    <string name="sharetask_shorttitle">Short title: </string>
+    <string name="sharetask_longtitle">Full title: (short title plus details)</string>
+    <string name="sharetask_email">Email with links to content </string>
 
 </resources>

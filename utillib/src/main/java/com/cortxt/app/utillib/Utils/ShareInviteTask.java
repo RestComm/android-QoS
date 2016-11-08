@@ -43,7 +43,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-public class ShareInviteTask extends AsyncTask<Void, Void, Boolean> {
+ public class ShareInviteTask extends AsyncTask<Void, Void, Boolean> {
 
 	private Context mContext;
 	private String mTextToShare;
@@ -83,18 +83,20 @@ public class ShareInviteTask extends AsyncTask<Void, Void, Boolean> {
 		eventType = evttype;
 		init (context, textToShare, subject, viewToScreenshot);
 	}
-	public ShareInviteTask(Context context, String textToShare, String subject, View viewToScreenshot, int evtid, Bitmap screenshot) {
+
+	 public ShareInviteTask(Context context, String textToShare, String subject, View viewToScreenshot, int evtid, Bitmap screenshot) {
 		eventid = evtid;
 		mScreenshot = screenshot;
 		mViewToScreenshot = viewToScreenshot;
 		init(context, textToShare, subject, viewToScreenshot);
 	}
-	public ShareInviteTask(Context context, String textToShare, String subject, View viewToScreenshot, int evtid) {
+
+	 public ShareInviteTask(Context context, String textToShare, String subject, View viewToScreenshot, int evtid) {
 		eventid = evtid;
 		mViewToScreenshot = viewToScreenshot;
 		init(context, textToShare, subject, viewToScreenshot);
 	}
-	public ShareInviteTask(Context context, String textToShare, String subject, View viewToScreenshot) {
+	 public ShareInviteTask(Context context, String textToShare, String subject, View viewToScreenshot) {
 		init(context, textToShare, subject, viewToScreenshot);
 	}
 	private void init(Context context, String textToShare, String subject, View viewToScreenshot) {

@@ -3,6 +3,8 @@ package com.cortxt.app.corelib.Utils;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,7 +64,7 @@ public class EventDetailWeb extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Enable the drawing of the whole document for Lollipop to get the whole WebView
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             WebView.enableSlowWholeDocumentDraw();
         }
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -227,9 +229,32 @@ public class EventDetailWeb extends Activity {
         int id = item.getItemId();
 
         if (id == R.id.action_share) {
-            String msg=getString(R.string.history_sharetitle);
-            TaskHelper.execute(
-                    new ShareInviteTask(this, msg, msg, findViewById(R.id.eventhistoryContainer)));
+
+            // int eventType = Integer.parseInt(mEvent.get(EventKeys.TYPE));
+            EventType eventType = EventType.get(Integer.parseInt(mEvent.get(ReportManager.EventKeys.TYPE)));
+            int markerResource = eventType.getImageResource();
+            String message;
+            String subject;
+            if (mEvent == null)
+                return true;
+
+            if (eventType != null) {
+                int evtstr = eventType.getEventString();
+
+                message = getString(R.string.sharemessage_eventdetail_event);
+                subject = getString(R.string.sharemessagesubject_eventdetail_event);
+                String strEvent = getString(evtstr);
+                message = String.format(message, strEvent);
+                subject = String.format(subject, strEvent);
+
+            } else {
+                message = "";
+                subject = "";
+            }
+
+            Bitmap screenshot = capture(webview);
+            TaskHelper.execute(new ShareInviteTask(EventDetailWeb.this, message, subject, webview, eventId, screenshot));
+
             return true;
         }
 
@@ -254,18 +279,41 @@ public class EventDetailWeb extends Activity {
                 if (mEvent == null)
                     return;
 
-                int customSocialText = (getResources().getInteger(R.integer.CUSTOM_SOCIALTEXT));
-
                 // int eventType = Integer.parseInt(mEvent.get(EventKeys.TYPE));
                 EventType eventType = EventType.get(Integer.parseInt(mEvent.get(ReportManager.EventKeys.TYPE)));
-                int markerResource = eventType.getImageResource();
 
-                webview.buildDrawingCache();
-                Bitmap screenshot = webview.getDrawingCache();
+                if (eventType != null) {
+                    int evtstr = eventType.getEventString();
+
+                    message = getString(R.string.sharemessage_eventdetail_event);
+                    subject = getString(R.string.sharemessagesubject_eventdetail_event);
+                    String strEvent = getString(evtstr);
+                    message = String.format(message, strEvent);
+                    subject = String.format(subject, strEvent);
+
+                } else {
+                    message = "";
+                    subject = "";
+                }
+                Bitmap screenshot = capture(webview);
                 TaskHelper.execute(
-                        new ShareInviteTask(EventDetailWeb.this, message, subject,webview, eventId, screenshot));
+                        new ShareInviteTask(EventDetailWeb.this, message, subject, webview, eventId, screenshot));
 
             }
         }, 500);
+    }
+
+    public Bitmap capture(WebView webView) {
+        WebView lObjWebView = webView;
+        lObjWebView.measure(View.MeasureSpec.makeMeasureSpec(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        //lObjWebView.layout(0, 0, lObjWebView.getMeasuredWidth(), lObjWebView.getMeasuredHeight());
+        Bitmap bm = Bitmap.createBitmap(lObjWebView.getMeasuredWidth(), lObjWebView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas bigcanvas = new Canvas(bm);
+        Paint paint = new Paint();
+        int iHeight = bm.getHeight();
+        bigcanvas.drawBitmap(bm, 0, iHeight, paint);
+        lObjWebView.draw(bigcanvas);
+        return bm;
     }
 }

@@ -1101,9 +1101,9 @@ public class EventManager {
 			reason = "checking in on startup";
 		else
 			reason = "user triggered update";
-		if (!isStartup)
-			context.verifyRegistration ();
-		String apikey = context.getApiKey(context);
+		//if (!isStartup)
+		//	context.verifyRegistration ();
+		//String apikey = context.getApiKey(context);
 
 		PreferenceManager.getDefaultSharedPreferences(context).edit().putLong(PreferenceKeys.Miscellaneous.LAST_TIME, System.currentTimeMillis()).commit();
 

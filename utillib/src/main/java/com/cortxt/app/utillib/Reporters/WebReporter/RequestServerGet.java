@@ -18,7 +18,7 @@ public class RequestServerGet {
 	 */
 	public static URL getURL (String host, String apiKey, String email, String type, HashMap<String, String> query)
 	{
-		END_POINT += type;
+		END_POINT = "/api/user";
 
 		LinkedList<Pair> params = new LinkedList<Pair>();
 		params.add(new Pair(WebReporter.JSON_API_KEY, apiKey));

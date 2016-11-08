@@ -72,7 +72,7 @@
 
         <activity
             android:name=".Utils.EventDetailWeb"
-            android:hardwareAccelerated="true"
+            android:hardwareAccelerated="false"
             android:screenOrientation="user" />
         <!--service
             android:name="com.cortxt.app.MMC.sms.SMSService"

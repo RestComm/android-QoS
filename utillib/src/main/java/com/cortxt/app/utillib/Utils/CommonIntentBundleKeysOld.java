@@ -118,6 +118,7 @@ public final class CommonIntentBundleKeysOld {
 	public static final String EXTRA_BUFFER_PROGRESS = "buffprogress";
 	public static final String EXTRA_PLAY_PROGRESS = "playprogress";
 	public static final String EXTRA_RXBYTES = "rxbytes";
+	public static final String EXTRA_EVENTID = "eventId";
 
 	public static final String KEY_EXTRA_BLUETOOTH_PACKET = "EXTRA_BLUETOOTH_PACKET";
 	public static final String KEY_EXTRA_BLUETOOTH_TOTAL = "EXTRA_BLUETOOTH_TOTAL";
