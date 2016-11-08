@@ -423,6 +423,19 @@ public class EventResponse {
             return null;
     }
 
+    public Integer getDisabledEvents() {
+        if (d.disabledevents != null)
+            return d.disabledevents;
+        else
+            return 0;
+    }
+    public Integer getDisabledStats() {
+        if (d.disabledstats != null)
+            return d.disabledstats;
+        else
+            return 0;
+    }
+
     public String getWifi() {
         return d.Wifi;
     }
@@ -546,6 +559,12 @@ public class EventResponse {
         if (this.getYoutubeId() != null)
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putString(PreferenceKeys.Miscellaneous.YOUTUBE_VIDEOID, this.getYoutubeId()).commit();
 
+        if (this.getDisabledEvents() != null)
+            PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.DISABLED_EVENTS, this.getDisabledEvents()).commit();
+
+        if (this.getDisabledStats() != null)
+            PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.DISABLED_STATS, this.getDisabledStats()).commit();
+
         Integer dropPopup = owner.getResources().getInteger(R.integer.SHOW_DROP_POPUP);
         if (dropPopup == -1 && this.getDropPopup() != null)
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.ALLOW_DROP_POPUP, this.getDropPopup()).commit();
@@ -643,6 +662,7 @@ class EventResponseContents {
     public long starttime = 0;
     public Integer hideCompare = 0, hideMap = 0, userCovOnly = 0, carrierCovOnly = 0;
     public Integer allow_sms = 1, mynetwork_link = 0;
+    public Integer disabledevents = 0, disabledstats = 0;
 	public EventResponseContents(){
 		
 	}

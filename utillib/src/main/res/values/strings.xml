@@ -37,7 +37,7 @@
     <string name="sharemessagesubject_mystats">Call stats on @CARRIERHANDLE</string>
     <string name="sharemessagesubject_speedtest">Speed test on @CARRIERHANDLE</string>
     <string name="sharemessagesubject_dataspeeds">Speed tests on @CARRIERHANDLE</string>
-    <string name="sharemessagesubject_callstats">Speed tests on @CARRIERHANDLE</string>
+    <string name="sharemessagesubject_callstats">Call stats on @CARRIERHANDLE at @ADDRESS</string>
     <string name="sharemessagesubject_speedtestwifi">Speed test on WiFi</string>
     <string name="sharemessagesubject_speedtestwimax">Speed test on WiMAX</string>
     <string name="sharemessagesubject_eventdetail_droppedcall">Dropped call on @CARRIERHANDLE</string>
@@ -48,7 +48,7 @@
     <string name="sharemessagesubject_troublespot_coverage">Coverage problem on @CARRIERHANDLE</string>
     <string name="sharemessagesubject_eventdetail_event">%s on @CARRIERHANDLE</string>
     <string name="sharemessagesubject_rankings">Carrier rankings including my carrier @CARRIERHANDLE</string>
-    <string name="sharemessage_rankings">Check out Carrier Rankings on #MyMobileCoverage app.  See how your carrier stacks up against others in your area!</string>
+    <string name="sharemessage_rankings">Check out Carrier Rankings on #MyMobileCoverage app at @ADDRESS</string>
     <!-- Event types -->
     <string name="eventtype_droppedcall">Dropped Call</string>
     <string name="eventtype_failedcall">Failed Call</string>
@@ -1223,5 +1223,7 @@
     <string name="sharetask_shorttitle">Short title: </string>
     <string name="sharetask_longtitle">Full title: (short title plus details)</string>
     <string name="sharetask_email">Email with links to content </string>
+    <string name="sharetask_subject">Subject: </string>
+    <string name="sharetask_message">Message: </string>
 
 </resources>

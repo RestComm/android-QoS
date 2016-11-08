@@ -762,10 +762,13 @@ public class EventManager {
 		//now set the timer to schedule the newly-staged-event's un-staging
 		stageTimerTask = new StageTimerTask(event, complimentaryEvent);
 		int stageTime = event.getEventType().getPostEventStageTime();
+
 		if ((event.getEventType() == EventType.EVT_CONNECT || event.getEventType() == EventType.SIP_CONNECT) && context.getUsageLimits().getUsageProfile() == 0)
 			stageTime = 60000;
 		if ((event.getEventType() == EventType.EVT_CONNECT || event.getEventType() == EventType.SIP_CONNECT) && context.getUsageLimits().getUsageProfile() == 1)
 			stageTime = 900000;
+		if (EventObj.isDisabledEvent(context,EventObj.DISABLE_LONGCALL) && (event.getEventType() == EventType.EVT_CONNECT || event.getEventType() == EventType.SIP_CONNECT))
+			stageTime = 30000;
 		stageTimer.schedule(stageTimerTask, stageTime);	
 		
 		//MMCLogger.logToFile(MMCLogger.Level.DEBUG, TAG, "temporarilyStageEvent", "staged event type=" + event.getEventType().getEventName() + " id=" + event.getUri().getLastPathSegment());

@@ -144,6 +144,7 @@ public class Global {
       */
     public static String getAppCategory (Context context) {
         String category = PreferenceManager.getDefaultSharedPreferences(context).getString(PreferenceKeys.Miscellaneous.APP_CATEGORY, null);
+        //category = "test";
         return category;
     }
     public static void setAppCategory (Context context, String val) {

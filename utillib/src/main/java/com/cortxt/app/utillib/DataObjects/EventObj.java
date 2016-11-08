@@ -541,8 +541,7 @@ public class EventObj {
 
 	public static boolean isDisabledEvent (Context context, int checkEvent)
 	{
-		if (disabledEvents == null)
-			disabledEvents = PreferenceManager.getDefaultSharedPreferences(context).getInt(PreferenceKeys.Miscellaneous.DISABLED_EVENTS, 0);
+		disabledEvents = PreferenceManager.getDefaultSharedPreferences(context).getInt(PreferenceKeys.Miscellaneous.DISABLED_EVENTS, 0);
 		if ((disabledEvents & checkEvent) > 0)
 			return true;
 		return false;
@@ -550,8 +549,7 @@ public class EventObj {
 
 	public static boolean isDisabledStat (Context context, int checkStat)
 	{
-		if (disabledStats == null)
-			disabledStats = PreferenceManager.getDefaultSharedPreferences(context).getInt(PreferenceKeys.Miscellaneous.DISABLED_STATS, 0);
+		disabledStats = PreferenceManager.getDefaultSharedPreferences(context).getInt(PreferenceKeys.Miscellaneous.DISABLED_STATS, 0);
 		if ((disabledStats & checkStat) > 0)
 			return true;
 		return false;

@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp"
-            android:text="Prepare to Share"
+            android:text="@string/sharetask_prompt"
             android:textColor="#666666"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -26,7 +26,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp"
             android:layout_below="@id/prepareShare"
-            android:text="Short name: (for file naming)"
+            android:text="@string/sharetask_shorttitle"
             android:textColor="#666666"
             android:textSize="18dp" />
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp"
-            android:text="Long Name: (short name plus details)"
+            android:text="@string/sharetask_longtitle"
             android:layout_below="@id/editShortName"
             android:textColor="#666666"
             android:textSize="18dp" />
@@ -63,8 +63,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
             android:layout_below="@id/editName"
-            android:text="Email with links to content"
+            android:text="@string/sharetask_email"
             android:textColor="#666666"
+            android:visibility="gone"
             android:textSize="18dp" />
 
         <LinearLayout

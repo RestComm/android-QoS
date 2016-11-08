@@ -952,4 +952,9 @@ The test server is http://mmctestsite.com/wsMMC/MainService.asmx/
     <string name="activetest_playback">Reprod.</string>
     <string name="activetest_progress">Progreso</string>
     <string name="activetest_rate">Velocidad</string>
+
+    <string name="sharetask_prompt">Prepárese para compartir</string>
+    <string name="sharetask_shorttitle">Título corto: </string>
+    <string name="sharetask_longtitle">Título completo: (título corto, más detalles)</string>
+    <string name="sharetask_email">Correo electrónico con enlaces a contenidos</string>
 </resources>

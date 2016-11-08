@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=0.2, maximum-scale=1.0" />
+    <!--meta name="viewport" content="width=device-width, initial-scale=0.2, maximum-scale=1.0" /-->
 </head>
 <body>
 <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
@@ -39,8 +39,8 @@
             videoId = '';
 
         player = new YT.Player('player', {
-          height: '600',
-          width: '900',
+          height: '900', //'600',
+          width: '1200', //'900',
           videoId: videoId,
           playerVars: {rel:0},
           events: {
