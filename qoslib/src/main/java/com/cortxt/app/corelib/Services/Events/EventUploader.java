@@ -362,6 +362,7 @@ public class EventUploader implements Runnable{
 		}
 		else
 		{
+			String responseJSON = null;
 			//synchronized (owner)
 			{
 				try {
@@ -372,7 +373,7 @@ public class EventUploader implements Runnable{
 					//MMCLogger.logToFile(MMCLogger.Level.DEBUG, TAG, "run", "uploading staged event type=" + eventType + " id=" + eventId);
 					Gson gson = new Gson();
 					String eventJSON = gson.toJson(eventDataEnvelope);
-					String responseJSON = owner.getReportManager().submitEvent(eventJSON);
+					responseJSON = owner.getReportManager().submitEvent(eventJSON);
 					EventResponse eventResponse = gson.fromJson(responseJSON, EventResponse.class);
 					if (eventResponse != null) {
 						eventResponse.init();

@@ -108,12 +108,6 @@ public class EventResponse {
             return 0;
     }
 
-    public Integer getLevelLimit() {
-        if (d.levelLimit != null)
-            return d.levelLimit;
-        else
-            return null;
-    }
 
     public Integer getDormant() {
         if (d.dormant != null)
@@ -129,7 +123,14 @@ public class EventResponse {
             return null;
     }
 
-    public Integer getLevelDefault() {
+    public Integer getLevelLimit() {
+        if (d.levelLimit != null)
+            return d.levelLimit;
+        else
+            return null;
+    }
+
+    public Integer getLevelDefault () {
         if (d.level_default != null)
             return d.level_default;
         else

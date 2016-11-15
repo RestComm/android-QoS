@@ -11,6 +11,8 @@ import android.preference.PreferenceManager;
 import com.cortxt.app.utillib.DataObjects.EventObj;
 import com.cortxt.app.utillib.DataObjects.EventType;
 import com.cortxt.app.utillib.ICallbacks;
+import com.cortxt.app.utillib.Reporters.ReportManager;
+import com.cortxt.app.utillib.Reporters.WebReporter.ServerUpdateRequest;
 import com.securepreferences.SecurePreferences;
 
 public class UsageLimits  implements OnSharedPreferenceChangeListener{
@@ -70,28 +72,34 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 	
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) 
     {
-		if (key.equals("KEY_SETTINGS_READ_LOG_PERMISSION"))
-    	{	 
-			_useRadioLog = PreferenceManager.getDefaultSharedPreferences(owner.getContext())
-					.getBoolean(PreferenceKeys.Miscellaneous.READ_LOG_PERMISSION, false);
-    	}
-		
-    	if (key.equals("KEY_SETTINGS_TRAVEL_DETECT"))
-    	{	 
-    		if (_detectionLevel != -1)
-    		{	
-    			if (updateTravelPreference () && _detectionLevel != -1) // returns true if preference was changed to a new value
-    			{
-		    		sharedPreferences.edit().putBoolean(PreferenceKeys.Miscellaneous.CHANGED_TRAVEL, true).commit();
-		    		_userChangedTravel = true;
-    			}
-    		}
-    	}
-    	
-    	if (key.equals(PreferenceKeys.Miscellaneous.USAGE_PROFILE) ||
+		try {
+			if (key.equals("KEY_SETTINGS_READ_LOG_PERMISSION")) {
+				_useRadioLog = PreferenceManager.getDefaultSharedPreferences(owner.getContext())
+						.getBoolean(PreferenceKeys.Miscellaneous.READ_LOG_PERMISSION, false);
+			}
+
+			if (key.equals("KEY_SETTINGS_TRAVEL_DETECT")) {
+				if (_detectionLevel != -1) {
+					if (updateTravelPreference() && _detectionLevel != -1) // returns true if preference was changed to a new value
+					{
+						sharedPreferences.edit().putBoolean(PreferenceKeys.Miscellaneous.CHANGED_TRAVEL, true).commit();
+						_userChangedTravel = true;
+					}
+				}
+			}
+
+			if (key.equals(PreferenceKeys.Miscellaneous.USAGE_PROFILE) ||
 					key.equals(PreferenceKeys.Miscellaneous.USAGE_PROFILE_CHARGER) ||
-					key.equals("KEY_SETTINGS_TRAVEL_ENABLE")) 
-    		updateTravelPreference ();
+					key.equals("KEY_SETTINGS_TRAVEL_ENABLE")) {
+
+				updateTravelPreference();
+			}
+
+			if (key.equals(PreferenceKeys.Miscellaneous.USAGE_PROFILE)) {
+				ReportManager.getInstance(owner.getContext()).reportSettingChange(ServerUpdateRequest.DEVICE, "level", _prevUsageProfile);
+			}
+		}
+		catch (Exception e) {}
     	
 //    	if (key.equals("KEY_SETTINGS_CONTACT_EMAIL") ||
 //    			key.equals("KEY_SETTINGS_SHARE_WITH_CARRIER"))
@@ -116,13 +124,17 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 	{
 		if (_dormantMode > 0)
 			return (-_dormantMode);
+
+		// Server may impose a limit on the actual level of reporting
+		int limit = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getInt(PreferenceKeys.Miscellaneous.USAGE_LIMIT, 10);
+
 		if (DeviceInfoOld.batteryCharging == true)
 		{
 			if (_usageProfile > _usageProfileCharger)
-				return _usageProfile;  // go with the higher usage when charging
-			return _usageProfileCharger;
+				return Math.min(limit, _usageProfile);  // go with the higher usage when charging
+			return Math.min(limit, _usageProfileCharger);
 		}
-		return _usageProfile;
+		return Math.min(limit, _usageProfile);
 	}
 	
 	public void setLevelLimit (Integer levelLimit)
@@ -135,7 +147,9 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 		if (lim != levelLimit)
 		{
 			PreferenceManager.getDefaultSharedPreferences(owner.getContext()).edit().putInt(PreferenceKeys.Miscellaneous.USAGE_LIMIT, (int)levelLimit).commit();
-			updateTravelPreference ();
+			updateTravelPreference();
+			ReportManager.getInstance(owner.getContext()).reportSettingChange(ServerUpdateRequest.DEVICE, "level", _prevUsageProfile);
+
 		}
 	}
 
@@ -172,11 +186,11 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 			{
 				if (usageProfile != deflevel)
 				{
-					//ReportManager.getInstance(owner).reportSettingChange(ServerUpdateRequest.DEVICE, "usagemode", deflevel);
+					ReportManager.getInstance(owner.getContext()).reportSettingChange(ServerUpdateRequest.DEVICE, "level", deflevel);
 					PreferenceManager.getDefaultSharedPreferences(owner.getContext()).edit().putString(PreferenceKeys.Miscellaneous.USAGE_PROFILE, Integer.toString(deflevel)).commit();
 				}
 				if (usageProfileCharger != deflevel) {
-					//ReportManager.getInstance(owner).reportSettingChange(ServerUpdateRequest.DEVICE, "chargermode", deflevel);
+					ReportManager.getInstance(owner.getContext()).reportSettingChange(ServerUpdateRequest.DEVICE, "chargermode", deflevel);
 					PreferenceManager.getDefaultSharedPreferences(owner.getContext()).edit().putString(PreferenceKeys.Miscellaneous.USAGE_PROFILE_CHARGER, Integer.toString(deflevel)).commit();
 				}
 				updateTravelPreference ();
@@ -195,6 +209,7 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 			PreferenceManager.getDefaultSharedPreferences(owner.getContext()).edit().putInt(PreferenceKeys.Miscellaneous.USAGE_DORMANT_MODE, (int)levelDormant).commit();
 			//if (dormant == 0) // come out of dormant state, and use original or limited level, whichever is smaller
 			updateTravelPreference ();
+			ReportManager.getInstance(owner.getContext()).reportSettingChange(ServerUpdateRequest.DEVICE, "level", _prevUsageProfile);
 		}
 	}
 	public boolean exceededGps (EventType eventType, boolean increment)
@@ -250,20 +265,7 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 		//_maxFillin = PreferenceManager.getDefaultSharedPreferences(owner).getInt(PreferenceKeys.Miscellaneous.ENABLE_MAXFILLIN, 0);
 		// active profile may be modified by battery charger state
 		int profile = getUsageProfile();
-		// Server may impose a limit on the actual level of reporting
-		int limit = PreferenceManager.getDefaultSharedPreferences(owner.getContext()).getInt(PreferenceKeys.Miscellaneous.USAGE_LIMIT, 10);
 
-
-		// If server sends a _dormantMode, put MMC into dormant mode
-		if (_dormantMode > 0)
-		{
-			profile = -_dormantMode;
-		}
-		else {
-			if (limit < profile) {
-				profile = limit;
-			}
-		}
 
 
 		if (_prevUsageProfile != profile)

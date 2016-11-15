@@ -46,7 +46,7 @@ public class CoverageRequest {
 					+ "&ver=1"
 					+ "&max=800"
 					+ "&min=600"
-					+ "&fade=40"
+					+ "&fade=70"
 					+ "&layer1=LTE/3g/2g signal"
 					+ "&mapMethod=" + mapmethod
 					+ "&nocache=1"
