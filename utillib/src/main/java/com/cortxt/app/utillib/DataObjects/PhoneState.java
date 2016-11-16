@@ -77,6 +77,7 @@ public class PhoneState {
 
     //last data caches
     public CellLocationEx lastKnownMMCCellLocation;
+    private String lastknownOperatorName;
 
     public ServiceState mLastServiceState;
     public long mLastServiceStateChangeTimeStamp =0;
@@ -327,7 +328,11 @@ public class PhoneState {
     }
 
     public String getNetworkOperatorName(){
-        return telephonyManager.getNetworkOperatorName();
+        if (telephonyManager.getNetworkOperatorName() == null || telephonyManager.getNetworkOperatorName().length() < 2) {
+            return lastknownOperatorName;
+        }
+        lastknownOperatorName = telephonyManager.getNetworkOperatorName();
+        return lastknownOperatorName;
     }
 
     // Check the Voice Network type using new Hidden TelephonyManager method

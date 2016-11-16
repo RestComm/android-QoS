@@ -567,8 +567,8 @@ public class EventUploader implements Runnable{
 			String Apps = "";
 			String ThroughputStats = "";
 			String latency = "fail";
-			int lookupid1 = 0;
-			int lookupid2 = 0;
+			long lookupid1 = 0;
+			long lookupid2 = 0;
 			String transitAccel = "";
 			
 			boolean check = false;

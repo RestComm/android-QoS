@@ -45,13 +45,14 @@ public class RestCommManager {
         String request = intentExtras.getString("REQUEST");
         boolean bIncoming = intentExtras.getBoolean("INCOMING");
         boolean bVideo = intentExtras.getBoolean("VIDEO");
+        String callSID = intentExtras.getString("CALLSID");
         if (state == null)
             state = "unknown";
 
-        EventCouple eventCouple = callStateChanged(state, cause, bIncoming);
+        EventCouple eventCouple = callStateChanged(state, cause, bIncoming, callSID);
     }
 
-    public EventCouple callStateChanged(String state, String cause, boolean bIncoming) {
+    public EventCouple callStateChanged(String state, String cause, boolean bIncoming, String callSID) {
 
         try
         {
@@ -148,6 +149,13 @@ public class RestCommManager {
             }
             else if (state.equals("connected")) {
                 onConnect (state);
+            }
+
+            if (callSID != null)
+            {
+                long sid = Long.valueOf(callSID, 16);
+                targetEventCouple.getStartEvent().setLookupid1(sid);
+                targetEventCouple.getStopEvent().setLookupid1(sid);
             }
 
             return targetEventCouple;
@@ -293,9 +301,9 @@ public class RestCommManager {
         @Override
         public void run() {
             if (callConnected == false && System.currentTimeMillis() > offhookTime + 60000 )
-                callStateChanged("cancelled", "timeout", false);
+                callStateChanged("cancelled", "timeout", false, null);
             if (callConnected == true && System.currentTimeMillis() > timeConnected + 600000 )
-                callStateChanged("cancelled", "timeout", false);
+                callStateChanged("cancelled", "timeout", false, null);
 
             rxBytes = TrafficStats.getTotalRxBytes();
             txBytes = TrafficStats.getTotalTxBytes();

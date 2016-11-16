@@ -61,8 +61,8 @@ public class EventObj {
 	 //Used for APP_MONITORING event
 	private String appData = null; 
 	
-	private int lookupid1 = 0;
-	private int lookupid2 = 0;
+	private long lookupid1 = 0;
+	private long lookupid2 = 0;
 
 
 	public static final int DISABLE_LOST2G = (1<<0); // 1 disable 2G outage events
@@ -185,18 +185,18 @@ public class EventObj {
 		this.appData = newAppData;
 	}
 
-	public int getLookupid1() {
+	public long getLookupid1() {
 		return lookupid1;
 	}
-	public void setLookupid1(int lookupid1) {
+	public void setLookupid1(long lookupid1) {
 		this.lookupid1 = lookupid1;
 	}
 
-	public int getLookupid2() {
+	public long getLookupid2() {
 		return lookupid2;
 	}
 	
-	public void setLookupid2(int lookupid2) {
+	public void setLookupid2(long lookupid2) {
 		this.lookupid2 = lookupid2;
 	}
 		
