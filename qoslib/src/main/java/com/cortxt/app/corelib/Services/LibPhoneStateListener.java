@@ -272,7 +272,9 @@ public class LibPhoneStateListener extends PhoneStateListener {
 				//if (owner.getUsageLimits().getUsageProfile () == UsageLimits.MINIMAL)
 				//	return;
 				//server allows - default no
-				int allow = 1;//PreferenceManager.getDefaultSharedPreferences(owner).getInt(PreferenceKeys.Miscellaneous.PASSIVE_SPEEDTEST_SERVER, 0);
+				int allow = PreferenceManager.getDefaultSharedPreferences(owner).getInt(PreferenceKeys.Miscellaneous.PASSIVE_SPEEDTEST_SERVER, 0);
+				if (!EventObj.isDisabledStat(owner,EventObj.DISABLESTAT_APPS_THROUGHPUT) && Global.SCANAPP_PERIOD > 0)
+					allow = 1;
 				if(allow > 0) {
 					dataThrougput();  
 				}

@@ -74,9 +74,10 @@ public class DataMonitorStats {
 		return phoneCallState;
 	}
 	
-	public void setBattery(boolean battery) {
+	public void setBattery(boolean battery, Integer percent) {
 		batteryChargeState = battery ? BatteryChargeState.ON : BatteryChargeState.OFF;
-		mStatsManager.setBatteryChargeState(batteryChargeState, false);
+		mStatsManager.setBatteryChargeState(batteryChargeState, false, percent);
+
 	}
 	
 	public BatteryChargeState getBattery() {

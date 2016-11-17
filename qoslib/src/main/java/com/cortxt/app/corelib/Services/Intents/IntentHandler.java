@@ -285,13 +285,13 @@ public class IntentHandler extends BroadcastReceiver {
 			int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);    
 			boolean bCharging = plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB; 
 			owner.setBatteryCharging (bCharging);
-			dataMonitorStats.setBattery(bCharging);
+			dataMonitorStats.setBattery(bCharging, DeviceInfoOld.battery);
 		}else if (action.equals(Intent.ACTION_POWER_CONNECTED)){
-			owner.setBatteryCharging (true);	
-			dataMonitorStats.setBattery(true);
+			owner.setBatteryCharging (true);
+			dataMonitorStats.setBattery(true, null);
 		}else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)){
 			owner.setBatteryCharging (false);
-			dataMonitorStats.setBattery(false);
+			dataMonitorStats.setBattery(false, null);
 		}else if (action.equals(Intent.ACTION_VIEW)) {
 			//this is supposed to trigger the update event
 			//owner.triggerUpdateEvent(false, false);
