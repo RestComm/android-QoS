@@ -1799,6 +1799,20 @@ public class LibPhoneStateListener extends PhoneStateListener {
 			LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "onCellInfoChanged", "InterruptedException: " + intEx.getMessage());
 		} 
 	}
+//	private void checkCallState () {
+//		try {
+//			TelecomManager telecom = (TelecomManager) owner.getSystemService(Context.TELECOM_SERVICE);
+//			//Class class1 = Class.forName("com.android.internal.telecom.ITelecomService");//TelecomGlobals");
+//			Method method = telecom.getClass().getMethod("getCallState");
+//			Object state = method.invoke(telecom, null);
+//			int istate = (Integer)state;
+//		}
+//		catch (Exception e)
+//		{
+//
+//		}
+//	}
+
 
     // If this is a CDMACellLocation without SID and NID, see if we can extract it from the ServiceState
     private void checkCDMACellSID (CellLocation cell)
