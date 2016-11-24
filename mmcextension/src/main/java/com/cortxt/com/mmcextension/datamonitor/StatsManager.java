@@ -125,7 +125,7 @@ public class StatsManager {
 	 * @param currentBatteryChargeState State of the Phone Battery charging, which can be either ON or OFF from
 	 *  the enumeration BatteryChargeState
 	 */
-	public void setBatteryChargeState(BatteryChargeState currentBatteryChargeState, boolean bCloseBucket){
+	public void setBatteryChargeState(BatteryChargeState currentBatteryChargeState, boolean bCloseBucket, Integer percent){
 	} 
 	
 	/**

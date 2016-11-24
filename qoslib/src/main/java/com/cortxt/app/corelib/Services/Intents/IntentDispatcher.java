@@ -139,9 +139,15 @@ public class IntentDispatcher {
 	 * Send the connection activity list to activities
 	 */
 	public void updateConnection(String conn, boolean updateRxTx){
-		Intent intent = new Intent(CommonIntentBundleKeysOld.ACTION_CONNECTION_UPDATE);
-		intent.putExtra(CommonIntentBundleKeysOld.KEY_UPDATE_CONNECTION, conn);
-		owner.sendBroadcast(intent);
+		try {
+			Intent intent = new Intent(CommonIntentBundleKeysOld.ACTION_CONNECTION_UPDATE);
+			intent.putExtra(CommonIntentBundleKeysOld.KEY_UPDATE_CONNECTION, conn);
+			owner.sendBroadcast(intent);
+		}
+		catch (Exception e)
+		{
+
+		}
 //		if (updateRxTx)
 //		{
 //			long totalRxBytes = TrafficStats.getTotalRxBytes();

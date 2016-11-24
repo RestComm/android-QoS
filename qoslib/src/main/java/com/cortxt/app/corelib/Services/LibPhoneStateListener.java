@@ -1692,8 +1692,10 @@ public class LibPhoneStateListener extends PhoneStateListener {
 		if (state == TelephonyManager.DATA_CONNECTED && mPhoneState.previousNetworkTier > 4) {// && !mPhoneState.bOffHook){
 			if (mPhoneState.isOffHook()) {
 				EventCouple targetEventCouple = owner.getEventManager().getEventCouple(EventType.EVT_CONNECT, EventType.EVT_DISCONNECT);
-				EventObj connectEvent = targetEventCouple.getStartEvent();
-				connectEvent.setFlag(EventObj.CALL_CSFB, true);
+				if (targetEventCouple != null) {
+					EventObj connectEvent = targetEventCouple.getStartEvent();
+					connectEvent.setFlag(EventObj.CALL_CSFB, true);
+				}
 			} else if (mPhoneState.isScreenOn() || owner.isTravelling())
 				event = owner.getEventManager().startPhoneEvent(EventType.COV_4G_NO, EventType.COV_4G_YES);
 		}

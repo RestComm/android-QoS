@@ -153,9 +153,19 @@ public class RestCommManager {
 
             if (callSID != null)
             {
-                long sid = Long.valueOf(callSID, 16);
-                targetEventCouple.getStartEvent().setLookupid1(sid);
-                targetEventCouple.getStopEvent().setLookupid1(sid);
+                String[] parts = callSID.split("-");
+                if (parts.length >= 2) {
+                    String part1 = parts[1].substring(2);
+                    String part2 = part1.substring(17);
+                    part1 = part1.substring(1, 16);
+
+                    long sid1 = Long.valueOf(part1, 16);
+                    long sid2 = Long.valueOf(part2, 16);
+                    targetEventCouple.getStartEvent().setLookupid1(sid1);
+                    targetEventCouple.getStopEvent().setLookupid1(sid1);
+                    targetEventCouple.getStartEvent().setLookupid2(sid2);
+                    targetEventCouple.getStopEvent().setLookupid2(sid2);
+                }
             }
 
             return targetEventCouple;

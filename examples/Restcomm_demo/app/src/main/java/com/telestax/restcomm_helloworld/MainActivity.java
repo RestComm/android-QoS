@@ -112,10 +112,12 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
         // initialize UI
         btnDial = (Button)findViewById(R.id.button_dial);
         btnDial.setOnClickListener(this);
+        btnDial.setEnabled(false);
         btnAnswer = (Button)findViewById(R.id.button_answer);
         btnAnswer.setOnClickListener(this);
         btnHangup = (Button)findViewById(R.id.button_hangup);
         btnHangup.setOnClickListener(this);
+        btnHangup.setEnabled(false);
         btnApply = (Button)findViewById(R.id.button_apply);
         btnApply.setOnClickListener(this);
         btnInfo = (Button)findViewById(R.id.button_info);
@@ -422,8 +424,8 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
             //params.put("pref_proxy_ip", editServer.getText());
             //params.put("pref_proxy_port", "5080");
             params.put(RCDevice.ParameterKeys.SIGNALING_DOMAIN, "sip:" + editServer.getText().toString() + ":5060");// + ":5080");
-            params.put(RCDevice.ParameterKeys.SIGNALING_USERNAME, editUser.getText());
-            params.put(RCDevice.ParameterKeys.SIGNALING_PASSWORD, editPwd.getText());
+            params.put(RCDevice.ParameterKeys.SIGNALING_USERNAME, editUser.getText().toString());
+            params.put(RCDevice.ParameterKeys.SIGNALING_PASSWORD, editPwd.getText().toString());
             device.updateParams(params);
             /*
             device = RCClient.createDevice(params, this);
@@ -532,6 +534,7 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
     public void onConnecting(RCConnection connection)
     {
         Log.i(TAG, "RCConnection connecting");
+        btnHangup.setEnabled(true);
     }
 
     public void onConnected(RCConnection connection, HashMap<String, String> customHeaders)
@@ -544,7 +547,7 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
         Log.i(TAG, "RCConnection disconnected");
         this.connection = null;
         pendingConnection = null;
-
+        btnHangup.setEnabled(false);
 //        // reside local renderer to take up all screen now that the call is over
 //        VideoRendererGui.update(localRender,
 //                LOCAL_X_CONNECTING, LOCAL_Y_CONNECTING,
@@ -597,17 +600,17 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
 
     public void onReleased(RCDevice device, int statusCode, String statusText)
     {
-
+        btnDial.setEnabled(false);
     }
 
     public void onInitialized(RCDevice device, RCDeviceListener.RCConnectivityStatus connectivityStatus, int statusCode, String statusText)
     {
-
+        btnDial.setEnabled(true);
     }
 
     public void onInitializationError(int errorCode, String errorText)
     {
-
+        btnDial.setEnabled(true);
     }
 
     public void onLocalVideo(RCConnection connection)
