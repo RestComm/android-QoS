@@ -30,7 +30,7 @@ android {
 }
 repositories {
     maven {
-        url "${nexusUrl}/content/repositories/releases"
+        url "http://nexus.mymobilecoverage.com:8081/content/repositories/releases"
     }
 }
 dependencies {
