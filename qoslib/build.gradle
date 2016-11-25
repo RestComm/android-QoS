@@ -71,7 +71,7 @@ android {
 
 repositories {
     jcenter()
-    //maven {url "${nexusUrl}/content/repositories/releases"}
+    maven {url "http://nexus.mymobilecoverage.com:8081/nexus/content/repositories/releases"}
 }
 dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'

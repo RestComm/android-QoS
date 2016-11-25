@@ -30,12 +30,12 @@ android {
 }
 repositories {
     maven {
-        url "http://nexus.mymobilecoverage.com:8081/content/repositories/releases"
+        url "http://nexus.mymobilecoverage.com:8081/nexus/content/repositories/releases"
     }
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    //compile "com.restcomm.app:utillib:1.0.6"
+    //compile "com.restcomm.app:utillib:1.0.7"
     compile project(':utillib')
     //compile 'com.scottyab:secure-preferences-lib:0.0.4'
 }

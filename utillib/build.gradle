@@ -3,7 +3,7 @@ apply plugin: 'maven'
 
 //group = 'com.cortxt.app'
 group = 'com.restcomm.app'
-version = '1.0.6'
+version = '1.0.7'
 android {
 
     compileSdkVersion 22
