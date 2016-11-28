@@ -57,7 +57,6 @@ utillib/.idea/
 !mmcsys.apk
 android-QoS.iml
 gradle/wrapper/gradle-wrapper.jar
-gradle/wrapper/gradle-wrapper.properties
 gradlew
 gradlew.bat
-gradle.properties
+

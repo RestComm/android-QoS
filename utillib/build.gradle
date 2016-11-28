@@ -3,7 +3,7 @@ apply plugin: 'maven'
 
 //group = 'com.cortxt.app'
 group = 'com.restcomm.app'
-version = '1.0.7'
+version = '1.0.8'
 android {
 
     compileSdkVersion 22
@@ -63,6 +63,14 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
 
     //compile files('libs/gson-2.3.1.jar')
+}
+
+ext {
+    if (!project.hasProperty('nexusUrl')) {
+        nexusUrl='http://nexus.mymobilecoverage.com:8081/nexus'
+        nexusUsername = ''
+        nexusPassword = ''
+    }
 }
 
 uploadArchives {

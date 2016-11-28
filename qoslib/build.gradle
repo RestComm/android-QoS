@@ -79,7 +79,13 @@ dependencies {
     //compile "com.restcomm.app:mmcextension:1.0.6"
 
 }
-
+ext {
+    if (!project.hasProperty('nexusUrl')) {
+        nexusUrl='http://nexus.mymobilecoverage.com:8081/nexus'
+        nexusUsername = ''
+        nexusPassword = ''
+    }
+}
 uploadArchives {
     repositories {
         mavenDeployer {
