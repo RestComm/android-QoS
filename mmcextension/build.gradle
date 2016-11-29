@@ -40,6 +40,13 @@ dependencies {
     //compile 'com.scottyab:secure-preferences-lib:0.0.4'
 }
 
+ext {
+    if (!project.hasProperty('nexusUrl')) {
+        nexusUrl='http://nexus.mymobilecoverage.com:8081/nexus'
+        nexusUsername = ''
+        nexusPassword = ''
+    }
+}
 uploadArchives {
     repositories {
         mavenDeployer {
