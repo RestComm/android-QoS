@@ -262,13 +262,15 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
         params.put(RCDevice.ParameterKeys.INTENT_INCOMING_CALL, intent);
         params.put(RCDevice.ParameterKeys.INTENT_INCOMING_MESSAGE, intent);
 
-        params.put(RCDevice.ParameterKeys.SIGNALING_DOMAIN, "sip:" + editServer.getText().toString() + ":5060"); // :5080
+        //params.put(RCDevice.ParameterKeys.SIGNALING_DOMAIN, "sip:" + editServer.getText().toString() + ":5060"); // :5080
+        params.put(RCDevice.ParameterKeys.SIGNALING_DOMAIN, editServer.getText().toString()); // :5080
         params.put(RCDevice.ParameterKeys.SIGNALING_USERNAME, editUser.getText().toString());
         params.put(RCDevice.ParameterKeys.SIGNALING_PASSWORD, editPwd.getText().toString());
         params.put(RCDevice.ParameterKeys.MEDIA_TURN_ENABLED, true);
         params.put(RCDevice.ParameterKeys.MEDIA_ICE_URL, "https://service.xirsys.com/ice");
         params.put(RCDevice.ParameterKeys.MEDIA_ICE_USERNAME, "atsakiridis");
         params.put(RCDevice.ParameterKeys.MEDIA_ICE_PASSWORD, "4e89a09e-bf6f-11e5-a15c-69ffdcc2b8a7");
+        params.put(RCDevice.ParameterKeys.SIGNALING_SECURE_ENABLED, true);
 
         if (!device.isInitialized()) {
             device.initialize(getApplicationContext(), params, this);
