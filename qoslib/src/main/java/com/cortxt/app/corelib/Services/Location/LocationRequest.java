@@ -7,6 +7,7 @@ import android.location.LocationManager;
 import android.os.Handler;
 import android.os.PowerManager;
 
+import com.cortxt.app.corelib.MainService;
 import com.cortxt.app.utillib.Reporters.ReportManager;
 import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.GpsListener;
@@ -75,6 +76,7 @@ public class LocationRequest {
 	{
 		gpsTimeout = timeout;
 	}
+
 	public void setOnNewLocationListener(OnLocationListener listener)
 	{
 		mOnNewLocationListener = listener;
@@ -233,7 +235,9 @@ public class LocationRequest {
 			locListener.setProvider(LocationManager.GPS_PROVIDER);
 			bGPSRunning = true;
 			gpsStartTime = System.currentTimeMillis();
-			Global.registerLocationListener(true, locListener);
+			if (MainService.getGpsManager() != null)
+				MainService.getGpsManager().registerListener(locListener);
+			//Global.registerLocationListener(true, locListener);
 		}
 
 
@@ -245,7 +249,9 @@ public class LocationRequest {
 		locListener2.setOperationTimeout(0);
 		locListener2.setProvider(LocationManager.NETWORK_PROVIDER);
 		bNWRunning = true;
-		Global.registerLocationListener(false, locListener2);
+		if (MainService.getNetLocationManager() != null)
+			MainService.getNetLocationManager().registerListener(locListener2);
+		//Global.registerLocationListener(false, locListener2);
 
 		acquireWakeLock(this.mContext);
 
@@ -276,8 +282,12 @@ public class LocationRequest {
 	
 	public void stop ()
 	{
-		Global.unregisterLocationListener (true, locListener);
-		Global.unregisterLocationListener (false, locListener2);
+		if (MainService.getGpsManager() != null) {
+			MainService.getGpsManager().unregisterListener(locListener);
+			MainService.getNetLocationManager().unregisterListener(locListener2);
+		}
+//		Global.unregisterLocationListener (true, locListener);
+//		Global.unregisterLocationListener (false, locListener2);
 		bGPSRunning = false;
 		bNWRunning = true;
 	}
@@ -353,7 +363,11 @@ public class LocationRequest {
 						if (finalAccuracy < firstAccuracy)
 							bLocationChanged = true;
 						if (location.getAccuracy() < finalAccuracy && satellites > 0)
+						{
 							bFinalLocation = true;
+							if (MainService.getGpsManager() != null)
+								MainService.getGpsManager().detectTravellingFromDistance();
+						}
 						boolean bNewLocation = false;
 						if (bLocChanged && bFirstNewLocation) {
 							bNewLocation = true;
@@ -362,6 +376,8 @@ public class LocationRequest {
 						} else
 							bFirstLocation = false;
 						handleLocation(bNewLocation | bFinalLocation);
+
+
 						//if (mOnNewLocationListener != null)
 						//	mOnNewLocationListener.onLocation (LocationRequest.this);
 						// if (handler != null)

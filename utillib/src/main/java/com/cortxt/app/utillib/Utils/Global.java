@@ -170,18 +170,6 @@ public class Global {
         return getString (context, "MMC_URL_LIN");
     }
 
-    public static void registerLocationListener (boolean useGPS, GpsListener listener)
-    {
-        if (callbacks != null)
-            callbacks.registerLocationListener(useGPS, listener);
-    }
-
-    public static void unregisterLocationListener (boolean useGPS, GpsListener listener)
-    {
-        if (callbacks != null)
-            callbacks.unregisterLocationListener(useGPS, listener);
-    }
-
     public static boolean isGpsRunning () // Needed for Engineering screen to show it
     {
         if (callbacks != null)

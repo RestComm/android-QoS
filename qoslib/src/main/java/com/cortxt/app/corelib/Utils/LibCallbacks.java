@@ -85,21 +85,6 @@ public class LibCallbacks implements ICallbacks {
         return 0;
     }
 
-    public void registerLocationListener (boolean useGPS, GpsListener listener)
-    {
-        if (useGPS && MainService.getGpsManager() != null)
-            MainService.getGpsManager().registerListener(listener);
-        else if (!useGPS && MainService.getNetLocationManager() != null)
-            MainService.getNetLocationManager().registerListener(listener);
-    }
-    public void unregisterLocationListener (boolean useGPS, GpsListener listener)
-    {
-        if (useGPS && MainService.getGpsManager() != null)
-            MainService.getGpsManager().unregisterListener(listener);
-        else if (!useGPS && MainService.getNetLocationManager() != null)
-            MainService.getNetLocationManager().unregisterListener(listener);
-    }
-
     public Location getLastLocation()
     {
         return mContext.getLastLocation();

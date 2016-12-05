@@ -27,9 +27,6 @@ public interface ICallbacks{
     void setNeighbors (String nbrs);
     int getLastServiceState();
 
-    void registerLocationListener (boolean useGPS, GpsListener listener);
-    void unregisterLocationListener (boolean useGPS, GpsListener listener);
-
     Location getLastLocation();
 
     void startRadioLog (boolean bStart, String reason, int eventType);

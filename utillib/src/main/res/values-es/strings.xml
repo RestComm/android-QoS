@@ -958,4 +958,7 @@ The test server is http://mmctestsite.com/wsMMC/MainService.asmx/
     <string name="sharetask_shorttitle">Título corto: </string>
     <string name="sharetask_longtitle">Título completo: (título corto, más detalles)</string>
     <string name="sharetask_email">Correo electrónico con enlaces a contenidos</string>
+
+    <string name="sharetask_uploaded">Información compartida cargada</string>
+    <string name="sharetask_invite_people">¿Quieres invitar a personas a ver esta Datos compartidos?</string>
 </resources>

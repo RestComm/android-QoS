@@ -1227,4 +1227,7 @@
     <string name="sharetask_subject">Subject: </string>
     <string name="sharetask_message">Message: </string>
 
+    <string name="sharetask_uploaded">Uploaded shared info</string>
+    <string name="sharetask_invite_people">Do you want to invite people to view this share?</string>
+
 </resources>

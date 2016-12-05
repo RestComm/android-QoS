@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 
 import com.cortxt.app.corelib.MainService;
@@ -460,7 +461,7 @@ public class QosAPI {
         watchActivity = PreferenceKeys.getSecurePreferences(context).getString("PREF_WATCH_ACTIVITY", watchActivity);
         if (watchActivity != null)
         {
-            if (System.currentTimeMillis() - lastWatchActivity < 60000)
+            if (System.currentTimeMillis() - lastWatchActivity < 60000 || SystemClock.elapsedRealtime() > 300000)
                 return;
             lastWatchActivity = System.currentTimeMillis();
             //int app = Global.getAppImportance (context.getPackageName(), context);

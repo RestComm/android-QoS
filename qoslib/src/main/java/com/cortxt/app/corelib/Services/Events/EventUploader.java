@@ -176,8 +176,9 @@ public class EventUploader implements Runnable{
 				// Event is 'reported' locally before GPS sampling is complete
 				// to make it show up on the map as soon as it gets a first fix
 				//if (local == true && ((event.getEventType() != EventType.MAN_SPEEDTEST && event.getEventType() != EventType.LATENCY_TEST && event.getEventType() != EventType.APP_MONITORING) || event.latency != 0))
-				if (local == true && (event.getEventType().waitsForSpeed() == false || event.getLatency() != 0))
+				//if (local == true && (event.getEventType().waitsForSpeed() == false || event.getLatency() != 0))
 				//	(local == false && event.getEventType() == EventType.MAN_SPEEDTEST))  // but for speedtest, wait until complete
+				if ( (event.getEventType().waitsForSpeed() == false || event.getLatency() != 0))
 				{
 					if (event.getLocalID() > 0 && eventData.getFltEventLng() != 0) {
 						owner.getReportManager().updateEventField(event.getLocalID(), Events.KEY_LATITUDE, String.valueOf(eventData.getFltEventLat()));

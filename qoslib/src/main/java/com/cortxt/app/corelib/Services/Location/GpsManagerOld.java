@@ -103,6 +103,12 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 	public Location getLastKnownLocation() {
 		return locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 	}
+	// Set the location from the LocationRequest outside the GpsManager, so that MMC can use the location
+	public void detectTravellingFromDistance ()
+	{
+		if (owner.getTravelDetector() != null)
+			owner.getTravelDetector().detectTravellingFromDistance();
+	}
 	
 	/*
 	 * Detect if GPS is enabled on the device
