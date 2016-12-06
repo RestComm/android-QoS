@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cortxt.app.corelib"
+    package="com.restcomm.app.qoslib"
     xmlns:tools="http://schemas.android.com/tools"
     android:versionCode="0"
     android:versionName="2.0" >
@@ -61,17 +61,17 @@
             android:theme="@android:style/Theme.Dialog" /-->
 
         <service
-            android:name="com.cortxt.app.corelib.MainService"
+            android:name="com.restcomm.app.qoslib.MainService"
             android:enabled="true"
             android:label="MMC Service"
             android:screenOrientation="user" />
 
         <activity
-            android:name=".Utils.EventHistory"
+            android:name="com.restcomm.app.qoslib.Utils.EventHistory"
             android:screenOrientation="user" />
 
         <activity
-            android:name=".Utils.EventDetailWeb"
+            android:name="com.restcomm.app.qoslib.Utils.EventDetailWeb"
             android:hardwareAccelerated="false"
             android:screenOrientation="user" />
         <!--service
@@ -86,14 +86,14 @@
 
         <!-- provider android:authorities="com.cortxt.app.mmcutility.ContentProvider.Tables" android:name=".ContentProvider.Provider" android:screenOrientation="user"/ -->
 
-        <receiver android:name="com.cortxt.app.corelib.BootListener" >
+        <receiver android:name="com.restcomm.app.qoslib.BootListener" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.cortxt.app.corelib.Services.Intents.IntentHandler" >
+        <receiver android:name="com.restcomm.app.qoslib.Services.Intents.IntentHandler" >
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

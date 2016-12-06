@@ -7,17 +7,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-//import com.cortxt.app.utillib.Utils.LoggerUtil;
+//import LoggerUtil;
 
-import com.cortxt.app.utillib.Utils.LoggerUtil;
+import com.restcomm.app.utillib.Utils.LoggerUtil;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

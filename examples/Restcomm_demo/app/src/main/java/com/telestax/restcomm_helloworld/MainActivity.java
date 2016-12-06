@@ -1,19 +1,10 @@
 package com.telestax.restcomm_helloworld;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 //import android.opengl.GLSurfaceView;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,26 +14,19 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.cortxt.app.corelib.Utils.EventDetailWeb;
-import com.cortxt.app.corelib.Utils.QosAPI;
-import com.cortxt.app.corelib.Utils.QosInfo;
-import com.cortxt.app.utillib.DataObjects.EventType;
+import com.restcomm.app.qoslib.Utils.QosAPI;
+import com.restcomm.app.utillib.DataObjects.EventType;
 //import com.cortxt.app.utillib.Utils.FirebaseInvite;
-import com.cortxt.app.utillib.Utils.LoggerUtil;
 
 import java.util.HashMap;
-import java.util.Timer;
 
 
-import org.restcomm.android.sdk.RCClient;
 import org.restcomm.android.sdk.RCConnection;
 import org.restcomm.android.sdk.RCConnectionListener;
 import org.restcomm.android.sdk.RCDevice;
 import org.restcomm.android.sdk.RCDeviceListener;
 import org.restcomm.android.sdk.RCPresenceEvent;
-import org.webrtc.VideoTrack;
 
 import android.content.ComponentName;
 import android.content.Context;

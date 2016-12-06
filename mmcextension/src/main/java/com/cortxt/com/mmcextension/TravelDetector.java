@@ -3,9 +3,9 @@ package com.cortxt.com.mmcextension;
 import android.location.Location;
 import android.telephony.CellLocation;
 
-import com.cortxt.app.utillib.DataObjects.EventObj;
-import com.cortxt.app.utillib.DataObjects.PhoneState;
-import com.cortxt.app.utillib.ICallbacks;
+import com.restcomm.app.utillib.DataObjects.EventObj;
+import com.restcomm.app.utillib.DataObjects.PhoneState;
+import com.restcomm.app.utillib.ICallbacks;
 
 public class TravelDetector {
 
@@ -26,7 +26,8 @@ public class TravelDetector {
 
 	public void detectTravellingFromCellId (int phoneType, CellLocation cellInfo, CellLocation lastCell, PhoneState phoneState) {
 	}
-
+	public void detectTravellingFromDistance () {
+	}
     /* 
 	 * Check the travel detection preferences, and set timers accordingly
 	 * return true if the scanning mode preference changed to a new value

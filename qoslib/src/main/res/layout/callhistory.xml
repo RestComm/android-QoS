@@ -91,7 +91,7 @@
                 android:id="@+id/historyList"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                class="com.cortxt.app.corelib.Utils.EventHistoryFragment"/>
+                class="com.restcomm.app.qoslib.Utils.EventHistoryFragment"/>
         </FrameLayout>
     </RelativeLayout>
 
