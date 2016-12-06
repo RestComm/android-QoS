@@ -27,6 +27,9 @@ public class TravelDetector {
 	public void detectTravellingFromCellId (int phoneType, CellLocation cellInfo, CellLocation lastCell, PhoneState phoneState) {
 	}
 
+	public void detectTravellingFromDistance () {
+	}
+
     /* 
 	 * Check the travel detection preferences, and set timers accordingly
 	 * return true if the scanning mode preference changed to a new value
