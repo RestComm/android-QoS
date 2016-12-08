@@ -536,7 +536,7 @@ public class IntentHandler extends BroadcastReceiver {
 			if (intervalDM > 0)
 			{
 				dataMonitorStats.scanApps();
-				dataMonitorStats.getRunningAppsString(false); // for debug
+				//dataMonitorStats.getRunningAppsString(false); // for debug
 			}
 
 			// Also using this timer for GCM heartbeats (its a 5 minute heartbeat to tell Google Cloud Messaging to check the socket more often for more reliable push messages)

@@ -284,7 +284,7 @@ public class ContentValuesGenerator {
 					lteRsrp = lteRsrq = null;
 
 				lteCqi = signal.getLayer3("mLteCqi");
-				if (lteRsrp != -1) {
+				if (lteRsrp != null && lteRsrp != -1) {
 					values.put(Tables.SignalStrengths.LTE_RSRP, lteRsrp);
 					values.put(Tables.SignalStrengths.LTE_RSRQ, lteRsrq);
 					values.put(Tables.SignalStrengths.LTE_SNR, lteSnr);
