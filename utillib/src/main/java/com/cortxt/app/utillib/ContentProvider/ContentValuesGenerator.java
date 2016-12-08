@@ -172,7 +172,7 @@ public class ContentValuesGenerator {
 
 				//if (dBm == -1) // When Scott had a network outage on CDMA, he got -1, we want -256
 				//	dBm = -256;
-				if (dBm == -120 && networkType == TelephonyManager.NETWORK_TYPE_LTE)
+				if (dBm == -120 && (networkType == TelephonyManager.NETWORK_TYPE_LTE || networkType == PhoneState.NETWORK_NEWTYPE_IWLAN || networkType == PhoneState.NETWORK_NEWTYPE_WIFI))
 					dBm = null;  // signal not known, this seems to happen with LTE advanced
 				values.put(
 						Tables.SignalStrengths.SIGNAL, dBm
@@ -265,7 +265,7 @@ public class ContentValuesGenerator {
 			values.put(
 					Tables.SignalStrengths.WIFISIGNAL, wifiSignal);
 			// check for LTE signal signal quality parameters only if connected to LTE
-			if (networkType == TelephonyManager.NETWORK_TYPE_LTE)
+			if (networkType == TelephonyManager.NETWORK_TYPE_LTE || networkType == PhoneState.NETWORK_NEWTYPE_IWLAN)
 			{
 				Integer lteRsrp = -1, lteRsrq, lteSnr, lteCqi;
 
@@ -284,13 +284,15 @@ public class ContentValuesGenerator {
 					lteRsrp = lteRsrq = null;
 
 				lteCqi = signal.getLayer3("mLteCqi");
-				values.put(Tables.SignalStrengths.LTE_RSRP, lteRsrp);
-				values.put(Tables.SignalStrengths.LTE_RSRQ, lteRsrq);
-				values.put(Tables.SignalStrengths.LTE_SNR, lteSnr);
-				values.put(Tables.SignalStrengths.LTE_CQI, lteCqi);
+				if (lteRsrp != -1) {
+					values.put(Tables.SignalStrengths.LTE_RSRP, lteRsrp);
+					values.put(Tables.SignalStrengths.LTE_RSRQ, lteRsrq);
+					values.put(Tables.SignalStrengths.LTE_SNR, lteSnr);
+					values.put(Tables.SignalStrengths.LTE_CQI, lteCqi);
+				}
 
 			}
-			// check for the LTE signal regardless, at least it will indicate of device supports LTE
+			// check for the LTE signal regardless, at least it will indicate if device supports LTE
 			Integer lteRssi = signal.getLayer3("mLteRssi");
 			if (lteRssi == null)
 				lteRssi = signal.getLayer3("mLteSignalStrength");
@@ -372,7 +374,7 @@ public class ContentValuesGenerator {
 			if (networkTier == 0) // dont make it 0 unless truly out of service
 				networkTier = 1;
 			if (serviceState == ServiceState.STATE_OUT_OF_SERVICE &&
-					(dataState != TelephonyManager.DATA_CONNECTED || networkType != TelephonyManager.NETWORK_TYPE_LTE))  // Sprint can be connected to LTE and say outofservice
+					(dataState != TelephonyManager.DATA_CONNECTED || (networkType != TelephonyManager.NETWORK_TYPE_LTE && networkType != PhoneState.NETWORK_NEWTYPE_IWLAN)))  // Sprint can be connected to LTE and say outofservice
 				networkTier = 0;
 			else if (serviceState == ServiceState.STATE_POWER_OFF || serviceState == ServiceState.STATE_EMERGENCY_ONLY || serviceState == ServiceState.STATE_POWER_OFF || serviceState == 9 ) // 9 = MMCPhoneStateListenerOld.SERVICE_STATE_AIRPLANE)
 				networkTier = -1;

@@ -58,7 +58,7 @@ public class SignalEx {
 	{
 		if (this.signalStrength == null)
 			return null;
-		if (networkType == PhoneState.NETWORK_NEWTYPE_LTE)
+		if (networkType == PhoneState.NETWORK_NEWTYPE_LTE || networkType == PhoneState.NETWORK_NEWTYPE_IWLAN)
 		{
 			Integer lteRssi = this.getLayer3("mLteRssi");
 			if (lteRssi == null)

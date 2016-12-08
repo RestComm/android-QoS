@@ -1560,14 +1560,17 @@ public class LibPhoneStateListener extends PhoneStateListener {
 
 			//if (signal != null) //  disabled because we do want the no-signal to be written to the signals table
 			{
-				values = ContentValuesGenerator.generateFromSignal(signal, telephonyManager.getPhoneType(), telephonyManager.getNetworkType(),
+				values = ContentValuesGenerator.generateFromSignal(signal, telephonyManager.getPhoneType(), mPhoneState.getNetworkType(),
 						serviceState, telephonyManager.getDataState(), stagedEventId, wifiSignal, mPhoneState.mServicemode);
 				Integer valSignal= (Integer)values.get("signal");
 				if (mPhoneState.getNetworkType() == PhoneState.NETWORK_NEWTYPE_LTE) // && phoneStateListener.previousNetworkState == TelephonyManager.DATA_CONNECTED)
 					valSignal= (Integer)values.get("lteRsrp");
 				if (valSignal != null && dbmValue != null && valSignal > -130 && valSignal < -30) //  && (dbmValue <= -120 || dbmValue >= -1))
 					dbmValue = valSignal;
-				if ((dbmValue > -120 || mPhoneState.getNetworkType() == PhoneState.NETWORK_NEWTYPE_LTE) && dbmValue < -40)
+				int minSig = -120;
+				if (mPhoneState.getNetworkType() == PhoneState.NETWORK_NEWTYPE_LTE)
+					minSig = -130;
+				if (dbmValue > minSig && dbmValue <= -50)
 					this.validSignal = true;
 				if (this.validSignal) // make sure phone has at least one valid signal before recording
 					owner.getDBProvider(owner).insert(TablesEnum.SIGNAL_STRENGTHS.getContentUri(), values);
@@ -1764,13 +1767,18 @@ public class LibPhoneStateListener extends PhoneStateListener {
 				return;
 			if (tmLastCellInfoUpdate + 60000 > System.currentTimeMillis() && cellinfos != null && cellinfos.size() > 0 && cellinfos.get(0).toString().equals(lastCellInfoString))
 				return;
+			boolean lteCell = false;
 			if (cellinfos != null && cellinfos.size() > 0)
+			{
 				lastCellInfoString = cellinfos.get(0).toString();
+				if (cellinfos.get(0) instanceof CellInfoLte)
+					lteCell = true;
+			}
 			else
 				lastCellInfoString = "";	
 			tmLastCellInfoUpdate = System.currentTimeMillis();
-			
-			if (mPhoneState.getNetworkType() == mPhoneState.NETWORK_NEWTYPE_LTE)
+
+			if (mPhoneState.getNetworkType() == mPhoneState.NETWORK_NEWTYPE_LTE || lteCell == true)
 			{
 				String neighbors = owner.getCellHistory().updateLteNeighborHistory(cellinfos);
 				if (neighbors != null)
@@ -1781,19 +1789,19 @@ public class LibPhoneStateListener extends PhoneStateListener {
 				
 			}
 			
-			if (cellinfos != null && cellinfos.size() > 0 && cellinfos.get(0) != null)
-				for (int i=0; i<cellinfos.size(); i++)
-				{
-					//MMCLogger.logToFile(MMCLogger.Level.DEBUG, TAG, "onCellInfoChanged", "cellinfos["+i+"]: " + cellinfos.get(i).toString());
-					if (mPhoneState.getNetworkType() == mPhoneState.NETWORK_NEWTYPE_LTE)
-					{
-						if (cellinfos.get(i) instanceof CellInfoLte)
-						{
-							CellIdentityLte cellIDLte = ((CellInfoLte)cellinfos.get(i)).getCellIdentity();
-							//MMCLogger.logToFile(MMCLogger.Level.DEBUG, TAG, "onCellInfoChanged", "Reflected: " + listCellInfoFields(cellIDLte));
-						}
-					}
-				}
+//			if (cellinfos != null && cellinfos.size() > 0 && cellinfos.get(0) != null)
+//				for (int i=0; i<cellinfos.size(); i++)
+//				{
+//					//MMCLogger.logToFile(MMCLogger.Level.DEBUG, TAG, "onCellInfoChanged", "cellinfos["+i+"]: " + cellinfos.get(i).toString());
+//					if (mPhoneState.getNetworkType() == mPhoneState.NETWORK_NEWTYPE_LTE || mPhoneState.getNetworkType() == mPhoneState.NETWORK_NEWTYPE_IWLAN)
+//					{
+//						if (cellinfos.get(i) instanceof CellInfoLte)
+//						{
+//							CellIdentityLte cellIDLte = ((CellInfoLte)cellinfos.get(i)).getCellIdentity();
+//							//MMCLogger.logToFile(MMCLogger.Level.DEBUG, TAG, "onCellInfoChanged", "Reflected: " + listCellInfoFields(cellIDLte));
+//						}
+//					}
+//				}
 			//else
 			//	MMCLogger.logToFile(MMCLogger.Level.ERROR, TAG, "onCellInfoChanged", "cellinfos: null");
 			

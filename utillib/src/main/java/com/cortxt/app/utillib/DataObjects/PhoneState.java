@@ -211,9 +211,11 @@ public class PhoneState {
             case PhoneState.NETWORK_NEWTYPE_HSPAP:	//3.5g HSPA+
             case PhoneState.NETWORK_NEWTYPE_EVDOB:	//3.5g
             case PhoneState.NETWORK_NEWTYPE_EHRPD:	//3.5g
+            case PhoneState.NETWORK_NEWTYPE_TD_SCDMA: //3.5g
                 return 4;
 
             case PhoneState.NETWORK_NEWTYPE_LTE:	// true 4g
+            case PhoneState.NETWORK_NEWTYPE_IWLAN:
                 return 5;
 
             case TelephonyManager.NETWORK_TYPE_UNKNOWN:
@@ -313,6 +315,8 @@ public class PhoneState {
 
             case PhoneState.NETWORK_NEWTYPE_LTE:	// true 4g
                 return "LTE";
+            case PhoneState.NETWORK_NEWTYPE_IWLAN:	// true 4g
+                return "IWLAN";
 
             case TelephonyManager.NETWORK_TYPE_UNKNOWN:
             default:
@@ -421,6 +425,13 @@ public class PhoneState {
 
     public int getNetworkType(){
         this.networkType = telephonyManager.getNetworkType();
+        if (this.networkType == PhoneState.NETWORK_NEWTYPE_IWLAN)
+        {
+            // check the voice network type instead
+            int nt = getVoiceNetworkType ();
+            if (nt > 0)
+                return nt;
+        }
         return this.networkType;
     }
 

@@ -128,7 +128,7 @@ public class CellHistory {
 				{
 					List<CellInfo> cells = null;
 					cells = telephonyManager.getAllCellInfo();
-					if (cells != null && cells.size() > 0 && cells.get(0) instanceof CellInfoLte && telephonyManager.getNetworkType() == PhoneState.NETWORK_NEWTYPE_LTE)
+					if (cells != null && cells.size() > 0 && cells.get(0) instanceof CellInfoLte) // && telephonyManager.getNetworkType() == PhoneState.NETWORK_NEWTYPE_LTE)
 					{
 						return updateLteNeighborHistory(cells);
 					}
