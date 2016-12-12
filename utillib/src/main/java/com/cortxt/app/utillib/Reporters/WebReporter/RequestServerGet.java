@@ -31,6 +31,8 @@ public class RequestServerGet {
 				}
 			}
 		}
+		if (query == null && email == null)
+			params.add(new Pair("chkauth", "1"));
 
 		String paramsString = WebReporter.URLEncodedFormat(params);
 		
