@@ -404,7 +404,7 @@ public class EventManager {
 								eventType == EventType.EVT_DROP || eventType == EventType.EVT_CALLFAIL || eventType == EventType.MAN_SPEEDTEST ||
 								eventType == EventType.SIP_DROP || eventType == EventType.SIP_CALLFAIL ||
 								eventType == EventType.SMS_TEST || eventType == EventType.APP_MONITORING || eventType == EventType.VIDEO_TEST || eventType == EventType.YOUTUBE_TEST
-								|| eventType == EventType.AUDIO_TEST || eventType == EventType.WEBPAGE_TEST || eventType == EventType.EVT_VQ_CALL)
+								|| eventType == EventType.AUDIO_TEST || eventType == EventType.WEBPAGE_TEST || eventType == EventType.EVT_VQ_CALL || eventType == EventType.EVT_TEST911)
 							reason = eventType.getEventString(context);
 						else if (eventType == EventType.MAN_TRACKING)
 							reason = EventType.MAN_TRACKING.getEventString(context);// getString(R.string.Gene"recording";
@@ -1119,8 +1119,8 @@ public class EventManager {
 			// @Override
 			public void run() {
 
-				if (eventType == EventType.EVT_VQ_CALL)
-					context.getVQManager().runTest(trigger);
+				if (eventType == EventType.EVT_VQ_CALL || eventType == EventType.EVT_TEST911)
+					context.getVQManager().runTest(trigger, eventType.getIntValue());
 				else if (eventType == EventType.MAN_SPEEDTEST)
 					mSpeedTestTrigger.runTest(true, trigger, eventType);
 				else if (eventType == EventType.SMS_TEST)
@@ -1135,6 +1135,7 @@ public class EventManager {
 					mVideoTestTrigger.runTest(true, trigger, eventType);
 				else if (eventType == EventType.YOUTUBE_TEST)
 					mVideoTestTrigger.runTest(true, trigger, eventType);
+
 			}
 		});
 	}

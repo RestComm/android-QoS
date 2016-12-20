@@ -44,6 +44,7 @@
     <string name="eventcustom_wificonnect">Conexión WiFi</string>
     <string name="eventcustom_wifidisconnect">Desconexión WiFi</string>
     <string name="eventcustom_vqcall">VQ Conectar</string>
+    <string name="eventcustom_test911">911 Test Call</string>
 
     <string name="troublecustom_step1_message">1. El problema que se registra es debido a:</string>
     <string name="troublecustom_step2_message">2. Evaluar la gravedad del problema</string>

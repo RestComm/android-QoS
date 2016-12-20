@@ -310,7 +310,7 @@ public class EventUploader implements Runnable{
 				// Force send TroubleTweets
 				else if (eventType.getIntValue() >= 30 && eventType.getIntValue() <= 39)
 					bForceSend = true;
-                else if (eventType == EventType.EVT_VQ_CALL || eventType == EventType.VIDEO_TEST || eventType == EventType.AUDIO_TEST  || eventType == EventType.WEBPAGE_TEST)
+                else if (eventType == EventType.EVT_VQ_CALL || eventType == EventType.EVT_TEST911 || eventType == EventType.VIDEO_TEST || eventType == EventType.AUDIO_TEST  || eventType == EventType.WEBPAGE_TEST)
                     bForceSend = true;
 			}
 
@@ -398,7 +398,7 @@ public class EventUploader implements Runnable{
 								svrEventID = eventids[d];
 							LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "run", "uploaded eventtype=" + eventType + " eventid=" + svrEventID);
 							reportManager.updateEventField(eventId, "eventid", Long.toString(svrEventID));
-							if (eventData.getEventType() == EventType.EVT_VQ_CALL.getIntValue() || eventData.getEventType() == EventType.SIP_VQ_CALL.getIntValue() ||
+							if (eventData.getEventType() == EventType.EVT_VQ_CALL.getIntValue() || eventData.getEventType() == EventType.EVT_TEST911.getIntValue() || eventData.getEventType() == EventType.SIP_VQ_CALL.getIntValue() ||
 									eventData.getEventType() == EventType.CONNECTION_FAILED.getIntValue())
 								reportManager.updateEventField(eventId, Events.KEY_TYPE, Integer.toString(eventData.getEventType()));
 
@@ -643,7 +643,7 @@ public class EventUploader implements Runnable{
 					if(lookupid1 == 0 || lookupid2 == 0)
 						return null;
 				}
-                if (_event.getEventType() == EventType.EVT_VQ_CALL)
+                if (_event.getEventType() == EventType.EVT_VQ_CALL || _event.getEventType() == EventType.EVT_TEST911)
                 {
                     //Apps = _event.getAppData();
                 }

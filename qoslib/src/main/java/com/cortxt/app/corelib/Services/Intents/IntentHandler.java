@@ -450,10 +450,11 @@ public class IntentHandler extends BroadcastReceiver {
 		else if (action.equals(CommonIntentActionsOld.ACTION_START_VOICETEST)){
 			//this is supposed to trigger a speed test
 			int trigger = intent.getIntExtra(CommonIntentBundleKeysOld.EXTRA_VQ_TRIGGER, 0);
-			owner.getVQManager().runTest(trigger);
+			int testtype = intent.getIntExtra(CommonIntentBundleKeysOld.EXTRA_EVENT_TYPE, 0);
+			owner.getVQManager().runTest(trigger, testtype);
 		}
 		else if (action.equals(CommonIntentActionsOld.ACTION_TEST_VQ_DEVICE)){
-			owner.getVQManager().runTest(10);
+			owner.getVQManager().runTest(10,EventType.EVT_VQ_CALL.getIntValue());
 		}
 		else if (action.equals(CommonIntentActionsOld.ACTION_STOP_VOICETEST)){
 			owner.getVQManager().killTest();
@@ -945,6 +946,9 @@ public class IntentHandler extends BroadcastReceiver {
                     else if (testType.equals("vq")){
                         LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "runTracking", "beginVoiceTest");
 						owner.getEventManager().queueActiveTest(EventType.EVT_VQ_CALL, 3);
+					}else if (testType.equals("e911")){
+						LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "runTracking", "begin911Test");
+						owner.getEventManager().queueActiveTest(EventType.EVT_TEST911, 3);
 					} else if (testType.equals("stop")){
                         owner.getEventManager().stopTracking();
 					}

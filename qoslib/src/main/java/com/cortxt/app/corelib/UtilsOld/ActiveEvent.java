@@ -14,6 +14,7 @@ public enum ActiveEvent {
     WEB_TEST (EventType.WEBPAGE_TEST),
     AUDIO_TEST (EventType.AUDIO_TEST),
     VOICE_QUALITY_TEST (EventType.EVT_VQ_CALL),
+    E911_TEST (EventType.EVT_TEST911),
     UPDATE_EVENT (EventType.COV_UPDATE),
     COVERAGE_EVENT (EventType.EVT_FILLIN);
 

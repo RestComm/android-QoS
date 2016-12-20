@@ -33,7 +33,7 @@ public class TrackingManager {
 	//private boolean bCoverage = true, bSpeed = false, bTracking = false;
 	private boolean bTracking = false;
 	private int coverageInterval = 5, speedtestInterval = 0, videoInterval = 0, audioInterval = 0;
-	private int webInterval = 0, smsInterval = 0, connectInterval = 0, vqInterval = 0, youtubeInterval = 0;
+	private int webInterval = 0, smsInterval = 0, connectInterval = 0, vqInterval = 0, youtubeInterval = 0, e911Interval = 0;
 	private int advancedIndex = 0;
 	private boolean advancedWaiting = false;
 	private int count = 0;
@@ -420,11 +420,11 @@ public class TrackingManager {
         if (vqInterval > 0 && (count % vqInterval) == 0)
         {
             owner.getEventManager().queueActiveTest(EventType.EVT_VQ_CALL, 2);
-            //owner.triggerWebTest(2);
-            //Intent intent = new Intent(CommonIntentBundleKeysOld.ACTION_START_VOICETEST);
-            //MMCLogger.logToFile(MMCLogger.Level.ERROR, TAG, "runTracking", "beginVoiceTest");
-            //owner.sendBroadcast(intent);
         }
+		if (e911Interval > 0 && (count % e911Interval) == 0)
+		{
+			owner.getEventManager().queueActiveTest(EventType.EVT_TEST911, 2);
+		}
         if (videoInterval > 0 && (count % videoInterval) == 0)
         {
             owner.getEventManager().queueActiveTest(EventType.VIDEO_TEST, 2);
@@ -479,6 +479,8 @@ public class TrackingManager {
 				owner.getEventManager().queueActiveTest(EventType.YOUTUBE_TEST, 2);
 			else if (cmdtype.equals("vq"))
 				owner.getEventManager().queueActiveTest(EventType.EVT_VQ_CALL, 2);
+			else if (cmdtype.equals("e911"))
+				owner.getEventManager().queueActiveTest(EventType.EVT_TEST911, 2);
 			else if (cmdtype.equals("video"))
 				owner.getEventManager().queueActiveTest(EventType.VIDEO_TEST, 2);
 			else if (cmdtype.equals("audio"))

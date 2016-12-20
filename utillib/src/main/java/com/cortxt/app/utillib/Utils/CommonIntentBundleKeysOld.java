@@ -70,6 +70,8 @@ public final class CommonIntentBundleKeysOld {
 	public static final String KEY_LOCATION_UPDATE = "UPDATE_LOCATION";
 	public static final String KEY_GPS_STATUS_UPDATE = "UPDATE_GPS_STATUS";
 	public static final String KEY_UPDATE_LTEID = "UPDATE_LTEID";
+	public static final String KEY_GMLC_STATUS = "GMLC_STATUS";
+	public static final String KEY_GMLC_RESPONSE = "GMLC_RESPONSE";
 
 	public static final String KEY_EXTRA_VIDEO_CHART = "KEY_EXTRA_VIDEO_CHART";
 	public static final String KEY_EXTRA_VIDEO_TRIGGER = "KEY_EXTRA_VIDEO_TRIGGER";
@@ -90,6 +92,7 @@ public final class CommonIntentBundleKeysOld {
 	public static final String ACTION_CELL_UPDATE = "com.cortxt.app.MMC.Activities.Livestatus.CELL_UPDATE";
 	public static final String ACTION_RX_TX = "com.cortxt.app.MMC.Activities.Livestatus.ACTION_RX_TX";
 	public static final String ACTION_NETWORK_UPDATE = "com.cortxt.app.MMC.ACTION_NETWORK_UPDATE";
+	public static final String ACTION_GMLC_STATUS_UPDATE = "com.cortxt.app.MMC.UPDATE_GMLC_STATUS";
 
 	public static final String EXTRA_STALLS = "stalls";
 	public static final String EXTRA_STALL_TIME = "stallTime";

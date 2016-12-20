@@ -80,7 +80,7 @@ public final class PreferenceKeys {
 			if (!PreferenceKeys.getSMSPermissionsAllowed(context, true))
 				return false;
 		}
-		else if (eventType == EventType.EVT_VQ_CALL) {
+		else if (eventType == EventType.EVT_VQ_CALL || eventType == EventType.EVT_TEST911) {
 			PackageManager pkMan = context.getPackageManager();
 			int voiceCallPermissionValue = pkMan.checkPermission("android.permission.CALL_PHONE", context.getPackageName()) | pkMan.checkPermission("android.permission.RECORD_AUDIO", context.getPackageName());
 			if (voiceCallPermissionValue != 0)
@@ -329,6 +329,7 @@ public final class PreferenceKeys {
 		public static final String VOICETEST_SERVICE = "KEY_VOICETEST_SERVICE";
 		public static final String VQ_EVENTID = "KEY_VQ_EVENTID";
 		public static final String SPEED_SIZES_JSON = "SPEED_SIZES_JSON";
+		public static final String E911_SERVICE = "KEY_VOICETEST_SERVICE";
 
         public static final String USE_GCM = "KEY_USE_GCM";
 		public static final String USE_SVCMODE = "KEY_USE_SVCMODE";

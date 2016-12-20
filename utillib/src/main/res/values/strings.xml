@@ -83,6 +83,8 @@
     <string name="eventtype_manTransit">Transit</string>
     <string name="eventtype_vqcall">VQ Test Call</string>
     <string name="eventtype_youtubeTest">YouTube Test</string>
+    <string name="eventtype_test911">911 Test</string>
+
     <!-- need translations -->
     <string name="eventtype_lowsignal">Low Signal</string>
     <string name="eventtype_openwifi">Open Wifi</string>

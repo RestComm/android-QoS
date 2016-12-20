@@ -65,7 +65,12 @@ public enum EventType {
 	 * This event occurs when the phone's 4g availability goes from "no" to "yes".
 	 */
 	EVT_VQ_CALL (8, "VQ CALL", R.string.eventtype_vqcall, R.string.eventcustom_vqcall, R.drawable.flat_pin_complete_call_ver2, R.drawable.flat_pin_complete_call_ver2, R.drawable.mapicon_event_connect, R.drawable.ic_stat_eventicon_connectcall_dark, 30000, 30000, 4, EventTypeGenre.START_OF_COUPLE, "", true, false),
-	
+
+	/**
+	 * This event occurs when the phone's 4g availability goes from "no" to "yes".
+	 */
+	EVT_TEST911 (8, "TEST 911", R.string.eventtype_test911, R.string.eventcustom_test911, R.drawable.flat_pin_complete_call_ver2, R.drawable.flat_pin_complete_call_ver2, R.drawable.mapicon_event_connect, R.drawable.ic_stat_eventicon_connectcall_dark, 30000, 30000, 4, EventTypeGenre.START_OF_COUPLE, "", true, false),
+
 	/**
 	 * This event occurs when the phone's 4g availability goes from "yes" to "no".
 	 */

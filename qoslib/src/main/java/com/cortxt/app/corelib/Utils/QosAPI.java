@@ -290,6 +290,12 @@ public class QosAPI {
             if (pref == null || pref.length() == 0)
                 return false;
         }
+        else if (eventType == EventType.EVT_TEST911)
+        {
+            pref = PreferenceManager.getDefaultSharedPreferences(context).getString(PreferenceKeys.Miscellaneous.E911_SERVICE, null);
+            if (pref == null || pref.length() == 0)
+                return false;
+        }
         return true;
     }
 
@@ -334,7 +340,7 @@ public class QosAPI {
                 }
             }
         }
-        else if (eventType == EventType.EVT_VQ_CALL) {
+        else if (eventType == EventType.EVT_VQ_CALL || eventType == EventType.EVT_TEST911) {
             PackageManager pkMan = context.getPackageManager();
             int voiceCallPermissionValue = pkMan.checkPermission("android.permission.CALL_PHONE", context.getPackageName()) | pkMan.checkPermission("android.permission.RECORD_AUDIO", context.getPackageName());
             if (voiceCallPermissionValue != 0)

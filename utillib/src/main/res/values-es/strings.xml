@@ -81,6 +81,7 @@
     <string name="eventtype_wificonnect">Conexión WiFi</string>
     <string name="eventtype_wifidisconnect">Desconexión WiFi</string>
     <string name="eventtype_vqcall">VQ Conectar</string>
+    <string name="eventtype_test911">Prueba de 911</string>
 
     <!-- Strings for SplashScreen activity -->
 

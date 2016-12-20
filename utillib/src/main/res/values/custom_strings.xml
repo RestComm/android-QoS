@@ -81,6 +81,7 @@
     <string name="eventcustom_wificonnect">WiFi connect</string>
     <string name="eventcustom_wifidisconnect">WiFi disconnect</string>
     <string name="eventcustom_vqcall">VQ Test Call</string>
+    <string name="eventcustom_test911">Prueba de 911</string>
 
     <string name="troublecustom_droppedcall">Dropped</string>
     <string name="troublecustom_failedcall">Failed</string>
