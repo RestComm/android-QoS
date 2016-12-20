@@ -1,3 +1,25 @@
+/*
+ * TeleStax, Open Source Cloud Communications
+ * Copyright 2011-2016, Telestax Inc and individual contributors
+ * by the @authors tag.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation; either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ *
+ * For questions related to commercial use licensing, please contact sales@telestax.com.
+ *
+ */
+
 package org.restcomm.app.qoslib;
 
 import java.sql.Date;
@@ -40,38 +62,39 @@ import android.widget.Toast;
 
 import org.restcomm.app.qoslib.Services.Intents.IntentHandler;
 import org.restcomm.app.qoslib.Utils.LibCallbacks;
-import com.restcomm.app.utillib.ContentProvider.ContentValuesGenerator;
-import com.restcomm.app.utillib.ContentProvider.Provider;
-import com.restcomm.app.utillib.ContentProvider.TablesEnum;
-import com.restcomm.app.utillib.DataObjects.PhoneState;
-import com.restcomm.app.utillib.ICallbacks;
-import com.restcomm.app.utillib.Reporters.ReportManager;
+import org.restcomm.app.utillib.ContentProvider.ContentValuesGenerator;
+import org.restcomm.app.utillib.ContentProvider.Provider;
+import org.restcomm.app.utillib.ContentProvider.TablesEnum;
+import org.restcomm.app.utillib.DataObjects.PhoneState;
+import org.restcomm.app.utillib.ICallbacks;
+import org.restcomm.app.utillib.Reporters.ReportManager;
 import org.restcomm.app.qoslib.Services.LibPhoneStateListener;
-import com.restcomm.app.utillib.Utils.Global;
-import com.restcomm.app.utillib.Utils.GpsListener;
+import org.restcomm.app.utillib.Utils.Global;
+import org.restcomm.app.utillib.Utils.GpsListener;
 //import com.cortxt.com.mmcextension.firebase.MyFirebaseInstanceIDService;
 import com.cortxt.com.mmcextension.VQ.VQManager;
 import org.restcomm.app.qoslib.Services.TrackingManager;
 import org.restcomm.app.qoslib.Services.Events.EventManager;
-import com.restcomm.app.utillib.DataObjects.EventObj;
+import org.restcomm.app.utillib.DataObjects.EventObj;
 import org.restcomm.app.qoslib.Services.Intents.IntentDispatcher;
 import org.restcomm.app.qoslib.Services.Location.GpsManagerOld;
 import org.restcomm.app.qoslib.Utils.QosAPI;
-import com.restcomm.app.utillib.DataObjects.DeviceInfo;
+import org.restcomm.app.utillib.DataObjects.DeviceInfo;
 import org.restcomm.app.qoslib.Utils.RTWebSocket;
 import org.restcomm.app.qoslib.UtilsOld.AccessPointHistory;
 import org.restcomm.app.qoslib.UtilsOld.CellHistory;
-import com.restcomm.app.utillib.DataObjects.ConnectionHistory;
+import org.restcomm.app.utillib.DataObjects.ConnectionHistory;
 import org.restcomm.app.qoslib.UtilsOld.DataMonitorStats;
-import com.restcomm.app.utillib.Utils.DeviceInfoOld;
-import com.restcomm.app.utillib.DataObjects.EventType;
-import com.restcomm.app.utillib.Utils.PreferenceKeys;
-import com.restcomm.app.utillib.Utils.LoggerUtil;
+import org.restcomm.app.utillib.Utils.DeviceInfoOld;
+import org.restcomm.app.utillib.DataObjects.EventType;
+import org.restcomm.app.utillib.Utils.PreferenceKeys;
+import org.restcomm.app.utillib.Utils.LoggerUtil;
 //import com.cortxt.com.mmcextension.datamonitor.DMService;
 import com.cortxt.com.mmcextension.TravelDetector;
-import com.restcomm.app.utillib.Utils.UsageLimits;
+import org.restcomm.app.utillib.Utils.UsageLimits;
 import com.cortxt.com.mmcextension.MMCSystemUtil;
 import com.securepreferences.SecurePreferences;
+import com.restcomm.app.qoslib.R;
 //import com.securepreferences.SecurePreferences;
 
 

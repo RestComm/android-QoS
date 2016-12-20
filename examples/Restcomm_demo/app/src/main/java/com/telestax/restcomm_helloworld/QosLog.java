@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 //import LoggerUtil;
 
-import com.restcomm.app.utillib.Utils.LoggerUtil;
+import org.restcomm.app.utillib.Utils.LoggerUtil;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

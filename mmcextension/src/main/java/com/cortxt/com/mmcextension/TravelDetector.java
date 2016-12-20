@@ -3,9 +3,9 @@ package com.cortxt.com.mmcextension;
 import android.location.Location;
 import android.telephony.CellLocation;
 
-import com.restcomm.app.utillib.DataObjects.EventObj;
-import com.restcomm.app.utillib.DataObjects.PhoneState;
-import com.restcomm.app.utillib.ICallbacks;
+import org.restcomm.app.utillib.DataObjects.EventObj;
+import org.restcomm.app.utillib.DataObjects.PhoneState;
+import org.restcomm.app.utillib.ICallbacks;
 
 public class TravelDetector {
 

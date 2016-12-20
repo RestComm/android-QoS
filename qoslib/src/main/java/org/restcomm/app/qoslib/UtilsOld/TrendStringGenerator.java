@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import android.database.Cursor;
 
 import org.restcomm.app.qoslib.MainService;
-import com.restcomm.app.utillib.ContentProvider.Tables;
-import com.restcomm.app.utillib.CoverageSamples.CellSamples;
-import com.restcomm.app.utillib.CoverageSamples.CoverageSamples;
-import com.restcomm.app.utillib.CoverageSamples.CoverageSamplesSend;
-import com.restcomm.app.utillib.CoverageSamples.EvtSample;
-import com.restcomm.app.utillib.DataObjects.EventObj;
-import com.restcomm.app.utillib.DataObjects.EventType;
-import com.restcomm.app.utillib.Utils.LoggerUtil;
+import org.restcomm.app.utillib.ContentProvider.Tables;
+import org.restcomm.app.utillib.CoverageSamples.CellSamples;
+import org.restcomm.app.utillib.CoverageSamples.CoverageSamples;
+import org.restcomm.app.utillib.CoverageSamples.CoverageSamplesSend;
+import org.restcomm.app.utillib.CoverageSamples.EvtSample;
+import org.restcomm.app.utillib.DataObjects.EventObj;
+import org.restcomm.app.utillib.DataObjects.EventType;
+import org.restcomm.app.utillib.Utils.LoggerUtil;
 
 /**
  * The Server requires a list of coverage samples associated with each event

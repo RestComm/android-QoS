@@ -2,7 +2,7 @@ package com.cortxt.com.mmcextension.datamonitor;
 
 import android.os.Handler;
 
-import com.restcomm.app.utillib.ICallbacks;
+import org.restcomm.app.utillib.ICallbacks;
 
 public class AppDataStatisticsRunnable implements Runnable {
 	

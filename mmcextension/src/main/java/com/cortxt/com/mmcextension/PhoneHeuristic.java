@@ -1,7 +1,7 @@
 package com.cortxt.com.mmcextension;
 
-import com.restcomm.app.utillib.DataObjects.PhoneState;
-import com.restcomm.app.utillib.ICallbacks;
+import org.restcomm.app.utillib.DataObjects.PhoneState;
+import org.restcomm.app.utillib.ICallbacks;
 
 /**
  * Created by bscheurman on 16-03-08.

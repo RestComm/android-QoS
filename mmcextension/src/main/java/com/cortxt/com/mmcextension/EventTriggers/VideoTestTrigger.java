@@ -4,8 +4,8 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.webkit.WebView;
 
-import com.restcomm.app.utillib.DataObjects.EventType;
-import com.restcomm.app.utillib.ICallbacks;
+import org.restcomm.app.utillib.DataObjects.EventType;
+import org.restcomm.app.utillib.ICallbacks;
 
 public class VideoTestTrigger {
 	public static final String TAG = VideoTestTrigger.class.getSimpleName();

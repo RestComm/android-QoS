@@ -1,3 +1,25 @@
+/*
+ * TeleStax, Open Source Cloud Communications
+ * Copyright 2011-2016, Telestax Inc and individual contributors
+ * by the @authors tag.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation; either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ *
+ * For questions related to commercial use licensing, please contact sales@telestax.com.
+ *
+ */
+
 package org.restcomm.app.qoslib.Services.Intents;
 
 import org.json.JSONArray;
@@ -34,21 +56,21 @@ import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
 
-import com.restcomm.app.utillib.ContentProvider.TablesEnum;
-import com.restcomm.app.utillib.DataObjects.DeviceInfo;
-import com.restcomm.app.utillib.DataObjects.EventObj;
-import com.restcomm.app.utillib.DataObjects.EventType;
-import com.restcomm.app.utillib.DataObjects.PhoneState;
-import com.restcomm.app.utillib.Reporters.ReportManager;
-import com.restcomm.app.utillib.Reporters.WebReporter.WebReporter;
-import com.restcomm.app.utillib.Utils.CommonIntentActionsOld;
-import com.restcomm.app.utillib.Utils.Global;
-import com.restcomm.app.utillib.Utils.LoggerUtil;
-import com.restcomm.app.utillib.Utils.PreciseCallCodes;
-import com.restcomm.app.utillib.Utils.PreferenceKeys;
-import com.restcomm.app.utillib.DataObjects.SignalEx;
-import com.restcomm.app.utillib.Utils.CommonIntentBundleKeysOld;
-import com.restcomm.app.utillib.Utils.DeviceInfoOld;
+import org.restcomm.app.utillib.ContentProvider.TablesEnum;
+import org.restcomm.app.utillib.DataObjects.DeviceInfo;
+import org.restcomm.app.utillib.DataObjects.EventObj;
+import org.restcomm.app.utillib.DataObjects.EventType;
+import org.restcomm.app.utillib.DataObjects.PhoneState;
+import org.restcomm.app.utillib.Reporters.ReportManager;
+import org.restcomm.app.utillib.Reporters.WebReporter.WebReporter;
+import org.restcomm.app.utillib.Utils.CommonIntentActionsOld;
+import org.restcomm.app.utillib.Utils.Global;
+import org.restcomm.app.utillib.Utils.LoggerUtil;
+import org.restcomm.app.utillib.Utils.PreciseCallCodes;
+import org.restcomm.app.utillib.Utils.PreferenceKeys;
+import org.restcomm.app.utillib.DataObjects.SignalEx;
+import org.restcomm.app.utillib.Utils.CommonIntentBundleKeysOld;
+import org.restcomm.app.utillib.Utils.DeviceInfoOld;
 import com.google.gson.Gson;
 
 import java.net.HttpURLConnection;

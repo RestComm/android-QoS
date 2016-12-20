@@ -2,9 +2,9 @@ package com.cortxt.com.mmcextension.VQ;
 
 import android.os.Handler;
 
-import com.restcomm.app.utillib.DataObjects.PhoneState;
-import com.restcomm.app.utillib.ICallbacks;
-import com.restcomm.app.utillib.Utils.TimeSeries;
+import org.restcomm.app.utillib.DataObjects.PhoneState;
+import org.restcomm.app.utillib.ICallbacks;
+import org.restcomm.app.utillib.Utils.TimeSeries;
 
 public class VQManager {
 

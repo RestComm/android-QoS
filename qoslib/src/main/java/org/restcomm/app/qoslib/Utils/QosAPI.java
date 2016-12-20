@@ -15,13 +15,13 @@ import android.preference.PreferenceManager;
 import org.restcomm.app.qoslib.MainService;
 import org.restcomm.app.qoslib.Services.Intents.IntentHandler;
 import org.restcomm.app.qoslib.UtilsOld.ActiveEvent;
-import com.restcomm.app.utillib.DataObjects.EventType;
-import com.restcomm.app.utillib.DataObjects.PhoneState;
-import com.restcomm.app.utillib.Reporters.ReportManager;
-import com.restcomm.app.utillib.Utils.Global;
-import com.restcomm.app.utillib.Utils.LoggerUtil;
-import com.restcomm.app.utillib.Utils.PreferenceKeys;
-import com.restcomm.app.utillib.Utils.UsageLimits;
+import org.restcomm.app.utillib.DataObjects.EventType;
+import org.restcomm.app.utillib.DataObjects.PhoneState;
+import org.restcomm.app.utillib.Reporters.ReportManager;
+import org.restcomm.app.utillib.Utils.Global;
+import org.restcomm.app.utillib.Utils.LoggerUtil;
+import org.restcomm.app.utillib.Utils.PreferenceKeys;
+import org.restcomm.app.utillib.Utils.UsageLimits;
 //import com.securepreferences.SecurePreferences;
 
 import org.json.JSONObject;
@@ -29,7 +29,29 @@ import org.json.JSONObject;
 import java.util.List;
 
 
-/**
+/*
+ * TeleStax, Open Source Cloud Communications
+ * Copyright 2011-2016, Telestax Inc and individual contributors
+ * by the @authors tag.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation; either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ *
+ * For questions related to commercial use licensing, please contact sales@telestax.com.
+ *
+ */
+
+ /**
  * QosAPI is the main interface between the client application and the Quality of Service Library
  * These methods allow the app to easily communicate and start and stop the background service
  * using static methods.

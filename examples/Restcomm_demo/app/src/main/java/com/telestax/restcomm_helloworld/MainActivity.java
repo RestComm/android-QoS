@@ -15,8 +15,8 @@ import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
-import com.restcomm.app.qoslib.Utils.QosAPI;
-import com.restcomm.app.utillib.DataObjects.EventType;
+import org.restcomm.app.qoslib.Utils.QosAPI;
+import org.restcomm.app.utillib.DataObjects.EventType;
 //import com.cortxt.app.utillib.Utils.FirebaseInvite;
 
 import java.util.HashMap;

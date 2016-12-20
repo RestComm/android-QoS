@@ -1,3 +1,24 @@
+/*
+ * TeleStax, Open Source Cloud Communications
+ * Copyright 2011-2016, Telestax Inc and individual contributors
+ * by the @authors tag.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation; either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ *
+ * For questions related to commercial use licensing, please contact sales@telestax.com.
+ *
+ */
 package org.restcomm.app.qoslib.Utils;
 
 import android.content.Context;
@@ -6,10 +27,10 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.restcomm.app.utillib.DataObjects.EventType;
-import com.restcomm.app.utillib.Utils.ScalingUtility;
-import com.restcomm.app.utillib.Utils.ShareInviteTask;
-import com.restcomm.app.utillib.Utils.TaskHelper;
+import org.restcomm.app.utillib.DataObjects.EventType;
+import org.restcomm.app.utillib.Utils.ScalingUtility;
+import org.restcomm.app.utillib.Utils.ShareInviteTask;
+import org.restcomm.app.utillib.Utils.TaskHelper;
 
 import java.util.HashSet;
 import com.restcomm.app.qoslib.R;

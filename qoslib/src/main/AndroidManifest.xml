@@ -61,17 +61,17 @@
             android:theme="@android:style/Theme.Dialog" /-->
 
         <service
-            android:name="com.restcomm.app.qoslib.MainService"
+            android:name="com.restcomm.app.qoslib.org.restcomm.app.qoslib.MainService"
             android:enabled="true"
             android:label="MMC Service"
             android:screenOrientation="user" />
 
         <activity
-            android:name="com.restcomm.app.qoslib.Utils.EventHistory"
+            android:name="com.restcomm.app.qoslib.org.restcomm.app.qoslib.Utils.EventHistory"
             android:screenOrientation="user" />
 
         <activity
-            android:name="com.restcomm.app.qoslib.Utils.EventDetailWeb"
+            android:name="com.restcomm.app.qoslib.org.restcomm.app.qoslib.Utils.EventDetailWeb"
             android:hardwareAccelerated="false"
             android:screenOrientation="user" />
         <!--service
@@ -86,14 +86,14 @@
 
         <!-- provider android:authorities="com.cortxt.app.mmcutility.ContentProvider.Tables" android:name=".ContentProvider.Provider" android:screenOrientation="user"/ -->
 
-        <receiver android:name="com.restcomm.app.qoslib.BootListener" >
+        <receiver android:name="com.restcomm.app.qoslib.org.restcomm.app.qoslib.BootListener" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.restcomm.app.qoslib.Services.Intents.IntentHandler" >
+        <receiver android:name="com.restcomm.app.qoslib.org.restcomm.app.qoslib.Services.Intents.IntentHandler" >
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
