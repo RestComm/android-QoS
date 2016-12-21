@@ -732,6 +732,12 @@
     <string name="Chart_Locations">Locations</string>
     <string name="Chart_Measurements">Measurements</string>
 
+    <string name="GMLC_Off">GMLC Off</string>
+    <string name="GMLC_Waiting">GMLC Waiting</string>
+    <string name="GMLC_Requested">GMLC Requested</string>
+    <string name="GMLC_Success">GMLC Success</string>
+    <string name="GMLC_Error">GMLC Error</string>
+
     <string-array name="LiveStatus_TrackingValues">
         <item name="5 minutes">5 minutes</item>
         <item name="15 minutes">15 minutes</item>

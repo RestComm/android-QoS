@@ -730,7 +730,7 @@ public class WebReporter  {
 	{
 		URL urlObj = new URL (url);
 		HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
-		connection.setReadTimeout(10000);
+		connection.setReadTimeout(30000);
 		connection.setConnectTimeout(15000);
 		connection.connect();
 		if (bVerifyJson)

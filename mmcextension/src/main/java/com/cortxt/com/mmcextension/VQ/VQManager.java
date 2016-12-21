@@ -37,6 +37,6 @@ public static final String TAG = VQManager.class.getSimpleName();
 	 * Runs a speed test in a background thread and reports the results if network is not wifi
 	 * @param trigger to flag how this test was triggered
 	 */
-	public void runTest(int trigger) {
+	public void runTest(int trigger, int eventtype) {
 	}
 }
