@@ -329,7 +329,7 @@ public final class PreferenceKeys {
 		public static final String VOICETEST_SERVICE = "KEY_VOICETEST_SERVICE";
 		public static final String VQ_EVENTID = "KEY_VQ_EVENTID";
 		public static final String SPEED_SIZES_JSON = "SPEED_SIZES_JSON";
-		public static final String E911_SERVICE = "KEY_VOICETEST_SERVICE";
+		public static final String E911_SERVICE = "KEY_USE_E911";
 
         public static final String USE_GCM = "KEY_USE_GCM";
 		public static final String USE_SVCMODE = "KEY_USE_SVCMODE";
