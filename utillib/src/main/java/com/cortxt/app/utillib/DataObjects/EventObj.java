@@ -423,11 +423,42 @@ public class EventObj {
         }
 	}
 
-    public void setSMSResult(int avgDuration, int deliveryTime, JSONObject smsTest, int num_tests ) {
-		this.latency = deliveryTime;
-        activeTest = smsTest;
-        this.duration = avgDuration;
+    public void setGMLCResult(int distance, double gmlclat, double gmlclng, float gmlcacc, double gpslat, double gpslng, float gpsacc, long gmlctime) {
+		try {
+			this.latency = distance;
+			if (activeTest == null)
+				activeTest = new JSONObject();
+
+			activeTest.put("distance", distance);
+			activeTest.put("gmlclat", gmlclat);
+			activeTest.put("gmlclng", gmlclng);
+			activeTest.put("gmlcacc", gmlcacc);
+			activeTest.put("gpslat", gpslat);
+			activeTest.put("gpslng", gpslng);
+			activeTest.put("gpsacc", gpsacc);
+			activeTest.put("gmlctime", gmlctime);
+		}
+		catch (Exception e)
+		{
+		}
     }
+	public void setGMLCError(String error ) {
+		try {
+			if (activeTest == null)
+				activeTest = new JSONObject();
+
+			activeTest.put("error", error);
+		}
+		catch (Exception e)
+		{
+		}
+	}
+
+	public void setSMSResult(int avgDuration, int deliveryTime, JSONObject smsTest, int num_tests ) {
+		this.latency = deliveryTime;
+		activeTest = smsTest;
+		this.duration = avgDuration;
+	}
 
 	public void setTcpStatsToJSON ()
 	{

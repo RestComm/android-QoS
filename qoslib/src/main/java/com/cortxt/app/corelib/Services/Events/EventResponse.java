@@ -378,6 +378,13 @@ public class EventResponse {
             return null;
     }
 
+    public String getE911Dial() {
+        if (d.e911dial != null)
+            return d.e911dial;
+        else
+            return null;
+    }
+
     public String getVoiceTestService() {
         if (d.voicetest_service != null)
             return d.voicetest_service;
@@ -552,6 +559,8 @@ public class EventResponse {
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putString(PreferenceKeys.Miscellaneous.WEB_URL, this.getWebUrl()).commit();
         if (this.getVoiceTestService() != null)
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putString(PreferenceKeys.Miscellaneous.VOICETEST_SERVICE, this.getVoiceTestService()).commit();
+        if (this.getE911Dial() != null)
+            PreferenceManager.getDefaultSharedPreferences(owner).edit().putString(PreferenceKeys.Miscellaneous.E911_SERVICE, this.getE911Dial()).commit();
         if (this.getSpeedSizes() != null)
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putString(PreferenceKeys.Miscellaneous.SPEED_SIZES_JSON, this.getSpeedSizes()).commit();
         if (this.getWebSocket() != null)
@@ -646,7 +655,7 @@ class EventResponseContents {
 	public String Wifi;
 	public String __type;
 	public String downloadurl = null, uploadurl = null, latencyurl = null;
-	public String videoUrl = "", voicetest_service = "";
+	public String videoUrl = "", voicetest_service = "", e911dial = "";
     public String web_url = "";
     public String audio_url = "";//"http://d1l72qawknwf5q.cloudfront.net/speedtest/test_60s.ogg";
     //public String audioUrl = "http://d1l72qawknwf5q.cloudfront.net/speedtest/wearie.mp3";
