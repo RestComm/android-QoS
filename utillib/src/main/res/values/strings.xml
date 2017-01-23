@@ -1027,7 +1027,7 @@
     <string name="VQ_UseBluetooth">Use VQ Module Recorder</string>
     <string name="VQ_selectDevice">VQ Module Device</string>
     <string name="VQ_Playback_Audio">Playback Audio</string>
-    <string name="VQ_Start_Test">Start VQ Test</string>
+    <string name="VQ_Start_Test">Start Test</string>
     <string name="VQ_InProgress">Test In Progress</string>
     <string name="VQ_NeedHeadphone">Connect Audio Cable</string>
     <string name="VQ_disconnectJack">Disconnect Audio Cable to hear recording</string>

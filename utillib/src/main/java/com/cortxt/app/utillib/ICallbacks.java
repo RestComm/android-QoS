@@ -28,6 +28,7 @@ public interface ICallbacks{
     int getLastServiceState();
 
     Location getLastLocation();
+    int getLastNumSatellites();
 
     void startRadioLog (boolean bStart, String reason, int eventType);
     void setAlarmManager ();

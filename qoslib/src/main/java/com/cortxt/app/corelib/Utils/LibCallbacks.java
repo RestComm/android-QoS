@@ -89,6 +89,10 @@ public class LibCallbacks implements ICallbacks {
     {
         return mContext.getLastLocation();
     }
+    public int getLastNumSatellites()
+    {
+        return mContext.getLastNumSatellites();
+    }
 
     public void startRadioLog (boolean bStart, String reason, int eventType)
     {

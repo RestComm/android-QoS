@@ -10,6 +10,7 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.telephony.ServiceState;
 
+import com.cortxt.app.utillib.Utils.Global;
 import com.cortxt.app.utillib.Utils.GpsListener;
 import com.cortxt.app.utillib.Utils.PreferenceKeys;
 
@@ -423,20 +424,22 @@ public class EventObj {
         }
 	}
 
-    public void setGMLCResult(int distance, double gmlclat, double gmlclng, float gmlcacc, double gpslat, double gpslng, float gpsacc, long gmlctime) {
+    public void setGMLCResult(int distance, Location gmlcLocation, Location gpsLocation, long gmlctime, int satellites) {
 		try {
 			this.downloadSpeed = distance;
 			if (activeTest == null)
 				activeTest = new JSONObject();
 
 			activeTest.put("distance", distance);
-			activeTest.put("gmlclat", gmlclat);
-			activeTest.put("gmlclng", gmlclng);
-			activeTest.put("gmlcacc", gmlcacc);
-			activeTest.put("gpslat", gpslat);
-			activeTest.put("gpslng", gpslng);
-			activeTest.put("gpsacc", gpsacc);
+			activeTest.put("gmlclat", gmlcLocation.getLatitude());
+			activeTest.put("gmlclng", gmlcLocation.getLongitude());
+			activeTest.put("gmlcacc", gmlcLocation.getAccuracy());
+			activeTest.put("gpslat", gpsLocation.getLatitude());
+			activeTest.put("gpslng", gpsLocation.getLongitude());
+			activeTest.put("gpsacc", gpsLocation.getAccuracy());
 			activeTest.put("gmlctime", gmlctime);
+
+			this.setLocation (gpsLocation, satellites);
 		}
 		catch (Exception e)
 		{
