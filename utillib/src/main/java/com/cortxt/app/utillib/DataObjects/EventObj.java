@@ -425,7 +425,7 @@ public class EventObj {
 
     public void setGMLCResult(int distance, double gmlclat, double gmlclng, float gmlcacc, double gpslat, double gpslng, float gpsacc, long gmlctime) {
 		try {
-			this.latency = distance;
+			this.downloadSpeed = distance;
 			if (activeTest == null)
 				activeTest = new JSONObject();
 
