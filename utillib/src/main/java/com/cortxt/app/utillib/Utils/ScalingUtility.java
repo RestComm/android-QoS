@@ -20,35 +20,35 @@ public class ScalingUtility {
 	private final double standardWidth = 720;
 	private final double standardHeight = 1184;
 	private final double standardDensity = 2.0;
-	private double runningDeviceDensity = 0;
+	private static double runningDeviceDensity = 0;
 
 	private double widthRatio = 0;
 	private double heightRatio = 0;
 	private double textSizeScalingFactor = 0;
 	private double minScalingFactor = 0;
 	private static ScalingUtility scalingUtility = null;
-	Context context = null;
-	int width = 0;
-	int height = 0;
+	//Context context = null;
+	static int width = 0;
+	static int height = 0;
 	boolean portrait = true;
 
 	public static ScalingUtility getInstance(Context context) {
 		if (scalingUtility == null && context != null) {
-			scalingUtility = new ScalingUtility(context);
+			WindowManager windowManager = (WindowManager) context
+					.getSystemService(Context.WINDOW_SERVICE);
+			Display display = windowManager.getDefaultDisplay();
+
+			width = display.getWidth();
+			height = display.getHeight();
+			runningDeviceDensity = context.getResources().getDisplayMetrics().density;
+
+			scalingUtility = new ScalingUtility();
+			Log.e("Scaling", "Size: " + width + " : " + height);
 		}
 		return scalingUtility;
 	}
 
-	protected ScalingUtility(Context ctxt) {
-		context = ctxt;//activity.getApplicationContext();
-		WindowManager windowManager = (WindowManager) context
-				.getSystemService(Context.WINDOW_SERVICE);
-		Display display = windowManager.getDefaultDisplay();
-
-		width = display.getWidth();
-		height = display.getHeight();
-		Log.e("Scaling", "Size: " + width + " : " + height);
-		runningDeviceDensity = ctxt.getResources().getDisplayMetrics().density;
+	protected ScalingUtility() {
 
 		widthRatio = portrait ? width / standardWidth : width/standardHeight ;
 		heightRatio = portrait ?  height / standardHeight : heightRatio/standardWidth;

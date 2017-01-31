@@ -13,6 +13,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
 import android.widget.Toast;
@@ -61,7 +62,7 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 	 * This is a general purpose timer that will be used for both first fix timeouts and
 	 * operation timeouts.
 	 */
-	private Timer gpsTimer = new Timer(TAG);
+	//private Timer gpsTimer = new Timer(TAG);
 	
 	/**
 	 * This collection holds all the listeners to this {@link GpsManagerOld}.
@@ -141,7 +142,7 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 			locManager.removeUpdates(this);
 			locManager.removeGpsStatusListener(this);
 		}
-		gpsTimer.cancel();
+		//gpsTimer.cancel();
 		gpsTimeout = 0;
 		//gpsHandlerThread.quit ();
 
@@ -359,60 +360,69 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 	 * @author Abhin
 	 *
 	 */
-	class FirstFixTimeoutTimerTask extends TimerTask {
-		private GpsListener listener;
-		
-		public FirstFixTimeoutTimerTask(GpsListener listener){
-			this.listener = listener;
-		}
-		
-		
-		/**
-		 * This timer task gets called when the firstFixTimeout period of a listener expires. In such cases,
-		 * check if the particular listener has received a first fix. If not, then depending on the value
-		 * of firstFixRenewalAllowed, either call the onTimeout method of the listener (if the renewal is allowed)
-		 * or remove the listener from the listeners collection of the GpsManager. 
-		 */
-		
-		@Override
-		public void run() {
+//	class FirstFixTimeoutTimerTask extends TimerTask {
+//		private GpsListener listener;
+//
+//		public FirstFixTimeoutTimerTask(GpsListener listener){
+//			this.listener = listener;
+//		}
+//
+//
+//		/**
+//		 * This timer task gets called when the firstFixTimeout period of a listener expires. In such cases,
+//		 * check if the particular listener has received a first fix. If not, then depending on the value
+//		 * of firstFixRenewalAllowed, either call the onTimeout method of the listener (if the renewal is allowed)
+//		 * or remove the listener from the listeners collection of the GpsManager.
+//		 */
+//
+//		@Override
+//		public void run() {
+	protected void runTimeout (final GpsListener listener)
+	{
 			synchronized(GpsManagerOld.this) {
 				boolean bLog = listener.getProvider().equals(LocationManager.GPS_PROVIDER);
                 bLog = false;
 				if (!listener.isFirstFixReceived()){
 					if (listener.isFirstFixRenewalAllowed()){
 						//in this case, renew the first fix timeout by scheduling another timerTask with the timer
-						
+
 						//Log.v(TAG, "Attempting to renew firstFixTimeout with " + mNumberOfSatellites + " satellites");
 						if (bLog) LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "FirstFixTimeoutTimerTask", "Attempting to renew firstFixTimeout with " + getNumberOfSatellites() + " satellites. listener: " + listener.hashCode());
-						
+
 						listener.setFirstFixTimeout(listener.attemptToRenewFirstFixTimeout(getNumberOfSatellites()));	//call the onTimeout method as promised
 						listener.setFirstFixRenewalAllowed(false);	//make sure that this timer renewal is the last time it happens with this listener
 						if (listener.getFirstFixTimeout() > 0 && owner.isServiceRunning()){	//if the onTimeout method returns lesser than zero, the renewal doesn't happen
 							//Log.v(TAG, "Request to renew firstFixTimeout accepted; extending timeout by " + Integer.toString(listener.getFirstFixTimeout()) + " milliseconds");
-							if (bLog) 
+							if (bLog)
 								LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "FirstFixTimeoutTimerTask", "Request to renew firstFixTimeout accepted; extending timeout by " + Integer.toString(listener.getFirstFixTimeout()) + " milliseconds");
-							
-							gpsTimer.schedule(new FirstFixTimeoutTimerTask(listener), listener.getFirstFixTimeout());
+
+							//gpsTimer.schedule(new FirstFixTimeoutTimerTask(listener), listener.getFirstFixTimeout());
+							Handler mHandler = new Handler ();
+							mHandler.postDelayed(new Runnable() {
+								@Override
+								public void run() {
+									runTimeout(listener);
+								}}, listener.getFirstFixTimeout());
+
 							gpsTimeout = System.currentTimeMillis() + listener.getFirstFixTimeout();
 						} else {
 							if (bLog) LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "FirstFixTimeoutTimerTask", "Request to renew firstFixTimeout declined for listener " + listener.hashCode());
-							
+
 							if (bLog) Log.v(TAG, "Request to renew firstFixTimeout declined for listener " + listener);
 							//in this case, the user doesn't want to use the gps anymore. Therefore, the listener has to be
 							//un-registered in order to turn the gps off.
 							removeListenerFromCollection(listener);
-							
+
 							//signal the staging of the event at this point using the onTimeout method
 							listener.onTimeout();
 						}
 					} else {
-						if (bLog) 
+						if (bLog)
 							LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "FirstFixTimeoutTimerTask", "Could not get Location even after a second attempt; Giving up on listener " + listener.hashCode());
 						//in this case, the first fix hasn't been received yet and renewal is not allowed.
 						//therefore, this listener has to be unregistered.
 						removeListenerFromCollection(listener);
-						
+
 						//signal the staging of the event at this point
 						listener.onTimeout();
 					}
@@ -422,8 +432,9 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 					if (bLog) LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "FirstFixTimeoutTimerTask", "First fix obtained, not a timeout on " + listener.hashCode());
 				}
 			}
-		}
-		
+
+		//}
+
 	}
 	
 	/**
@@ -501,7 +512,14 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 			//add timer task for a first fix
 			if (listener.getFirstFixTimeout() > 0 && owner.isServiceRunning())
 			{
-				gpsTimer.schedule(new FirstFixTimeoutTimerTask(listener), listener.getFirstFixTimeout());
+				//gpsTimer.schedule(new FirstFixTimeoutTimerTask(listener), listener.getFirstFixTimeout());
+				Handler mHandler = new Handler ();
+				mHandler.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						runTimeout(listener);
+					}}, listener.getFirstFixTimeout());
+
 				gpsTimeout = System.currentTimeMillis() + listener.getFirstFixTimeout();
 			}
 			Log.v(TAG, "registerListener");
@@ -631,12 +649,14 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 						Global.checkPermission(owner, "android.permission.ACCESS_FINE_LOCATION"))
 					locManager.removeUpdates(this);
 				//gpsHandlerThread.quit ();
+
 				listener.gpsStopped();
 				if (listener.getProvider().equals(LocationManager.GPS_PROVIDER))
 				{
 					owner.goIdle();
 					LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "removeListenerFromCollection", "stopped listening for location updates " + listener.getProvider());
 				}
+				//	gpsTimer.cancel();
 			}
 		}
 	}

@@ -3,6 +3,7 @@ package com.cortxt.app.corelib.Services.Location;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Handler;
 import android.os.PowerManager;
@@ -388,6 +389,7 @@ public class LocationRequest {
 					//return true;
 					if (bFinalLocation) {
 						bGPSRunning = false;
+						setFirstFixReceived(true);
 						LocationStopped(true);
 						LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "GpsListenerForRequest.onLocationUpdate", "LocationStopped (true)");
 						return false;
@@ -484,6 +486,7 @@ public class LocationRequest {
 							bFirstLocation = false;
 
 						if (gpsTimeout > 0) {  // If timeout is indefinate, keep getting locations
+							setFirstFixReceived(true);
 							LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "LocationListenerForRequest.onLocationUpdate", "LocationStopped (false)");
 							LocationStopped(false);
 							return false;
