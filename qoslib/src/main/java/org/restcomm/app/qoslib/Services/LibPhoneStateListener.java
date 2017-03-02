@@ -79,7 +79,7 @@ import org.restcomm.app.utillib.Utils.DeviceInfoOld;
 import org.restcomm.app.utillib.Utils.Global;
 import org.restcomm.app.utillib.Utils.LoggerUtil;
 import org.restcomm.app.utillib.Utils.PreferenceKeys;
-import com.cortxt.com.mmcextension.PhoneHeuristic;
+import org.restcomm.app.mmcextension.PhoneHeuristic;
 import org.restcomm.app.utillib.Utils.PreciseCallCodes;
 import org.restcomm.app.utillib.Reporters.ReportManager;
 import org.restcomm.app.utillib.Reporters.LocalStorageReporter.LocalStorageReporter.Events;
@@ -89,7 +89,7 @@ import org.restcomm.app.utillib.DataObjects.EventCouple;
 import org.restcomm.app.utillib.DataObjects.EventObj;
 import org.restcomm.app.qoslib.UtilsOld.DataMonitorStats;
 
-import com.cortxt.com.mmcextension.datamonitor.AppDataStatisticsRunnable;
+import org.restcomm.app.mmcextension.datamonitor.AppDataStatisticsRunnable;
 
 import org.json.JSONObject;
 

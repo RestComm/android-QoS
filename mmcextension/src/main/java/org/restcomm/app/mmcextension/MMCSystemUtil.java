@@ -1,4 +1,4 @@
-package com.cortxt.com.mmcextension;
+package org.restcomm.app.mmcextension;
 
 import android.app.Activity;
 import android.content.Context;

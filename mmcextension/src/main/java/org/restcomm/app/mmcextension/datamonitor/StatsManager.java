@@ -1,33 +1,7 @@
-package com.cortxt.com.mmcextension.datamonitor;
+package org.restcomm.app.mmcextension.datamonitor;
 
-import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import android.app.ActivityManager;
-import android.app.Service;
-import android.app.ActivityManager.RunningAppProcessInfo;
-import android.app.ActivityManager.RunningTaskInfo;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.TrafficStats;
-import android.os.BatteryManager;
-import android.os.Build;
 import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
 
 
 //import com.datamonitor.SMSObserver;

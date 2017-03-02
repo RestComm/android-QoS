@@ -1,4 +1,4 @@
-package com.cortxt.com.mmcextension.VQ;
+package org.restcomm.app.mmcextension.VQ;
 
 import android.os.Handler;
 

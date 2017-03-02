@@ -1,4 +1,4 @@
-package com.cortxt.com.mmcextension.datamonitor;
+package org.restcomm.app.mmcextension.datamonitor;
 
 import android.os.Handler;
 

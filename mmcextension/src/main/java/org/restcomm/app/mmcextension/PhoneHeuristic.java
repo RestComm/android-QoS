@@ -1,4 +1,4 @@
-package com.cortxt.com.mmcextension;
+package org.restcomm.app.mmcextension;
 
 import org.restcomm.app.utillib.DataObjects.PhoneState;
 import org.restcomm.app.utillib.ICallbacks;

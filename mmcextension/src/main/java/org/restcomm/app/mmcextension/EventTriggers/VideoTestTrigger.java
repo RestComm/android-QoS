@@ -1,4 +1,4 @@
-package com.cortxt.com.mmcextension.EventTriggers;
+package org.restcomm.app.mmcextension.EventTriggers;
 
 import android.media.MediaPlayer;
 import android.os.Handler;
