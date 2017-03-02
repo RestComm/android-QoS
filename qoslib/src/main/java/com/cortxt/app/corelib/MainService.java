@@ -29,6 +29,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
@@ -896,12 +897,24 @@ public class MainService extends Service {
                 	 String neighbors = cellHistory.updateNeighborHistory (null, null);
                 	 if (neighbors != null && neighbors.length() > 2)
                 		 intentDispatcher.updateNeighbors (neighbors);
-					 connectionHistory.updateRxTx ();
+					 connectionHistory.updateRxTx (MainService.this);
+
+					 int wifiSignal = -1;
+					 WifiManager wifiManager = (WifiManager)MainService.this.getSystemService(Context.WIFI_SERVICE);
+					 WifiInfo wifiinfo = wifiManager.getConnectionInfo() ;
+					 if (wifiinfo != null && wifiinfo.getBSSID() != null)
+						 wifiSignal =  wifiManager.getConnectionInfo().getRssi();
+					 if (wifiSignal != lastKnownWifiSignal)
+					 {
+						 phoneStateListener.processLastSignal ();
+						 lastKnownWifiSignal = wifiSignal;
+					 }
                 	 
                  }
 			});
 		}
 	}
+	private int lastKnownWifiSignal;
 	private long timeEngg = 0;
 	public void setEnggQueryTime ()
 	{

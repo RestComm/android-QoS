@@ -622,7 +622,7 @@ public class EventManager {
 			}
 			//context.getCellHistory ().snapshotHistory();
 			String conn = context.getConnectionHistory().updateConnectionHistory(telephonyManager.getNetworkType(),
-					telephonyManager.getDataState(), telephonyManager.getDataActivity(), context.getPhoneState().getLastServiceStateObj(),context.getConnectivityManager().getActiveNetworkInfo());
+					telephonyManager.getDataState(), telephonyManager.getDataActivity(), context.getPhoneState().getLastServiceStateObj(),context.getConnectivityManager().getActiveNetworkInfo(),context);
 			context.getIntentDispatcher().updateConnection (conn, true);
 			
 			WifiInfo wifiinfo = getWifiInfo ();

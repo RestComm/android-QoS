@@ -248,7 +248,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 		String activity = null;
 		try
 		{
-			activity = owner.getConnectionHistory().updateConnectionHistory(telephonyManager.getNetworkType(), telephonyManager.getDataState(), telephonyManager.getDataActivity(), mPhoneState.previousServiceStateObj, owner.getConnectivityManager().getActiveNetworkInfo());
+			activity = owner.getConnectionHistory().updateConnectionHistory(telephonyManager.getNetworkType(), telephonyManager.getDataState(), telephonyManager.getDataActivity(), mPhoneState.previousServiceStateObj, owner.getConnectivityManager().getActiveNetworkInfo(), owner);
 		}
 		catch (Exception e)
 		{
@@ -315,6 +315,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 	
 		//notify MainService of the new network type
 		mPhoneState.updateNetworkType(networkType);
+		processLastSignal ();
 		
 		int datastate = telephonyManager.getDataState();
 		// disregard network change events if data is disabled or in airplane mode
@@ -332,7 +333,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 		
 		try{
 
-			String conn = owner.getConnectionHistory().updateConnectionHistory (networkType, state, telephonyManager.getDataActivity(), mPhoneState.previousServiceStateObj, owner.getConnectivityManager().getActiveNetworkInfo());
+			String conn = owner.getConnectionHistory().updateConnectionHistory (networkType, state, telephonyManager.getDataActivity(), mPhoneState.previousServiceStateObj, owner.getConnectivityManager().getActiveNetworkInfo(),owner);
 			if (conn != null)
 		   		owner.getIntentDispatcher().updateConnection(conn, false);
 			
@@ -596,7 +597,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 					PhoneHeuristic heur = new PhoneHeuristic (owner.getCallbacks(), mPhoneState);
 					rating = heur.heuristicDropped(mPhoneState);
 				}
-				
+
 				// Detected dropped call based on logcat cause, or proximity (phone against ear at disconnect time)
 				if (mPhoneState.lastCallDropped == true)
 				{
@@ -917,7 +918,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 		
 		//owner.getConnectionHistory().updateConnectionHistory(cellnettype, state, activity, networkInfo)
 		try{
-		String activity = owner.getConnectionHistory().updateConnectionHistory(telephonyManager.getNetworkType(), telephonyManager.getDataState(), telephonyManager.getDataActivity(), serviceState, owner.getConnectivityManager().getActiveNetworkInfo());
+		String activity = owner.getConnectionHistory().updateConnectionHistory(telephonyManager.getNetworkType(), telephonyManager.getDataState(), telephonyManager.getDataActivity(), serviceState, owner.getConnectivityManager().getActiveNetworkInfo(),owner);
 		if (activity != null)
 	   		owner.getIntentDispatcher().updateConnection(activity, false);
 		} catch (Exception e)
@@ -1382,8 +1383,8 @@ public class LibPhoneStateListener extends PhoneStateListener {
 				// allowConfirm=3 hits the 'else' and invokes confirmation if rating >= 3 and <5
 				int expiry = 60000  * 2 * 60;
 				int customText = (owner.getResources().getInteger(R.integer.CUSTOM_EVENTNAMES));
-				message = owner.getString((customText == 1) ? R.string.sharecustom_speedtest_wifi : R.string.sharemessage_speedtest_wifi);
-
+				//message = owner.getString((customText == 1) ? R.string.sharecustom_speedtest_wifi : R.string.sharemessage_speedtest_wifi);
+				message = null;
 				if (rating >= 5 || allowConfirm == 0)
 				{
 					title = Global.getAppName(owner);
@@ -1416,6 +1417,8 @@ public class LibPhoneStateListener extends PhoneStateListener {
 					}
 					msg = message;
 				}
+				if (msg == null || msg.length() == 0)
+					return;
 
 				java.util.Date date = new java.util.Date();
 				String time = date.toLocaleString();

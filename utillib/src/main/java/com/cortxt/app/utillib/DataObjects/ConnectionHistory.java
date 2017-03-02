@@ -3,6 +3,7 @@ package com.cortxt.app.utillib.DataObjects;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
 import android.telephony.ServiceState;
@@ -36,7 +37,7 @@ public class ConnectionHistory {
 	
 	// Called when a neighbor list is detected in the RadioLog
 	// It augments that neighbor list with the neighbor from the API
-	public String updateConnectionHistory (int cellnettype, int state, int activity, ServiceState serviceState, NetworkInfo networkInfo)
+	public String updateConnectionHistory (int cellnettype, int state, int activity, ServiceState serviceState, NetworkInfo networkInfo, Context context)
 	{
 		int i;
 		//MMCLogger.logToFile(MMCLogger.Level.DEBUG, TAG, "onDataActivityChanged", String.format("Network type: %d, State: %d, Activity: %d", cellnettype, state, activity));
@@ -87,7 +88,7 @@ public class ConnectionHistory {
 				long rx = TrafficStats.getTotalRxBytes();
 				long tx = TrafficStats.getTotalTxBytes();
 
-				tcpstats.readTcpStats(false);
+				tcpstats.readTcpStats(context, false);
 				tcpstats.updateCounts();
 				int tcprsts = tcpstats.tcpResets;
 				int tcperrs = tcpstats.tcpErrors;
@@ -108,14 +109,14 @@ public class ConnectionHistory {
 	}
 
 	private long lastRxTxUpdate = 0;
-	public void updateRxTx ()
+	public void updateRxTx (Context context)
 	{
 		if (lastRxTxUpdate + 4000 < System.currentTimeMillis())
 		{
 			// Update Neighbor list history if state changes
 			long rx = TrafficStats.getTotalRxBytes();
 			long tx = TrafficStats.getTotalTxBytes();
-			tcpstats.readTcpStats(false);
+			tcpstats.readTcpStats(context,false);
 			tcpstats.updateCounts();
 			int tcprsts = tcpstats.tcpResets;
 			int tcperrs = tcpstats.tcpErrors;

@@ -87,10 +87,10 @@ public final class PreferenceKeys {
 				return false;
 		}
 		else if (trigger > 0 && (eventType == EventType.VIDEO_TEST || eventType == EventType.WEBPAGE_TEST || eventType == EventType.AUDIO_TEST || eventType == EventType.YOUTUBE_TEST)) {
-			PackageManager pkMan = context.getPackageManager();
-			int permissionValue = pkMan.checkPermission("android.permission.SYSTEM_ALERT_WINDOW", context.getPackageName());
-			if (permissionValue != 0)
-				return false;
+			//PackageManager pkMan = context.getPackageManager();
+			//int permissionValue = pkMan.checkPermission("android.permission.SYSTEM_ALERT_WINDOW", context.getPackageName());
+			//if (permissionValue != 0 && trigger > 0)
+			//	return false;
 		}
 		return true;
 	}

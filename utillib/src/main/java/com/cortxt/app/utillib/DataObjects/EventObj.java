@@ -148,8 +148,8 @@ public class EventObj {
 		this.isUploaded = false;
 		this.rx = TrafficStats.getTotalRxBytes();
 		this.tx = TrafficStats.getTotalTxBytes();
-		this.tcpstats = new TcpStats ();
-		this.tcpstats.readTcpStats(true);
+		this.tcpstats = new TcpStats();
+		this.tcpstats.readTcpStats(null, true);
 	}
 		
 	public EventObj(EventType eventType, long eventTimestamp, long duration) {
@@ -467,7 +467,7 @@ public class EventObj {
 	{
 		try {
 			if (activeTest != null) {
-				tcpstats.readTcpStats(false);
+				tcpstats.readTcpStats(null,false);
 				activeTest.put("tcpInSegs", tcpstats.numIn);
 				activeTest.put("tcpResets", tcpstats.numResets);
 				activeTest.put("tcpErrs", tcpstats.numErrors);
@@ -583,6 +583,8 @@ public class EventObj {
 
 	public static boolean isDisabledStat (Context context, int checkStat)
 	{
+		if (checkStat == DISABLESTAT_CPUTCP)
+			return true;
 		disabledStats = PreferenceManager.getDefaultSharedPreferences(context).getInt(PreferenceKeys.Miscellaneous.DISABLED_STATS, 0);
 		if ((disabledStats & checkStat) > 0)
 			return true;

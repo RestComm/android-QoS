@@ -246,8 +246,7 @@ public class AccessPointHistory {
 					batteryStartTime,roamOn, wifiOn, wimaxOn, batteryOn, bluetoothStartTime, bluetoothId);
 		SharedPreferences preferenceSettings = PreferenceManager.getDefaultSharedPreferences(mContext);
 		preferenceSettings.edit().putString(PreferenceKeys.Miscellaneous.ACCESS_POINT_STATE, stateSP).commit ();
-		//MMCLogger.logToFile(MMCLogger.Level.DEBUG, TAG, "saveState", stateSP);
-		
+
 	}
 	// State of the counters and timers will always be stored in case of restart
 	private void restoreState ()

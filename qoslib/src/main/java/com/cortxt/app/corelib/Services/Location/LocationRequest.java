@@ -517,7 +517,7 @@ public class LocationRequest {
 		}
 	}
 
-	private PowerManager.WakeLock wakeLock;
+	private static PowerManager.WakeLock wakeLock;
 	//-------------------------------------------------------------------------------------------------
 	void acquireWakeLock(Context context)
 	{
@@ -526,10 +526,13 @@ public class LocationRequest {
 //		wakeLock.setReferenceCounted(true);
 //
 //		//acquire the lock
-//		if(!wakeLock.isHeld())
-		PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
-		wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MMC LocationRequest partial wake");
-		wakeLock.acquire();
+		if (wakeLock == null) {
+			PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+			wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MMC LocationRequest partial wake");
+		}
+		while (wakeLock.isHeld())
+			wakeLock.release();
+		wakeLock.acquire(300000);
 		LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, "LocationRequest", "acquireWakeLock", "ACQUIRE");
 
 	}

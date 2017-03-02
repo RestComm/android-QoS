@@ -282,8 +282,8 @@ public class IntentHandler extends BroadcastReceiver {
 			int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
 			int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 100);
 			DeviceInfoOld.battery = level * 100 / scale;
-			int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);    
-			boolean bCharging = plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB; 
+			int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+			boolean bCharging = plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB;
 			owner.setBatteryCharging (bCharging);
 			dataMonitorStats.setBattery(bCharging, DeviceInfoOld.battery);
 		}else if (action.equals(Intent.ACTION_POWER_CONNECTED)){
@@ -584,6 +584,7 @@ public class IntentHandler extends BroadcastReceiver {
 		else if(action.equals(HANDOFF)) {  
 			dataMonitorStats.handoff();
 		}
+
 		else if(action.equals(MANUAL_TRANSIT_START)) {
 			long lat = intent.getIntExtra("latitude", 0);
 			long lon = intent.getIntExtra("longitude", 0);

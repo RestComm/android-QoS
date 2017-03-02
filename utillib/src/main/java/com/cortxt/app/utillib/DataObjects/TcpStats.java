@@ -1,5 +1,9 @@
 package com.cortxt.app.utillib.DataObjects;
 
+
+
+import android.content.Context;
+
 import com.cortxt.app.utillib.Utils.LoggerUtil;
 
 import java.io.RandomAccessFile;
@@ -18,6 +22,8 @@ public class TcpStats
     public int numResets = 0, numErrors = 0, numRetrans = 0;
     public int numIn = 0, numOut = 0;
 
+    public static Context appContext;
+
     public void updateCounts ()
     {
         if (prevResets > 0)
@@ -34,8 +40,14 @@ public class TcpStats
     }
 
     // Read TCP stats on packet segments and errors from linux file /proc/net/snmp
-    public float readTcpStats(boolean reset) {
+    public float readTcpStats(Context context, boolean reset) {
         try {
+            if (context != null)
+                appContext = context.getApplicationContext();
+            else
+                context = appContext;
+            if (context != null && EventObj.isDisabledStat(context,EventObj.DISABLESTAT_CPUTCP))
+                return 0;
             RandomAccessFile reader = new RandomAccessFile("/proc/net/snmp", "r");
             // for network stats: cat /proc/net/netstat
             String line = reader.readLine();

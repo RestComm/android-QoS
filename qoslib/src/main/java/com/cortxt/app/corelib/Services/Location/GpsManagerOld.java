@@ -15,6 +15,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -513,6 +514,8 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 			if (listener.getFirstFixTimeout() > 0 && owner.isServiceRunning())
 			{
 				//gpsTimer.schedule(new FirstFixTimeoutTimerTask(listener), listener.getFirstFixTimeout());
+				if (Looper.myLooper() == null) { Looper.prepare(); }
+
 				Handler mHandler = new Handler ();
 				mHandler.postDelayed(new Runnable() {
 					@Override
