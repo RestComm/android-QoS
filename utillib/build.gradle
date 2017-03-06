@@ -3,8 +3,8 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 //group = 'com.cortxt.app'
-group = 'com.restcomm.app'
-version = '1.0.8'
+//group = 'com.restcomm.app'
+//version = '1.0.8'
 android {
 
     compileSdkVersion 22

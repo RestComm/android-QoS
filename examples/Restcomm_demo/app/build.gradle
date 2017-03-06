@@ -39,16 +39,21 @@ android {
 
 
 repositories {
+    /*
     flatDir {
         dirs 'libs'
     }
+    */
     // repository for restcomm-android-sdk
+    // urls need to be in separate maven 'containers'
     maven {
         url "https://oss.sonatype.org/content/repositories/snapshots/"
     }
+    /*
     maven {
         url "http://nexus.mymobilecoverage.com:8081/nexus/content/repositories/releases"
     }
+    */
 }
 
 dependencies {
@@ -61,7 +66,11 @@ dependencies {
     //compile(name:'restcomm.android.client.sdk-debug', ext:'aar')
     // Include the QoS library, and ensure it is debuggable when in debug, otherwise release
     compile project(':qoslib')
-    ////compile 'org.restcomm:restcomm-android-qos-sdk-qoslib:1.0.0-alpha-1-SNAPSHOT'
+    /*
+    compile ('org.restcomm:restcomm-android-qos-sdk-qoslib:1.0.0-alpha-1-SNAPSHOT') {
+        transitive = true;
+    }
+    */
     //compile "com.restcomm.app:qoslib:1.0.6"
     compile 'com.android.support:multidex:1.0.1'
     //compile project(':restcomm.android.sdk')

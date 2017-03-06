@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-group = 'com.restcomm.app'
-version = '1.0.6'
+//group = 'com.restcomm.app'
+//version = '1.0.6'
 
 android {
     compileSdkVersion 22
@@ -30,16 +30,18 @@ android {
 //    }
 }
 repositories {
-    ////maven {url "https://oss.sonatype.org/content/repositories/snapshots/"}
+    maven {url "https://oss.sonatype.org/content/repositories/snapshots/"}
+/*
     maven {
         url "http://nexus.mymobilecoverage.com:8081/nexus/content/repositories/releases"
     }
+    */
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //compile "com.restcomm.app:utillib:1.0.7"
-    compile project(':utillib')
-    ////compile 'org.restcomm:restcomm-android-qos-sdk-utillib:1.0.0-alpha-1-SNAPSHOT'
+    ////compile project(':utillib')
+    compile 'org.restcomm:restcomm-android-qos-sdk-utillib:1.0.0-alpha-1-SNAPSHOT'
     //compile 'com.scottyab:secure-preferences-lib:0.0.4'
 }
 
