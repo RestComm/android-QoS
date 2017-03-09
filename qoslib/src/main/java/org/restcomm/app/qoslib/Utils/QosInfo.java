@@ -48,7 +48,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Method;
 import java.sql.Date;
 import java.util.BitSet;
-import com.restcomm.app.qoslib.R;
+import org.restcomm.app.qoslib.R;
 
 /**
  * QosInfo is a class that consolidates a wide variety of information about the network state of the phone.

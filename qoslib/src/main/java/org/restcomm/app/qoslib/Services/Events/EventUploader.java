@@ -65,7 +65,7 @@ import org.restcomm.app.utillib.DataObjects.EventObj;
 import org.restcomm.app.utillib.DataObjects.EventTypeGenre;
 
 import com.google.gson.Gson;
-import com.restcomm.app.qoslib.R;
+import org.restcomm.app.qoslib.R;
 /**
  * This class can be used to upload an event to the server. Everything in this
  * class happens in a separate thread.

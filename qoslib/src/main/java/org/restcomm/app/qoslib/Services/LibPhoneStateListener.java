@@ -68,7 +68,9 @@ import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 
 //import com.cortxt.app.MMC.ActivitiesOld.NerdScreen;
+
 import org.restcomm.app.qoslib.MainService;
+import org.restcomm.app.qoslib.R;
 import org.restcomm.app.qoslib.Services.Intents.IntentHandler;
 import org.restcomm.app.utillib.ContentProvider.ContentValuesGenerator;
 import org.restcomm.app.utillib.ContentProvider.TablesEnum;
@@ -93,7 +95,6 @@ import org.restcomm.app.mmcextension.datamonitor.AppDataStatisticsRunnable;
 
 import org.json.JSONObject;
 
-import com.restcomm.app.qoslib.R;
 /**
  * @author abhin
  * This is the class that MMC_Service instantiates and registers as 

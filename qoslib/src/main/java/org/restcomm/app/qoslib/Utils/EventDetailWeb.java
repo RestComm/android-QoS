@@ -57,7 +57,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import com.restcomm.app.qoslib.R;
+import org.restcomm.app.qoslib.R;
 /**
  * Activity that shows details of an event. It must be passed an integer event id in the Intent, with the key
  * {@link EventDetailWeb#EXTRA_EVENT_ID}

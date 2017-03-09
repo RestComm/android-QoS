@@ -75,7 +75,7 @@ import com.google.gson.Gson;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import com.restcomm.app.qoslib.R;
+import org.restcomm.app.qoslib.R;
 /**
  * This method handles all the intents that the service can receive. 
  * The intent filters are defined in the owner class but this class acts

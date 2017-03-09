@@ -68,7 +68,7 @@ import org.restcomm.app.utillib.Utils.UsageLimits;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.restcomm.app.qoslib.R;
+import org.restcomm.app.qoslib.R;
 /**
  * This is the class responsible for the event related logic that has to be executed
  * on the app. Some of its main features are :-

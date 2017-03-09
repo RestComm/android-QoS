@@ -51,7 +51,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import com.restcomm.app.qoslib.R;
+import org.restcomm.app.qoslib.R;
 
 // TODO: use Compatibility Package
 @SuppressLint("NewApi")

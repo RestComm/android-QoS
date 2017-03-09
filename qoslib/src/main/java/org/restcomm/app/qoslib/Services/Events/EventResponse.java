@@ -37,7 +37,7 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.restcomm.app.qoslib.R;
+import org.restcomm.app.qoslib.R;
 
 public class EventResponse {
     private EventResponseContents d;

@@ -8,8 +8,6 @@ import android.bluetooth.BluetoothHeadset;
 
 import android.content.Context;
 
-import com.cortxt.com.mmcextension.R;
-
 public class BluetoothRecorder   {
 
 	public BluetoothHeadset headset;

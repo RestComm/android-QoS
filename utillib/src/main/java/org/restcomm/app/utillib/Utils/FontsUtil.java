@@ -27,7 +27,7 @@ import android.graphics.Typeface;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.cortxt.app.utillib.R;
+import org.restcomm.app.utillib.R;
 
 
 public class FontsUtil {
