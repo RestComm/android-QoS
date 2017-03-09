@@ -367,6 +367,8 @@ public class TrackingManager {
 			PendingIntent alarm = PendingIntent.getBroadcast( owner, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 			alarmMgr.cancel(alarm);
 			handler.removeCallbacks(testRunnable);
+			if (runAdvancedTests != null)
+				handler.removeCallbacks(runAdvancedTests);
 
 		}catch (Exception e)
 		{
@@ -446,6 +448,7 @@ public class TrackingManager {
 
     }
 
+	private Runnable runAdvancedTests;
 	// Queue a series of tests with delays, then detect when they complete, and repeat them again
 	public void runAdvancedTrackingTests ()
 	{
@@ -498,14 +501,15 @@ public class TrackingManager {
 				loop = 1;
 			}
 
+			runAdvancedTests = new Runnable() {
+				public void run() {
+					runAdvancedTrackingTests();
+				}
+			};
 
 			if (cmdtype.equals("postdelay"))
 			{
-				handler.postDelayed(new Runnable() {
-					public void run() {
-						runAdvancedTrackingTests();
-					}
-				}, (int)(1000 * loop));
+				handler.postDelayed(runAdvancedTests, (int)(1000 * loop));
 			}
 			else {
 				// check for pre-delay in next index
@@ -515,11 +519,8 @@ public class TrackingManager {
 				loop = command.getInt("loop");
 				if (cmdtype.equals("predelay")) {
 					advancedIndex = (advancedIndex + 1) % scheduledCommands.length();
-					handler.postDelayed(new Runnable() {
-						public void run() {
-							runAdvancedTrackingTests();
-						}
-					}, (int) (1000 * loop));
+
+					handler.postDelayed(runAdvancedTests, (int) (1000 * loop));
 				} else if (cmdtype.equals("postdelay"))
 				{
 					// wait for the test queue to complete

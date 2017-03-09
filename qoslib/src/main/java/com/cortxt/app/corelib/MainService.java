@@ -973,6 +973,8 @@ public class MainService extends Service {
 		
 		if (getPhoneState().isOffHook())
 			return;
+		if (wakeLockScreen.isHeld() || wakeLockPartial.isHeld())
+			mmcActive = true;
 		// Unbind from the RadioLogService
 		if (mmcActive == true)
 		{
