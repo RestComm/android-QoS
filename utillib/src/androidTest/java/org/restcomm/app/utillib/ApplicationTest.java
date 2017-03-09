@@ -1,4 +1,4 @@
-package com.cortxt.app.utillib;
+package org.restcomm.app.utillib;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

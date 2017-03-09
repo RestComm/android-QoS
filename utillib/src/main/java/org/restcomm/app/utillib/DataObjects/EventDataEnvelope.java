@@ -27,7 +27,7 @@ import java.util.List;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
-import com.cortxt.app.utillib.R;
+import org.restcomm.app.utillib.R;
 import org.restcomm.app.utillib.Reporters.ReportManager;
 import org.restcomm.app.utillib.Utils.Global;
 

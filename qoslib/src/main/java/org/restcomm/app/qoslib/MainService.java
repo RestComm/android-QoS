@@ -94,7 +94,6 @@ import org.restcomm.app.mmcextension.TravelDetector;
 import org.restcomm.app.utillib.Utils.UsageLimits;
 import org.restcomm.app.mmcextension.MMCSystemUtil;
 
-import com.restcomm.app.qoslib.R;
 import com.securepreferences.SecurePreferences;
 
 //import com.securepreferences.SecurePreferences;

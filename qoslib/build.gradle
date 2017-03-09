@@ -21,7 +21,7 @@ android {
         targetSdkVersion 22
         versionCode System.getenv("BUILD_NUMBER") as Integer ?: 0
         versionName "2.0.1." + System.getenv("BUILD_NUMBER") ?: "0"
-        testApplicationId "com.cortxt.app.MMC.test"
+        testApplicationId "org.restcomm.app.MMC.test"
         testInstrumentationRunner "pl.polidea.instrumentation.PolideaInstrumentationTestRunner"
         signingConfig signingConfigs.configDebug
 

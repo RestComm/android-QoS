@@ -27,7 +27,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.restcomm.app.qoslib.R;
+import org.restcomm.app.qoslib.R;
 
 import org.restcomm.app.utillib.DataObjects.EventType;
 import org.restcomm.app.utillib.Utils.ScalingUtility;

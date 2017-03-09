@@ -25,13 +25,13 @@
 -keep public class com.google.android.gms.gcm.GoogleCloudMessaging
 -keep public class com.google.android.gms.common.GooglePlayServicesUtil
 
--keep class com.cortxt.app.corelib.UtilsOld.** {
+-keep class org.restcomm.app.corelib.UtilsOld.** {
   *;
 }
--keep class com.cortxt.app.corelib.Utils.** {
+-keep class org.restcomm.app.corelib.Utils.** {
   *;
 }
--keep class com.cortxt.app.corelib.Services.** {
+-keep class org.restcomm.app.corelib.Services.** {
   *;
 }
 
