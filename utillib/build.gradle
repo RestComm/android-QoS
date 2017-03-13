@@ -2,9 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-//group = 'com.cortxt.app'
-//group = 'com.restcomm.app'
-//version = '1.0.8'
 android {
 
     compileSdkVersion 22
@@ -137,7 +134,7 @@ uploadArchives {
             pom.groupId = "org.restcomm"
             pom.artifactId = "restcomm-android-qos-sdk-utillib"
             //pom.version = "1.0.0-beta-4.1"
-            pom.version = "1.0.0-alpha-1-SNAPSHOT"
+            pom.version = "1.0.1-alpha-1-SNAPSHOT"
 
             // remember that releases first go to the staging area
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {

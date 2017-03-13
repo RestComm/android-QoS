@@ -2,9 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-//group = 'com.cortxt.app'
-//version = '1.0.6'
-
 android {
     signingConfigs {
         configDebug {
@@ -77,13 +74,10 @@ repositories {
 }
 dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
-    compile project(':mmcextension')
+
+    compile 'org.restcomm:restcomm-android-qos-sdk-mmcextension:1.0.1-alpha-1-SNAPSHOT'
     //compile "com.restcomm.app:mmcextension:1.0.6"
-    /*
-    compile ('org.restcomm:restcomm-android-qos-sdk-mmcextension:1.0.0-alpha-1-SNAPSHOT') {
-        transitive = true;
-    }
-    */
+    //compile project(':mmcextension')
 }
 
 // Upload Archives functionality
@@ -156,7 +150,7 @@ uploadArchives {
             pom.groupId = "org.restcomm"
             pom.artifactId = "restcomm-android-qos-sdk-qoslib"
             //pom.version = "1.0.0-beta-4.1"
-            pom.version = "1.0.0-alpha-1-SNAPSHOT"
+            pom.version = "1.0.1-alpha-1-SNAPSHOT"
 
             // remember that releases first go to the staging area
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
