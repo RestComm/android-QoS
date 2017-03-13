@@ -35,7 +35,7 @@ import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
-import com.cortxt.app.utillib.R;
+import org.restcomm.app.utillib.R;
 
 
 public class ScalingUtility {

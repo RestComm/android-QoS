@@ -72,7 +72,7 @@ import org.restcomm.app.qoslib.Services.LibPhoneStateListener;
 import org.restcomm.app.utillib.Utils.Global;
 import org.restcomm.app.utillib.Utils.GpsListener;
 //import com.cortxt.com.mmcextension.firebase.MyFirebaseInstanceIDService;
-import com.cortxt.com.mmcextension.VQ.VQManager;
+import org.restcomm.app.mmcextension.VQ.VQManager;
 import org.restcomm.app.qoslib.Services.TrackingManager;
 import org.restcomm.app.qoslib.Services.Events.EventManager;
 import org.restcomm.app.utillib.DataObjects.EventObj;
@@ -90,11 +90,12 @@ import org.restcomm.app.utillib.DataObjects.EventType;
 import org.restcomm.app.utillib.Utils.PreferenceKeys;
 import org.restcomm.app.utillib.Utils.LoggerUtil;
 //import com.cortxt.com.mmcextension.datamonitor.DMService;
-import com.cortxt.com.mmcextension.TravelDetector;
+import org.restcomm.app.mmcextension.TravelDetector;
 import org.restcomm.app.utillib.Utils.UsageLimits;
-import com.cortxt.com.mmcextension.MMCSystemUtil;
+import org.restcomm.app.mmcextension.MMCSystemUtil;
+
 import com.securepreferences.SecurePreferences;
-import com.restcomm.app.qoslib.R;
+
 //import com.securepreferences.SecurePreferences;
 
 

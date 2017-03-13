@@ -27,7 +27,7 @@ import java.util.Map;
 
 import android.content.Context;
 
-import com.cortxt.app.utillib.R;
+import org.restcomm.app.utillib.R;
 import org.restcomm.app.utillib.Utils.Global;
 import org.restcomm.app.utillib.Utils.PreferenceKeys;
 

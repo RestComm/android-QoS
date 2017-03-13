@@ -27,13 +27,14 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import org.restcomm.app.qoslib.R;
+
 import org.restcomm.app.utillib.DataObjects.EventType;
 import org.restcomm.app.utillib.Utils.ScalingUtility;
 import org.restcomm.app.utillib.Utils.ShareInviteTask;
 import org.restcomm.app.utillib.Utils.TaskHelper;
 
 import java.util.HashSet;
-import com.restcomm.app.qoslib.R;
 
 public class EventHistory extends FragmentActivity {
 	private static final HashSet<Integer> EVENTS_TO_DISPLAY = new HashSet<Integer>();

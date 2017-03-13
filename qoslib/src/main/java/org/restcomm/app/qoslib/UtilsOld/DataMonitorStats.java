@@ -25,13 +25,13 @@ package org.restcomm.app.qoslib.UtilsOld;
 import android.content.Context;
 import android.os.Handler;
 
-import com.cortxt.com.mmcextension.datamonitor.StatsManager;
-import com.cortxt.com.mmcextension.datamonitor.StatsManager.BatteryChargeState;
-import com.cortxt.com.mmcextension.datamonitor.StatsManager.GPSState;
-import com.cortxt.com.mmcextension.datamonitor.StatsManager.PhoneCallState;
-import com.cortxt.com.mmcextension.datamonitor.StatsManager.RoamingState;
-import com.cortxt.com.mmcextension.datamonitor.StatsManager.ScreenState;
-import com.cortxt.com.mmcextension.datamonitor.StatsManager.WifiState;
+import org.restcomm.app.mmcextension.datamonitor.StatsManager;
+import org.restcomm.app.mmcextension.datamonitor.StatsManager.BatteryChargeState;
+import org.restcomm.app.mmcextension.datamonitor.StatsManager.GPSState;
+import org.restcomm.app.mmcextension.datamonitor.StatsManager.PhoneCallState;
+import org.restcomm.app.mmcextension.datamonitor.StatsManager.RoamingState;
+import org.restcomm.app.mmcextension.datamonitor.StatsManager.ScreenState;
+import org.restcomm.app.mmcextension.datamonitor.StatsManager.WifiState;
 
 public class DataMonitorStats {
 	

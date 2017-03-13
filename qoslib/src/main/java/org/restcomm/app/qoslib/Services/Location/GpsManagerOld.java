@@ -47,7 +47,7 @@ import org.restcomm.app.utillib.DataObjects.EventType;
 import org.restcomm.app.utillib.Utils.Global;
 import org.restcomm.app.utillib.Utils.GpsListener;
 import org.restcomm.app.utillib.Utils.LoggerUtil;
-import com.restcomm.app.qoslib.R;
+import org.restcomm.app.qoslib.R;
 
 /**
  * This class manages locations for the MMC application. Specifically, this class manages the gps

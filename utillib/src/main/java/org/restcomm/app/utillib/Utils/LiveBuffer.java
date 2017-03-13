@@ -34,7 +34,7 @@ import org.restcomm.app.utillib.DataObjects.DeviceInfo;
 import org.restcomm.app.utillib.ContentProvider.Provider;
 import org.restcomm.app.utillib.ContentProvider.Tables;
 import org.restcomm.app.utillib.ContentProvider.UriMatch;
-import com.cortxt.app.utillib.R;
+import org.restcomm.app.utillib.R;
 import org.restcomm.app.utillib.Reporters.LocalStorageReporter.LocalStorageReporter;
 import org.restcomm.app.utillib.Reporters.ReportManager;
 
@@ -254,7 +254,7 @@ public class LiveBuffer {
 		
 		//create the time series datastructures
 		cellTimeSeries = new TimeSeries<Integer>(
-			getParent().getString(R.string.Chart_CellIDs), 
+			getParent().getString(R.string.Chart_CellIDs),
 			-1, 
 			(1<<31)
 		);

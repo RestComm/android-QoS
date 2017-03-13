@@ -44,7 +44,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
-import com.restcomm.app.qoslib.R;
+import org.restcomm.app.qoslib.R;
 /**
  * Created by bscheurman on 16-02-07.
  */

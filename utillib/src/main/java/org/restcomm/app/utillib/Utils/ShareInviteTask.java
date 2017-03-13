@@ -47,7 +47,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.restcomm.app.utillib.DataObjects.EventType;
-import com.cortxt.app.utillib.R;
+import org.restcomm.app.utillib.R;
 import org.restcomm.app.utillib.Reporters.LocalStorageReporter.LocalStorageReporter;
 import org.restcomm.app.utillib.Reporters.ReportManager;
 import org.restcomm.app.utillib.Reporters.WebReporter.WebReporter;
