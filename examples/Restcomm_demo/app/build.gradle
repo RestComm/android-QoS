@@ -39,29 +39,32 @@ android {
 
 
 repositories {
-    flatDir {
-        dirs 'libs'
-    }
-    maven {
-        url "http://nexus.mymobilecoverage.com:8081/nexus/content/repositories/releases"
-    }
     // repository for restcomm-android-sdk
+    // urls need to be in separate maven 'containers'
     maven {
         url "https://oss.sonatype.org/content/repositories/snapshots/"
     }
+    /*
+    maven {
+        url "http://nexus.mymobilecoverage.com:8081/nexus/content/repositories/releases"
+    }
+    */
 }
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:24.2.1'
-    // TODO:  To set up the project to use actual Restcomm SDK, please edit settings.gradle to set actual path to sdk
-    //compile project(':restcomm.android.sdk')
+
     compile 'org.restcomm:restcomm-android-sdk:1.0.0-beta-4.1-SNAPSHOT'
-    // TODO: Otherwise for now, I shipped .aar file with the modified SDK
+    // Otherwise you can use a static .aar file with the modified SDK
     //compile(name:'restcomm.android.client.sdk-debug', ext:'aar')
     // Include the QoS library, and ensure it is debuggable when in debug, otherwise release
-    compile project(':qoslib')
-    //compile "com.restcomm.app:qoslib:1.0.6"
-    compile 'com.android.support:multidex:1.0.1'
     //compile project(':restcomm.android.sdk')
+
+    compile 'org.restcomm:restcomm-android-qos-sdk-qoslib:1.0.1-alpha-1-SNAPSHOT'
+    //compile project(':qoslib')
+    //compile "com.restcomm.app:qoslib:1.0.6"
+
+    compile 'com.android.support:multidex:1.0.1'
 }
 
