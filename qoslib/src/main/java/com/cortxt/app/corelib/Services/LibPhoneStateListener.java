@@ -135,8 +135,8 @@ public class LibPhoneStateListener extends PhoneStateListener {
 		restcommManager = new RestCommManager(this, owner);
 		dataActivtyHandler = new Handler();
 		dataActivityRunnable = new AppDataStatisticsRunnable(owner.getCallbacks(), dataActivtyHandler, owner.getDataMonitorStats().getStatsManager());
-		mySensorManager = (SensorManager)owner.getSystemService(
-				owner.SENSOR_SERVICE);
+		//mySensorManager = (SensorManager)owner.getSystemService(
+		//		owner.SENSOR_SERVICE);
 
 		// Proximity sensor code exists in case we want to go back to blacking out screen and forcing screen on during phone calls
         //myProximitySensor = mySensorManager.getDefaultSensor(
@@ -192,6 +192,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 	protected boolean proximityNear = false;
 	protected boolean lastNear = false;
 
+	/*
 	SensorEventListener proximitySensorEventListener
 	    = new SensorEventListener(){
 		
@@ -239,7 +240,7 @@ public class LibPhoneStateListener extends PhoneStateListener {
 	   }
 	  }
     };
-    
+    */
 	@Override
 	public void onDataActivity(int data){
 		super.onDataActivity(data);
