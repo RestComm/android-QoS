@@ -75,9 +75,9 @@ repositories {
 dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
 
-    compile 'org.restcomm:restcomm-android-qos-sdk-mmcextension:1.0.1-alpha-1-SNAPSHOT'
+    //compile 'org.restcomm:restcomm-android-qos-sdk-mmcextension:1.0.1-alpha-1-SNAPSHOT'
     //compile "com.restcomm.app:mmcextension:1.0.6"
-    //compile project(':mmcextension')
+    compile project(':mmcextension')
 }
 
 // Upload Archives functionality

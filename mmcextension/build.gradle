@@ -37,9 +37,9 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile 'org.restcomm:restcomm-android-qos-sdk-utillib:1.0.1-alpha-1-SNAPSHOT'
+    //compile 'org.restcomm:restcomm-android-qos-sdk-utillib:1.0.1-alpha-1-SNAPSHOT'
     //compile "com.restcomm.app:utillib:1.0.7"
-    //compile project(':utillib')
+    compile project(':utillib')
 
     //compile 'com.scottyab:secure-preferences-lib:0.0.4'
 }
