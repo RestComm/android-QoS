@@ -73,7 +73,8 @@ public class Global {
         }
         if (!isServiceYeilded (context)) {
             Intent bgServiceIntent = new Intent();
-            bgServiceIntent.setComponent(new ComponentName(context.getPackageName(), "com.cortxt.app.corelib.MainService"));
+            //bgServiceIntent.setComponent(new ComponentName(context.getPackageName(), "com.cortxt.app.corelib.MainService"));
+            bgServiceIntent.setComponent(new ComponentName(context.getPackageName(), "org.restcomm.com.qoslib.MainService"));
             LoggerUtil.logToFile(LoggerUtil.Level.ERROR, "Global", "isServiceYeilded", "MMC Service started for " + packagename);
 
             context.startService(bgServiceIntent);
