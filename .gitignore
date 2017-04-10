@@ -59,4 +59,7 @@ android-QoS.iml
 gradle/wrapper/gradle-wrapper.jar
 gradlew
 gradlew.bat
-
+qoslib/qoslib.iml
+mmcextension/mmcextension.iml
+utillib/utillib.iml
+examples/Restcomm_demo/app/app.iml
