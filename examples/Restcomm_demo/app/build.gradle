@@ -44,6 +44,13 @@ repositories {
     maven {
         url "https://oss.sonatype.org/content/repositories/snapshots/"
     }
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/releases'
+    }
+    maven {
+        url "http://telestax.jfrog.io/telestax/community-releases"
+    }
+
     /*
     maven {
         url "http://nexus.mymobilecoverage.com:8081/nexus/content/repositories/releases"
@@ -55,7 +62,8 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:24.2.1'
 
-    compile 'org.restcomm:restcomm-android-sdk:1.0.0-beta-4.1-SNAPSHOT'
+    //compile 'org.restcomm:restcomm-android-sdk:1.0.0-beta-4.1-SNAPSHOT'
+    compile 'org.restcomm:restcomm-android-sdk:1.0.1-BETA6-85'
     // Otherwise you can use a static .aar file with the modified SDK
     //compile(name:'restcomm.android.client.sdk-debug', ext:'aar')
     // Include the QoS library, and ensure it is debuggable when in debug, otherwise release

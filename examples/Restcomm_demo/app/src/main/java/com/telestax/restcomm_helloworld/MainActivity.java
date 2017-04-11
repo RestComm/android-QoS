@@ -254,6 +254,7 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
         params.put(RCDevice.ParameterKeys.MEDIA_ICE_URL, "https://service.xirsys.com/ice");
         params.put(RCDevice.ParameterKeys.MEDIA_ICE_USERNAME, "atsakiridis");
         params.put(RCDevice.ParameterKeys.MEDIA_ICE_PASSWORD, "4e89a09e-bf6f-11e5-a15c-69ffdcc2b8a7");
+        params.put(RCDevice.ParameterKeys.MEDIA_ICE_DOMAIN, "cloud.restcomm.com");
         params.put(RCDevice.ParameterKeys.SIGNALING_SECURE_ENABLED, true);
 
         if (!device.isInitialized()) {
@@ -262,9 +263,9 @@ public class MainActivity extends FragmentActivity implements RCDeviceListener, 
         }
 
 
-        // Make sure Qos server is started
+        // Make sure Qos service is started
         QosAPI.start(this, true);
-        // make sure user is registered with the QoS server
+        // make sure user is registered with the remote QoS server
         String login = editUser.getText().toString() + "@" + editServer.getText().toString();
         QosAPI.setLogin(this, login);
         // Check Firebase invites before proceeding from SplashScreen
