@@ -70,12 +70,13 @@ android {
 repositories {
     jcenter()
     maven {url "https://oss.sonatype.org/content/repositories/snapshots/"}
+    maven {url "https://oss.sonatype.org/content/repositories/staging/"}
     //maven {url "http://nexus.mymobilecoverage.com:8081/nexus/content/repositories/releases"}
 }
 dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
 
-    compile 'org.restcomm:restcomm-android-qos-sdk-mmcextension:1.0.1-alpha-1-SNAPSHOT'
+    compile 'org.restcomm:restcomm-android-qos-sdk-mmcextension:1.0.3-alpha-1'
     //compile "com.restcomm.app:mmcextension:1.0.6"
     //compile project(':mmcextension')
 }
@@ -154,6 +155,7 @@ def getRepositoryUsername() {
 def getRepositoryPassword() {
     return hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : ""
 }
+
 
 uploadArchives {
     repositories {
