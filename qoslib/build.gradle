@@ -105,6 +105,22 @@ uploadArchives {
 */
 
 // Upload to sonatype stuff
+gradle.taskGraph.whenReady { taskGraph ->
+    if (taskGraph.allTasks.any { it instanceof Sign }) {
+        allprojects {
+            // The rest of the signing properties are set in the global gradle.properties. Reason we keep this path here
+            // is that the path needs to be absolute, but yet we want it to be functional both on local and Travis builds.
+            // Since there doesn't seem to be a way to add conditional logic in properties files let's do it here
+            if (project.hasProperty('SIGNING_SECRET_KEYRING_FULLPATH')) {
+                ext."signing.secretKeyRingFile" = SIGNING_SECRET_KEYRING_FULLPATH
+            }
+            else {
+                ext."signing.secretKeyRingFile" = System.properties['user.home'] + "/.gnupg/secring.gpg"
+            }
+        }
+    }
+}
+
 task androidJavadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
@@ -150,7 +166,7 @@ uploadArchives {
             pom.groupId = "org.restcomm"
             pom.artifactId = "restcomm-android-qos-sdk-qoslib"
             //pom.version = "1.0.0-beta-4.1"
-            pom.version = "1.0.1-alpha-1-SNAPSHOT"
+            pom.version = "1.0.3-alpha-1"  // -SNAPSHOT"
 
             // remember that releases first go to the staging area
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
