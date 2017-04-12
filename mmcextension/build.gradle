@@ -148,7 +148,7 @@ uploadArchives {
                 name 'Restcomm Android QoS MMC Extension'
                 packaging 'aar'
                 // optionally artifactId can be defined here
-                description 'TODO'
+                description 'Middle layer library, placeholder to interchange with non-open-source mmcextension library'
                 url 'https://github.com/RestComm/android-QoS'
 
                 scm {
