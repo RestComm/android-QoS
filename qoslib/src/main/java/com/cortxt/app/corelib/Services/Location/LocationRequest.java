@@ -92,7 +92,7 @@ public class LocationRequest {
 		mOnLocationListener = listener;
 		if (this.lastLocation != null && listener != null) {
 			this.netLocation = null;
-			handleLocation(true);
+			//handleLocation(true);
 		}
 		//if (this.lastLocation != null && listener != null)
 		//	handleLocation(true);

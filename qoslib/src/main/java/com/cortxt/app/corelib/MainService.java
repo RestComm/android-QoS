@@ -765,13 +765,13 @@ public class MainService extends Service {
 		// This is so a new sample is only added to an event if the location changed significantly
 		if (location != null && lastLocation != null) // && lastEventId == stagedEventId)
 	    {
+			if (location.getLongitude() == 0.0 && location.getLatitude() == 0.0)
+				return;
+			lastLocation = location;
 			// dont store the same location twice
 	    	if (Math.abs(lastLocation.getLatitude() - location.getLatitude()) < 0.00005 &&
 	    			Math.abs(lastLocation.getLongitude() - location.getLongitude()) < 0.00005 &&
 	    			Math.abs(lastLocation.getAccuracy() - location.getAccuracy()) < 8)
-	    		return;
-
-	    	if (location.getLongitude() == 0.0 && location.getLatitude() == 0.0)
 	    		return;
 
 	    	// mark event as inaccurate if there was a large jump

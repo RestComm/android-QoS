@@ -89,6 +89,7 @@ public class LibCallbacks implements ICallbacks {
     {
         return mContext.getLastLocation();
     }
+    public void setLastLocation (Location location) { mContext.setLastLocation(location);};
     public int getLastNumSatellites()
     {
         return mContext.getLastNumSatellites();

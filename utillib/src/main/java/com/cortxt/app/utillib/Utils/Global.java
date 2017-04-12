@@ -262,6 +262,8 @@ public class Global {
     public static int getAppImportance(String packageName, Context context) {
         ActivityManager manager = (ActivityManager) context.getSystemService(Service.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> runningProcesses = manager.getRunningAppProcesses();
+        if (runningProcesses == null)
+            return 0;
         for (ActivityManager.RunningAppProcessInfo info : runningProcesses) {
             String process = info.processName;
             if(process.equals(packageName)) {
