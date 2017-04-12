@@ -149,7 +149,7 @@ uploadArchives {
                 name 'Restcomm Android QoS Utility Library'
                 packaging 'aar'
                 // optionally artifactId can be defined here
-                description 'TODO'
+                description 'Bottom level utility library, to support calls from both of the above layers'
                 url 'https://github.com/RestComm/android-QoS'
 
                 scm {
