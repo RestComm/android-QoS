@@ -31,11 +31,13 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.Html;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -354,13 +356,20 @@ import java.util.HashMap;
 			ReportManager reportManager = ReportManager.getInstance(mContext.getApplicationContext());
 
 			prepareFiles();
+			boolean useHtml = false;
+			if (Build.VERSION.SDK_INT >= 23) //  Build.VERSION_CODES.KITKAT)
+				useHtml = false;
+
 			if (emailOnly) {
 				if (eventid > 0)
 				{
 					if (allowLinks) {
 						mTextToShare += "\n" + mContext.getString(R.string.sharemessage_eventdetail_links);
-						addShareLinks();
-						mTextToShare = "<html><body>" + mTextToShare + "</body></html>";
+
+
+						addShareLinks(useHtml);
+                        if (useHtml)
+						    mTextToShare = "<html><body>" + mTextToShare + "</body></html>";
 						prepareHtmlFile();  // After share links are built, save this as an html file
 					}
 				}
@@ -397,9 +406,18 @@ import java.util.HashMap;
 					intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 				}
 				else {
-					intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-					intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(mTextToShare));
+					intent = new Intent(Intent.ACTION_SEND);
 
+
+					if (useHtml)
+					{
+						//intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(mTextToShare));
+						intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(mTextToShare));
+						intent.putExtra(Intent.EXTRA_HTML_TEXT, mTextToShare);
+					}
+					else
+						intent.putExtra(Intent.EXTRA_TEXT, mTextToShare);
+					intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + filePaths[0]));
 					ArrayList<Uri> uris = new ArrayList<Uri>();
 					//convert from paths to Android friendly Parcelable Uri's
 					for (String file : filePaths) {
@@ -409,7 +427,7 @@ import java.util.HashMap;
 							uris.add(u);
 						}
 					}
-					intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+					//intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 				}
 			} else {
 				if (eventid > 0)
@@ -440,7 +458,7 @@ import java.util.HashMap;
 			//		else {
 			//			intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + (mContext.getApplicationContext()).getCacheDir() + filename));
 			//		}
-			if (bInvite)
+			if (bInvite && false)
 			{
 				Activity activity = (Activity)mViewToScreenshot.getContext();//.getParent().getA
 
@@ -546,7 +564,7 @@ import java.util.HashMap;
 		alertDialog.getWindow().setAttributes(lp);
 	}
 
-	private void addShareLinks ()
+	private void addShareLinks (boolean useHtml)
 	{
 		//ReportManager reportManager = ReportManager.getInstance(mContext.getApplicationContext());
 
@@ -595,13 +613,20 @@ import java.util.HashMap;
 			//mTextToShare += "<img id=\"MMClogo\" src=\"https://lb1.mymobilecoverage.com/img/mmcLOGO.png\">";
 
 			String appname = Global.getAppName(mContext);
+			/*
 			if (bInvite)
 				mTextToShare += "<br><br><a href='%%APPINVITE_LINK_PLACEHOLDER%%'>View in " + appname + "</a><br><br>";
 			else {
 				String deepLink = buildDeepLink(link);
 				mTextToShare += "<br><br><a href='" + deepLink + "'>View in " + appname + "</a><br><br>";
 			}
-			mTextToShare += "<br><br><a href='" + link + "'>View in browser</a><br><br>";
+			*/
+			if (!useHtml){
+				link = link.replace(" ", "+");
+				mTextToShare += "\n\nView chart in browser: \n" + link;
+			}
+			else
+				mTextToShare += "<br><br><a href='" + link + "'>View in browser</a><br><br>";
 
 			if (allowMynetwork) {
 				String linkMN = "https://" + servername + ".mymobilecoverage.com/MyNetwork/mainindex2.html?userID=" + Global.getUserID(mContext) + "&type=" + ieventtype + "&carrierID=" + carrierID;
@@ -613,7 +638,8 @@ import java.util.HashMap;
 				mTextToShare += "<a href='" + urlencode(linkMN) + "'>View in MyNetwork (with login)</a><br><br>";
 				mTextToShare += "<a href='" + urlencode(linkEvent) + "'>CSV Download</a><br><br>";
 			}
-			mTextToShare = mTextToShare.replace("\n", "<br>");
+			if (useHtml)
+			    mTextToShare = mTextToShare.replace("\n", "<br>");
 
 			//mTextToShare += "<a href='" + urlencode(linkCov) + "'>Coverage Image</a><br>";
 
