@@ -72,9 +72,12 @@ android {
 repositories {
     jcenter()
     maven {url "http://nexus.mymobilecoverage.com:8081/nexus/content/repositories/releases"}
+    maven {
+        url "https://maven.google.com" // Google's Maven repository
+    }
 }
 dependencies {
-    compile 'com.android.support:appcompat-v7:22.2.0'
+    //compile 'com.android.support:appcompat-v7:22.2.0'
     compile project(':mmcextension')
     //compile "com.restcomm.app:mmcextension:1.0.6"
 

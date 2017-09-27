@@ -164,66 +164,67 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 	@Override
 	public void onGpsStatusChanged(int event) {
 		//update the local copy of gpsStatus
-		if(gpsStatus != null) {
-			synchronized(gpsStatus) {
-				locManager.getGpsStatus(gpsStatus);
-			}
-			
-		}
-		else {
-			gpsStatus = locManager.getGpsStatus(null);
-		}
-		switch (event) {
-		case GpsStatus.GPS_EVENT_FIRST_FIX:
-			//iterate over the listeners collection and make firstFixReceived true
-			Log.v(TAG, "First fix received");
-			break;
-		case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
-			int numberOfSatellites = 0;
-			int numberOfSatellitesUsedInFix = 0;
-			
-			synchronized(gpsStatus) {
-				Iterable<GpsSatellite> satellites = gpsStatus.getSatellites();
-				for(GpsSatellite sat : satellites){
-					if (sat.getSnr() > 10)
-						numberOfSatellites++;
-					if (sat.usedInFix())
-						numberOfSatellitesUsedInFix++;
+		try {
+			if (gpsStatus != null && locManager != null) {
+				synchronized (gpsStatus) {
+					locManager.getGpsStatus(gpsStatus);
 				}
+
+			} else if (locManager != null) {
+				gpsStatus = locManager.getGpsStatus(null);
 			}
-			if (numberOfSatellites != mNumberOfSatellites)
-			{
-				try{
-					setNumberOfSatellites(numberOfSatellites);
-					//if (listeners.size() > 0 && (!listeners.get(0).isFirstFixReceived() || numberOfSatellitesUsedInFix > 0))
-					if (listeners != null && listeners.size() > 0 && (numberOfSatellitesUsedInFix > 0 || numberOfSatellites > 0))
-								//Log.v(TAG, String.format("Gps status changed; numberOfSatellites:%d; numberOfSatellitesUsedInFix:%d", numberOfSatellites, numberOfSatellitesUsedInFix));
-						owner.updateNumberOfSatellites(numberOfSatellites, numberOfSatellitesUsedInFix);
-					
-					Location lastloc = owner.getLastLocation ();
-					if (lastloc == null || !lastloc.getProvider().equals(LocationManager.GPS_PROVIDER)) //  || lastloc.getTime() < System.currentTimeMillis() - 10000 )
-					{
-						for (int i=0; i<listeners.size(); i++) {
-							GpsListener listener = listeners.get(i);
-							if (listener.getProvider().equals(LocationManager.GPS_PROVIDER))
-								listener.onLocationUpdate(null,0);
+			switch (event) {
+				case GpsStatus.GPS_EVENT_FIRST_FIX:
+					//iterate over the listeners collection and make firstFixReceived true
+					Log.v(TAG, "First fix received");
+					break;
+				case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
+					int numberOfSatellites = 0;
+					int numberOfSatellitesUsedInFix = 0;
+
+					synchronized (gpsStatus) {
+						Iterable<GpsSatellite> satellites = gpsStatus.getSatellites();
+						for (GpsSatellite sat : satellites) {
+							if (sat.getSnr() > 10)
+								numberOfSatellites++;
+							if (sat.usedInFix())
+								numberOfSatellitesUsedInFix++;
 						}
 					}
-				}
-				catch (Exception e) {}
+					if (numberOfSatellites != mNumberOfSatellites) {
+						try {
+							setNumberOfSatellites(numberOfSatellites);
+							//if (listeners.size() > 0 && (!listeners.get(0).isFirstFixReceived() || numberOfSatellitesUsedInFix > 0))
+							if (listeners != null && listeners.size() > 0 && (numberOfSatellitesUsedInFix > 0 || numberOfSatellites > 0))
+								//Log.v(TAG, String.format("Gps status changed; numberOfSatellites:%d; numberOfSatellitesUsedInFix:%d", numberOfSatellites, numberOfSatellitesUsedInFix));
+								owner.updateNumberOfSatellites(numberOfSatellites, numberOfSatellitesUsedInFix);
+
+							Location lastloc = owner.getLastLocation();
+							if (lastloc == null || !lastloc.getProvider().equals(LocationManager.GPS_PROVIDER)) //  || lastloc.getTime() < System.currentTimeMillis() - 10000 )
+							{
+								for (int i = 0; i < listeners.size(); i++) {
+									GpsListener listener = listeners.get(i);
+									if (listener.getProvider().equals(LocationManager.GPS_PROVIDER))
+										listener.onLocationUpdate(null, 0);
+								}
+							}
+						} catch (Exception e) {
+						}
+					}
+					break;
+				case GpsStatus.GPS_EVENT_STARTED:
+					owner.broadcastGpsStatus(true);
+					Intent intent = new Intent(IntentHandler.GPS_STATE_ON);
+					owner.sendBroadcast(intent);
+					break;
+				case GpsStatus.GPS_EVENT_STOPPED:
+					owner.updateNumberOfSatellites(0, 0);
+					owner.broadcastGpsStatus(false);
+					Intent intent2 = new Intent(IntentHandler.GPS_STATE_OFF);
+					owner.sendBroadcast(intent2);
+					break;
 			}
-			break;
-		case GpsStatus.GPS_EVENT_STARTED:
-			owner.broadcastGpsStatus(true);
-			Intent intent = new Intent(IntentHandler.GPS_STATE_ON);
-			owner.sendBroadcast(intent);
-			break;
-		case GpsStatus.GPS_EVENT_STOPPED:
-			owner.updateNumberOfSatellites(0, 0); 
-			owner.broadcastGpsStatus(false);
-			Intent intent2 = new Intent(IntentHandler.GPS_STATE_OFF);
-			owner.sendBroadcast(intent2);
-			break;
+		} catch (Exception e) {
 		}
 	}
 	
@@ -398,7 +399,7 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 								LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "FirstFixTimeoutTimerTask", "Request to renew firstFixTimeout accepted; extending timeout by " + Integer.toString(listener.getFirstFixTimeout()) + " milliseconds");
 
 							//gpsTimer.schedule(new FirstFixTimeoutTimerTask(listener), listener.getFirstFixTimeout());
-							Handler mHandler = new Handler ();
+							Handler mHandler = new Handler (Looper.getMainLooper());
 							mHandler.postDelayed(new Runnable() {
 								@Override
 								public void run() {
@@ -511,24 +512,32 @@ public class GpsManagerOld implements GpsStatus.Listener, LocationListener {
 	public void registerListener(final GpsListener listener){
 		synchronized(GpsManagerOld.this) {
 			//add timer task for a first fix
-			if (listener.getFirstFixTimeout() > 0 && owner.isServiceRunning())
+			int delay = listener.getFirstFixTimeout();
+			if (delay <= 60000)
+				delay = 60000;
+			final boolean neededLooper;
+
+			if (delay > 0 && owner.isServiceRunning())
 			{
 				//gpsTimer.schedule(new FirstFixTimeoutTimerTask(listener), listener.getFirstFixTimeout());
-				if (Looper.myLooper() == null) { Looper.prepare(); }
+				//if (Looper.myLooper() == null)
+					//Looper.prepare();
+				Handler mHandler = new Handler (Looper.getMainLooper());
 
-				Handler mHandler = new Handler ();
 				mHandler.postDelayed(new Runnable() {
 					@Override
 					public void run() {
 						runTimeout(listener);
-					}}, listener.getFirstFixTimeout());
+					}}, delay);
 
 				gpsTimeout = System.currentTimeMillis() + listener.getFirstFixTimeout();
+
 			}
 			Log.v(TAG, "registerListener");
 			
 			//add the listener to the collection in order to turn on the gps
 			addListenerToCollection(listener);
+
 		}
 	}
 	

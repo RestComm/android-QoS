@@ -39,7 +39,6 @@
         android:value="@integer/google_play_services_version" /-->
 
     <application>
-        <uses-library android:name="com.google.android.maps" />
 
         <!--receiver
             android:name="com.cortxt.app.corelib.GcmBroadcastReceiver"

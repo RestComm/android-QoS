@@ -363,9 +363,10 @@ public class LocationRequest {
 
 						if (finalAccuracy < firstAccuracy)
 							bLocationChanged = true;
-						if (location.getAccuracy() < finalAccuracy && satellites > 0)
+						if (location.getAccuracy() < finalAccuracy)// && satellites > 0)
 						{
-							bFinalLocation = true;
+							if (System.currentTimeMillis() - gpsStartTime > 8000)
+								bFinalLocation = true;
 							if (MainService.getGpsManager() != null)
 								MainService.getGpsManager().detectTravellingFromDistance();
 						}
@@ -385,6 +386,7 @@ public class LocationRequest {
 						//	 handler.sendMessage(new Message ());
 						//return false;
 					}
+
 
 					//return true;
 					if (bFinalLocation) {
@@ -468,9 +470,13 @@ public class LocationRequest {
 							bBetterThanLastLocation = true;
 					}
 				}
+
 				netLocation = location;
 				bLocationChanged = bLocChanged;
 				bLastKnownLocation = false;
+				if (statsLocation != null) {
+					statsLocation.setProvider(LocationManager.NETWORK_PROVIDER);
+				}
 				if (location.getAccuracy() < finalAccuracy || bBetterThanLastLocation == true) // We'll settle for 400 for statistics
 				{
 
@@ -501,6 +507,7 @@ public class LocationRequest {
 
 				if (System.currentTimeMillis() - lastGpsTime > 10000)
 					handleLocation(false);
+				LocationStopped(false);
 				return true;
 			}
 
