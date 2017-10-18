@@ -744,12 +744,12 @@ public class QosInfo {
             int netTypeIndex = cell_cursor.getColumnIndex(Tables.BaseStations.NET_TYPE);
             if (cell_cursor.getCount() > 0) {
                 netType = cell_cursor.isNull(netTypeIndex) ? null : cell_cursor.getString(netTypeIndex);
-                int bsLow = cell_cursor.isNull(LowIndex) ? null : cell_cursor.getInt(LowIndex);
-                int bsMid = cell_cursor.isNull(MidIndex) ? null : cell_cursor.getInt(MidIndex);
-                int bsHigh = cell_cursor.isNull(HighIndex) ? null : cell_cursor.getInt(HighIndex);
-                int bsCode = cell_cursor.isNull(CodeIndex) ? null : cell_cursor.getInt(CodeIndex);
-                int bsBand = cell_cursor.isNull(BandIndex) ? null : cell_cursor.getInt(BandIndex);
-                int bsChan = cell_cursor.isNull(ChanIndex) ? null : cell_cursor.getInt(ChanIndex);
+                Integer bsLow = cell_cursor.isNull(LowIndex) ? null : cell_cursor.getInt(LowIndex);
+                Integer bsMid = cell_cursor.isNull(MidIndex) ? null : cell_cursor.getInt(MidIndex);
+                Integer bsHigh = cell_cursor.isNull(HighIndex) ? null : cell_cursor.getInt(HighIndex);
+                Integer bsCode = cell_cursor.isNull(CodeIndex) ? null : cell_cursor.getInt(CodeIndex);
+                Integer bsBand = cell_cursor.isNull(BandIndex) ? null : cell_cursor.getInt(BandIndex);
+                Integer bsChan = cell_cursor.isNull(ChanIndex) ? null : cell_cursor.getInt(ChanIndex);
                 if (netType.equals("cdma")) {
                     if (LowIndex != -1)
                         BID = bsLow;
@@ -765,15 +765,15 @@ public class QosInfo {
                     // the network Id is kept 0 for gsm phones
                     if (HighIndex != -1)
                         LAC = bsHigh;
-                    if (bsCode > 0 && bsCode < 1000)
+                    if (bsCode != null && bsCode > 0 && bsCode < 1000)
                         PSC = bsCode;
                     else
                         PSC = 0;
-                    if (bsBand > 0)
+                    if (bsBand != null && bsBand > 0)
                         Band = bsBand;
                     else
                         Band = 0;
-                    if (bsChan > 0)
+                    if (bsChan != null && bsChan > 0)
                         Channel = bsChan;
                     else
                         Channel = 0;
