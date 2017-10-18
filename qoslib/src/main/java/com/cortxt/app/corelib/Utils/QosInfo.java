@@ -734,6 +734,7 @@ public class QosInfo {
 
             cell_cursor.moveToFirst();
 
+            String netType = "gsm";
             int LowIndex = cell_cursor.getColumnIndex(Tables.BaseStations.BS_LOW);
             int MidIndex = cell_cursor.getColumnIndex(Tables.BaseStations.BS_MID);
             int HighIndex = cell_cursor.getColumnIndex(Tables.BaseStations.BS_HIGH);
@@ -741,40 +742,42 @@ public class QosInfo {
             int BandIndex = cell_cursor.getColumnIndex(Tables.BaseStations.BS_BAND);
             int ChanIndex = cell_cursor.getColumnIndex(Tables.BaseStations.BS_CHAN);
             int netTypeIndex = cell_cursor.getColumnIndex(Tables.BaseStations.NET_TYPE);
-            String netType = cell_cursor.getString(netTypeIndex);
-            int bsLow = cell_cursor.getInt(LowIndex);
-            int bsMid = cell_cursor.getInt(MidIndex);
-            int bsHigh = cell_cursor.getInt(HighIndex);
-            int bsCode = cell_cursor.getInt(CodeIndex);
-            int bsBand = cell_cursor.getInt(BandIndex);
-            int bsChan = cell_cursor.getInt(ChanIndex);
-            if (netType.equals("cdma")) {
-                if (LowIndex != -1)
-                    BID =  bsLow;
-                if (MidIndex != -1)
-                    NID = bsMid;
-                if (HighIndex != -1)
-                    SID = bsHigh;
-            } else if (netType.equals("gsm")) {
-                if (LowIndex != -1) {
-                    RNC = bsMid;
-                    CellID = cell_cursor.getInt(LowIndex);
+            if (cell_cursor.getCount() > 0) {
+                netType = cell_cursor.isNull(netTypeIndex) ? null : cell_cursor.getString(netTypeIndex);
+                int bsLow = cell_cursor.isNull(LowIndex) ? null : cell_cursor.getInt(LowIndex);
+                int bsMid = cell_cursor.isNull(MidIndex) ? null : cell_cursor.getInt(MidIndex);
+                int bsHigh = cell_cursor.isNull(HighIndex) ? null : cell_cursor.getInt(HighIndex);
+                int bsCode = cell_cursor.isNull(CodeIndex) ? null : cell_cursor.getInt(CodeIndex);
+                int bsBand = cell_cursor.isNull(BandIndex) ? null : cell_cursor.getInt(BandIndex);
+                int bsChan = cell_cursor.isNull(ChanIndex) ? null : cell_cursor.getInt(ChanIndex);
+                if (netType.equals("cdma")) {
+                    if (LowIndex != -1)
+                        BID = bsLow;
+                    if (MidIndex != -1)
+                        NID = bsMid;
+                    if (HighIndex != -1)
+                        SID = bsHigh;
+                } else if (netType.equals("gsm")) {
+                    if (LowIndex != -1) {
+                        RNC = bsMid;
+                        CellID = cell_cursor.isNull(LowIndex) ? null : cell_cursor.getInt(LowIndex);
+                    }
+                    // the network Id is kept 0 for gsm phones
+                    if (HighIndex != -1)
+                        LAC = bsHigh;
+                    if (bsCode > 0 && bsCode < 1000)
+                        PSC = bsCode;
+                    else
+                        PSC = 0;
+                    if (bsBand > 0)
+                        Band = bsBand;
+                    else
+                        Band = 0;
+                    if (bsChan > 0)
+                        Channel = bsChan;
+                    else
+                        Channel = 0;
                 }
-                // the network Id is kept 0 for gsm phones
-                if (HighIndex != -1)
-                    LAC = bsHigh;
-                if (bsCode > 0 && bsCode < 1000)
-                    PSC = bsCode;
-                else
-                    PSC = 0;
-                if (bsBand > 0)
-                    Band = bsBand;
-                else
-                    Band = 0;
-                if (bsChan > 0)
-                    Channel = bsChan;
-                else
-                    Channel = 0;
             }
 
             if (sig_cursor.getCount() != 0) {
@@ -791,6 +794,7 @@ public class QosInfo {
                 int berIndex = sig_cursor.getColumnIndex(Tables.SignalStrengths.BER);
                 int rscpIndex = sig_cursor.getColumnIndex(Tables.SignalStrengths.RSCP);
                 int tierIndex = sig_cursor.getColumnIndex(Tables.SignalStrengths.COVERAGE);
+
                 Integer tier = sig_cursor.isNull(tierIndex) ? null : sig_cursor.getInt(tierIndex);
                 Integer rssi = sig_cursor.isNull(signalIndex) ? null : sig_cursor.getInt(signalIndex);
                 Integer rssi2G = sig_cursor.isNull(signal2GIndex) ? null : sig_cursor.getInt(signal2GIndex);
@@ -951,10 +955,11 @@ public class QosInfo {
             }
             catch (Exception e)
             {
+                LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "QoSinfo", "inner exception querying signal data: " + e.getMessage());
             }
 
         } catch (Exception e) {
-            LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "updateNerdViewFromDB", "exception querying signal data: " + e.getMessage());
+            LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "QoSinfo", "exception querying signal data: " + e.getMessage());
         } finally {
             if (cell_cursor != null)
                 cell_cursor.close();
