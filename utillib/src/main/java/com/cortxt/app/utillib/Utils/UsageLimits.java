@@ -317,6 +317,7 @@ public class UsageLimits  implements OnSharedPreferenceChangeListener{
 						_fillinsPer3hr = 500;
 						_consecFillinLimit = 500;
 						_coverageFillSamples = 200;
+						_speedtestsPerDay = 100;
 					}
 				}
 				_travelEnable = true;

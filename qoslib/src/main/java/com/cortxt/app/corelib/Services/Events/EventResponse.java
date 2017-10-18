@@ -62,6 +62,8 @@ public class EventResponse {
                             d.hideMap = Integer.parseInt(value);
                         if (name.equals("usercovonly"))
                             d.userCovOnly = Integer.parseInt(value);
+                        if (name.equals("gcm_heartbeat"))
+                            d.gcm_heartbeat = Integer.parseInt(value);
                         if (name.equals("carriercovonly"))
                             d.carrierCovOnly = Integer.parseInt(value);
                         if (name.equals("mynetwork_link"))
@@ -534,18 +536,25 @@ public class EventResponse {
         if (this.getUseSvcMode() != null)
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.USE_SVCMODE, this.getUseSvcMode()).commit();
 
-        if (this.getAutoSpeedtest() != null)
+        if (this.getAutoSpeedtest() != null) {
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.AUTOSPEED_SVR_ENABLE, this.getAutoSpeedtest()).commit();
-        if (this.getSpeedMonthMB() != null)
-            PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.AUTOSPEED_SVR_SIZEMB, this.getSpeedMonthMB()).commit();
-//        if (this.getGCMHeartbeat() != null)
-//        {
-//            if (PreferenceManager.getDefaultSharedPreferences(owner).getBoolean(PreferenceKeys.Miscellaneous.KEY_GCM_HEARTBEAT_CHANGED, false) == false)
-//            {
-//                PreferenceManager.getDefaultSharedPreferences(owner).edit().putBoolean(PreferenceKeys.Miscellaneous.KEY_GCM_HEARTBEAT, this.getGCMHeartbeat()==1).commit();
-//                PreferenceManager.getDefaultSharedPreferences(owner).edit().putBoolean(PreferenceKeys.Miscellaneous.KEY_GCM_HEARTBEAT_CHANGED, false).commit();
-//            }
-//        }
+            if (this.getSpeedMonthMB() != null)
+                PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.AUTOSPEED_SVR_SIZEMB, this.getSpeedMonthMB()).commit();
+            if (PreferenceManager.getDefaultSharedPreferences(owner).getBoolean(PreferenceKeys.Miscellaneous.AUTOSPEED_ENABLE_CHANGED, false) == false) {
+                PreferenceManager.getDefaultSharedPreferences(owner).edit().putBoolean(PreferenceKeys.Miscellaneous.AUTOSPEED_ENABLE, this.getAutoSpeedtest()==1).commit();
+                if (this.getSpeedMonthMB() != null)
+                    PreferenceManager.getDefaultSharedPreferences(owner).edit().putString(PreferenceKeys.Miscellaneous.AUTOSPEED_SIZEMB, this.getSpeedMonthMB().toString()).commit();
+            }
+        }
+
+        if (this.getGCMHeartbeat() != null)
+        {
+            if (PreferenceManager.getDefaultSharedPreferences(owner).getBoolean(PreferenceKeys.Miscellaneous.KEY_GCM_HEARTBEAT_CHANGED, false) == false)
+            {
+                PreferenceManager.getDefaultSharedPreferences(owner).edit().putBoolean(PreferenceKeys.Miscellaneous.KEY_GCM_HEARTBEAT, this.getGCMHeartbeat()==1).commit();
+                PreferenceManager.getDefaultSharedPreferences(owner).edit().putBoolean(PreferenceKeys.Miscellaneous.KEY_GCM_HEARTBEAT_CHANGED, false).commit();
+            }
+        }
 
         if (this.getDropProx() != null)
             PreferenceManager.getDefaultSharedPreferences(owner).edit().putInt(PreferenceKeys.Miscellaneous.DROP_PROX, this.getDropProx()).commit();

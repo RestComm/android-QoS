@@ -146,6 +146,18 @@ public class MainService extends Service {
 			mReportManager.setService(mmcCallbacks, mPhoneState, connectionHistory);
 
 			mReportManager.getCarrierLogo(null);
+			gpsManager = new GpsManagerOld(this);
+			netLocationManager = new GpsManagerOld(this);
+			serviceRunning = true;
+
+			powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+			wakeLockScreen = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "MMC wakelock");
+			modifyWakeLock ();
+			iUserID = getUserID(MainService.this);
+
+
+
+			boolean monitoringEnabled = true;
 
 			eventManager = new EventManager(this);
 			dataMonitorStats = new DataMonitorStats(this, handler);
@@ -154,84 +166,78 @@ public class MainService extends Service {
 
 			intentDispatcher = new IntentDispatcher(this);
 			intentHandler = new IntentHandler(this, dataMonitorStats);
-			//killMMCZombies();
-
-			LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "OnCreate", "MMC startup");
-
-			// start all our helpers and managers
-			connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-			phoneStateListener = new LibPhoneStateListener(this, mPhoneState);
-			gpsManager = new GpsManagerOld(this);
-			netLocationManager = new GpsManagerOld(this);
-
-			trackingManager = new TrackingManager(this);
-
-
-
-			serviceRunning = true;
-
-			powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-			wakeLockScreen = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "MMC wakelock");
-			modifyWakeLock ();
-			registerPhoneStateListener();
-
-			setAlarmManager ();
-			int intervalDM = PreferenceManager.getDefaultSharedPreferences(MainService.this).getInt(PreferenceKeys.Miscellaneous.MANAGE_DATAMONITOR, 0);
-			int appscansecDM = PreferenceManager.getDefaultSharedPreferences(MainService.this).getInt(PreferenceKeys.Miscellaneous.APPSCAN_DATAMONITOR, 60*5);
-
-			set15MinuteAlarmManager(intervalDM * 60 * 1000, appscansecDM);
-			travelDetector = new TravelDetector (mmcCallbacks);
-			cellHistory = new CellHistory ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE));
-
-			String msg = Global.getAppName(this) + " " + getString (R.string.MMC_Notification_message);
-			makeApplicationForeground(false, msg);
-
-			if (this.getConnectivityManager() != null)
-			{
-				NetworkInfo networkInfo = this.getConnectivityManager().getActiveNetworkInfo();
-				wifiStateChange (networkInfo);
-			}
-
-			//this call is to update the lastKnownMCCMNC
-			getMCCMNC();
-
-			iUserID = getUserID(MainService.this);
-
-			// GPS event to server on startup to:
-			// assure cust-ops gps is working, checkpoint in % coverage calculation, warm up GPS
-			// and to center the map on user
-			long last_time = PreferenceManager.getDefaultSharedPreferences(MainService.this).getLong(PreferenceKeys.Miscellaneous.LAST_TIME, 0);
-			// need a startup event if we dont know whether to hide rankings
-			boolean needEvent = false;
-			if (!PreferenceManager.getDefaultSharedPreferences(MainService.this).contains(PreferenceKeys.Miscellaneous.HIDE_RANKING))
-				needEvent = true;
-			// run a gps location on first time startup (but not if it was recently running)
-			if (System.currentTimeMillis() - 60000 * 60 * 4 > last_time || needEvent)
-			{
-				brieflyRunLocation (30, LocationManager.GPS_PROVIDER, true, null);  // Initially run the GPS for 20 seconds, then it will cycle the GPS and trigger the first update event
-				EventObj evt = eventManager.registerSingletonEvent(EventType.EVT_STARTUP);
-				// STARTUP event is triggered and uploads right away without GPS
-				// and without waiting for SHUTDOWN event
-				eventManager.temporarilyStageEvent(evt, null, null);
-			}
-			// in case app was killed in the middle of tracking, it will resume
-			trackingManager.resumeTracking();
-
-
 			// intentFilter is MMCIntentHandlerOld, it will declare and handle a large number of Intents
-			registerReceiver(intentHandler, intentHandler.declareIntentFilters());
 
-			// many features are interested in whether the Screen is turned off,
-			// because Signal and network state may be unknown and should be ignored when off
-			boolean screenOn = powerManager.isScreenOn();
-			dataMonitorStats.setScreen(screenOn);
-			mPhoneState.screenChanged(screenOn);
-			eventManager.screenChanged(screenOn);
+				//killMMCZombies();
+			if (monitoringEnabled) {
+				LoggerUtil.logToFile(LoggerUtil.Level.ERROR, TAG, "OnCreate", "MMC startup");
+				registerReceiver(intentHandler, intentHandler.declareIntentFilters());
+				// start all our helpers and managers
+				connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+				phoneStateListener = new LibPhoneStateListener(this, mPhoneState);
 
-			verifyRegistration();
 
-			if (getApiKey(this) != null)
-				MMCSystemUtil.checkFirebaseRegistration (this);
+				trackingManager = new TrackingManager(this);
+
+
+				registerPhoneStateListener();
+
+				setAlarmManager();
+				int intervalDM = PreferenceManager.getDefaultSharedPreferences(MainService.this).getInt(PreferenceKeys.Miscellaneous.MANAGE_DATAMONITOR, 0);
+				int appscansecDM = PreferenceManager.getDefaultSharedPreferences(MainService.this).getInt(PreferenceKeys.Miscellaneous.APPSCAN_DATAMONITOR, 60 * 5);
+
+				set15MinuteAlarmManager(intervalDM * 60 * 1000, appscansecDM);
+				travelDetector = new TravelDetector(mmcCallbacks);
+				cellHistory = new CellHistory((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE));
+
+				String msg = Global.getAppName(this) + " " + getString(R.string.MMC_Notification_message);
+				makeApplicationForeground(false, msg);
+
+				if (this.getConnectivityManager() != null) {
+					NetworkInfo networkInfo = this.getConnectivityManager().getActiveNetworkInfo();
+					wifiStateChange(networkInfo);
+				}
+				//this call is to update the lastKnownMCCMNC
+				getMCCMNC();
+			}
+
+
+
+			if (monitoringEnabled) {
+
+				// GPS event to server on startup to:
+				// assure cust-ops gps is working, checkpoint in % coverage calculation, warm up GPS
+				// and to center the map on user
+				long last_time = PreferenceManager.getDefaultSharedPreferences(MainService.this).getLong(PreferenceKeys.Miscellaneous.LAST_TIME, 0);
+				// need a startup event if we dont know whether to hide rankings
+				boolean needEvent = false;
+				if (!PreferenceManager.getDefaultSharedPreferences(MainService.this).contains(PreferenceKeys.Miscellaneous.HIDE_RANKING))
+					needEvent = true;
+				// run a gps location on first time startup (but not if it was recently running)
+				if (System.currentTimeMillis() - 60000 * 60 * 4 > last_time || needEvent) {
+					brieflyRunLocation(30, LocationManager.GPS_PROVIDER, true, null);  // Initially run the GPS for 20 seconds, then it will cycle the GPS and trigger the first update event
+					EventObj evt = eventManager.registerSingletonEvent(EventType.EVT_STARTUP);
+					// STARTUP event is triggered and uploads right away without GPS
+					// and without waiting for SHUTDOWN event
+					eventManager.temporarilyStageEvent(evt, null, null);
+				}
+				// in case app was killed in the middle of tracking, it will resume
+				trackingManager.resumeTracking();
+
+
+
+				// many features are interested in whether the Screen is turned off,
+				// because Signal and network state may be unknown and should be ignored when off
+				boolean screenOn = powerManager.isScreenOn();
+				dataMonitorStats.setScreen(screenOn);
+				mPhoneState.screenChanged(screenOn);
+				eventManager.screenChanged(screenOn);
+
+				verifyRegistration();
+
+				if (getApiKey(this) != null)
+					MMCSystemUtil.checkFirebaseRegistration(this);
+			}
 
 			//		mReportManager.checkPlayServices(this, true);
         }
@@ -577,15 +583,15 @@ public class MainService extends Service {
 
 			LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "set15MinuteAlarmManager", "Stats alarm was set to 0 in onCreate: alarm not on");
 			// If we're not using ACTION_ALARM_SCANAPPS alarm every 5 minutes for scanning apps, we may still want to use it as a heartbeat
-//			boolean useHeartbeat = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("KEY_GCM_HEARTBEAT", false);
-//			if (useHeartbeat)
-//			{
-//				// re-using the same timer here to avoid 2 timers in the event that both heartbeat and scanapps are in effect
-//				// 2 independent timers might wake up device twice as often, doubling the battery impact, so I'm forcing it to use one for both cases
-//				Intent intent = new Intent(IntentHandler.ACTION_ALARM_SCANAPPS);
-//				PendingIntent alarm = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_CANCEL_CURRENT);
-//				alarmMgr.setRepeating(AlarmManager.RTC, System.currentTimeMillis() + 5000, 60000 * 5L, alarm);
-//			}
+			boolean useHeartbeat = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("KEY_GCM_HEARTBEAT", false);
+			if (useHeartbeat)
+			{
+				// re-using the same timer here to avoid 2 timers in the event that both heartbeat and scanapps are in effect
+				// 2 independent timers might wake up device twice as often, doubling the battery impact, so I'm forcing it to use one for both cases
+				Intent intent = new Intent(IntentHandler.ACTION_ALARM_SCANAPPS);
+				PendingIntent alarm = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_CANCEL_CURRENT);
+				alarmMgr.setRepeating(AlarmManager.RTC, System.currentTimeMillis() + 5000, 60000 * 5L, alarm);
+			}
 		}
 	}
 	

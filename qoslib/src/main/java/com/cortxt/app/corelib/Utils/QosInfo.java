@@ -70,7 +70,7 @@ public class QosInfo {
     public int Satellites;
     private String LTEIdentity;
     private int WifiSec, WifiFreq, WifiSig;
-    private long WifiID;
+    private String WifiBSSID, WifiSSID;
     Location location;
     public int Band, Channel;
     public int MCC, MNC;
@@ -131,7 +131,7 @@ public class QosInfo {
         protected String noiseDoc="";
 
         protected String[] identifierLabels, identifierDocs;
-        protected long[] identifierValues;
+        protected String[] identifierValues;
         protected String networkType;
 
         /**
@@ -321,7 +321,7 @@ public class QosInfo {
                 for (i = 0; i < identifierValues.length; i++) {
                     if (i < identifierLabels.length) {
                         identifiers += identifierLabels[i] + ": ";
-                        if (identifierValues[i] == 0)
+                        if (identifierValues[i] == null || identifierValues[i].isEmpty())
                             identifiers += "n/a ";
                         else
                             identifiers += identifierValues[i] + " ";
@@ -339,7 +339,7 @@ public class QosInfo {
          * Get the array of values for the Identifier parts defined for the current Network type
          * @return the array of values
          */
-        public long[] getIdentifierValues (){ return identifierValues; };
+        public String[] getIdentifierValues (){ return identifierValues; };
         /**
          * Get the array of docs for the Identifier parts defined for the current Network type
          * @return the array of values
@@ -405,7 +405,7 @@ public class QosInfo {
 
             identifierLabels = new String[] {"SID","NID","BID"};
             identifierDocs = new String[] {"SID is the 'System ID' which identifies a region of towers, unique worldwide", "NID is the 'Network ID'", "BID is the 'Billing ID' which Uniquely identifies a cell tower, sector and band within a SID and NID"};
-            identifierValues = new long[] {SID,NID,BID};
+            identifierValues = new String[] {String.valueOf(SID),String.valueOf(NID),String.valueOf(BID)};
         }
         @Override
         public String toString () {
@@ -457,7 +457,7 @@ public class QosInfo {
 
             identifierLabels = new String[] {"LAC","CellId"};
             identifierDocs = new String[] {"Local Area Code, identifies a group of cell towers", "Cell Id uniquely identifies a cell tower, sector and band when combined with LAC"};
-            identifierValues = new long[] {LAC,CellID};
+            identifierValues = new String[] {String.valueOf(LAC),String.valueOf(CellID)};
         }
 
         @Override
@@ -529,7 +529,7 @@ public class QosInfo {
 
             identifierLabels = new String[] {"LAC","RNC","CellId","PSC"};
             identifierDocs = new String[] {"Local Area Code, identifies a group of cell towers", "RNC Radio Network Controller is the top 12 bits of a 28 bit Cell Identifier", "Cell Id is the bottom 16 bits of a 28 bit Cell identifier in 3G. Uniquely identifies a cell tower, sector and band when combined with LAC", "PSC Primary Scrambling Code, short non-unique cell identifier"};
-            identifierValues = new long[] {LAC,RNC,CellID,PSC};
+            identifierValues = new String[] {String.valueOf(LAC),String.valueOf(RNC),String.valueOf(CellID),String.valueOf(PSC)};
         }
 
         @Override
@@ -630,7 +630,7 @@ public class QosInfo {
 
             identifierLabels = new String[] {"Tac","Ci","Pci"};
             identifierDocs = new String[] {"Tracking Area Code, like a GSM LAC", "Cell Id", "Physical cell id, 0-504, not unique"};
-            identifierValues = new long[] {Tac,Ci,Pci};
+            identifierValues = new String[] {String.valueOf(Tac),String.valueOf(Ci),String.valueOf(Pci)};
         }
         @Override
         public String toString () {
@@ -659,7 +659,7 @@ public class QosInfo {
     {
         public int RSSI = 0;
         public int Frequency = 0;
-        public long WifiID = 0;
+        public String WifiBSSID = "", WifiSSID = "";
 
         /**
          * Initialize all the special labels, units, value ranges appropriate for the WiFi type of network
@@ -668,7 +668,8 @@ public class QosInfo {
         {
             RSSI = qos.WifiSig;
             Frequency = qos.WifiFreq;
-            WifiID = qos.WifiID;
+            WifiBSSID = qos.WifiBSSID;
+            WifiSSID = qos.WifiSSID;
 
             // base class assignments to describe WiFi info in a unified way
             networkType = "WiFi";
@@ -679,16 +680,17 @@ public class QosInfo {
             sigMax = -40;
             sigMin = -120;
             sigExcellent = -65;
-            identifierLabels = new String[] {"BSSID"};
-            identifierDocs = new String[] {"BSSID is a unique number identifying the WiFi access point (Basic Service Set Identifier)"};
-            identifierValues = new long[] {WifiID};
+            identifierLabels = new String[] {"BSSID", "SSID"};
+            identifierDocs = new String[] {"BSSID is a unique number identifying the WiFi access point (Basic Service Set Identifier)","SSID is service set identifier (Wifi name)"};
+            identifierValues = new String[] {WifiBSSID, WifiSSID};
         }
         @Override
         public String toString () {
             String str =  "WIFI Info:" + "\n";
             str +=  "RSSI: " + RSSI + "\n";
             str +=  "Frequency: " + Frequency + "\n";
-            str +=  "WifiID: " + WifiID + "\n";
+            str +=  "WifiBSSID: " + WifiBSSID + "\n";
+            str +=  "WifiSSID: " + WifiSSID + "\n";
             return str;
         }
     }
@@ -996,20 +998,21 @@ public class QosInfo {
         if (wifiInfo == null || wifiConfig == null)
             return;
 
-        String macid = wifiInfo.getBSSID();
-        if (macid == null)
-            return;
-        String[] bytes = macid.split(":");
-        long bssid = 0;
-        for (int i=0; i<6; i++)
-        {
-            if (i < bytes.length)
-            {
-                long v = hexval(bytes[i]);
-                bssid = bssid + (v<<((5-i)*8));
-            }
-        }
-        WifiID = bssid;
+//        String macid = wifiInfo.getBSSID();
+//        if (macid == null)
+//            return;
+//        String[] bytes = macid.split(":");
+//        long bssid = 0;
+//        for (int i=0; i<6; i++)
+//        {
+//            if (i < bytes.length)
+//            {
+//                long v = hexval(bytes[i]);
+//                bssid = bssid + (v<<((5-i)*8));
+//            }
+//        }
+        WifiBSSID = wifiInfo.getBSSID();
+        WifiSSID = wifiInfo.getSSID();
 
         if (wifiConfig != null)
         {
