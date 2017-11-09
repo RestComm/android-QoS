@@ -334,7 +334,7 @@ public final class PreferenceKeys {
 
         public static final String USE_GCM = "KEY_USE_GCM";
 		public static final String USE_SVCMODE = "KEY_USE_SVCMODE";
-        public static final String KEY_GCM_REG_ID = "KEY_GCM_REG_ID";
+        public static final String KEY_GCM_REG_ID = "KEY_FCM_REG_ID";
         public static final String KEY_GCM_APP_VERSION = "KEY_GCM_APP_VERSION";
 		public static final String KEY_GCM_REG_SENTTO = "KEY_GCM_APP_SENTTO";
 

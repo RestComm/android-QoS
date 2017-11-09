@@ -160,7 +160,11 @@ public class TrackingManager {
 				//bTracking = true;
 
 				// Run the normal Signal tracking as usual
-				startCoverageTracking ();
+				boolean doCoverage = false;
+				if (!schedule.has("coverage") || schedule.getBoolean("coverage") == true) {
+					doCoverage = true;
+				}
+				startCoverageTracking(doCoverage);
 				long startDelay = 1000;
 				if (starttime > System.currentTimeMillis())
 					startDelay = starttime - System.currentTimeMillis();
@@ -177,7 +181,7 @@ public class TrackingManager {
 		}
 	}
 
-	public void startCoverageTracking ()
+	public void startCoverageTracking (boolean doCoverage)
 	{
 		bTracking = true;
 		this.owner.keepAwake(true, true);
@@ -201,8 +205,10 @@ public class TrackingManager {
 		}
 		LoggerUtil.logToFile(LoggerUtil.Level.DEBUG, TAG, "startTracking", "durationMinutes=" + durMinutes + ",covInterval=" + coverageInterval + ",SpeedInterval=" + speedtestInterval + ",videoInterval=" + videoInterval);
 
-		delay = 5L * 60L * 1000L;
-		alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000, delay, alarm);
+		if (doCoverage) {
+			delay = 5L * 60L * 1000L;
+			alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000, delay, alarm);
+		}
 	}
 	public void startTracking (JSONObject cmdJson, long starttime, boolean resetElapsed)
 	{
@@ -242,8 +248,7 @@ public class TrackingManager {
 				this.vqInterval = testSettings.getInt("vq");
 			if (testSettings.has("aud"))
 				this.audioInterval = testSettings.getInt("aud");
-
-			startCoverageTracking ();
+			startCoverageTracking (true);
 			long startDelay = 1000;
 			if (starttime > System.currentTimeMillis())
 				startDelay = starttime - System.currentTimeMillis();
